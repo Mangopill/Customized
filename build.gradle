@@ -5,9 +5,13 @@ plugins {
     id 'net.neoforged.moddev' version '1.0.20'
 }
 version = "${minecraft_version}-${mod_version}"
-group = '${mod_group_id}'
+group = mod_group_id
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
 
 repositories {
     // CurseMaven
@@ -35,6 +39,9 @@ repositories {
         url "https://maven.ryanliptak.com/"
     }
 
+}
+base {
+    archivesName = mod_id
 }
 neoForge {
     version = project.neo_version
@@ -83,32 +90,40 @@ dependencies {
     //JEI
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}" 
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:19.10.0.126" 
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
     // Farmer's Delight
     implementation "curse.maven:farmers-delight-398521:${farmersdelight_version}"
     // Appleskin
     compileOnly "squeek.appleskin:appleskin-neoforge:${appleskin_version}:api"
     compileOnly "squeek.appleskin:appleskin-neoforge:${appleskin_version}"
     runtimeOnly "squeek.appleskin:appleskin-neoforge:${appleskin_version}"
-var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+}
+tasks.withType(ProcessResources).configureEach {
     var replaceProperties = [
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            neo_version_range      : neo_version_range,
-            loader_version_range   : loader_version_range,
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
             mod_version            : mod_version,
+            mod_group_id           : mod_group_id,
             mod_authors            : mod_authors,
-            mod_description        : mod_description
+            mod_description        : mod_description,
+
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+
+            neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+
+            jei_version            : jei_version,
+            farmersdelight_version : farmersdelight_version,
+            appleskin_version      : appleskin_version
     ]
     inputs.properties replaceProperties
+
     filesMatching(['META-INF/neoforge.mods.toml']) {
         expand replaceProperties
     }
-}
 }
 publishing {
     publications {
