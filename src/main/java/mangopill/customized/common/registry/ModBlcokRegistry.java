@@ -1,10 +1,10 @@
 package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
+import mangopill.customized.common.block.ModBrushableBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BrushableBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -21,7 +21,7 @@ public class ModBlcokRegistry {
 
     public static final Supplier<Block> SUSPICIOUS_DIRT = BLOCKS.register(
             "suspicious_dirt",
-            () -> new BrushableBlock(
+            () -> new ModBrushableBlock(
                     DIRT,
                     SoundEvents.BRUSH_SAND,
                     SoundEvents.BRUSH_SAND_COMPLETED,
