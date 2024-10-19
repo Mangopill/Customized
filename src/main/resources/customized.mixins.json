@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "mangopill.customized.common.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
