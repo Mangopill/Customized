@@ -13,11 +13,13 @@ version="${minecraft_version}-neoforge-${mod_version}"
 
 displayName="${mod_name}"
 
-logoFile="pack.png"
+logoFile="logo.png"
 
 authors="${mod_authors}"
 
 description='''${mod_description}'''
+
+displayURL = "https://github.com/Mangopill/Customized"
 
 [[mixins]]
 config="${mod_id}.mixins.json"
