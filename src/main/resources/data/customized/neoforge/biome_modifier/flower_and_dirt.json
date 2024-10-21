@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#c:is_overworld",
+  "features": "customized:flower_and_dirt",
+  "step": "surface_structures"
+}

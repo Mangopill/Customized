@@ -23,13 +23,13 @@ public class ModBlcokRegistry {
             "suspicious_dirt",
             () -> new ModBrushableBlock(
                     DIRT,
-                    SoundEvents.BRUSH_SAND,
-                    SoundEvents.BRUSH_SAND_COMPLETED,
+                    SoundEvents.BRUSH_GRAVEL,
+                    SoundEvents.BRUSH_GRAVEL_COMPLETED,
                     BlockBehaviour.Properties.of()
                             .mapColor(MapColor.DIRT)
                             .instrument(NoteBlockInstrument.SNARE)
                             .strength(0.25F)
-                            .sound(SoundType.GRAVEL)
+                            .sound(SoundType.SUSPICIOUS_GRAVEL)
                             .pushReaction(PushReaction.DESTROY))
             );
 }

@@ -1,6 +1,6 @@
 package mangopill.customized.common.block;
 
-import mangopill.customized.common.blockentity.ModBrushableBlockEntity;
+import mangopill.customized.common.block.entity.ModBrushableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BrushableBlock;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;

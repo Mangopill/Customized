@@ -1,3 +1,6 @@
 {
-  "fml.menu.mods.info.description.customized": "Customized Cooking Experience."
+  "block.customized.suspicious_dirt": "suspicious dirt",
+
+  "fml.menu.mods.info.description.customized": "Customized Cooking Experience.",
+  "itemGroup.customized": "Customized"
 }
