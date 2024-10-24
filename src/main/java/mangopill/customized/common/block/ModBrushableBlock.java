@@ -19,19 +19,6 @@ public class ModBrushableBlock extends BrushableBlock {
     public ModBrushableBlock(Block turnsInto, SoundEvent brushSound, SoundEvent brushCompletedSound, Properties properties) {
         super(turnsInto, brushSound, brushCompletedSound, properties);
     }
-
-    @Override
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (level.getBlockEntity(pos) instanceof ModBrushableBlockEntity modBrushableblockentity) {
-            modBrushableblockentity.checkReset();
-        }
-
-        if (FallingBlock.isFree(level.getBlockState(pos.below())) && pos.getY() >= level.getMinBuildHeight()) {
-            FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(level, pos, state);
-            fallingblockentity.disableDrop();
-        }
-    }
-
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

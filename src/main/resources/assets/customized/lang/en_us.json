@@ -1,5 +1,7 @@
 {
-  "block.customized.suspicious_dirt": "suspicious dirt",
+  "item.customized.soiled_seed": "Soiled Seed",
+
+  "block.customized.suspicious_dirt": "Suspicious Dirt",
 
   "fml.menu.mods.info.description.customized": "Customized Cooking Experience.",
   "itemGroup.customized": "Customized"
