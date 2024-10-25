@@ -15,5 +15,6 @@ public class Customized {
         ModBlockEntityTypeRegistry.BLOCK_ENTITY_TYPES.register(modBus);
         ModCreativeModeTabRegistry.CREATIVE_MODE_TAB.register(modBus);
         ModFeatureRegistry.FEATURE.register(modBus);
+        ModParticleTypeRegistry.PARTICLE_TYPE.register(modBus);
     }
 }
