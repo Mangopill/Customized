@@ -3,6 +3,23 @@
 
   "block.customized.suspicious_dirt": "Suspicious Dirt",
 
+  "tooltip.customized.property_value": "%s:%s",
+
+  "property.customized.nutrient_category.water": "Water",
+  "property.customized.nutrient_category.protein": "Protein",
+  "property.customized.nutrient_category.lipid": "Lipid",
+  "property.customized.nutrient_category.carbohydrate": "Carbohydrate",
+  "property.customized.nutrient_category.vitamin": "Vitamin",
+  "property.customized.nutrient_category.mineral": "Mineral",
+  "property.customized.nutrient_category.dietary_fiber": "Dietary Fiber",
+
+  "property.customized.nutrient_category.cold": "Cold",
+  "property.customized.nutrient_category.warm": "Warm",
+
+  "property.customized.nutrient_category.ecology": "Ecology",
+  "property.customized.nutrient_category.dread": "Dread",
+  "property.customized.nutrient_category.nothingness": "Nothingness",
+
   "fml.menu.mods.info.description.customized": "Customized Cooking Experience.",
   "itemGroup.customized": "Customized"
 }

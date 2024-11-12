@@ -16,5 +16,7 @@ public class Customized {
         ModCreativeModeTabRegistry.CREATIVE_MODE_TAB.register(modBus);
         ModFeatureRegistry.FEATURE.register(modBus);
         ModParticleTypeRegistry.PARTICLE_TYPE.register(modBus);
+        ModRecipeRegistry.RECIPE_TYPE.register(modBus);
+        ModRecipeSerializerRegistry.RECIPE_SERIALIZER.register(modBus);
     }
 }

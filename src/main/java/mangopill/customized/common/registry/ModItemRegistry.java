@@ -3,14 +3,13 @@ package mangopill.customized.common.registry;
 import com.google.common.collect.Sets;
 import mangopill.customized.Customized;
 import mangopill.customized.common.item.SoiledSeedItem;
-import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.LinkedHashSet;
 import java.util.function.Supplier;
 
-import static mangopill.customized.common.StaticHelperMethod.*;
+import static mangopill.customized.common.util.RegistryUtil.*;
 
 public class ModItemRegistry {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Customized.MODID);

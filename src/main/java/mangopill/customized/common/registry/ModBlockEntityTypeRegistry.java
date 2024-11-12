@@ -8,7 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-import static mangopill.customized.common.StaticHelperMethod.basicBlockEntityType;
+import static mangopill.customized.common.util.RegistryUtil.*;
 
 public class ModBlockEntityTypeRegistry {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Customized.MODID);

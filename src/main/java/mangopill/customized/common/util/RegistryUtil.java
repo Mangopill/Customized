@@ -1,12 +1,10 @@
-package mangopill.customized.common;
+package mangopill.customized.common.util;
 
 import mangopill.customized.Customized;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -16,7 +14,9 @@ import java.util.function.Supplier;
 import static mangopill.customized.common.registry.ModItemRegistry.CREATIVE_MODE_TAB;
 import static mangopill.customized.common.registry.ModItemRegistry.ITEMS;
 
-public class StaticHelperMethod {
+public final class RegistryUtil {
+    private RegistryUtil() {
+    }
     public static Item.Properties basicItemProperties() {
         return new Item.Properties();
     }
@@ -35,19 +35,12 @@ public class StaticHelperMethod {
         return register;
     }
 
-    public static TagKey<Block> basicCBlockTag(String s) {
-        return BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", s));
-    }
-
-    public static TagKey<Item> basicCItemTag(String s) {
-        return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", s));
-    }
-
-    public static TagKey<Item> basicModItemTag(String s) {
-        return ItemTags.create(ResourceLocation.fromNamespaceAndPath(Customized.MODID, s));
-    }
-
-    public static TagKey<Block> basicModBlockTag(String s) {
-        return BlockTags.create(ResourceLocation.fromNamespaceAndPath(Customized.MODID, s));
+    public static <T extends Recipe<?>> RecipeType<T> registerRecipeType(final String s) {
+        return new RecipeType<>()
+        {
+            public String toString() {
+                return Customized.MODID + ":" + s;
+            }
+        };
     }
 }

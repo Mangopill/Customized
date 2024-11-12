@@ -23,7 +23,7 @@ public abstract class ItemReplaceMixin{
     private static final ResourceKey<LootTable> LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Customized.MODID, "entity/soiled_seed"));
     private int life = 200;
     @Inject(at = @At("HEAD"), method = "tick")
-    public void itemReplace(CallbackInfo ci) {
+    public void customized$itemReplace(CallbackInfo ci) {
         ItemEntity itemEntity = (ItemEntity)(Object)this;
         ItemStack itemStack = itemEntity.getItem().copy();
         if (!(itemStack.getItem() instanceof SoiledSeedItem) || !(itemEntity.isInWaterRainOrBubble())) {

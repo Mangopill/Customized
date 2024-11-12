@@ -1,7 +1,25 @@
 {
-  "item.customized.soiled_seed": "沾满泥土的种子",
+  "item.customized.soiled_seed": "覆土种子",
+
   "block.customized.suspicious_dirt": "可疑的泥土",
 
+  "tooltip.customized.property_value": "%s:%s",
+
+  "property.customized.nutrient_category.water": "水",
+  "property.customized.nutrient_category.protein": "蛋白质",
+  "property.customized.nutrient_category.lipid": "脂质",
+  "property.customized.nutrient_category.carbohydrate": "碳水化合物",
+  "property.customized.nutrient_category.vitamin": "维生素",
+  "property.customized.nutrient_category.mineral": "矿物质",
+  "property.customized.nutrient_category.dietary_fiber": "膳食纤维",
+
+  "property.customized.nutrient_category.cold": "冰冷",
+  "property.customized.nutrient_category.warm": "温暖",
+
+  "property.customized.nutrient_category.ecology": "生态",
+  "property.customized.nutrient_category.dread": "悚怖",
+  "property.customized.nutrient_category.nothingness": "虚无",
+
   "fml.menu.mods.info.description.customized": "定制化烹饪体验。",
-  "itemGroup.customized": "Customized"
+  "itemGroup.customized": "食尚臻制"
 }
