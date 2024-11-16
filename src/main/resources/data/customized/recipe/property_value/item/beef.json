@@ -1,0 +1,30 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:beef",
+    "minecraft:cooked_beef"
+  ],
+  "value": {
+    "WATER" : 80.1,
+    "PROTEIN" : 90.4,
+    "LIPID" : 100.0,
+    "CARBOHYDRATE" : 50.0,
+    "VITAMIN" : 20.0,
+    "MINERAL" : 23.1,
+    "DIETARY_FIBER" : 31.1,
+
+    "COLD" : 7.4,
+    "WARM" : 9.6,
+
+    "ECOLOGY" : 80.0,
+    "DREAD" : 40.0,
+    "NOTHINGNESS" : 30.2,
+
+    "SOUR" : 100.0,
+    "SWEET" : 50.0,
+    "BITTER" : 20.0,
+    "SPICY" : 23.1,
+    "SALTY" : 31.1,
+    "NUMBING" : 31.1
+  }
+}

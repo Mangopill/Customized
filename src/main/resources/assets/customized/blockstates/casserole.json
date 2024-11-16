@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "facing=north,lid=with_lid": {
+      "model": "customized:block/casserole_with_lid"
+    },
+    "facing=south,lid=with_lid": {
+      "model": "customized:block/casserole_with_lid",
+      "y": 180
+    },
+    "facing=west,lid=with_lid": {
+      "model": "customized:block/casserole_with_lid",
+      "y": 270
+    },
+    "facing=east,lid=with_lid": {
+      "model": "customized:block/casserole_with_lid",
+      "y": 90
+    },
+    "facing=north,lid=without_lid": {
+      "model": "customized:block/casserole_without_lid"
+    },
+    "facing=south,lid=without_lid": {
+      "model": "customized:block/casserole_without_lid",
+      "y": 180
+    },
+    "facing=west,lid=without_lid": {
+      "model": "customized:block/casserole_without_lid",
+      "y": 270
+    },
+    "facing=east,lid=without_lid": {
+      "model": "customized:block/casserole_without_lid",
+      "y": 90
+    },
+    "facing=north,lid=with_water": {
+      "model": "customized:block/casserole_with_water"
+    },
+    "facing=south,lid=with_water": {
+      "model": "customized:block/casserole_with_water",
+      "y": 180
+    },
+    "facing=west,lid=with_water": {
+      "model": "customized:block/casserole_with_water",
+      "y": 270
+    },
+    "facing=east,lid=with_water": {
+      "model": "customized:block/casserole_with_water",
+      "y": 90
+    }
+  }
+}

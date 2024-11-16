@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:apple"
+  ],
+  "value": {
+    "VITAMIN": 90.0
+  }
+}
