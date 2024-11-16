@@ -3,6 +3,11 @@
 
   "block.customized.suspicious_dirt": "可疑的泥土",
 
+  "item.customized.spatula": "锅铲",
+
+  "block.customized.casserole": "砂锅",
+  "pot.customized.casserole": "砂锅",
+
   "tooltip.customized.property_value": "%s:%s",
 
   "property.customized.nutrient_category.water": "水",
@@ -19,6 +24,13 @@
   "property.customized.nutrient_category.ecology": "生态",
   "property.customized.nutrient_category.dread": "悚怖",
   "property.customized.nutrient_category.nothingness": "虚无",
+
+  "property.customized.nutrient_category.sour": "酸",
+  "property.customized.nutrient_category.sweet": "甜",
+  "property.customized.nutrient_category.bitter": "苦",
+  "property.customized.nutrient_category.spicy": "辣",
+  "property.customized.nutrient_category.salty": "咸",
+  "property.customized.nutrient_category.numbing": "麻",
 
   "fml.menu.mods.info.description.customized": "定制化烹饪体验。",
   "itemGroup.customized": "食尚臻制"

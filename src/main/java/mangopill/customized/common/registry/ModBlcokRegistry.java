@@ -1,6 +1,7 @@
 package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
+import mangopill.customized.common.block.CasseroleBlock;
 import mangopill.customized.common.block.ModBrushableBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
@@ -20,16 +21,9 @@ public class ModBlcokRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, Customized.MODID);
 
     public static final Supplier<Block> SUSPICIOUS_DIRT = BLOCKS.register(
-            "suspicious_dirt",
-            () -> new ModBrushableBlock(
-                    DIRT,
-                    SoundEvents.BRUSH_GRAVEL,
-                    SoundEvents.BRUSH_GRAVEL_COMPLETED,
-                    BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.DIRT)
-                            .instrument(NoteBlockInstrument.SNARE)
-                            .strength(0.25F)
-                            .sound(SoundType.SUSPICIOUS_GRAVEL)
-                            .pushReaction(PushReaction.DESTROY))
-            );
+            "suspicious_dirt", () -> new ModBrushableBlock(DIRT, SoundEvents.BRUSH_GRAVEL, SoundEvents.BRUSH_GRAVEL_COMPLETED,
+            BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.SNARE).strength(0.25F).sound(SoundType.SUSPICIOUS_GRAVEL).pushReaction(PushReaction.DESTROY)));
+
+    public static final Supplier<Block> CASSEROLE = BLOCKS.register(
+            "casserole", () -> new CasseroleBlock(Block.Properties.of().mapColor(MapColor.METAL).strength(0.6F, 6.0F).sound(SoundType.LANTERN)));
 }

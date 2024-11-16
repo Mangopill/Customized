@@ -17,7 +17,14 @@ public enum NutrientCategory implements StringRepresentable {
 
     ECOLOGY("ECOLOGY", 0x76B64C),
     DREAD("DREAD", 0x01A7AC),
-    NOTHINGNESS("NOTHINGNESS", 0x003152);
+    NOTHINGNESS("NOTHINGNESS", 0x003152),
+
+    SOUR("SOUR", 0xFFF700),
+    SWEET("SWEET", 0xFFB6C1),
+    BITTER("BITTER", 0x6B4F3B),
+    SPICY("SPICY", 0xFF4500),
+    SALTY("SALTY", 0x1E90FF),
+    NUMBING("NUMBING", 0xB86B7D);
 
     private final String name;
     private final TextColor color;

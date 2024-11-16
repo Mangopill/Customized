@@ -100,7 +100,7 @@ public class PropertyValueRecipe implements ModRecipeInterface<RecipeInput>{
                 .findFirst().map(PropertyValueRecipe::getPropertyValue)
                 .orElseGet(() -> {
                     PropertyValue propertyValue = new PropertyValue();
-                    long maxCount = -1L;
+                    long maxCount = 0L;
                     HashMap<ResourceLocation, PropertyValue> map = new HashMap<>();
                     recipeHolder.stream().map(RecipeHolder::value).forEach(valueRecipe ->
                             valueRecipe.getName().forEach(name -> map.put(name, valueRecipe.getPropertyValue()))

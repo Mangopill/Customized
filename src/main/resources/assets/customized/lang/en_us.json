@@ -3,6 +3,11 @@
 
   "block.customized.suspicious_dirt": "Suspicious Dirt",
 
+  "item.customized.spatula": "Spatula",
+
+  "block.customized.casserole": "Casserole",
+  "pot.customized.casserole": "Casserole",
+
   "tooltip.customized.property_value": "%s:%s",
 
   "property.customized.nutrient_category.water": "Water",
@@ -19,6 +24,13 @@
   "property.customized.nutrient_category.ecology": "Ecology",
   "property.customized.nutrient_category.dread": "Dread",
   "property.customized.nutrient_category.nothingness": "Nothingness",
+
+  "property.customized.nutrient_category.sour": "Sour",
+  "property.customized.nutrient_category.sweet": "Sweet",
+  "property.customized.nutrient_category.bitter": "Bitter",
+  "property.customized.nutrient_category.spicy": "Spicy",
+  "property.customized.nutrient_category.salty": "Salty",
+  "property.customized.nutrient_category.numbing": "Numbing",
 
   "fml.menu.mods.info.description.customized": "Customized Cooking Experience.",
   "itemGroup.customized": "Customized"

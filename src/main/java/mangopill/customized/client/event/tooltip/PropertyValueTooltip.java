@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 @EventBusSubscriber(value = Dist.CLIENT, modid = Customized.MODID)
 public class PropertyValueTooltip {
     @SubscribeEvent
-    public static void onTooltip(final ItemTooltipEvent event) {
+    public static void onItemTooltip(final ItemTooltipEvent event) {
         Player player = event.getEntity();
         if (player == null || player.level() == null) {
             return;
