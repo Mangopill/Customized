@@ -1,24 +1,31 @@
 package mangopill.customized.common.block;
 
+import com.mojang.serialization.MapCodec;
+import mangopill.customized.common.block.entity.CasseroleBlockEntity;
+import mangopill.customized.common.block.state.PotState;
+import mangopill.customized.common.registry.ModBlockEntityTypeRegistry;
+import mangopill.customized.common.registry.ModItemRegistry;
+import mangopill.customized.common.registry.ModSoundRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 public class CasseroleBlock extends AbstractPotBlock{
+    public static final MapCodec<CasseroleBlock> CODEC = simpleCodec(CasseroleBlock::new);
+
     protected static final VoxelShape BLOCK_SHAPE_WITHOUT_LID = Shapes.or(
             Block.box(13, 1, 3, 14, 3, 13),
             Block.box(1, 3, 2, 2, 8, 14),
@@ -55,54 +62,88 @@ public class CasseroleBlock extends AbstractPotBlock{
     );
 
     public CasseroleBlock(Properties properties) {
-        super(properties, BLOCK_SHAPE_WITHOUT_LID, BLOCK_SHAPE_WITH_LID, BLOCK_SHAPE_WITHOUT_LID);
+        super(properties);
     }
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-/*        BlockEntity tileEntity = level.getBlockEntity(pos);
-        if (tileEntity instanceof CasseroleBlockEntity cookingPotEntity && cookingPotEntity.isHeated()) {
-            SoundEvent boilSound = !cookingPotEntity.getMeal().isEmpty()
-                    ? ModSounds.BLOCK_COOKING_POT_BOIL_SOUP.get()
-                    : ModSounds.BLOCK_COOKING_POT_BOIL.get();
-            double x = (double) pos.getX() + 0.5D;
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public void animateTick(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull RandomSource random) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof CasseroleBlockEntity cookingPotEntity && cookingPotEntity.isHeated()) {
+            double x = (double) pos.getX() + 0.4D;
             double y = pos.getY();
-            double z = (double) pos.getZ() + 0.5D;
-            if (random.nextInt(10) == 0) {
-                level.playLocalSound(x, y, z, boilSound, SoundSource.BLOCKS, 0.5F, random.nextFloat() * 0.2F + 0.9F, false);
+            double z = (double) pos.getZ() + 0.4D;
+            if (random.nextInt(8) == 0) {
+                SoundEvent sound = state.getValue(LID).equals(PotState.WITH_LID)
+                        ? ModSoundRegistry.BOILING_WATER_WITH_LID.get()
+                        : ModSoundRegistry.BOILING_WATER_WITHOUT_LID.get();
+                level.playLocalSound(x, y, z, sound, SoundSource.BLOCKS, random.nextFloat() + 0.3F, 0.8F, false);
             }
-        }*/
+        }
     }
 
-    @Override
-    public ItemInteractionResult useItemOn(ItemStack itemStackInhand, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-/*        if (itemStackInhand.isEmpty() && player.isShiftKeyDown()) {
-            level.setBlockAndUpdate(pos, state.setValue(SUPPORT, state.getValue(SUPPORT).equals(CookingPotSupport.HANDLE)
-                    ? getTrayState(level, pos) : CookingPotSupport.HANDLE));
-            level.playSound(null, pos, SoundEvents.LANTERN_PLACE, SoundSource.BLOCKS, 0.7F, 1.0F);
-        } else if (!level.isClientSide) {
-            BlockEntity tileEntity = level.getBlockEntity(pos);
-            if (tileEntity instanceof CasseroleBlockEntity cookingPotEntity) {
-                ItemStack servingStack = cookingPotEntity.useHeldItemOnMeal(heldStack);
-                if (servingStack != ItemStack.EMPTY) {
-                    if (!player.getInventory().add(servingStack)) {
-                        player.drop(servingStack, false);
-                    }
-                    level.playSound(null, pos, SoundEvents.ARMOR_EQUIP_GENERIC.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
-                } else {
-                    player.openMenu(cookingPotEntity, pos);
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> blockEntityType) {
+        if (canInputDrive()){
+            if (!state.getValue(LID).equals(PotState.WITHOUT_LID)){
+                if (level.isClientSide) {
+                    return createTickerHelper(blockEntityType, CasseroleBlockEntity.getBlockEntityType(), CasseroleBlockEntity::animationTick);
                 }
+                return createTickerHelper(blockEntityType, CasseroleBlockEntity.getBlockEntityType(), CasseroleBlockEntity::cookingTick);
             }
-            return ItemInteractionResult.SUCCESS;
+        } else {
+            if (!state.getValue(LID).equals(PotState.WITH_DRIVE)){
+                if (level.isClientSide) {
+                    return createTickerHelper(blockEntityType, CasseroleBlockEntity.getBlockEntityType(), CasseroleBlockEntity::animationTick);
+                }
+                return createTickerHelper(blockEntityType, CasseroleBlockEntity.getBlockEntityType(), CasseroleBlockEntity::cookingTick);
+            }
         }
-        return ItemInteractionResult.SUCCESS;*/
         return null;
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return null;
-        /*return ModBlockEntityTypeRegistry.CASSEROLE.get().create(pos, state);*/
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+        return ModBlockEntityTypeRegistry.CASSEROLE.get().create(pos, state);
+    }
+
+    @Override
+    public boolean canStirFry() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeCovered() {
+        return true;
+    }
+
+    @Override
+    public boolean canInputDrive() {
+        return true;
+    }
+
+    @Override
+    public @NotNull ItemStack setLid() {
+        return new ItemStack(ModItemRegistry.CASSEROLE_ILD.get());
+    }
+
+    @Override
+    public @NotNull VoxelShape setShapeWithoutLid() {
+        return BLOCK_SHAPE_WITHOUT_LID;
+    }
+
+    @Override
+    public @NotNull VoxelShape setShapeWithLid() {
+        return BLOCK_SHAPE_WITH_LID;
+    }
+
+    @Override
+    public @NotNull VoxelShape setShapeWithDrive() {
+        return BLOCK_SHAPE_WITHOUT_LID;
     }
 }

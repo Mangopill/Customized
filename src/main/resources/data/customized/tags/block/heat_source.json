@@ -1,0 +1,13 @@
+{
+  "values": [
+    "minecraft:magma_block",
+    "minecraft:lava_cauldron",
+    "minecraft:lava",
+    "#minecraft:campfires",
+    "#minecraft:fire",
+    {
+      "id": "farmersdelight:stove",
+      "required": false
+    }
+  ]
+}

@@ -1,20 +1,15 @@
 package mangopill.customized.common.recipe;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSortedSet;
-import mangopill.customized.Customized;
 import mangopill.customized.common.registry.ModRecipeRegistry;
 import mangopill.customized.common.registry.ModRecipeSerializerRegistry;
-import mangopill.customized.common.util.category.NutrientCategory;
 import mangopill.customized.common.util.value.PropertyValue;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +28,7 @@ public class PropertyValueRecipe implements ModRecipeInterface<RecipeInput>{
     }
 
     @Override
-    public boolean matches(RecipeInput input, Level level) {
+    public boolean matches(RecipeInput input, @NotNull Level level) {
         ItemStack stack = input.getItem(0);
         return item ?
                 name.stream().anyMatch(name -> name.equals(BuiltInRegistries.ITEM.getKey(stack.getItem()))) :
@@ -41,43 +36,18 @@ public class PropertyValueRecipe implements ModRecipeInterface<RecipeInput>{
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
+    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registries) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public ItemStack assemble(RecipeInput input, HolderLookup.Provider registries) {
+    public @NotNull ItemStack assemble(@NotNull RecipeInput input, HolderLookup.@NotNull Provider registries) {
         return ItemStack.EMPTY;
-    }
-
-    public static Set<ItemStack> getMatchedItems(NutrientCategory category, Level level) {
-        ImmutableSortedSet.Builder<ItemStack> builder = ImmutableSortedSet.orderedBy(
-                Comparator.comparing((ItemStack stack) -> getPropertyValue(stack, level).getBigger(category))
-                        .thenComparing(stack -> BuiltInRegistries.ITEM.getKey(stack.getItem()),
-                                Comparator.comparing((ResourceLocation key) -> !"minecraft".equals(key.getNamespace()))
-                                        .thenComparing(key -> !Customized.MODID.equals(key.getNamespace()))
-                                        .thenComparing(Comparator.naturalOrder())
-                        )
-        );
-        List<PropertyValueRecipe> recipeList = level.getRecipeManager().getAllRecipesFor(ModRecipeRegistry.PROPERTY_VALUE.get()).stream().map(RecipeHolder::value).filter(def -> def.getPropertyValue().has(category)).toList();
-        recipeList.stream().filter(PropertyValueRecipe::isItem).forEach(items -> items.getName().forEach(name -> {
-            Item item = BuiltInRegistries.ITEM.get(name);
-            if (item != null && item != Items.AIR) {
-                builder.add(item.getDefaultInstance());
-            }
-        }));
-        recipeList.stream().filter(def -> !def.isItem()).forEach(tagDef -> tagDef.getName().forEach(name -> {
-            TagKey<Item> tag = ItemTags.create(name);
-            if (BuiltInRegistries.ITEM.getTag(tag).isPresent()) {
-                Ingredient.TagValue tagIngredient = new Ingredient.TagValue(tag);
-                tagIngredient.getItems().forEach(stack -> {
-                    if (getPropertyValue(stack, level).has(category)) {
-                        builder.add(stack);
-                    }
-                });
-            }
-        }));
-        return builder.build();
     }
 
     public Set<ResourceLocation> getName() {

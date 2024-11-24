@@ -105,7 +105,7 @@ public class PropertyValue {
         return Math.max(value[category.ordinal()], 0.0F);
     }
 
-    public static NutrientCategory[] getCategorie() {
+    public static NutrientCategory[] getCategory() {
         return CATEGORY;
     }
 

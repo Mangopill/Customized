@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 public enum PotState implements StringRepresentable {
     WITHOUT_LID("without_lid"),
     WITH_LID("with_lid"),
-    WITH_WATER("with_water");
+    WITH_DRIVE("with_drive");
 
     private final String name;
 

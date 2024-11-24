@@ -1,0 +1,10 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:poisonous_potato"
+  ],
+  "value": {
+    "CARBOHYDRATE" : 60.0,
+    "VITAMIN": 3.0
+  }
+}

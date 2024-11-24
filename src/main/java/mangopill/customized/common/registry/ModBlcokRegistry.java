@@ -18,12 +18,12 @@ import java.util.function.Supplier;
 import static net.minecraft.world.level.block.Blocks.DIRT;
 
 public class ModBlcokRegistry {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, Customized.MODID);
-
-    public static final Supplier<Block> SUSPICIOUS_DIRT = BLOCKS.register(
+    public static final DeferredRegister<Block> BLOCK = DeferredRegister.create(Registries.BLOCK, Customized.MODID);
+    //block
+    public static final Supplier<Block> SUSPICIOUS_DIRT = BLOCK.register(
             "suspicious_dirt", () -> new ModBrushableBlock(DIRT, SoundEvents.BRUSH_GRAVEL, SoundEvents.BRUSH_GRAVEL_COMPLETED,
             BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.SNARE).strength(0.25F).sound(SoundType.SUSPICIOUS_GRAVEL).pushReaction(PushReaction.DESTROY)));
-
-    public static final Supplier<Block> CASSEROLE = BLOCKS.register(
-            "casserole", () -> new CasseroleBlock(Block.Properties.of().mapColor(MapColor.METAL).strength(0.6F, 6.0F).sound(SoundType.LANTERN)));
+    //kitchenware block
+    public static final Supplier<Block> CASSEROLE = BLOCK.register(
+            "casserole", () -> new CasseroleBlock(Block.Properties.of().mapColor(MapColor.STONE).strength(0.6F, 6.0F).sound(SoundType.DECORATED_POT)));
 }

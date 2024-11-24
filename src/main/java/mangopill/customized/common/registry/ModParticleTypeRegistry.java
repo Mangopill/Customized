@@ -13,4 +13,6 @@ public class ModParticleTypeRegistry {
 
     public static final Supplier<SimpleParticleType> DIRT = PARTICLE_TYPE.register("dirt",
             () -> new SimpleParticleType(true));
+    public static final Supplier<SimpleParticleType> STEAM = PARTICLE_TYPE.register("steam",
+            () -> new SimpleParticleType(true));
 }

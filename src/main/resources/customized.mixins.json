@@ -3,7 +3,8 @@
   "package": "mangopill.customized.common.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ItemReplaceMixin"
+    "ItemReplaceMixin",
+    "WarmStomachEffectMixin"
   ],
   "client": [
   ],

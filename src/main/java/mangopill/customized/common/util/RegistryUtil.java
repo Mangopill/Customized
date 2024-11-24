@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import java.util.function.Supplier;
 
 import static mangopill.customized.common.registry.ModItemRegistry.CREATIVE_MODE_TAB;
-import static mangopill.customized.common.registry.ModItemRegistry.ITEMS;
+import static mangopill.customized.common.registry.ModItemRegistry.ITEM;
 
 public final class RegistryUtil {
     private RegistryUtil() {
@@ -25,12 +25,12 @@ public final class RegistryUtil {
         return () -> new BlockItem(supplier.get(), properties);
     }
 
-    public static<T extends BlockEntity> Supplier<BlockEntityType<T>> basicBlockEntityType(BlockEntityType.BlockEntitySupplier<T> blockEntitytType, Supplier<Block> supplier) {
-        return () -> BlockEntityType.Builder.of(blockEntitytType , supplier.get()).build(null);
+    public static<T extends BlockEntity> Supplier<BlockEntityType<T>> basicBlockEntityType(BlockEntityType.BlockEntitySupplier<T> blockEntityType, Supplier<Block> supplier) {
+        return () -> BlockEntityType.Builder.of(blockEntityType , supplier.get()).build(null);
     }
 
     public static Supplier<Item> registerWithCreativeTab(final String string, final Supplier<Item> supplier) {
-        Supplier<Item> register = ITEMS.register(string, supplier);
+        Supplier<Item> register = ITEM.register(string, supplier);
         CREATIVE_MODE_TAB.add(register);
         return register;
     }

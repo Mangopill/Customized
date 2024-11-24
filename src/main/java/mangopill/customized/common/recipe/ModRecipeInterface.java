@@ -8,9 +8,4 @@ public interface ModRecipeInterface<T extends RecipeInput> extends Recipe<T> {
     default boolean canCraftInDimensions(int pWidth, int pHeight) {
         return true;
     }
-
-    @Override
-    default boolean isSpecial() {
-        return true;
-    }
 }

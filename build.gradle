@@ -114,7 +114,6 @@ tasks.withType(ProcessResources).configureEach {
             loader_version_range   : loader_version_range,
 
             jei_version            : jei_version,
-            farmersdelight_version : farmersdelight_version,
             appleskin_version      : appleskin_version
     ]
     inputs.properties replaceProperties

@@ -1,0 +1,22 @@
+{
+  "type": "customized:casserole",
+  "time": 100,
+  "ingredient": [
+    {
+      "item": "customized:soiled_seed"
+    }
+  ],
+  "seasoning": [
+    {
+      "tag": "customized:seasoning"
+    }
+  ],
+  "spice": {
+    "count": 1,
+    "id": "minecraft:apple"
+  },
+  "result": {
+        "count": 1,
+    "id": "customized:suspicious_dirt"
+  }
+}

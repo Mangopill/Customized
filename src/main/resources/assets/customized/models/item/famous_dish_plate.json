@@ -1,0 +1,60 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "customized:block/famous_dish_plate",
+		"particle": "customized:block/famous_dish_plate"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 2],
+			"to": [14, 1, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 10]},
+			"faces": {
+				"north": {"uv": [0, 6, 3, 6.25], "texture": "#0"},
+				"east": {"uv": [6, 0, 9, 0.25], "texture": "#0"},
+				"south": {"uv": [6, 0.25, 9, 0.5], "texture": "#0"},
+				"west": {"uv": [6, 0.5, 9, 0.75], "texture": "#0"},
+				"up": {"uv": [3, 3, 0, 0], "texture": "#0"},
+				"down": {"uv": [3, 3, 0, 6], "texture": "#0"}
+			}
+		},
+		{
+			"from": [2, 1.01, 2],
+			"to": [14, 1.01, 14],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 1, 8]},
+			"faces": {
+				"up": {"uv": [6, 3, 3, 0], "texture": "#0"},
+				"down": {"uv": [6, 3, 3, 6], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 8, 0]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 8, 0]
+		},
+		"firstperson_righthand": {
+			"translation": [0, 10, 0]
+		},
+		"firstperson_lefthand": {
+			"translation": [0, 10, 0]
+		},
+		"ground": {
+			"translation": [0, 4.75, 0]
+		},
+		"gui": {
+			"rotation": [4.25, 67.25, 19],
+			"translation": [-1, 6, 0]
+		},
+		"head": {
+			"translation": [0, 14.25, 0]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -7]
+		}
+	}
+}

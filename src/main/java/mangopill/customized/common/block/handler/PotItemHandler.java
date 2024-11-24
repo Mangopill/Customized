@@ -12,7 +12,6 @@ public class PotItemHandler implements IItemHandler {
     private static int ingredientInput;
     private static int seasoningInput;
     private static final int SPICE_INPUT = 1;
-    private static final int OUTPUT = 1;
     private final IItemHandler itemHandler;
     private final Direction side;
 
@@ -54,7 +53,7 @@ public class PotItemHandler implements IItemHandler {
     @NotNull
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (side == null || side.equals(Direction.UP)) {
-            return slot < ingredientInput ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+            return slot < seasoningInput + ingredientInput + SPICE_INPUT ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         } else {
             return slot == seasoningInput + ingredientInput + SPICE_INPUT ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         }

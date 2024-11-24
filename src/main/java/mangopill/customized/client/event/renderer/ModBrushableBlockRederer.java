@@ -1,4 +1,4 @@
-package mangopill.customized.client.renderer;
+package mangopill.customized.client.event.renderer;
 
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
