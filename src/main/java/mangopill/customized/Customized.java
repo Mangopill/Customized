@@ -28,5 +28,6 @@ public class Customized {
         ModRecipeRegistry.RECIPE_TYPE.register(modBus);
         ModRecipeSerializerRegistry.RECIPE_SERIALIZER.register(modBus);
         ModEffectRegistry.MOB_EFFECT.register(modBus);
+        ModDataComponentRegistry.DATA_COMPONENT.register(modBus);
     }
 }

@@ -8,6 +8,7 @@
   "item.customized.famous_dish_plate": "名菜餐盘",
 
   "block.customized.casserole": "砂锅",
+  "block.customized.soup_bowl": "汤碗",
 
   "effect.customized.iced": "冰镇",
   "effect.customized.warm_stomach": "暖胃",
@@ -15,6 +16,11 @@
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:饱食度:%s 饱和度:%s",
   "tooltip.customized.estimated_buff": "%s:效果:%s 持续时长:%s",
+  "item_text.customized.consumption_count_total": "总食用次数:%s",
+  "item_text.customized.consumption_count": "剩余食用次数:%s",
+  "item_text.customized.item_stack": "内含物品:×%s %s",
+  "item_text.customized.buff": "%s:(%s)",
+  "item_text.customized.inedible": "这道菜看起来很恶心...",
 
   "property.customized.nutrient_category.water": "水",
   "property.customized.nutrient_category.protein": "蛋白质",

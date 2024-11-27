@@ -8,6 +8,7 @@
   "item.customized.famous_dish_plate": "Famous Dish Plate",
 
   "block.customized.casserole": "Casserole",
+  "block.customized.soup_bowl": "Soup Bowl",
 
   "effect.customized.iced": "Iced",
   "effect.customized.warm_stomach": "Warm Stomach",
@@ -15,6 +16,11 @@
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:Nutrition:%s Saturation:%s",
   "tooltip.customized.estimated_buff": "%s:Buff:%s Duration:%s",
+  "item_text.customized.consumption_count_total": "Total Consumption Count:%s",
+  "item_text.customized.consumption_count": "Remaining Consumption Count:%s",
+  "item_text.customized.item_stack": "Included Items:×%s %s",
+  "item_text.customized.buff": "%s:(%s)",
+  "item_text.customized.inedible": "This dish looks gross...",
 
   "property.customized.nutrient_category.water": "Water",
   "property.customized.nutrient_category.protein": "Protein",

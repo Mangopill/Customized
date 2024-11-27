@@ -2,6 +2,7 @@ package mangopill.customized.common.block;
 
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.state.PotState;
+import mangopill.customized.common.item.AbstractPlateItem;
 import mangopill.customized.common.registry.ModItemRegistry;
 import mangopill.customized.common.tag.ModTag;
 import net.minecraft.core.BlockPos;
@@ -119,6 +120,9 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
                                 level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 0.8F, 1.0F);
                                 return ItemInteractionResult.SUCCESS;
                             }
+                        }
+                        if (itemStackInHand.getItem() instanceof AbstractPlateItem){
+                            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
                         }
                         potBlockEntity.insertItem(itemStackInHand);
                         level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT, SoundSource.BLOCKS, 0.8F, 1.0F);

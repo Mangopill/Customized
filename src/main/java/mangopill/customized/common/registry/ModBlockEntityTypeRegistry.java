@@ -1,7 +1,7 @@
 package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
-import mangopill.customized.common.block.entity.CasseroleBlockEntity;
+import mangopill.customized.common.block.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.*;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -18,4 +18,6 @@ public class ModBlockEntityTypeRegistry {
     //kitchenware block
     public static final Supplier<BlockEntityType<CasseroleBlockEntity>> CASSEROLE = BLOCK_ENTITY_TYPE.register(
             "casserole", basicBlockEntityType(CasseroleBlockEntity::new, ModBlcokRegistry.CASSEROLE));
+    public static final Supplier<BlockEntityType<SoupBowlBlockEntity>> SOUP_BOWL = BLOCK_ENTITY_TYPE.register(
+            "soup_bowl", basicBlockEntityType(SoupBowlBlockEntity::new, ModBlcokRegistry.SOUP_BOWL));
 }

@@ -79,6 +79,13 @@ public abstract class AbstractPotBlockEntity extends BlockEntity {
         };
     }
 
+    public void itemStackHandlerChanged() {
+        super.setChanged();
+        if (level != null){
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+        }
+    }
+
     public static void cookingTick(Level level, BlockPos pos, BlockState state, AbstractPotBlockEntity potBlockEntity) {
         RecipeWrapper wrapper = new RecipeWrapper(potBlockEntity.itemStackHandler);
         Optional<RecipeHolder<? extends AbstractPotRecipe>> potMatchRecipe = potBlockEntity.getPotMatchRecipe(wrapper);
@@ -122,12 +129,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity {
     }
 
     protected boolean hasInput() {
-        for (int i = 0; i < ingredientInput + seasoningInput + SPICE_INPUT; ++i) {
-            if (!itemStackHandler.getStackInSlot(i).isEmpty()) {
-                return true;
-            }
-        }
-        return false;
+        return ModItemStackHandlerHelper.hasInput(itemStackHandler, ingredientInput + seasoningInput + SPICE_INPUT);
     }
 
     protected boolean canCooking() {
@@ -253,13 +255,6 @@ public abstract class AbstractPotBlockEntity extends BlockEntity {
 
     public void getRecipeCookingCompletionTime(RecipeHolder<? extends AbstractPotRecipe> holder){
         cookingCompletionTime = holder.value().getCookingTime();
-    }
-
-    protected void itemStackHandlerChanged() {
-        super.setChanged();
-        if (level != null){
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
-        }
     }
 
     protected void spawnRemainderItem(ItemStack remainderStack) {

@@ -2,7 +2,11 @@ package mangopill.customized.common.registry;
 
 import com.google.common.collect.Sets;
 import mangopill.customized.Customized;
+import mangopill.customized.common.FoodValue;
+import mangopill.customized.common.item.SoupBowlItem;
+import mangopill.customized.common.util.record.ItemStackHandlerRecord;
 import net.minecraft.world.item.*;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.LinkedHashSet;
@@ -29,4 +33,7 @@ public class ModItemRegistry {
     //kitchenware block
     public static final Supplier<Item> CASSEROLE = registerWithCreativeTab(
             "casserole", blockItem(ModBlcokRegistry.CASSEROLE, basicItemProperties().stacksTo(1)));
+    public static final Supplier<Item> SOUP_BOWL = registerWithCreativeTab(
+            "soup_bowl", () -> new SoupBowlItem(ModBlcokRegistry.SOUP_BOWL.get(), basicItemProperties().stacksTo(1).food(FoodValue.NULL)
+                    .component(ModDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(new ItemStackHandler(13)))));
 }

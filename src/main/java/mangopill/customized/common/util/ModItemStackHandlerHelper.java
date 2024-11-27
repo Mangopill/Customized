@@ -1,11 +1,9 @@
 package mangopill.customized.common.util;
 
 import mangopill.customized.common.FoodValue;
-import mangopill.customized.common.util.value.NutrientBuff;
-import mangopill.customized.common.util.value.NutrientFoodValue;
 import mangopill.customized.common.recipe.PropertyValueRecipe;
 import mangopill.customized.common.util.category.NutrientCategory;
-import mangopill.customized.common.util.value.PropertyValue;
+import mangopill.customized.common.util.value.*;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
@@ -17,14 +15,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static mangopill.customized.common.CustomizedConfig.NORMAL_BUFF;
-import static mangopill.customized.common.util.category.NutrientCategory.*;
-import static mangopill.customized.common.util.value.NutrientBuff.*;
+import static mangopill.customized.common.util.category.NutrientCategory.COLD;
+import static mangopill.customized.common.util.category.NutrientCategory.WARM;
+import static mangopill.customized.common.util.value.NutrientBuff.ICED;
+import static mangopill.customized.common.util.value.NutrientBuff.WARM_STOMACH;
 
 public final class ModItemStackHandlerHelper {
     private ModItemStackHandlerHelper() {
@@ -72,6 +69,27 @@ public final class ModItemStackHandlerHelper {
         return stackList;
     }
 
+    public static void reduceItemStackCountByDivision(ItemStackHandler itemStackHandler, int consumptionCount) {
+        for (int i = 0; i < itemStackHandler.getSlots(); ++i) {
+            ItemStack stack = itemStackHandler.getStackInSlot(i);
+            if (!stack.isEmpty()) {
+                int shrinkCount = Math.round((float) stack.getCount() / consumptionCount);
+                System.out.println(shrinkCount);
+                if (shrinkCount >= stack.getCount()) {
+                    stack.copyAndClear();
+                    continue;
+                }
+                stack.shrink(shrinkCount);
+            }
+        }
+    }
+
+    public static void clearAllSlot(ItemStackHandler itemStackHandler) {
+        for (int i = 0; i < itemStackHandler.getSlots(); ++i) {
+            itemStackHandler.getStackInSlot(i).copyAndClear();
+        }
+    }
+
     public static FoodProperties getFoodPropertyByPropertyValue(Level level, List<ItemStack> stackList, boolean shardByConsumption) {
         if (stackList == null || stackList.isEmpty()) {
             return FoodValue.NULL;
@@ -95,6 +113,8 @@ public final class ModItemStackHandlerHelper {
                     float value = entry.getValue() * stack.getCount();
                     nutrientTotal.put(category, nutrientTotal.get(category) + value);
                 }
+            } else {
+                return FoodValue.INEDIBLE;
             }
         }
         int nutritionValue = 0;
@@ -181,7 +201,7 @@ public final class ModItemStackHandlerHelper {
                 int duration = Math.round( nutrientValue * 10 * (float) nutrientBuff.getDuration());
                 float probability = (float) (nutrientValue * 10 * nutrientBuff.getProbability());
                 foodEffect.add(new FoodProperties.PossibleEffect(
-                        () -> new MobEffectInstance(nutrientBuff.getEffect(), duration, 0), probability));
+                        () -> new MobEffectInstance(nutrientBuff.getEffect(), duration, 0), Math.min(probability, 1.0F)));
             }
         }
         return foodEffect;
@@ -198,5 +218,14 @@ public final class ModItemStackHandlerHelper {
             return WARM_STOMACH;
         }
         return null;
+    }
+
+    public static boolean hasInput(ItemStackHandler itemStackHandler, int endIndex){
+        for (int i = 0; i < endIndex; ++i) {
+            if (!itemStackHandler.getStackInSlot(i).isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

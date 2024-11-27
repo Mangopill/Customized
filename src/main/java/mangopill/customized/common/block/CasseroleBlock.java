@@ -2,8 +2,8 @@ package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
 import mangopill.customized.common.block.entity.CasseroleBlockEntity;
+import mangopill.customized.common.block.record.PotRecord;
 import mangopill.customized.common.block.state.PotState;
-import mangopill.customized.common.registry.ModBlockEntityTypeRegistry;
 import mangopill.customized.common.registry.ModItemRegistry;
 import mangopill.customized.common.registry.ModSoundRegistry;
 import net.minecraft.core.BlockPos;
@@ -91,16 +91,16 @@ public class CasseroleBlock extends AbstractPotBlock{
         if (canInputDrive()){
             if (!state.getValue(LID).equals(PotState.WITHOUT_LID)){
                 if (level.isClientSide) {
-                    return createTickerHelper(blockEntityType, CasseroleBlockEntity.getBlockEntityType(), CasseroleBlockEntity::animationTick);
+                    return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::animationTick);
                 }
-                return createTickerHelper(blockEntityType, CasseroleBlockEntity.getBlockEntityType(), CasseroleBlockEntity::cookingTick);
+                return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::cookingTick);
             }
         } else {
             if (!state.getValue(LID).equals(PotState.WITH_DRIVE)){
                 if (level.isClientSide) {
-                    return createTickerHelper(blockEntityType, CasseroleBlockEntity.getBlockEntityType(), CasseroleBlockEntity::animationTick);
+                    return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::animationTick);
                 }
-                return createTickerHelper(blockEntityType, CasseroleBlockEntity.getBlockEntityType(), CasseroleBlockEntity::cookingTick);
+                return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::cookingTick);
             }
         }
         return null;
@@ -109,7 +109,7 @@ public class CasseroleBlock extends AbstractPotBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        return ModBlockEntityTypeRegistry.CASSEROLE.get().create(pos, state);
+        return PotRecord.CASSEROLE.entityType().create(pos, state);
     }
 
     @Override

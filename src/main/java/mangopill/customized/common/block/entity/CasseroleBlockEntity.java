@@ -1,23 +1,16 @@
 package mangopill.customized.common.block.entity;
 
-import mangopill.customized.common.registry.ModBlockEntityTypeRegistry;
+import mangopill.customized.common.block.record.PotRecord;
 import mangopill.customized.common.registry.ModParticleTypeRegistry;
-import mangopill.customized.common.registry.ModRecipeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class CasseroleBlockEntity extends AbstractPotBlockEntity{
     public CasseroleBlockEntity(BlockPos pos, BlockState blockState) {
-        super(getBlockEntityType(), pos, blockState, 6, 6, RecipeManager.createCheck(ModRecipeRegistry.CASSEROLE.get()));
-    }
-
-    public static BlockEntityType<? extends AbstractPotBlockEntity> getBlockEntityType() {
-        return ModBlockEntityTypeRegistry.CASSEROLE.get();
+        super(PotRecord.CASSEROLE.entityType(), pos, blockState, PotRecord.CASSEROLE.ingredientCount(), PotRecord.CASSEROLE.seasoningCount(), PotRecord.CASSEROLE.potCheck());
     }
 
     @Override

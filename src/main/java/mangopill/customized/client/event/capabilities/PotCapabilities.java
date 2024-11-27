@@ -1,6 +1,7 @@
 package mangopill.customized.client.event.capabilities;
 
 import mangopill.customized.Customized;
+import mangopill.customized.common.block.record.PotRecord;
 import net.minecraft.core.Direction;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -14,7 +15,7 @@ public class PotCapabilities {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                CasseroleBlockEntity.getBlockEntityType(),
+                PotRecord.CASSEROLE.entityType(),
                 (entity, context) -> {
                     if (context == Direction.UP) {
                         return entity.getInputHandler();
