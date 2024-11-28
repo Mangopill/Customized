@@ -11,19 +11,19 @@ import net.minecraft.world.level.block.Block;
 public final class TagUtil {
     private TagUtil() {
     }
-    public static TagKey<Block> basicCBlockTag(String s) {
-        return BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", s));
+    public static TagKey<Block> basicCBlockTag(String string) {
+        return BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", string));
     }
 
-    public static TagKey<Item> basicCItemTag(String s) {
-        return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", s));
+    public static TagKey<Item> basicCItemTag(String string) {
+        return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", string));
     }
 
-    public static TagKey<Item> basicModItemTag(String s) {
-        return ItemTags.create(ResourceLocation.fromNamespaceAndPath(Customized.MODID, s));
+    public static TagKey<Item> basicModItemTag(String string) {
+        return ItemTags.create(ResourceLocation.fromNamespaceAndPath(Customized.MODID, string));
     }
 
-    public static TagKey<Block> basicModBlockTag(String s) {
-        return BlockTags.create(ResourceLocation.fromNamespaceAndPath(Customized.MODID, s));
+    public static TagKey<Block> basicModBlockTag(String string) {
+        return BlockTags.create(ResourceLocation.fromNamespaceAndPath(Customized.MODID, string));
     }
 }

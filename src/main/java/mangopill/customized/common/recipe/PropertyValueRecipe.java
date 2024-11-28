@@ -8,13 +8,12 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Set;
 
 public class PropertyValueRecipe implements ModRecipeInterface<RecipeInput>{
     private final Set<ResourceLocation> name;
@@ -56,40 +55,6 @@ public class PropertyValueRecipe implements ModRecipeInterface<RecipeInput>{
 
     public PropertyValue getPropertyValue() {
         return propertyValue;
-    }
-
-    @NotNull
-    public static PropertyValue getPropertyValue(ItemStack stack, Level level) {
-        List<RecipeHolder<PropertyValueRecipe>> recipeHolder = level.getRecipeManager().getRecipesFor(ModRecipeRegistry.PROPERTY_VALUE.get(), new SingleRecipeInput(stack), level);
-        if (recipeHolder.isEmpty()) {
-            return new PropertyValue();
-        }
-        return recipeHolder.stream()
-                .map(RecipeHolder::value)
-                .filter(PropertyValueRecipe::isItem)
-                .findFirst().map(PropertyValueRecipe::getPropertyValue)
-                .orElseGet(() -> {
-                    PropertyValue propertyValue = new PropertyValue();
-                    long maxCount = 0L;
-                    HashMap<ResourceLocation, PropertyValue> map = new HashMap<>();
-                    recipeHolder.stream().map(RecipeHolder::value).forEach(valueRecipe ->
-                            valueRecipe.getName().forEach(name -> map.put(name, valueRecipe.getPropertyValue()))
-                    );
-                    for (ResourceLocation tag : stack.getTags().map(TagKey::location).filter(map::containsKey).toList()) {
-                        long count = tag.getPath().chars().filter(c -> c == '/').count();
-                        if (count >= maxCount) {
-                            if (count > maxCount) {
-                                maxCount = count;
-                                propertyValue.replace();
-                            }
-                            map.get(tag).toSet().forEach(entry ->
-                                    propertyValue.put(entry.getKey(),
-                                            Math.max(propertyValue.getBigger(entry.getKey()), entry.getValue()))
-                            );
-                        }
-                    }
-                    return propertyValue;
-                });
     }
 
     public boolean isItem() {

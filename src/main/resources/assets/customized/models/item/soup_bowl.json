@@ -1,3 +1,11 @@
 {
-  "parent": "customized:block/soup_bowl"
+    "parent": "customized:block/soup_bowl_without_drive",
+    "overrides": [
+        {
+            "predicate": {
+                "customized:drive": 1
+            },
+            "model": "customized:item/soup_bowl_with_drive"
+        }
+    ]
 }

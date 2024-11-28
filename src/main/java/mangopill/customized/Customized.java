@@ -1,6 +1,6 @@
 package mangopill.customized;
 
-import mangopill.customized.common.*;
+import mangopill.customized.common.CustomizedConfig;
 import mangopill.customized.common.registry.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -17,7 +17,6 @@ public class Customized {
         container.registerConfig(ModConfig.Type.COMMON, CustomizedConfig.COMMON_CONFIG);
         container.registerConfig(ModConfig.Type.CLIENT, CustomizedConfig.CLIENT_CONFIG);
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
-
         ModBlcokRegistry.BLOCK.register(modBus);
         ModItemRegistry.ITEM.register(modBus);
         ModSoundRegistry.SOUND_EVENT.register(modBus);

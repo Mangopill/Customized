@@ -34,6 +34,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import static mangopill.customized.common.block.state.PotState.*;
+
 public abstract class AbstractPotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final EnumProperty<PotState> LID = EnumProperty.create("lid", PotState.class);
 
@@ -42,7 +44,7 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
         registerDefaultState(defaultBlockState()
                 .setValue(BlockStateProperties.WATERLOGGED, false)
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-                .setValue(LID, PotState.WITHOUT_LID)
+                .setValue(LID, WITHOUT_LID)
         );
     }
 
@@ -61,7 +63,7 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
                             level.playSound(null, pos, SoundEvents.DECORATED_POT_HIT, SoundSource.BLOCKS, 0.8F, 1.0F);
                             return ItemInteractionResult.SUCCESS;
                         } else {
-                            level.setBlockAndUpdate(pos, state.setValue(LID, PotState.WITHOUT_LID));
+                            level.setBlockAndUpdate(pos, state.setValue(LID, WITHOUT_LID));
                             player.getInventory().add(setLid());
                             level.playSound(null, pos, SoundEvents.DECORATED_POT_HIT, SoundSource.BLOCKS, 0.8F, 1.0F);
                             return ItemInteractionResult.SUCCESS;
@@ -85,7 +87,7 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
                             level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT_FAIL, SoundSource.BLOCKS, 0.8F, 1.0F);
                             return ItemInteractionResult.SUCCESS;
                         }
-                        if(state.getValue(LID).equals(PotState.WITHOUT_LID)){
+                        if(state.getValue(LID).equals(WITHOUT_LID)){
                             if (canInputDrive()){
                                 if (itemStackInHand.is(Items.WATER_BUCKET)){
                                     level.setBlockAndUpdate(pos, state.setValue(LID, PotState.WITH_DRIVE));
@@ -112,7 +114,7 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
                                 return ItemInteractionResult.SUCCESS;
                             }
                             if (itemStackInHand.is(Items.BUCKET)) {
-                                level.setBlockAndUpdate(pos, state.setValue(LID, PotState.WITHOUT_LID));
+                                level.setBlockAndUpdate(pos, state.setValue(LID, WITHOUT_LID));
                                 itemStackInHand.shrink(1);
                                 if (!player.getInventory().add(Items.WATER_BUCKET.getDefaultInstance())) {
                                     player.drop(Items.WATER_BUCKET.getDefaultInstance(), false);
@@ -186,7 +188,7 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
         return defaultBlockState()
                 .setValue(BlockStateProperties.WATERLOGGED, hasWater)
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection())
-                .setValue(LID, PotState.WITHOUT_LID);
+                .setValue(LID, WITHOUT_LID);
     }
 
     @Override
@@ -204,7 +206,7 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
 
     @Override
     public @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootParams.@NotNull Builder builder) {
-        if (state.getValue(LID).equals(PotState.WITH_LID)){
+        if (state.getValue(LID).equals(WITH_LID)){
            List<ItemStack> getDrops = super.getDrops(state,builder);
             getDrops.add(setLid());
            return getDrops;

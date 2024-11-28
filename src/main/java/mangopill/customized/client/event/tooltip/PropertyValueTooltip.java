@@ -2,13 +2,10 @@ package mangopill.customized.client.event.tooltip;
 
 import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
-import mangopill.customized.common.recipe.PropertyValueRecipe;
+import mangopill.customized.common.util.ModItemStackHandlerHelper;
 import mangopill.customized.common.util.value.PropertyValue;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.neoforged.api.distmarker.Dist;
@@ -20,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 
 import static mangopill.customized.common.CustomizedConfig.*;
-import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.ModItemStackHandlerHelper.getFoodPropertyByPropertyValue;
 
 @EventBusSubscriber(value = Dist.CLIENT, modid = Customized.MODID)
 public class PropertyValueTooltip {
@@ -30,7 +27,7 @@ public class PropertyValueTooltip {
         if (player == null || player.level() == null) {
             return;
         }
-        @NotNull PropertyValue propertyValue = PropertyValueRecipe.getPropertyValue(event.getItemStack(), player.level());
+        @NotNull PropertyValue propertyValue = ModItemStackHandlerHelper.getPropertyValue(event.getItemStack(), player.level());
         FoodProperties foodProperty = getFoodPropertyByPropertyValue(player.level(), Collections.singletonList(event.getItemStack()), false);
         if (propertyValue.isEmpty()) {
             return;

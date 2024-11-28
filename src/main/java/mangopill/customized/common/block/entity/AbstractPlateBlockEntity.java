@@ -3,9 +3,7 @@ package mangopill.customized.common.block.entity;
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.registry.ModDataComponentRegistry;
 import mangopill.customized.common.util.ModItemStackHandlerHelper;
-import mangopill.customized.common.util.record.ConsumptionCountRecord;
-import mangopill.customized.common.util.record.ConsumptionCountTotalRecord;
-import mangopill.customized.common.util.record.ItemStackHandlerRecord;
+import mangopill.customized.common.util.record.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
@@ -14,7 +12,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -25,9 +22,10 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.ModItemStackHandlerHelper.fillInItem;
+import static mangopill.customized.common.util.ModItemStackHandlerHelper.getItemStackListInSlot;
 
-public abstract class AbrstractPlateBlockEntity extends BlockEntity {
+public abstract class AbstractPlateBlockEntity extends BlockEntity {
     private final int ingredientInput;
     private final int seasoningInput;
     private final int SPICE_INPUT = 1;
@@ -37,7 +35,7 @@ public abstract class AbrstractPlateBlockEntity extends BlockEntity {
     private int consumptionCount;
     private int consumptionCountTotal;
 
-    public AbrstractPlateBlockEntity(BlockEntityType<? extends AbrstractPlateBlockEntity> type, BlockPos pos, BlockState blockState, int ingredientInput, int seasoningInput) {
+    public AbstractPlateBlockEntity(BlockEntityType<? extends AbstractPlateBlockEntity> type, BlockPos pos, BlockState blockState, int ingredientInput, int seasoningInput) {
         super(type, pos, blockState);
         this.ingredientInput = ingredientInput;
         this.seasoningInput = seasoningInput;
@@ -67,14 +65,14 @@ public abstract class AbrstractPlateBlockEntity extends BlockEntity {
         }
     }
 
-    public static void animationTick(Level level, BlockPos pos, BlockState state, AbrstractPlateBlockEntity potBlockEntity) {
-        potBlockEntity.particleTick(level, pos, potBlockEntity);
-    }
-
-    abstract public void particleTick(Level level, BlockPos pos, AbrstractPlateBlockEntity potBlockEntity);
-
     protected boolean hasInput() {
         return ModItemStackHandlerHelper.hasInput(itemStackHandler, allSlot);
+    }
+
+    //getItemStackList
+    public List<ItemStack> getItemStackListInPlate(boolean includeSeasoningAndSpice) {
+        return includeSeasoningAndSpice ? ModItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, allSlot) :
+                ModItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, ingredientInput) ;
     }
 
     @Override

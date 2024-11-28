@@ -2,11 +2,16 @@ package mangopill.customized.common.util;
 
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.recipe.PropertyValueRecipe;
+import mangopill.customized.common.registry.ModRecipeRegistry;
 import mangopill.customized.common.util.category.NutrientCategory;
 import mangopill.customized.common.util.value.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.apache.commons.lang3.tuple.Pair;
@@ -74,7 +79,6 @@ public final class ModItemStackHandlerHelper {
             ItemStack stack = itemStackHandler.getStackInSlot(i);
             if (!stack.isEmpty()) {
                 int shrinkCount = Math.round((float) stack.getCount() / consumptionCount);
-                System.out.println(shrinkCount);
                 if (shrinkCount >= stack.getCount()) {
                     stack.copyAndClear();
                     continue;
@@ -100,7 +104,7 @@ public final class ModItemStackHandlerHelper {
         }
         List<FoodProperties.PossibleEffect> foodEffect = new ArrayList<>();
         for (ItemStack stack : stackList) {
-            @NotNull PropertyValue propertyValue = PropertyValueRecipe.getPropertyValue(stack, level);
+            @NotNull PropertyValue propertyValue = getPropertyValue(stack, level);
             FoodProperties food = stack.getFoodProperties(null);
             if (food != null) {
                 if (!food.effects().isEmpty()) {
@@ -227,5 +231,39 @@ public final class ModItemStackHandlerHelper {
             }
         }
         return false;
+    }
+
+    @NotNull
+    public static PropertyValue getPropertyValue(ItemStack stack, Level level) {
+        List<RecipeHolder<PropertyValueRecipe>> recipeHolder = level.getRecipeManager().getRecipesFor(ModRecipeRegistry.PROPERTY_VALUE.get(), new SingleRecipeInput(stack), level);
+        if (recipeHolder.isEmpty()) {
+            return new PropertyValue();
+        }
+        return recipeHolder.stream()
+                .map(RecipeHolder::value)
+                .filter(PropertyValueRecipe::isItem)
+                .findFirst().map(PropertyValueRecipe::getPropertyValue)
+                .orElseGet(() -> {
+                    PropertyValue propertyValue = new PropertyValue();
+                    long maxCount = 0L;
+                    HashMap<ResourceLocation, PropertyValue> map = new HashMap<>();
+                    recipeHolder.stream().map(RecipeHolder::value).forEach(valueRecipe ->
+                            valueRecipe.getName().forEach(name -> map.put(name, valueRecipe.getPropertyValue()))
+                    );
+                    for (ResourceLocation tag : stack.getTags().map(TagKey::location).filter(map::containsKey).toList()) {
+                        long count = tag.getPath().chars().filter(c -> c == '/').count();
+                        if (count >= maxCount) {
+                            if (count > maxCount) {
+                                maxCount = count;
+                                propertyValue.replace();
+                            }
+                            map.get(tag).toSet().forEach(entry ->
+                                    propertyValue.put(entry.getKey(),
+                                            Math.max(propertyValue.getBigger(entry.getKey()), entry.getValue()))
+                            );
+                        }
+                    }
+                    return propertyValue;
+                });
     }
 }

@@ -4,23 +4,20 @@ import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.record.PlateRecord;
 import mangopill.customized.common.tag.ModTag;
+import mangopill.customized.common.util.ModItemStackHandlerHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -28,10 +25,10 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-
 import java.util.List;
 
 import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.PlateComponentUtil.getConsumptionCount;
 import static mangopill.customized.common.util.PlateComponentUtil.*;
 
 public abstract class AbstractPlateItem extends BlockItem {
@@ -45,7 +42,7 @@ public abstract class AbstractPlateItem extends BlockItem {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".consumption_count_total", getConsumptionCountTotal(stack)).withStyle(ChatFormatting.GRAY));
         tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".consumption_count", getConsumptionCount(stack)).withStyle(ChatFormatting.GRAY));
-        List<ItemStack> stackList = getItemStackListInSlot(getItemStackHandler(stack), 0, getItemStackHandler(stack).getSlots());
+        List<ItemStack> stackList = getItemStackListInPlate(stack, true);
         if (!stackList.isEmpty()) {
             stackList.forEach(itemStack -> {
                 tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".item_stack",
@@ -120,20 +117,33 @@ public abstract class AbstractPlateItem extends BlockItem {
 
     public void insertItem(ItemStack itemStackInHand, ItemStackHandler itemStackHandler) {
         if (itemStackInHand.is(ModTag.SEASONING)) {
-            fillInItem(itemStackHandler, itemStackInHand, PlateRecord.SOUP_BOWL.ingredientInput(), PlateRecord.SOUP_BOWL.ingredientInput() + PlateRecord.SOUP_BOWL.seasoningInput());
+            fillInItem(itemStackHandler, itemStackInHand, getIngredientInput(), getIngredientInput() + getSeasoningInput());
             return;
         }
         if (itemStackInHand.is(ModTag.FAMOUS_SPICE)) {
-            fillInItem(itemStackHandler, itemStackInHand, PlateRecord.SOUP_BOWL.ingredientInput() + PlateRecord.SOUP_BOWL.seasoningInput(), itemStackHandler.getSlots());
+            fillInItem(itemStackHandler, itemStackInHand, getIngredientInput() + getSeasoningInput(), itemStackHandler.getSlots());
             return;
         }
-        fillInItem(itemStackHandler, itemStackInHand, 0, PlateRecord.SOUP_BOWL.ingredientInput());
+        fillInItem(itemStackHandler, itemStackInHand, 0, getIngredientInput());
     }
 
     public ItemStackHandler copyItemStackHandlerByComponent(ItemStack stack){
-        List<ItemStack> stackList = getItemStackListInSlot(getItemStackHandler(stack), 0, getItemStackHandler(stack).getSlots());
         ItemStackHandler newItemStackHandler = new ItemStackHandler(getItemStackHandler(stack).getSlots());
-        stackList.forEach(itemStack -> insertItem(itemStack.copy(), newItemStackHandler));
+        getItemStackListInPlate(stack, true).forEach(itemStack -> insertItem(itemStack.copy(), newItemStackHandler));
         return newItemStackHandler;
     }
+
+    public boolean hasInput(ItemStack stack) {
+        return ModItemStackHandlerHelper.hasInput(getItemStackHandler(stack), getItemStackHandler(stack).getSlots());
+    }
+
+    //getItemStackList
+    public List<ItemStack> getItemStackListInPlate(ItemStack stack, boolean includeSeasoningAndSpice) {
+        return includeSeasoningAndSpice ? ModItemStackHandlerHelper.getItemStackListInSlot(getItemStackHandler(stack), 0, getItemStackHandler(stack).getSlots()) :
+                ModItemStackHandlerHelper.getItemStackListInSlot(getItemStackHandler(stack), 0, getIngredientInput()) ;
+    }
+
+    abstract public int getIngredientInput();
+
+    abstract public int getSeasoningInput();
 }

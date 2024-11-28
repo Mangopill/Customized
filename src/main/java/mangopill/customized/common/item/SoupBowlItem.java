@@ -1,6 +1,7 @@
 package mangopill.customized.common.item;
 
 import mangopill.customized.common.block.entity.CasseroleBlockEntity;
+import mangopill.customized.common.block.record.PlateRecord;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -19,6 +20,16 @@ import static mangopill.customized.common.util.PlateComponentUtil.*;
 public class SoupBowlItem extends AbstractPlateItem {
     public SoupBowlItem(Block block, Properties properties) {
         super(block, properties);
+    }
+
+    @Override
+    public int getIngredientInput() {
+        return PlateRecord.SOUP_BOWL.ingredientInput();
+    }
+
+    @Override
+    public int getSeasoningInput() {
+        return PlateRecord.SOUP_BOWL.ingredientInput();
     }
 
     @Override
@@ -41,6 +52,4 @@ public class SoupBowlItem extends AbstractPlateItem {
         }
         return player.isShiftKeyDown() ? super.useOn(context) : InteractionResult.PASS;
     }
-
-
 }

@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,drive=with_drive": {
+      "model": "customized:block/soup_bowl_with_drive"
+    },
+    "facing=south,drive=with_drive": {
+      "model": "customized:block/soup_bowl_with_drive",
+      "y": 180
+    },
+    "facing=west,drive=with_drive": {
+      "model": "customized:block/soup_bowl_with_drive",
+      "y": 270
+    },
+    "facing=east,drive=with_drive": {
+      "model": "customized:block/soup_bowl_with_drive",
+      "y": 90
+    },
+    "facing=north,drive=without_drive": {
+      "model": "customized:block/soup_bowl_without_drive"
+    },
+    "facing=south,drive=without_drive": {
+      "model": "customized:block/soup_bowl_without_drive",
+      "y": 180
+    },
+    "facing=west,drive=without_drive": {
+      "model": "customized:block/soup_bowl_without_drive",
+      "y": 270
+    },
+    "facing=east,drive=without_drive": {
+      "model": "customized:block/soup_bowl_without_drive",
+      "y": 90
+    }
+  }
+}
