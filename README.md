@@ -10,4 +10,5 @@
 You can modify the nutritional values, the nutrients they provide, and the corresponding buffs by editing the mod's config files.
 <br>
 <img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png" title="Logo" style="width: 200px;">
+<br>
 <img src="http://cf.way2muchnoise.eu/full__downloads.svg" title="Curseforge Downloads">
