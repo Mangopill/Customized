@@ -5,7 +5,7 @@ import mangopill.customized.common.registry.ModItemRegistry;
 import net.minecraft.world.item.ItemStack;
 
 public class PotStrategyRegistry {
-    private static final PotStrategyHandler HANDLER = PotStrategyHandler.getInstance();
+    public static final PotStrategyHandler HANDLER = PotStrategyHandler.getInstance();
 
     public static void onPotRegistry() {
         HANDLER.registry("block.customized.casserole",
