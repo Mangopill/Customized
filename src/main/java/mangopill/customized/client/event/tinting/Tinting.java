@@ -22,7 +22,7 @@ import static mangopill.customized.common.block.AbstractPotBlock.LID;
 public class Tinting {
     public static int getPotWaterColor(BlockAndTintGetter getter, BlockState state, BlockPos pos) {
         if (state.getBlock() instanceof AbstractPotBlock potBlock) {
-            if (!potBlock.canInputDrive() || !state.getValue(LID).equals(PotState.WITH_DRIVE)){
+            if (!state.getValue(LID).equals(PotState.WITH_DRIVE)){
                 return -1;
             }
             if (getter.getBlockEntity(pos) instanceof AbstractPotBlockEntity potBlockEntity){

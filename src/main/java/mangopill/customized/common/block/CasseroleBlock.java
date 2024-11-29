@@ -18,11 +18,16 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.List;
+
+import static mangopill.customized.common.block.state.PotState.WITH_LID;
+
 public class CasseroleBlock extends AbstractPotBlock{
     public static final MapCodec<CasseroleBlock> CODEC = simpleCodec(CasseroleBlock::new);
 
@@ -70,6 +75,7 @@ public class CasseroleBlock extends AbstractPotBlock{
         return CODEC;
     }
 
+
     @Override
     public void animateTick(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -88,20 +94,11 @@ public class CasseroleBlock extends AbstractPotBlock{
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> blockEntityType) {
-        if (canInputDrive()){
-            if (!state.getValue(LID).equals(PotState.WITHOUT_LID)){
-                if (level.isClientSide) {
-                    return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::animationTick);
-                }
-                return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::cookingTick);
+        if (!state.getValue(LID).equals(PotState.WITHOUT_LID)){
+            if (level.isClientSide) {
+                return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::animationTick);
             }
-        } else {
-            if (!state.getValue(LID).equals(PotState.WITH_DRIVE)){
-                if (level.isClientSide) {
-                    return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::animationTick);
-                }
-                return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::cookingTick);
-            }
+            return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::cookingTick);
         }
         return null;
     }
@@ -113,23 +110,13 @@ public class CasseroleBlock extends AbstractPotBlock{
     }
 
     @Override
-    public boolean canStirFry() {
-        return false;
-    }
-
-    @Override
-    public boolean canBeCovered() {
-        return true;
-    }
-
-    @Override
-    public boolean canInputDrive() {
-        return true;
-    }
-
-    @Override
-    public @NotNull ItemStack setLid() {
-        return new ItemStack(ModItemRegistry.CASSEROLE_ILD.get());
+    public @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootParams.@NotNull Builder builder) {
+        if (state.getValue(LID).equals(WITH_LID)){
+            List<ItemStack> getDrops = super.getDrops(state,builder);
+            getDrops.add(new ItemStack(ModItemRegistry.CASSEROLE_ILD.get()));
+            return getDrops;
+        }
+        return super.getDrops(state,builder);
     }
 
     @Override
