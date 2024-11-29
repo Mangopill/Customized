@@ -1,8 +1,7 @@
 # Customized - A Cooking Experience Mod
 
-<a href="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png-delight" title="Logo">
-  <img src="http://cf.way2muchnoise.eu/full__downloads.svg" alt="Curseforge Downloads">
-</a>
+<img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png" title="Logo">
+<img src="http://cf.way2muchnoise.eu/full__downloads.svg" title="Curseforge Downloads">
 
 **Customized** is a mod for Minecraft that enhances the cooking system by adding new cooking methods, recipes, and dynamic food buffs. Cook delicious meals with various techniques and gain special buffs!
 
