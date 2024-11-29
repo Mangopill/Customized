@@ -16,6 +16,6 @@ public class SoupBowlBlockRenderer implements BlockEntityRenderer<SoupBowlBlockE
 
     @Override
     public void render(@NotNull SoupBowlBlockEntity soupBowlBlockEntity, float v, @NotNull PoseStack poseStack, @NotNull MultiBufferSource multiBufferSource, int light, int overlay) {
-        renderDrivePlate(soupBowlBlockEntity, poseStack, multiBufferSource, light, overlay, 0.1F, 0.25F, 0.2F, 0.75F, 0.75F, 0.45F);
+        renderDrivePlate(soupBowlBlockEntity, poseStack, multiBufferSource, light, overlay, 0.1F, 0.25F, 0.2F, 0.75F, 0.75F, 0.4F);
     }
 }
