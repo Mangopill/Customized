@@ -34,7 +34,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.*;
 
 import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.PlateComponentUtil.*;
@@ -168,31 +168,41 @@ public abstract class AbstractPlateItem extends BlockItem {
         return 5592575;
     }
 
+    @Override
+    public @NotNull Component getName(@NotNull ItemStack stack) {
+        List<ItemStack> stackList = getItemStackListInPlate(stack, false);
+        List<ItemStack> topTwoItems = getTopTwoItemsByCount(stackList);
+        if (topTwoItems.size() == 1) {
+            ItemStack aStack = getTopTwoItemsByCount(stackList).getFirst();
+            return Component.translatable("").append(aStack.getDisplayName())
+                    .append(":").append(Component.translatable(this.getDescriptionId(stack) + "_food"));
+        }
+        if (topTwoItems.size() == 2) {
+            ItemStack aStack = getTopTwoItemsByCount(stackList).getFirst();
+            ItemStack bStack = getTopTwoItemsByCount(stackList).get(1);
+            return Component.translatable("").append(aStack.getDisplayName()).append("&").append(bStack.getDisplayName())
+                    .append(":").append(Component.translatable(this.getDescriptionId(stack) + "_food"));
+        }
+        return Component.translatable(this.getDescriptionId(stack));
+    }
+
     private InteractionResult getInteractionResult(AbstractPotBlockEntity potBlockEntity, ItemStack itemInHand, Level level) {
         List<ItemStack> stackList = potBlockEntity.getItemStackListInPot(false, true);
         ItemStackHandler newItemStackHandler = copyItemStackHandlerByComponent(itemInHand);
-        stackList.forEach(stack -> insertItem(stack, newItemStackHandler));
+        stackList.forEach(itemStack -> insertItem(itemStack, newItemStackHandler));
         List<ItemStack> newStackList = getItemStackListInSlot(newItemStackHandler, 0, newItemStackHandler.getSlots());
         potBlockEntity.itemStackHandlerChanged();
         updateAll(itemInHand, newItemStackHandler, getFoodPropertyByPropertyValue(level, newStackList, true), getConsumptionCount(newStackList), getConsumptionCount(newStackList));
         return InteractionResult.SUCCESS;
     }
 
-    public void insertItem(ItemStack itemStackInHand, ItemStackHandler itemStackHandler) {
-        if (itemStackInHand.is(ModTag.SEASONING)) {
-            fillInItem(itemStackHandler, itemStackInHand, ingredientInput, ingredientInput + seasoningInput);
-            return;
-        }
-        if (itemStackInHand.is(ModTag.FAMOUS_SPICE)) {
-            fillInItem(itemStackHandler, itemStackInHand, ingredientInput + seasoningInput, itemStackHandler.getSlots());
-            return;
-        }
-        fillInItem(itemStackHandler, itemStackInHand, 0, ingredientInput);
+    public void insertItem(ItemStack stack, ItemStackHandler newItemStackHandler) {
+        ModItemStackHandlerHelper.insertItem(stack, newItemStackHandler, ingredientInput, seasoningInput, 1);
     }
 
     public ItemStackHandler copyItemStackHandlerByComponent(ItemStack stack){
         ItemStackHandler newItemStackHandler = new ItemStackHandler(getItemStackHandler(stack).getSlots());
-        getItemStackListInPlate(stack, true).forEach(itemStack -> insertItem(itemStack.copy(), newItemStackHandler));
+        getItemStackListInPlate(stack, true).forEach(itemStack -> insertItem(itemStack, newItemStackHandler));
         return newItemStackHandler;
     }
 

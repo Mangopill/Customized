@@ -33,8 +33,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static mangopill.customized.common.CustomizedConfig.*;
-import static mangopill.customized.common.block.AbstractPotBlock.LID;
-import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
+import static mangopill.customized.common.block.AbstractPotBlock.*;
 
 public abstract class AbstractPotBlockEntity extends BlockEntity {
     private final int ingredientInput;
@@ -231,17 +230,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity {
     }
 
     public void insertItem(ItemStack itemStackInHand) {
-        if (itemStackInHand.is(ModTag.SEASONING)) {
-            fillInItem(itemStackHandler, itemStackInHand,ingredientInput ,ingredientInput + seasoningInput);
-            itemStackHandlerChanged();
-            return;
-        }
-        if (itemStackInHand.is(ModTag.FAMOUS_SPICE)) {
-            fillInItem(itemStackHandler, itemStackInHand,ingredientInput + seasoningInput ,ingredientInput + seasoningInput +SPICE_INPUT);
-            itemStackHandlerChanged();
-            return;
-        }
-        fillInItem(itemStackHandler, itemStackInHand,0, ingredientInput);
+        ModItemStackHandlerHelper.insertItem(itemStackInHand, itemStackHandler, ingredientInput, seasoningInput, SPICE_INPUT);
         itemStackHandlerChanged();
     }
 

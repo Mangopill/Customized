@@ -1,12 +1,8 @@
 package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
-import mangopill.customized.common.block.entity.SoupBowlBlockEntity;
 import mangopill.customized.common.block.record.PlateRegistryRecord;
-import mangopill.customized.common.registry.ModParticleTypeRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -39,19 +35,6 @@ public class SoupBowlBlock extends AbstractPlateBlock {
     @Override
     protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
-    }
-
-    @Override
-    public void animateTick(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull RandomSource random) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof SoupBowlBlockEntity) {
-            if (random.nextFloat() <= 0.3F) {
-                double x = (double) pos.getX() + 0.2D + (random.nextDouble() * 0.3D);
-                double y = (double) pos.getY() + 0.2D;
-                double z = (double) pos.getZ() + 0.2D + (random.nextDouble() * 0.3D);
-                level.addParticle(ModParticleTypeRegistry.AROMA.get(), x, y, z, 0.0D, 0.0D, 0.0D);
-            }
-        }
     }
 
     @Nullable

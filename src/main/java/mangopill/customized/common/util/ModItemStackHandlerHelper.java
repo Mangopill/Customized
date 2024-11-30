@@ -3,12 +3,14 @@ package mangopill.customized.common.util;
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.recipe.PropertyValueRecipe;
 import mangopill.customized.common.registry.ModRecipeRegistry;
+import mangopill.customized.common.tag.ModTag;
 import mangopill.customized.common.util.category.NutrientCategory;
 import mangopill.customized.common.util.value.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
@@ -21,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static mangopill.customized.common.CustomizedConfig.NORMAL_BUFF;
 import static mangopill.customized.common.util.category.NutrientCategory.COLD;
@@ -61,6 +64,18 @@ public final class ModItemStackHandlerHelper {
                 }
             }
         }
+    }
+
+    public static void insertItem(ItemStack itemStackInHand, ItemStackHandler itemStackHandler, int ingredientInput, int seasoningInput, int spiceInput) {
+        if (itemStackInHand.is(ModTag.SEASONING)) {
+            fillInItem(itemStackHandler, itemStackInHand, ingredientInput ,ingredientInput + seasoningInput);
+            return;
+        }
+        if (itemStackInHand.is(ModTag.FAMOUS_SPICE)) {
+            fillInItem(itemStackHandler, itemStackInHand,ingredientInput + seasoningInput ,ingredientInput + seasoningInput + spiceInput);
+            return;
+        }
+        fillInItem(itemStackHandler, itemStackInHand,0, ingredientInput);
     }
 
     public static List<ItemStack> getItemStackListInSlot(ItemStackHandler itemStackHandler, int startIndex, int endIndex){
@@ -265,5 +280,21 @@ public final class ModItemStackHandlerHelper {
                     }
                     return propertyValue;
                 });
+    }
+
+    public static List<ItemStack> getTopTwoItemsByCount(List<ItemStack> itemStackList) {
+        Map<Item, Integer> itemCountMap = new HashMap<>();
+        for (ItemStack itemStack : itemStackList) {
+            if (itemStack != null) {
+                Item item = itemStack.getItem();
+                int count = itemStack.getCount();
+                itemCountMap.put(item, itemCountMap.getOrDefault(item, 0) + count);
+            }
+        }
+        return itemCountMap.entrySet().stream()
+                .sorted((entry1, entry2) -> entry2.getValue() - entry1.getValue())
+                .limit(2)
+                .map(entry -> new ItemStack(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 }
