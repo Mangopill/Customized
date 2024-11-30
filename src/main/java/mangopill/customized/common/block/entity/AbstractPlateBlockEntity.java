@@ -65,7 +65,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity {
         }
     }
 
-    protected boolean hasInput() {
+    public boolean hasInput() {
         return ModItemStackHandlerHelper.hasInput(itemStackHandler, allSlot);
     }
 
@@ -106,6 +106,13 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity {
     }
 
     @Override
+    public void removeComponentsFromTag(CompoundTag tag) {
+        tag.remove("ConsumptionCount");
+        tag.remove("ConsumptionCountTotal");
+        tag.remove("ItemStackHandler");
+    }
+
+    @Override
     protected void collectImplicitComponents(DataComponentMap.@NotNull Builder component) {
         super.collectImplicitComponents(component);
         if (hasInput() && !foodProperty.equals(FoodValue.NULL)) {
@@ -124,7 +131,8 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity {
         foodProperty = componentInput.getOrDefault(DataComponents.FOOD, FoodValue.NULL);
         ItemStackHandler componentItemStackHandler = componentInput.getOrDefault(ModDataComponentRegistry.ITEM_STACK_HANDLER, ItemStackHandlerRecord.NULL).itemStackHandler();
         List<ItemStack> stackList = getItemStackListInSlot(componentItemStackHandler, 0, allSlot);
-        stackList.forEach(stack -> fillInItem(itemStackHandler, stack, 0, allSlot));
+        stackList.forEach(stack -> fillInItem(itemStackHandler, stack.copy(), 0, allSlot));
+        itemStackHandlerChanged();
     }
 
     public int getIngredientInput() {

@@ -2,7 +2,7 @@ package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
 import mangopill.customized.common.block.entity.SoupBowlBlockEntity;
-import mangopill.customized.common.block.record.PlateRecord;
+import mangopill.customized.common.block.record.PlateRegistryRecord;
 import mangopill.customized.common.registry.ModParticleTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -57,7 +57,7 @@ public class SoupBowlBlock extends AbstractPlateBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        return PlateRecord.SOUP_BOWL.type().create(pos, state);
+        return PlateRegistryRecord.SOUP_BOWL.type().create(pos, state);
     }
 
     @Override

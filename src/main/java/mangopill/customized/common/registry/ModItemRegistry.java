@@ -3,6 +3,7 @@ package mangopill.customized.common.registry;
 import com.google.common.collect.Sets;
 import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
+import mangopill.customized.common.block.record.PlateSlotRecord;
 import mangopill.customized.common.item.SoupBowlItem;
 import mangopill.customized.common.util.record.ItemStackHandlerRecord;
 import net.minecraft.world.item.*;
@@ -35,5 +36,5 @@ public class ModItemRegistry {
             "casserole", blockItem(ModBlcokRegistry.CASSEROLE, basicItemProperties().stacksTo(1)));
     public static final Supplier<Item> SOUP_BOWL = registerWithCreativeTab(
             "soup_bowl", () -> new SoupBowlItem(ModBlcokRegistry.SOUP_BOWL.get(), basicItemProperties().stacksTo(1).food(FoodValue.NULL)
-                    .component(ModDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(new ItemStackHandler(13)))));
+                    .component(ModDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(new ItemStackHandler(PlateSlotRecord.SOUP_BOWL.ingredientInput() + PlateSlotRecord.SOUP_BOWL.seasoningInput() + 1)))));
 }

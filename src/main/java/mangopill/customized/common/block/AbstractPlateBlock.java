@@ -3,7 +3,6 @@ package mangopill.customized.common.block;
 import mangopill.customized.common.block.state.PlateState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -14,14 +13,11 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-import static mangopill.customized.common.block.state.PlateState.WITHOUT_DRIVE;
+import static mangopill.customized.common.block.state.PlateState.*;
 
 public abstract class AbstractPlateBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final EnumProperty<PlateState> DRIVE = EnumProperty.create("drive", PlateState.class);
@@ -88,10 +84,5 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
             level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
         return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
-    }
-
-    @Override
-    public @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootParams.@NotNull Builder builder) {
-        return super.getDrops(state,builder);
     }
 }

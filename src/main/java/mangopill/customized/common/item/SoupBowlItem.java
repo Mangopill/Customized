@@ -1,55 +1,18 @@
 package mangopill.customized.common.item;
 
-import mangopill.customized.common.block.entity.CasseroleBlockEntity;
-import mangopill.customized.common.block.record.PlateRecord;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
+import mangopill.customized.common.block.entity.*;
+import mangopill.customized.common.block.record.*;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-
-import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.PlateComponentUtil.*;
 
 public class SoupBowlItem extends AbstractPlateItem {
     public SoupBowlItem(Block block, Properties properties) {
-        super(block, properties);
+        super(block, properties, PlateSlotRecord.SOUP_BOWL.ingredientInput(), PlateSlotRecord.SOUP_BOWL.ingredientInput(), true);
     }
 
     @Override
-    public int getIngredientInput() {
-        return PlateRecord.SOUP_BOWL.ingredientInput();
-    }
-
-    @Override
-    public int getSeasoningInput() {
-        return PlateRecord.SOUP_BOWL.ingredientInput();
-    }
-
-    @Override
-    public @NotNull InteractionResult useOn(@NotNull UseOnContext context) {
-        Level level = context.getLevel();
-        ItemStack itemInHand = context.getItemInHand();
-        Player player = context.getPlayer();
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
-        }
-        BlockEntity blockEntity = level.getBlockEntity(context.getClickedPos());
-        if (blockEntity instanceof CasseroleBlockEntity potBlockEntity && player.isShiftKeyDown()) {
-            List<ItemStack> stackList = potBlockEntity.getItemStackListInPot(false, true);
-            ItemStackHandler newItemStackHandler = copyItemStackHandlerByComponent(itemInHand);
-            stackList.forEach(stack -> insertItem(stack, newItemStackHandler));
-            List<ItemStack> newStackList = getItemStackListInSlot(newItemStackHandler, 0, newItemStackHandler.getSlots());
-            potBlockEntity.itemStackHandlerChanged();
-            updateAll(itemInHand, newItemStackHandler, getFoodPropertyByPropertyValue(level, newStackList, true), getConsumptionCount(newStackList), getConsumptionCount(newStackList));
-            return InteractionResult.SUCCESS;
-        }
-        return player.isShiftKeyDown() ? super.useOn(context) : InteractionResult.PASS;
+    public AbstractPotBlockEntity getPotEntity(Level level, BlockPos pos) {
+        return PotRecord.CASSEROLE.entityType().getBlockEntity(level, pos);
     }
 }

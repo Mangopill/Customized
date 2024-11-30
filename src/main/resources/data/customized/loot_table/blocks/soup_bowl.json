@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "customized:item_stack_handler",
+                "customized:consumption_count",
+                "customized:consumption_count_total",
+                "minecraft:food"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "customized:soup_bowl"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
+}
