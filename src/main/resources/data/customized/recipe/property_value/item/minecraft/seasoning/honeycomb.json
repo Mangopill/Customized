@@ -1,9 +1,9 @@
 {
   "type": "customized:property_value",
   "item": [
-    "minecraft:apple"
+    "minecraft:honeycomb"
   ],
   "value": {
-    "VITAMIN": 90.0
+    "sweet" : 30.0
   }
 }

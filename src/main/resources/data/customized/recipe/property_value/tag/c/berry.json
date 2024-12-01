@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:foods/berry"
+  ],
+  "value": {
+    "water" : 72.0,
+    "carbohydrate" : 7.7,
+    "vitamin": 5.88,
+    "mineral" : 2.06,
+    "dietary_fiber" : 2.0
+  }
+}

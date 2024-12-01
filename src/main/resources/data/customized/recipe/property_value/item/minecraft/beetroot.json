@@ -1,0 +1,14 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:beetroot"
+  ],
+  "value": {
+    "water" : 86.0,
+    "protein" : 1.6,
+    "carbohydrate" : 9.6,
+    "vitamin": 0.4,
+    "mineral" : 0.3,
+    "dietary_fiber" : 2.8
+  }
+}

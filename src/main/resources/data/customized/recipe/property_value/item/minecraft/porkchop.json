@@ -1,0 +1,11 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:porkchop"
+  ],
+  "value": {
+    "water" : 21.0,
+    "protein" : 20.0,
+    "mineral" : 1.0
+  }
+}

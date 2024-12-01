@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:pufferfish"
+  ],
+  "value": {
+    "water" : 18.0,
+    "protein" : 19.0,
+    "lipid" : 2.0,
+    "mineral" : 1.0
+  }
+}

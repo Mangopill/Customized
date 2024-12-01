@@ -38,7 +38,7 @@ public class PropertyValueTooltip {
         if (SHOW_NUTRIENT_VALUE_TOOLTIP.get()) {
             propertyValue.toSet().forEach(entry -> {
                 MutableComponent propertyComponent = Component.translatable("tooltip." + Customized.MODID + ".property_value",
-                        Component.translatable("property." + Customized.MODID + ".nutrient_category." + entry.getKey().name().toLowerCase()),
+                        Component.translatable("property." + Customized.MODID + ".nutrient_category." + entry.getKey().getSerializedName()),
                         entry.getValue()).withStyle(Style.EMPTY.withColor(entry.getKey().getColor())).append("%");
                 event.getToolTip().add(propertyComponent);
             });

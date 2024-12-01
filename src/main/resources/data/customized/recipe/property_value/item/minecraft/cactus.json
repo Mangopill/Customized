@@ -1,0 +1,11 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:cactus"
+  ],
+  "value": {
+    "water" : 45.6,
+    "protein" : 0.5,
+    "dietary_fiber" : 2.5
+  }
+}

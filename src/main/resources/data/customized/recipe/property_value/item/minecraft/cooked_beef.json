@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:cooked_beef"
+  ],
+  "value": {
+    "water" : 10.0,
+    "protein" : 45.0,
+    "lipid" : 30.0,
+    "mineral" : 2.0
+  }
+}

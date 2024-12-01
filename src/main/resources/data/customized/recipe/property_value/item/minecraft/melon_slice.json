@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:melon_slice"
+  ],
+  "value": {
+    "water" : 72.0,
+    "carbohydrate" : 7.5,
+    "vitamin": 8.1,
+    "mineral" : 0.4,
+    "dietary_fiber" : 0.4
+  }
+}

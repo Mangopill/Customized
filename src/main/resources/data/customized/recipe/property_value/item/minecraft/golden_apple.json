@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:golden_apple"
+  ],
+  "value": {
+    "water" : 68.45,
+    "carbohydrate" : 13.81,
+    "vitamin": 4.6,
+    "mineral" : 50.0,
+    "dietary_fiber" : 2.4
+  }
+}

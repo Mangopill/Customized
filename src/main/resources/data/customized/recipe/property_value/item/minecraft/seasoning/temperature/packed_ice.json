@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:packed_ice"
+  ],
+  "value": {
+    "cold" : 90.0
+  }
+}

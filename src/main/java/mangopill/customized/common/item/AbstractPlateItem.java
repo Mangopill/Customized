@@ -17,8 +17,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.*;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -86,16 +85,7 @@ public abstract class AbstractPlateItem extends BlockItem {
         if(consumptionCount >= 1) {
             level.playSound(null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), livingEntity.getEatingSound(stack),
                     SoundSource.NEUTRAL, 1.0F, 1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.4F);
-            if (!livingEntity.level().isClientSide()) {
-                for (FoodProperties.PossibleEffect foodproperties$possibleeffect : getFoodProperty(stack).effects()) {
-                    if (livingEntity.getRandom().nextFloat() < foodproperties$possibleeffect.probability()) {
-                        livingEntity.addEffect(foodproperties$possibleeffect.effect());
-                    }
-                }
-                if (getFoodProperty(stack).effects().equals(FoodValue.INEDIBLE.effects())) {
-                    livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 500, 1));
-                }
-            }
+            AbstractPlateBlockEntity.addEffect(livingEntity, getFoodProperty(stack));
             if (consumptionCount > 1){
                 reduceItemStackCountByDivision(newItemStackHandler, consumptionCountTotal);
             } else {
@@ -232,9 +222,12 @@ public abstract class AbstractPlateItem extends BlockItem {
             getFoodProperty(stack).effects().forEach(buff -> {
                 int i = Mth.floor((float) buff.effectSupplier().get().getDuration());
                 Component component = Component.literal(StringUtil.formatTickDuration(i, context.tickRate()));
+                MobEffect mobEffect = buff.effectSupplier().get().getEffect().value();
                 tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".buff",
-                                Component.translatable(buff.effectSupplier().get().getEffect().value().getDescriptionId()), component)
-                        .withStyle(buff.effectSupplier().get().getEffect().value().getCategory().getTooltipFormatting()));
+                                Component.translatable(mobEffect.getDescriptionId())
+                                        .append(Component.translatable("enchantment.level." + (buff.effect().getAmplifier() + 1)))
+                                , component)
+                        .withStyle(mobEffect.getCategory().getTooltipFormatting()));
             });
         }
     }

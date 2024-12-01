@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:carrot"
+  ],
+  "value": {
+    "water" : 75.5,
+    "carbohydrate" : 9.6,
+    "vitamin": 5.9,
+    "mineral" : 3.0,
+    "dietary_fiber" : 2.8
+  }
+}

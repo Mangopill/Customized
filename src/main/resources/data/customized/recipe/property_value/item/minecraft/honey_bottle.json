@@ -1,0 +1,11 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:honey_bottle"
+  ],
+  "value": {
+    "water" : 17.0,
+    "protein" : 0.3,
+    "carbohydrate" : 32.5
+  }
+}

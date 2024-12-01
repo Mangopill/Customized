@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:mutton"
+  ],
+  "value": {
+    "water" : 20.0,
+    "protein" : 20.0,
+    "lipid" : 21.0,
+    "mineral" : 1.2
+  }
+}

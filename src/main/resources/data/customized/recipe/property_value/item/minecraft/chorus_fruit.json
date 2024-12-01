@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:chorus_fruit"
+  ],
+  "value": {
+    "water" : 20.5,
+    "carbohydrate" : 12.4,
+    "mineral" : 28.9,
+    "dietary_fiber" : 7.0
+  }
+}

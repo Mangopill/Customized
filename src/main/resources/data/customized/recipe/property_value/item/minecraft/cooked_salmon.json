@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:cooked_salmon"
+  ],
+  "value": {
+    "water" : 7.5,
+    "protein" : 40.0,
+    "lipid" : 26.0,
+    "mineral" : 2.0
+  }
+}

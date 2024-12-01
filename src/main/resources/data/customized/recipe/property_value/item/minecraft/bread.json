@@ -1,0 +1,14 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:bread"
+  ],
+  "value": {
+    "water" : 3.5,
+    "protein" : 7.0,
+    "lipid" : 3.0,
+    "carbohydrate" : 50.0,
+    "mineral" : 1.0,
+    "dietary_fiber" : 2.5
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:chicken"
+  ],
+  "value": {
+    "water" : 14.0,
+    "protein" : 20.0,
+    "lipid" : 5.0,
+    "mineral" : 1.0
+  }
+}

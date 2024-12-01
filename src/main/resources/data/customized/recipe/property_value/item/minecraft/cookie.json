@@ -1,0 +1,14 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:cookie"
+  ],
+  "value": {
+    "water" : 4.0,
+    "protein" : 6.0,
+    "lipid" : 25.0,
+    "carbohydrate" : 60.0,
+    "mineral" : 1.0,
+    "dietary_fiber" : 1.25
+  }
+}

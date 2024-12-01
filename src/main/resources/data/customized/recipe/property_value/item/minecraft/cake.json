@@ -1,0 +1,15 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:cake"
+  ],
+  "value": {
+    "water" : 30.0,
+    "protein" : 5.0,
+    "lipid" : 10.0,
+    "carbohydrate" : 55.0,
+    "vitamin" : 0.5,
+    "mineral" : 1.0,
+    "dietary_fiber" : 0.5
+  }
+}

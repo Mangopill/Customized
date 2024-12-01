@@ -1,0 +1,11 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:bone"
+  ],
+  "value": {
+    "protein" : 7.0,
+    "lipid" : 4.5,
+    "mineral" : 35.5
+  }
+}

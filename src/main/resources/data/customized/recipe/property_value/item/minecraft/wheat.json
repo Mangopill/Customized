@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:wheat"
+  ],
+  "value": {
+    "water" : 11.0,
+    "protein" : 12.5,
+    "lipid" : 1.5,
+    "carbohydrate" : 22.5,
+    "dietary_fiber" : 11.0
+  }
+}

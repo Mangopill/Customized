@@ -25,7 +25,7 @@ public class DishStrategy implements PotInteractionStrategy {
                          @NotNull BlockHitResult result) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AbstractPotBlockEntity potBlockEntity){
-            if (canTakeOut(itemStackInHand, state)){
+            if (!canTakeOut(itemStackInHand, state)){
                 return;
             }
             takeOutDish(itemStackInHand, level, pos, player, potBlockEntity);

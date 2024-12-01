@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:blaze_powder"
+  ],
+  "value": {
+    "warm" : 15.0
+  }
+}

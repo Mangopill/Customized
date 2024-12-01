@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:sea_pickle"
+  ],
+  "value": {
+    "water" : 25.0,
+    "protein" : 5.6,
+    "carbohydrate" : 6.7,
+    "mineral" : 3.5
+  }
+}

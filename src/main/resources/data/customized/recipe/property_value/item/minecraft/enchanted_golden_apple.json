@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:enchanted_golden_apple"
+  ],
+  "value": {
+    "water" : 100.0,
+    "carbohydrate" : 100.0,
+    "vitamin": 100.0,
+    "mineral" : 100.0,
+    "dietary_fiber" : 100.0
+  }
+}

@@ -1,6 +1,6 @@
 {
   "values": [
-    "minecraft:dirt",
-    "minecraft:bread"
+    "#customized:seasoning/seasoning",
+    "#customized:seasoning/temperature"
   ]
 }

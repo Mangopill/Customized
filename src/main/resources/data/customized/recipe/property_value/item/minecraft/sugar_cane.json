@@ -1,0 +1,11 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:sugar_cane"
+  ],
+  "value": {
+    "water" : 57.5,
+    "carbohydrate" : 12.5,
+    "dietary_fiber" : 0.5
+  }
+}

@@ -17,6 +17,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
@@ -82,23 +83,14 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity {
     //getItemStackList
     public List<ItemStack> getItemStackListInPlate(boolean includeSeasoningAndSpice) {
         return includeSeasoningAndSpice ? ModItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, allSlot) :
-                ModItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, ingredientInput) ;
+                ModItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, ingredientInput);
     }
 
     public void eatFood(@NotNull ItemStack stack, @NotNull Level level, @NotNull Player player, @NotNull BlockState state, @NotNull BlockPos pos) {
         if(consumptionCount >= 1) {
             level.playSound(null, player.getX(), player.getY(), player.getZ(), player.getEatingSound(stack),
                     SoundSource.NEUTRAL, 1.0F, 1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.4F);
-            if (!player.level().isClientSide()) {
-                for (FoodProperties.PossibleEffect foodproperties$possibleeffect : foodProperty.effects()) {
-                    if (player.getRandom().nextFloat() < foodproperties$possibleeffect.probability()) {
-                        player.addEffect(foodproperties$possibleeffect.effect());
-                    }
-                }
-                if (foodProperty.effects().equals(FoodValue.INEDIBLE.effects())) {
-                    player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 500, 1));
-                }
-            }
+            addEffect(player, foodProperty);
             if (consumptionCount > 1){
                 reduceItemStackCountByDivision(itemStackHandler, consumptionCountTotal);
             } else {
@@ -109,6 +101,19 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity {
             --consumptionCount;
             player.gameEvent(GameEvent.EAT);
             itemStackHandlerChanged();
+        }
+    }
+
+    public static void addEffect(LivingEntity livingEntity, FoodProperties foodProperties) {
+        if (!livingEntity.level().isClientSide()) {
+            for (FoodProperties.PossibleEffect foodproperties$possibleeffect : foodProperties.effects()) {
+                if (livingEntity.getRandom().nextFloat() < foodproperties$possibleeffect.probability()) {
+                    livingEntity.addEffect(foodproperties$possibleeffect.effect());
+                }
+            }
+            if (foodProperties.equals(FoodValue.INEDIBLE)) {
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 500, 1));
+            }
         }
     }
 
@@ -212,7 +217,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity {
         foodProperty = componentInput.getOrDefault(DataComponents.FOOD, FoodValue.NULL);
         ItemStackHandler componentItemStackHandler = componentInput.getOrDefault(ModDataComponentRegistry.ITEM_STACK_HANDLER, ItemStackHandlerRecord.NULL).itemStackHandler();
         List<ItemStack> stackList = getItemStackListInSlot(componentItemStackHandler, 0, allSlot);
-        stackList.forEach(stack -> fillInItem(itemStackHandler, stack.copy(), 0, allSlot));
+        stackList.forEach(stack -> insertItem(stack.copy(), itemStackHandler, ingredientInput, seasoningInput, allSlot));
         itemStackHandlerChanged();
     }
 

@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:cod"
+  ],
+  "value": {
+    "water" : 20.0,
+    "protein" : 18.0,
+    "lipid" : 0.5,
+    "mineral" : 1.0
+  }
+}

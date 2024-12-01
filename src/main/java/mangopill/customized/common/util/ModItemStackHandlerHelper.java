@@ -25,11 +25,9 @@ import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static mangopill.customized.common.CustomizedConfig.NORMAL_BUFF;
-import static mangopill.customized.common.util.category.NutrientCategory.COLD;
-import static mangopill.customized.common.util.category.NutrientCategory.WARM;
-import static mangopill.customized.common.util.value.NutrientBuff.ICED;
-import static mangopill.customized.common.util.value.NutrientBuff.WARM_STOMACH;
+import static mangopill.customized.common.CustomizedConfig.*;
+import static mangopill.customized.common.util.category.NutrientCategory.*;
+import static mangopill.customized.common.util.value.NutrientBuff.*;
 
 public final class ModItemStackHandlerHelper {
     private ModItemStackHandlerHelper() {
@@ -159,7 +157,7 @@ public final class ModItemStackHandlerHelper {
                 BigDecimal newSaturationValue = new BigDecimal(saturationValue)
                         .divide(BigDecimal.valueOf(nutritionValue * 2L), 6, RoundingMode.HALF_UP)
                         .divide(BigDecimal.valueOf(consumptionCount), 5, RoundingMode.HALF_UP);
-                builder.saturationModifier(newSaturationValue.floatValue());
+                builder.saturationModifier(newSaturationValue.floatValue() * 5);
             } else {
                 builder.saturationModifier(0.0F);
             }
@@ -173,7 +171,7 @@ public final class ModItemStackHandlerHelper {
             if (nutritionValue * 2L != 0){
                 BigDecimal newSaturationValue = new BigDecimal(saturationValue)
                         .divide(BigDecimal.valueOf(nutritionValue * 2L), 5, RoundingMode.HALF_UP);
-                builder.saturationModifier(newSaturationValue.floatValue());
+                builder.saturationModifier(newSaturationValue.floatValue() * 5);
             } else {
                 builder.saturationModifier(0.0F);
             }

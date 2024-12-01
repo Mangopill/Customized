@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:glistering_melon_slice"
+  ],
+  "value": {
+    "water" : 50.0,
+    "carbohydrate" : 7.5,
+    "vitamin": 8.1,
+    "mineral" : 38.5,
+    "dietary_fiber" : 0.4
+  }
+}

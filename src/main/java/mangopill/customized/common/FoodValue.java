@@ -7,5 +7,5 @@ public class FoodValue {
             .alwaysEdible().build();
     public static final FoodProperties INEDIBLE = new FoodProperties.Builder()
             .nutrition(4).saturationModifier(0.5f)
-            .alwaysEdible().build();
+            .build();
 }

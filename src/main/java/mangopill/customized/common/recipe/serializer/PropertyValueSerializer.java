@@ -10,6 +10,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -50,12 +51,12 @@ public class PropertyValueSerializer implements RecipeSerializer<PropertyValueRe
     }
 
     @Override
-    public MapCodec<PropertyValueRecipe> codec() {
+    public @NotNull MapCodec<PropertyValueRecipe> codec() {
         return CODEC;
     }
 
     @Override
-    public StreamCodec<RegistryFriendlyByteBuf, PropertyValueRecipe> streamCodec() {
+    public @NotNull StreamCodec<RegistryFriendlyByteBuf, PropertyValueRecipe> streamCodec() {
         return STREAM_CODEC;
     }
 }

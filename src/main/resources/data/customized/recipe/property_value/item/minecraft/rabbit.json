@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:rabbit"
+  ],
+  "value": {
+    "water" : 16.0,
+    "protein" : 21.0,
+    "lipid" : 8.0,
+    "mineral" : 1.0
+  }
+}
