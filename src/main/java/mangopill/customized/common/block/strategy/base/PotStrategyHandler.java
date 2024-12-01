@@ -2,7 +2,6 @@ package mangopill.customized.common.block.strategy.base;
 
 import com.google.common.collect.Maps;
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
-import mangopill.customized.common.item.AbstractPlateItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -51,9 +50,6 @@ public class PotStrategyHandler {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof AbstractPotBlockEntity)) {
             return ItemInteractionResult.SUCCESS;
-        }
-        if (itemStackInHand.getItem() instanceof AbstractPlateItem){
-            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
         }
         if (count == 0){
             PotStrategyRegistry.onPotRegistry();

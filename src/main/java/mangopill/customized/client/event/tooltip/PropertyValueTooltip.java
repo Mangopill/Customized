@@ -6,8 +6,10 @@ import mangopill.customized.common.util.ModItemStackHandlerHelper;
 import mangopill.customized.common.util.value.PropertyValue;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -19,20 +21,21 @@ import java.util.Collections;
 import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.util.ModItemStackHandlerHelper.getFoodPropertyByPropertyValue;
 
-@EventBusSubscriber(value = Dist.CLIENT, modid = Customized.MODID)
+@EventBusSubscriber(modid = Customized.MODID, value = Dist.CLIENT)
 public class PropertyValueTooltip {
     @SubscribeEvent
     public static void onItemTooltip(final ItemTooltipEvent event) {
         Player player = event.getEntity();
+        ItemStack stack = event.getItemStack();
         if (player == null || player.level() == null) {
             return;
         }
-        @NotNull PropertyValue propertyValue = ModItemStackHandlerHelper.getPropertyValue(event.getItemStack(), player.level());
-        FoodProperties foodProperty = getFoodPropertyByPropertyValue(player.level(), Collections.singletonList(event.getItemStack()), false);
+        @NotNull PropertyValue propertyValue = ModItemStackHandlerHelper.getPropertyValue(stack, player.level());
+        FoodProperties foodProperty = getFoodPropertyByPropertyValue(player.level(), Collections.singletonList(stack), false);
         if (propertyValue.isEmpty()) {
             return;
         }
-        if(SHOW_NUTRIENT_VALUE_TOOLTIP.get()){
+        if (SHOW_NUTRIENT_VALUE_TOOLTIP.get()) {
             propertyValue.toSet().forEach(entry -> {
                 MutableComponent propertyComponent = Component.translatable("tooltip." + Customized.MODID + ".property_value",
                         Component.translatable("property." + Customized.MODID + ".nutrient_category." + entry.getKey().name().toLowerCase()),
@@ -43,14 +46,14 @@ public class PropertyValueTooltip {
         if (foodProperty.equals(FoodValue.NULL)) {
             return;
         }
-        if (SHOW_ESTIMATED_VALUE_TOOLTIP.get()){
+        if (SHOW_ESTIMATED_VALUE_TOOLTIP.get()) {
             MutableComponent estimatedComponent = Component.translatable("tooltip." + Customized.MODID + ".estimated_value",
                     Component.translatable("estimated." + Customized.MODID + ".nutritional_value"),
                     foodProperty.nutrition(), foodProperty.saturation()).withStyle(ChatFormatting.GREEN);
             event.getToolTip().add(estimatedComponent);
         }
-        if (SHOW_ESTIMATED_BUFF_TOOLTIP.get()){
-            if (!foodProperty.effects().isEmpty()){
+        if (SHOW_ESTIMATED_BUFF_TOOLTIP.get()) {
+            if (!foodProperty.effects().isEmpty()) {
                 foodProperty.effects().forEach(buff -> {
                     MutableComponent estimatedBuff = Component.translatable("tooltip." + Customized.MODID + ".estimated_buff",
                             Component.translatable("estimated." + Customized.MODID + ".buff"),
