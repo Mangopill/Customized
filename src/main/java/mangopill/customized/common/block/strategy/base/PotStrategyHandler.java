@@ -48,14 +48,14 @@ public class PotStrategyHandler {
             return ItemInteractionResult.SUCCESS;
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof AbstractPotBlockEntity)) {
-            return ItemInteractionResult.SUCCESS;
-        }
-        if (count == 0){
-            PotStrategyRegistry.onPotRegistry();
-        }
-        for (PotInteractionStrategy strategy : map.get(potName)){
-            strategy.interact(itemStackInHand, state, level, pos, player, hand, result);
+        if (blockEntity instanceof AbstractPotBlockEntity potBlockEntity) {
+            if (count == 0){
+                PotStrategyRegistry.onPotRegistry();
+            }
+            for (PotInteractionStrategy strategy : map.get(potName)){
+                strategy.interact(itemStackInHand, state, level, pos, player, hand, result);
+            }
+            potBlockEntity.itemStackHandlerChanged();
         }
         return ItemInteractionResult.SUCCESS;
     }

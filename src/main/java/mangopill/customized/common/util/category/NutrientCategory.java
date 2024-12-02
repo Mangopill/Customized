@@ -5,7 +5,7 @@ import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.NotNull;
 
 public enum NutrientCategory implements StringRepresentable {
-    WATER("water", 0x446FE9),
+    WATER("water", 0x5A8FE9),
     PROTEIN("protein", 0xE39191),
     LIPID("lipid", 0xF9B2BA),
     CARBOHYDRATE("carbohydrate", 0xEAEAEA),

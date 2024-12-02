@@ -79,7 +79,7 @@ public class CasseroleBlock extends AbstractPotBlock{
     @Override
     public void animateTick(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof CasseroleBlockEntity cookingPotEntity && cookingPotEntity.isHeated()) {
+        if (blockEntity instanceof CasseroleBlockEntity cookingPotEntity && cookingPotEntity.isHeated() && !state.getValue(LID).equals(PotState.WITHOUT_LID)) {
             double x = (double) pos.getX() + 0.4D;
             double y = pos.getY();
             double z = (double) pos.getZ() + 0.4D;
