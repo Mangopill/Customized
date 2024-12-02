@@ -1,7 +1,10 @@
 package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
-import mangopill.customized.common.effect.*;
+import mangopill.customized.common.effect.normal.IcedEffect;
+import mangopill.customized.common.effect.powerful.VitalityEffect;
+import mangopill.customized.common.effect.normal.WarmStomachEffect;
+import mangopill.customized.common.effect.powerful.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;

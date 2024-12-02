@@ -156,7 +156,7 @@ public final class ModItemStackHandlerHelper {
                 BigDecimal newSaturationValue = new BigDecimal(saturationValue)
                         .divide(BigDecimal.valueOf(nutritionValue * 2L), 6, RoundingMode.HALF_UP)
                         .divide(BigDecimal.valueOf(consumptionCount), 5, RoundingMode.HALF_UP);
-                builder.saturationModifier(newSaturationValue.floatValue() * 5);
+                builder.saturationModifier(newSaturationValue.floatValue() * 6);
             } else {
                 builder.saturationModifier(0.0F);
             }
@@ -170,7 +170,7 @@ public final class ModItemStackHandlerHelper {
             if (nutritionValue * 2L != 0){
                 BigDecimal newSaturationValue = new BigDecimal(saturationValue)
                         .divide(BigDecimal.valueOf(nutritionValue * 2L), 5, RoundingMode.HALF_UP);
-                builder.saturationModifier(newSaturationValue.floatValue() * 5);
+                builder.saturationModifier(newSaturationValue.floatValue() * 6);
             } else {
                 builder.saturationModifier(0.0F);
             }
@@ -213,10 +213,10 @@ public final class ModItemStackHandlerHelper {
                 continue;
             }
             if (NORMAL_BUFF.get()) {
-                addBuffToList(nutrientValue, foodEffect, getNormalBuff(category, nutrientValue));
+                addBuffToList(nutrientValue, foodEffect, getNormalBuff(category));
             }
             if (POWERFUL_BUFF.get()) {
-                addBuffToList(nutrientValue, foodEffect, getPowerfulBuff(category, nutrientValue));
+                addBuffToList(nutrientValue, foodEffect, getPowerfulBuff(category));
             }
         }
         return foodEffect;
@@ -232,7 +232,7 @@ public final class ModItemStackHandlerHelper {
                     () -> new MobEffectInstance(nutrientBuff.getEffect(), duration, 0), Math.min(probability, 1.0F)));
     }
 
-    public static @Nullable NutrientBuff getNormalBuff(NutrientCategory category, Float nutrientValue){
+    public static @Nullable NutrientBuff getNormalBuff(NutrientCategory category){
         return switch (category) {
             case COLD -> ICED;
             case WARM -> WARM_STOMACH;
@@ -240,7 +240,7 @@ public final class ModItemStackHandlerHelper {
         };
     }
 
-    public static @Nullable NutrientBuff getPowerfulBuff(NutrientCategory category, Float nutrientValue){
+    public static @Nullable NutrientBuff getPowerfulBuff(NutrientCategory category){
         return switch (category) {
             case ECOLOGY -> VITALITY;
             case DREAD -> ANTIDOTE;

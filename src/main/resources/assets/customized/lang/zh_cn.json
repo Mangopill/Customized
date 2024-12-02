@@ -13,6 +13,9 @@
 
   "effect.customized.iced": "冰镇",
   "effect.customized.warm_stomach": "暖胃",
+  "effect.customized.vitality": "活力",
+  "effect.customized.antidote": "御衰",
+  "effect.customized.soar": "腾空",
 
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:饱食度:%s 饱和度:%s",

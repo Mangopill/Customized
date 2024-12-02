@@ -13,6 +13,9 @@
 
   "effect.customized.iced": "Iced",
   "effect.customized.warm_stomach": "Warm Stomach",
+  "effect.customized.vitality": "Vitality",
+  "effect.customized.antidote": "Antidote",
+  "effect.customized.soar": "Soar",
 
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:Nutrition:%s Saturation:%s",
