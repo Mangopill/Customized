@@ -173,5 +173,6 @@
   "gui.jei.customized.cook_time": "烹饪时间:%s秒",
   "gui.jei.customized.fire": "需受热",
   "gui.jei.customized.container": "需盛装于:%s",
+  "jei.info.customized.soiled_seed": "在水中清洗以看清它的真面目。",
   "jei.info.customized.soup_bowl": "潜行右键砂锅获取里面的炖汤。"
 }

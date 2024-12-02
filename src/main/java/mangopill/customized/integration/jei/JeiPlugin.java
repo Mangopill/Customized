@@ -27,7 +27,10 @@ public class JeiPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(JeiUtil.CASSEROLE, getCasseroleRecipeList());
-        registration.addIngredientInfo(new ItemStack(ModItemRegistry.SOUP_BOWL.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.info." + Customized.MODID + ".soup_bowl"));
+        registration.addIngredientInfo(new ItemStack(ModItemRegistry.SOILED_SEED.get()), VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.info." + Customized.MODID + ".soiled_seed"));
+        registration.addIngredientInfo(new ItemStack(ModItemRegistry.SOUP_BOWL.get()), VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.info." + Customized.MODID + ".soup_bowl"));
     }
 
     @Override
