@@ -25,7 +25,7 @@ public class CasseroleSerializer implements RecipeSerializer<CasseroleRecipe> {
                 seasoningList.addAll(seasoning);
                 return seasoningList;
             }, seasoning -> seasoning).forGetter(CasseroleRecipe::getSeasoningItem),
-            ItemStack.STRICT_CODEC.fieldOf("spice").forGetter(CasseroleRecipe::getSpiceItem),
+            Ingredient.CODEC_NONEMPTY.fieldOf("spice").forGetter(CasseroleRecipe::getSpiceItem),
             ItemStack.STRICT_CODEC.fieldOf("result").forGetter(CasseroleRecipe::getOutput),
             Codec.INT.optionalFieldOf("time", 300).forGetter(CasseroleRecipe::getCookingTime)
     ).apply(instance, CasseroleRecipe::new));
@@ -49,7 +49,7 @@ public class CasseroleSerializer implements RecipeSerializer<CasseroleRecipe> {
         int seasoningLength = buffer.readVarInt();
         NonNullList<Ingredient> seasoning = NonNullList.withSize(seasoningLength, Ingredient.EMPTY);
         seasoning.replaceAll(j -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
-        ItemStack spice = ItemStack.STREAM_CODEC.decode(buffer);
+        Ingredient spice = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
         ItemStack output = ItemStack.STREAM_CODEC.decode(buffer);
         int cookingTime = buffer.readVarInt();
         return new CasseroleRecipe(ingredient, seasoning, spice, output, cookingTime);
@@ -64,7 +64,7 @@ public class CasseroleSerializer implements RecipeSerializer<CasseroleRecipe> {
         for (Ingredient ingredient : recipe.getSeasoningItem()) {
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
         }
-        ItemStack.STREAM_CODEC.encode(buffer, recipe.getSpiceItem());
+        Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.getSpiceItem());
         ItemStack.STREAM_CODEC.encode(buffer, recipe.getOutput());
         buffer.writeVarInt(recipe.getCookingTime());
     }

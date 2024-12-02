@@ -38,7 +38,13 @@ public class LidStrategy implements PotInteractionStrategy {
             }
         }
        if (itemStackInHand.is(lid.getItem()) && !state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)){
-           addLid(itemStackInHand, state, level, pos);
+           if (canInputDrive){
+               if (state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE)){
+                   addLid(itemStackInHand, state, level, pos);
+               }
+           } else {
+               addLid(itemStackInHand, state, level, pos);
+           }
        }
     }
 

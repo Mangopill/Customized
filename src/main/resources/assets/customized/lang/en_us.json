@@ -165,5 +165,10 @@
   "customized.configuration.tooltip.tooltip": "Tooltip",
   "customized.config.show_nutrient_value_tooltip.tooltip": "This boolean value corresponds to whether to show the nutrient value tooltip.",
   "customized.config.show_estimated_value_tooltip.tooltip": "This boolean value corresponds to whether to show the estimated value tooltip.",
-  "customized.config.show_estimated_buff_tooltip.tooltip": "This boolean value corresponds to whether to show the estimated buff tooltip."
+  "customized.config.show_estimated_buff_tooltip.tooltip": "This boolean value corresponds to whether to show the estimated buff tooltip.",
+
+  "gui.jei.customized.cook_time": "Cooking Time:%s seconds",
+  "gui.jei.customized.fire": "Requires Heating",
+  "gui.jei.customized.container": "Served on:%s",
+  "jei.info.customized.soup_bowl": "Sneak right-click the casserole to obtain the stew inside。"
 }

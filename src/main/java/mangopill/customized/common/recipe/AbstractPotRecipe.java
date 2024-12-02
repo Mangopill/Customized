@@ -18,7 +18,7 @@ public abstract class AbstractPotRecipe implements ModRecipeInterface<RecipeWrap
 
     private final NonNullList<Ingredient> ingredientItem;
     private final NonNullList<Ingredient> seasoningItem;
-    private final ItemStack spiceItem;
+    private final Ingredient spiceItem;
     private final ItemStack output;
     private final int cookingTime;
     private final RecipeSerializer<?> recipeSerializer;
@@ -26,7 +26,7 @@ public abstract class AbstractPotRecipe implements ModRecipeInterface<RecipeWrap
     private final int ingredientInput;
     private final int seasoningInput;
 
-    public AbstractPotRecipe(NonNullList<Ingredient> ingredientItem, NonNullList<Ingredient> seasoningItem, ItemStack spiceItem, ItemStack output, int cookingTime, RecipeSerializer<?> recipeSerializer, RecipeType<?> recipeType,int ingredientSlot,int seasoningSlot) {
+    public AbstractPotRecipe(NonNullList<Ingredient> ingredientItem, NonNullList<Ingredient> seasoningItem, Ingredient spiceItem, ItemStack output, int cookingTime, RecipeSerializer<?> recipeSerializer, RecipeType<?> recipeType,int ingredientSlot,int seasoningSlot) {
         this.ingredientItem = ingredientItem;
         this.seasoningItem = seasoningItem;
         this.spiceItem = spiceItem;
@@ -54,7 +54,7 @@ public abstract class AbstractPotRecipe implements ModRecipeInterface<RecipeWrap
                 seasoning.add(stack);
             }
         }
-        return ItemStack.isSameItem(spiceItem, recipeWrapper.getItem(ingredientInput + seasoningInput))
+        return ItemStack.isSameItem(spiceItem.getItems()[0], recipeWrapper.getItem(ingredientInput + seasoningInput))
                 && ingredient.size() == ingredientItem.size()
                 && seasoning.size() == seasoningItem.size()
                 && RecipeMatcher.findMatches(ingredient, ingredientItem) != null
@@ -77,7 +77,7 @@ public abstract class AbstractPotRecipe implements ModRecipeInterface<RecipeWrap
         combinedIngredient.addAll(ingredientItem);
         combinedIngredient.addAll(seasoningItem);
         if (spiceItem != null && !spiceItem.isEmpty()) {
-            combinedIngredient.add(Ingredient.of(spiceItem));
+            combinedIngredient.add(spiceItem);
         }
         return combinedIngredient;
     }
@@ -100,7 +100,7 @@ public abstract class AbstractPotRecipe implements ModRecipeInterface<RecipeWrap
         return seasoningItem;
     }
 
-    public ItemStack getSpiceItem() {
+    public Ingredient getSpiceItem() {
         return spiceItem;
     }
 

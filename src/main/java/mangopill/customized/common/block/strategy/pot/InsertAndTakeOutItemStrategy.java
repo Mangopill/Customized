@@ -25,8 +25,11 @@ public class InsertAndTakeOutItemStrategy implements PotInteractionStrategy {
                          @NotNull BlockHitResult result) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AbstractPotBlockEntity potBlockEntity){
+            if (state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)){
+                return;
+            }
             if (itemStackInHand.isEmpty()){
-                if (!state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID) && player.isShiftKeyDown()){
+                if (player.isShiftKeyDown()){
                     takeOut(state, level, pos, potBlockEntity);
                 }
             } else {

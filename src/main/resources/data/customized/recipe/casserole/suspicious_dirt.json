@@ -12,8 +12,7 @@
     }
   ],
   "spice": {
-    "count": 1,
-    "id": "minecraft:apple"
+    "item": "minecraft:apple"
   },
   "result": {
         "count": 1,

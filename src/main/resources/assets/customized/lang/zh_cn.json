@@ -165,5 +165,10 @@
   "customized.configuration.tooltip.tooltip": "提示",
   "customized.config.show_nutrient_value_tooltip.tooltip": "此布尔值对应于营养值提示是否启用。",
   "customized.config.show_estimated_value_tooltip.tooltip": "此布尔值对应于预估值提示是否启用。",
-  "customized.config.show_estimated_buff_tooltip.tooltip": "此布尔值对应于预估BUFF提示是否启用。"
+  "customized.config.show_estimated_buff_tooltip.tooltip": "此布尔值对应于预估BUFF提示是否启用。",
+
+  "gui.jei.customized.cook_time": "烹饪时间:%s秒",
+  "gui.jei.customized.fire": "需受热",
+  "gui.jei.customized.container": "需盛装于:%s",
+  "jei.info.customized.soup_bowl": "潜行右键砂锅获取里面的炖汤。"
 }
