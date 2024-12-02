@@ -18,6 +18,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class StirFryStrategy implements PotInteractionStrategy {
+    //Will I use it in the future?
     @Override
     public void interact(@NotNull ItemStack itemStackInHand, @NotNull BlockState state,
                          @NotNull Level level, @NotNull BlockPos pos,
