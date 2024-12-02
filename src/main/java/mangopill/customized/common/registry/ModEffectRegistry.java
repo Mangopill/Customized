@@ -12,4 +12,8 @@ public class ModEffectRegistry {
 
     public static final Holder<MobEffect> ICED = MOB_EFFECT.register("iced", () -> new IcedEffect(0x6CA3FD));
     public static final Holder<MobEffect> WARM_STOMACH = MOB_EFFECT.register("warm_stomach", () -> new WarmStomachEffect(0xFFD700));
+
+    public static final Holder<MobEffect> VITALITY = MOB_EFFECT.register("vitality", () -> new VitalityEffect(0x00FA9A));
+    public static final Holder<MobEffect> ANTIDOTE = MOB_EFFECT.register("antidote", () -> new AntidoteEffect(0xFF8C00));
+    public static final Holder<MobEffect> SOAR = MOB_EFFECT.register("soar", () -> new SoarEffect(0x87CEEB));
 }

@@ -26,7 +26,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static mangopill.customized.common.CustomizedConfig.*;
-import static mangopill.customized.common.util.category.NutrientCategory.*;
 import static mangopill.customized.common.util.value.NutrientBuff.*;
 
 public final class ModItemStackHandlerHelper {
@@ -208,33 +207,46 @@ public final class ModItemStackHandlerHelper {
     public static List<FoodProperties.PossibleEffect> getCustomizedFoodEffectList(Map<NutrientCategory, Float> nutrientTotal){
         List<FoodProperties.PossibleEffect> foodEffect = new ArrayList<>();
         List<Float> valueList = new ArrayList<>(nutrientTotal.values());
-        if (NORMAL_BUFF.get()){
-            for (NutrientCategory category : nutrientTotal.keySet()){
-                float nutrientValue = nutrientTotal.get(category);
-                NutrientBuff nutrientBuff = getNormalBuff(category ,nutrientValue);
-                if (nutrientBuff == null){
-                    continue;
-                }
-                int duration = Math.round( nutrientValue * 10 * (float) nutrientBuff.getDuration());
-                float probability = (float) (nutrientValue * 10 * nutrientBuff.getProbability());
-                foodEffect.add(new FoodProperties.PossibleEffect(
-                        () -> new MobEffectInstance(nutrientBuff.getEffect(), duration, 0), Math.min(probability, 1.0F)));
+        for (NutrientCategory category : nutrientTotal.keySet()){
+            float nutrientValue = nutrientTotal.get(category);
+            if (nutrientValue <= 0.0F){
+                continue;
+            }
+            if (NORMAL_BUFF.get()) {
+                addBuffToList(nutrientValue, foodEffect, getNormalBuff(category, nutrientValue));
+            }
+            if (POWERFUL_BUFF.get()) {
+                addBuffToList(nutrientValue, foodEffect, getPowerfulBuff(category, nutrientValue));
             }
         }
         return foodEffect;
     }
 
+    public static void addBuffToList(float nutrientValue, List<FoodProperties.PossibleEffect> foodEffect, NutrientBuff nutrientBuff) {
+            if (nutrientBuff == null){
+                return;
+            }
+            int duration = Math.round( nutrientValue * 10 * (float) nutrientBuff.getDuration());
+            float probability = (float) (nutrientValue * 10 * nutrientBuff.getProbability());
+            foodEffect.add(new FoodProperties.PossibleEffect(
+                    () -> new MobEffectInstance(nutrientBuff.getEffect(), duration, 0), Math.min(probability, 1.0F)));
+    }
+
     public static @Nullable NutrientBuff getNormalBuff(NutrientCategory category, Float nutrientValue){
-        if (nutrientValue <= 0.0F){
-            return null;
-        }
-        if (category.name().equals(COLD.name())){
-            return ICED;
-        }
-        if (category.name().equals(WARM.name())){
-            return WARM_STOMACH;
-        }
-        return null;
+        return switch (category) {
+            case COLD -> ICED;
+            case WARM -> WARM_STOMACH;
+            default -> null;
+        };
+    }
+
+    public static @Nullable NutrientBuff getPowerfulBuff(NutrientCategory category, Float nutrientValue){
+        return switch (category) {
+            case ECOLOGY -> VITALITY;
+            case DREAD -> ANTIDOTE;
+            case NOTHINGNESS -> SOAR;
+            default -> null;
+        };
     }
 
     public static boolean hasInput(ItemStackHandler itemStackHandler, int endIndex){

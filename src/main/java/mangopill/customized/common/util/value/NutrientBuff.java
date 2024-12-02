@@ -8,7 +8,11 @@ import static mangopill.customized.common.CustomizedConfig.*;
 
 public enum NutrientBuff {
     ICED(ModEffectRegistry.ICED, NORMAL_BUFF_DURATION.get(), NORMAL_BUFF_PROBABILITY.get()),
-    WARM_STOMACH(ModEffectRegistry.WARM_STOMACH, NORMAL_BUFF_DURATION.get(), NORMAL_BUFF_PROBABILITY.get());
+    WARM_STOMACH(ModEffectRegistry.WARM_STOMACH, NORMAL_BUFF_DURATION.get(), NORMAL_BUFF_PROBABILITY.get()),
+
+    VITALITY(ModEffectRegistry.VITALITY, POWERFUL_BUFF_DURATION.get(), POWERFUL_BUFF_PROBABILITY.get()),
+    ANTIDOTE(ModEffectRegistry.ANTIDOTE, POWERFUL_BUFF_DURATION.get(), POWERFUL_BUFF_PROBABILITY.get()),
+    SOAR(ModEffectRegistry.SOAR, POWERFUL_BUFF_DURATION.get(), POWERFUL_BUFF_PROBABILITY.get());
 
     private final Holder<MobEffect> effect;
     private final double duration;
