@@ -1,17 +1,16 @@
 package mangopill.customized.common.effect.powerful;
 
+import mangopill.customized.common.effect.ModMobEffect;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class SoarEffect extends MobEffect {
+public class SoarEffect extends ModMobEffect {
     public SoarEffect(int color) {
-        super(MobEffectCategory.BENEFICIAL, color);
+        super(color);
         super.addAttributeModifier(Attributes.MOVEMENT_SPEED, ResourceLocation.withDefaultNamespace("effect.speed"), 0.3F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     }
 
@@ -21,11 +20,6 @@ public class SoarEffect extends MobEffect {
             player.getAbilities().flying = true;
             player.onUpdateAbilities();
         }
-        return true;
-    }
-
-    @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return true;
     }
 }

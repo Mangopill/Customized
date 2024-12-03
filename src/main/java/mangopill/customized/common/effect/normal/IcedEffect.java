@@ -1,13 +1,12 @@
 package mangopill.customized.common.effect.normal;
 
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
+import mangopill.customized.common.effect.ModMobEffect;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
-public class IcedEffect extends MobEffect {
+public class IcedEffect extends ModMobEffect {
     public IcedEffect(int color) {
-        super(MobEffectCategory.BENEFICIAL, color);
+        super(color);
     }
 
     @Override
@@ -15,11 +14,6 @@ public class IcedEffect extends MobEffect {
         if (!livingEntity.level().isClientSide && livingEntity.isOnFire()) {
             livingEntity.clearFire();
         }
-        return true;
-    }
-
-    @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return true;
     }
 }

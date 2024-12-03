@@ -16,6 +16,8 @@
   "effect.customized.vitality": "活力",
   "effect.customized.antidote": "御衰",
   "effect.customized.soar": "腾空",
+  "effect.customized.metabolism": "代谢",
+  "effect.customized.robust": "健壮",
 
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:饱食度:%s 饱和度:%s",

@@ -1,9 +1,8 @@
 package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
-import mangopill.customized.common.effect.normal.IcedEffect;
-import mangopill.customized.common.effect.powerful.VitalityEffect;
-import mangopill.customized.common.effect.normal.WarmStomachEffect;
+import mangopill.customized.common.effect.combination.*;
+import mangopill.customized.common.effect.normal.*;
 import mangopill.customized.common.effect.powerful.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -19,4 +18,7 @@ public class ModEffectRegistry {
     public static final Holder<MobEffect> VITALITY = MOB_EFFECT.register("vitality", () -> new VitalityEffect(0x00FA9A));
     public static final Holder<MobEffect> ANTIDOTE = MOB_EFFECT.register("antidote", () -> new AntidoteEffect(0xFF8C00));
     public static final Holder<MobEffect> SOAR = MOB_EFFECT.register("soar", () -> new SoarEffect(0x87CEEB));
+
+    public static final Holder<MobEffect> METABOLISM = MOB_EFFECT.register("metabolism", () -> new MetabolismEffect(0xFFCC00));
+    public static final Holder<MobEffect> ROBUST = MOB_EFFECT.register("robust", () -> new RobustEffect(0x3A5F7D));
 }
