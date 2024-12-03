@@ -6,6 +6,7 @@
   "value": {
     "water" : 17.0,
     "protein" : 0.3,
-    "carbohydrate" : 32.5
+    "carbohydrate" : 32.5,
+    "sweet" : 15.0
   }
 }

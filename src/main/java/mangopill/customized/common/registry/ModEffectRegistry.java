@@ -21,4 +21,5 @@ public class ModEffectRegistry {
 
     public static final Holder<MobEffect> METABOLISM = MOB_EFFECT.register("metabolism", () -> new MetabolismEffect(0xFFCC00));
     public static final Holder<MobEffect> ROBUST = MOB_EFFECT.register("robust", () -> new RobustEffect(0x3A5F7D));
+    public static final Holder<MobEffect> VITALITY_RESTORATION = MOB_EFFECT.register("vitality_restoration", () -> new VitalityRestorationEffect(0x4CAF50));
 }

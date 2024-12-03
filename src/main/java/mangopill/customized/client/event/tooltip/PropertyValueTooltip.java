@@ -2,7 +2,7 @@ package mangopill.customized.client.event.tooltip;
 
 import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
-import mangopill.customized.common.util.ModItemStackHandlerHelper;
+import mangopill.customized.common.util.PropertyValueUtil;
 import mangopill.customized.common.util.value.PropertyValue;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.*;
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 
 import static mangopill.customized.common.CustomizedConfig.*;
-import static mangopill.customized.common.util.ModItemStackHandlerHelper.getFoodPropertyByPropertyValue;
+import static mangopill.customized.common.util.PropertyValueUtil.*;
 
 @EventBusSubscriber(modid = Customized.MODID, value = Dist.CLIENT)
 public class PropertyValueTooltip {
@@ -30,7 +30,7 @@ public class PropertyValueTooltip {
         if (player == null || player.level() == null) {
             return;
         }
-        @NotNull PropertyValue propertyValue = ModItemStackHandlerHelper.getPropertyValue(stack, player.level());
+        @NotNull PropertyValue propertyValue = PropertyValueUtil.getPropertyValue(stack, player.level());
         FoodProperties foodProperty = getFoodPropertyByPropertyValue(player.level(), Collections.singletonList(stack), false);
         if (propertyValue.isEmpty()) {
             return;

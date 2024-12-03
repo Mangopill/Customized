@@ -7,7 +7,7 @@ import mangopill.customized.Customized;
 import mangopill.customized.common.block.entity.AbstractPlateBlockEntity;
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.item.AbstractPlateItem;
-import mangopill.customized.common.util.ModItemStackHandlerHelper;
+import mangopill.customized.common.util.PropertyValueUtil;
 import mangopill.customized.common.util.category.NutrientCategory;
 import mangopill.customized.common.util.value.PropertyValue;
 import net.minecraft.client.Minecraft;
@@ -33,7 +33,7 @@ public final class ClientUtil {
     public static int getMaxValueColor(Level level, List<ItemStack> stackList) {
         Map<NutrientCategory, Float> nutrientSums = new HashMap<>();
         for (ItemStack stack : stackList) {
-            @NotNull PropertyValue propertyValue = ModItemStackHandlerHelper.getPropertyValue(stack, level);
+            @NotNull PropertyValue propertyValue = PropertyValueUtil.getPropertyValue(stack, level);
             if (!propertyValue.isEmpty()) {
                 for (Pair<NutrientCategory, Float> entry : propertyValue.toSet()) {
                     NutrientCategory category = entry.getKey();

@@ -8,7 +8,6 @@ import mangopill.customized.common.block.entity.AbstractPlateBlockEntity;
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.state.PlateState;
 import mangopill.customized.common.block.state.PotState;
-import mangopill.customized.common.tag.ModTag;
 import mangopill.customized.common.util.ModItemStackHandlerHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -37,6 +36,7 @@ import java.util.*;
 
 import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.PlateComponentUtil.*;
+import static mangopill.customized.common.util.PropertyValueUtil.*;
 
 public abstract class AbstractPlateItem extends BlockItem {
     private final int ingredientInput;
@@ -112,13 +112,13 @@ public abstract class AbstractPlateItem extends BlockItem {
         Player player = context.getPlayer();
         BlockPos pos = context.getClickedPos();
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        BlockEntity potEntity = getPotEntity(level, pos);
+        AbstractPotBlockEntity potEntity = getPotEntity(level, pos);
         BlockState state = level.getBlockState(pos);
         if (level.isClientSide || player == null) {
             return InteractionResult.SUCCESS;
         }
         if (blockEntity != null && blockEntity.equals(potEntity) && player.isShiftKeyDown()) {
-            if (!state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE)){
+            if (!state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE) || !potEntity.isHeated()){
                 return InteractionResult.PASS;
             }
             return getInteractionResult(getPotEntity(level, pos), itemInHand, level);

@@ -10,17 +10,16 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.NotNull;
 
-public class RobustEffect extends ModMobEffect {
-    public RobustEffect(int color) {
+public class VitalityRestorationEffect extends ModMobEffect {
+    public VitalityRestorationEffect(int color) {
         super(color);
-        super.addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.withDefaultNamespace("effect.health_boost"), 5.0, AttributeModifier.Operation.ADD_VALUE);
-        super.addAttributeModifier(Attributes.ATTACK_DAMAGE, ResourceLocation.withDefaultNamespace("effect.strength"), 4.0, AttributeModifier.Operation.ADD_VALUE);
+        super.addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.withDefaultNamespace("effect.health_boost"), 4.0, AttributeModifier.Operation.ADD_VALUE);
     }
 
     @Override
     public void onEffectStarted(@NotNull LivingEntity livingEntity, int amplifier) {
         if (livingEntity instanceof ServerPlayer player) {
-            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 500, amplifier));
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, amplifier));
         }
     }
 }

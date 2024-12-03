@@ -18,6 +18,7 @@
   "effect.customized.soar": "Soar",
   "effect.customized.metabolism": "Metabolism",
   "effect.customized.robust": "Robust",
+  "effect.customized.vitality_restoration": "Vitality Restoration",
 
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:Nutrition:%s Saturation:%s",
