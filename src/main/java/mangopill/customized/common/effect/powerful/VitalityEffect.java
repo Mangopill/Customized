@@ -7,6 +7,9 @@ import net.minecraft.world.entity.ai.attributes.*;
 import org.jetbrains.annotations.NotNull;
 
 public class VitalityEffect extends ModMobEffect {
+    /**
+     *This MobEffect can increase the player's health regeneration speed, as well as MOVEMENT_SPEED, ATTACK_SPEED, MAX_HEALTH, and ATTACK_DAMAGE.
+     */
     public VitalityEffect(int color) {
         super(color);
         super.addAttributeModifier(Attributes.MOVEMENT_SPEED, ResourceLocation.withDefaultNamespace("effect.speed"), 0.6F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);

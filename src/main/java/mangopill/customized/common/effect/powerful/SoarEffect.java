@@ -9,6 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class SoarEffect extends ModMobEffect {
+    /**
+     *This MobEffect allows the player to stay flying, but prevents them from landing.
+     */
     public SoarEffect(int color) {
         super(color);
         super.addAttributeModifier(Attributes.MOVEMENT_SPEED, ResourceLocation.withDefaultNamespace("effect.speed"), 0.3F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);

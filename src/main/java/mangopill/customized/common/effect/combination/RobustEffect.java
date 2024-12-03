@@ -11,6 +11,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.NotNull;
 
 public class RobustEffect extends ModMobEffect {
+    /**
+     *This MobEffect can increase MAX_HEALTH, ATTACK_DAMAGE, and grant DAMAGE_RESISTANCE.
+     */
     public RobustEffect(int color) {
         super(color);
         super.addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.withDefaultNamespace("effect.health_boost"), 5.0, AttributeModifier.Operation.ADD_VALUE);

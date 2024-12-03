@@ -5,6 +5,9 @@ import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
 public class IcedEffect extends ModMobEffect {
+    /**
+     *This MobEffect can extinguish the fire on the entity when it is no longer in contact with a fire source.
+     */
     public IcedEffect(int color) {
         super(color);
     }

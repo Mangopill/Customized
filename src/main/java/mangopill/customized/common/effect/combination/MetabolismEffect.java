@@ -6,6 +6,9 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class MetabolismEffect extends ModMobEffect {
+    /**
+     *This MobEffect can increase the player's health regeneration speed, but it will slightly accelerate food consumption.
+     */
     public MetabolismEffect(int color) {
         super(color);
     }

@@ -11,6 +11,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.NotNull;
 
 public class VitalityRestorationEffect extends ModMobEffect {
+    /**
+     *This MobEffect grants the player the DAMAGE_RESISTANCE effect upon activation and increases their maximum health.
+     */
     public VitalityRestorationEffect(int color) {
         super(color);
         super.addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.withDefaultNamespace("effect.health_boost"), 4.0, AttributeModifier.Operation.ADD_VALUE);
