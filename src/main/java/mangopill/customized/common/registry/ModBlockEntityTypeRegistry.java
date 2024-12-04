@@ -13,8 +13,8 @@ import static mangopill.customized.common.util.RegistryUtil.*;
 public class ModBlockEntityTypeRegistry {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPE = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Customized.MODID);
     //block
-    public static final Supplier<BlockEntityType<BrushableBlockEntity>> SUSPICIOUS_DIRT = BLOCK_ENTITY_TYPE.register(
-            "suspicious_dirt", basicBlockEntityType(BrushableBlockEntity::new, ModBlcokRegistry.SUSPICIOUS_DIRT));
+    public static final Supplier<BlockEntityType<ModBrushableBlockEntity>> SUSPICIOUS_DIRT = BLOCK_ENTITY_TYPE.register(
+            "suspicious_dirt", basicBlockEntityType(ModBrushableBlockEntity::new, ModBlcokRegistry.SUSPICIOUS_DIRT));
     //kitchenware block
     public static final Supplier<BlockEntityType<CasseroleBlockEntity>> CASSEROLE = BLOCK_ENTITY_TYPE.register(
             "casserole", basicBlockEntityType(CasseroleBlockEntity::new, ModBlcokRegistry.CASSEROLE));
