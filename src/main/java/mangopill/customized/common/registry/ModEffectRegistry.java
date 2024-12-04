@@ -24,4 +24,9 @@ public class ModEffectRegistry {
     public static final Holder<MobEffect> VITALITY_RESTORATION = MOB_EFFECT.register("vitality_restoration", () -> new VitalityRestorationEffect(0x4CAF50));
     public static final Holder<MobEffect> CALORIE_BURN = MOB_EFFECT.register("calorie_burn", () -> new CalorieBurnEffect(0xFF4500));
     public static final Holder<MobEffect> SMOOTH_BLOOD_FLOW = MOB_EFFECT.register("smooth_blood_flow", () -> new SmoothBloodFlowEffect(0x9B111E));
+    public static final Holder<MobEffect> MENTAL_STIMULATION = MOB_EFFECT.register("mental_stimulation", () -> new MentalStimulationEffect(0xFFD700));
+    public static final Holder<MobEffect> APPETITE_BOOST = MOB_EFFECT.register("appetite_boost", () -> new AppetiteBoostEffect(0xFF6347));
+    public static final Holder<MobEffect> SUSTAINED_ENERGY = MOB_EFFECT.register("sustained_energy", () -> new SustainedEnergyEffect(0xFFA500));
+    public static final Holder<MobEffect> STRESS_RELIEF = MOB_EFFECT.register("stress_relief", () -> new StressReliefEffect(0x87CEFA));
+    public static final Holder<MobEffect> HYDRATION_AND_PLUMPNESS = MOB_EFFECT.register("hydration_and_plumpness", () -> new HydrationAndPlumpnessEffect(0x00BFFF));
 }

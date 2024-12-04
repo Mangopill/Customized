@@ -21,6 +21,11 @@
   "effect.customized.vitality_restoration": "Vitality Restoration",
   "effect.customized.calorie_burn": "Calorie Burn",
   "effect.customized.smooth_blood_flow": "Smooth Blood Flow",
+  "effect.customized.mental_stimulation": "Mental Stimulation",
+  "effect.customized.appetite_boost": "Appetite Boost",
+  "effect.customized.sustained_energy": "Sustained Energy",
+  "effect.customized.stress_relief": "Stress Relief",
+  "effect.customized.hydration_and_plumpness": "Hydration And Plumpness",
 
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:Nutrition:%s Saturation:%s",
@@ -52,6 +57,8 @@
   "property.customized.nutrient_category.spicy": "Spicy",
   "property.customized.nutrient_category.salty": "Salty",
   "property.customized.nutrient_category.numbing": "Numbing",
+  "property.customized.nutrient_category.fresh": "Fresh",
+  "property.customized.nutrient_category.fragrant": "Fragrant",
 
   "estimated.customized.nutritional_value": "Estimated Nutritional Value",
   "estimated.customized.buff": "Estimated BUFF",

@@ -25,7 +25,9 @@ public enum NutrientCategory implements StringRepresentable {
     BITTER("bitter", 0x6B4F3B),
     SPICY("spicy", 0xFF4500),
     SALTY("salty", 0x1E90FF),
-    NUMBING("numbing", 0xB86B7D);
+    NUMBING("numbing", 0xB86B7D),
+    FRESH("fresh", 0xFF6F61),
+    FRAGRANT("fragrant", 0xD4A0A7);
 
     private final String name;
     private final TextColor color;

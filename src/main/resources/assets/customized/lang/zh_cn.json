@@ -20,7 +20,12 @@
   "effect.customized.robust": "健壮",
   "effect.customized.vitality_restoration": "活力恢复",
   "effect.customized.calorie_burn": "热量燃烧",
-  "effect.customized.smooth_blood_flow": "血液流动",
+  "effect.customized.smooth_blood_flow": "血液流畅",
+  "effect.customized.mental_stimulation": "脑力激发",
+  "effect.customized.appetite_boost": "食欲全开",
+  "effect.customized.sustained_energy": "持续能量",
+  "effect.customized.stress_relief": "身心解压",
+  "effect.customized.hydration_and_plumpness": "水润充盈",
 
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:饱食度:%s 饱和度:%s",
@@ -52,6 +57,8 @@
   "property.customized.nutrient_category.spicy": "辣",
   "property.customized.nutrient_category.salty": "咸",
   "property.customized.nutrient_category.numbing": "麻",
+  "property.customized.nutrient_category.fresh": "鲜",
+  "property.customized.nutrient_category.fragrant": "香",
 
   "estimated.customized.nutritional_value": "预估营养值",
   "estimated.customized.buff": "预估BUFF",
