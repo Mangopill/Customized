@@ -20,6 +20,7 @@
   "effect.customized.robust": "Robust",
   "effect.customized.vitality_restoration": "Vitality Restoration",
   "effect.customized.calorie_burn": "Calorie Burn",
+  "effect.customized.smooth_blood_flow": "Smooth Blood Flow",
 
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:Nutrition:%s Saturation:%s",

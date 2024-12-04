@@ -20,6 +20,7 @@
   "effect.customized.robust": "健壮",
   "effect.customized.vitality_restoration": "活力恢复",
   "effect.customized.calorie_burn": "热量燃烧",
+  "effect.customized.smooth_blood_flow": "血液流动",
 
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:饱食度:%s 饱和度:%s",

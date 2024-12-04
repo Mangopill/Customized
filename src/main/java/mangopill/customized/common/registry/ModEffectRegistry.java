@@ -23,4 +23,5 @@ public class ModEffectRegistry {
     public static final Holder<MobEffect> ROBUST = MOB_EFFECT.register("robust", () -> new RobustEffect(0x3A5F7D));
     public static final Holder<MobEffect> VITALITY_RESTORATION = MOB_EFFECT.register("vitality_restoration", () -> new VitalityRestorationEffect(0x4CAF50));
     public static final Holder<MobEffect> CALORIE_BURN = MOB_EFFECT.register("calorie_burn", () -> new CalorieBurnEffect(0xFF4500));
+    public static final Holder<MobEffect> SMOOTH_BLOOD_FLOW = MOB_EFFECT.register("smooth_blood_flow", () -> new SmoothBloodFlowEffect(0x9B111E));
 }
