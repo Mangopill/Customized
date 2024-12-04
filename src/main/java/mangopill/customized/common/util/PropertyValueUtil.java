@@ -1,6 +1,9 @@
 package mangopill.customized.common.util;
 
 import mangopill.customized.common.FoodValue;
+import mangopill.customized.common.effect.ShrinkNutritionMobEffect;
+import mangopill.customized.common.effect.ShrinkSaturationMobEffect;
+import mangopill.customized.common.effect.CombinationMobEffect;
 import mangopill.customized.common.recipe.PropertyValueRecipe;
 import mangopill.customized.common.registry.ModRecipeRegistry;
 import mangopill.customized.common.util.category.NutrientCategory;
@@ -168,37 +171,35 @@ public final class PropertyValueUtil {
 
     public static Map<NutrientBuff, Float> getCombinationBuffMap(Map<NutrientCategory, Float> filteredNutrientTotal) {
         Map<NutrientBuff, Float> combinationBuff = new HashMap<>();
+        Set<NutrientBuff> nutrientTotal = EnumSet.allOf(NutrientBuff.class);
         Set<NutrientCategory> saturation1 = Set.of(WATER, PROTEIN);
         Set<NutrientCategory> saturation2 = Set.of(WATER, DIETARY_FIBER);
         putCombinationBuffByContains(filteredNutrientTotal, combinationBuff, NutrientBuff.SATURATION, List.of(saturation1, saturation2));
-        Set<NutrientCategory> metabolism = Set.of(MINERAL, VITAMIN, DIETARY_FIBER);
-        putCombinationBuffByContains(filteredNutrientTotal, combinationBuff, METABOLISM, List.of(metabolism));
-        Set<NutrientCategory> robust = Set.of(PROTEIN, LIPID, CARBOHYDRATE);
-        putCombinationBuffByContains(filteredNutrientTotal, combinationBuff, ROBUST, List.of(robust));
-        Set<NutrientCategory> vitalityRestoration = Set.of(SOUR, SWEET);
-        putCombinationBuffByContains(filteredNutrientTotal, combinationBuff, VITALITY_RESTORATION, List.of(vitalityRestoration));
+        nutrientTotal.forEach(nutrientBuff -> {
+            if (nutrientBuff.getEffect().value() instanceof CombinationMobEffect combinationMobEffect) {
+                putCombinationBuffByContains(filteredNutrientTotal, combinationBuff, nutrientBuff, combinationMobEffect.getCategorySet());
+            }
+        });
         return combinationBuff;
     }
 
     public static float getShrinkNutrition(Map<NutrientCategory, Float> nutrientTotal) {
-        //Map<NutrientBuff, Float> buffMap = getCombinationBuffMap(getFilteredNutrientTotal(nutrientTotal));
-        //Set<NutrientBuff> set = EnumSet.of();
+        Map<NutrientBuff, Float> buffMap = getCombinationBuffMap(getFilteredNutrientTotal(nutrientTotal));
         float i = 0.0F;
-        //for (NutrientBuff nutrient : buffMap.keySet()) {
-        //    if (set.contains(nutrient)) {
-        //        i += 0.05F;
-        //    }
-        //}
+        for (NutrientBuff nutrient : buffMap.keySet()) {
+            if (nutrient.getEffect().value() instanceof ShrinkNutritionMobEffect effect) {
+                i += effect.getShrinkNutritionModifier();
+            }
+        }
         return i;
     }
 
     public static float getShrinkSaturation(Map<NutrientCategory, Float> nutrientTotal) {
         Map<NutrientBuff, Float> buffMap = getCombinationBuffMap(getFilteredNutrientTotal(nutrientTotal));
-        Set<NutrientBuff> set = EnumSet.of(VITALITY_RESTORATION);
         float i = 0.0F;
         for (NutrientBuff nutrient : buffMap.keySet()) {
-            if (set.contains(nutrient)) {
-                i += 0.05F;
+            if (nutrient.getEffect().value() instanceof ShrinkSaturationMobEffect effect) {
+                i += effect.getShrinkSaturationModifier();
             }
         }
         return i;

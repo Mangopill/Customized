@@ -19,6 +19,7 @@
   "effect.customized.metabolism": "Metabolism",
   "effect.customized.robust": "Robust",
   "effect.customized.vitality_restoration": "Vitality Restoration",
+  "effect.customized.calorie_burn": "Calorie Burn",
 
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:Nutrition:%s Saturation:%s",

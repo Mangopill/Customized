@@ -8,6 +8,7 @@
     "carbohydrate" : 7.5,
     "vitamin": 8.1,
     "mineral" : 0.4,
-    "dietary_fiber" : 0.4
+    "dietary_fiber" : 0.4,
+    "sweet" : 10.0
   }
 }
