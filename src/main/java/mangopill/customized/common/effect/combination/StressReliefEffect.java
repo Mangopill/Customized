@@ -10,7 +10,11 @@ import java.util.Set;
 
 import static mangopill.customized.common.util.category.NutrientCategory.*;
 
+/**
+ * This MobEffect can accelerate the player's health regeneration.
+ */
 public class StressReliefEffect extends ModMobEffect implements ShrinkNutritionMobEffect, ShrinkSaturationMobEffect, CombinationMobEffect {
+
     public StressReliefEffect(int color) {
         super(color);
     }

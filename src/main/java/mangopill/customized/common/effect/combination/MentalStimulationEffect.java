@@ -11,10 +11,14 @@ import java.util.Set;
 
 import static mangopill.customized.common.util.category.NutrientCategory.*;
 
+/**
+ * This MobEffect can make the player luckier.
+ */
 public class MentalStimulationEffect extends ModMobEffect implements ShrinkNutritionMobEffect, CombinationMobEffect {
+
     public MentalStimulationEffect(int color) {
         super(color);
-        super.addAttributeModifier(Attributes.LUCK, ResourceLocation.withDefaultNamespace("effect.luck"), 1.0, AttributeModifier.Operation.ADD_VALUE);
+        super.addAttributeModifier(Attributes.LUCK, ResourceLocation.withDefaultNamespace("effect.luck"), 0.6, AttributeModifier.Operation.ADD_VALUE);
     }
 
     @Override

@@ -13,7 +13,11 @@ import java.util.Set;
 
 import static mangopill.customized.common.util.category.NutrientCategory.*;
 
+/**
+ *This MobEffect can give the player the DAMAGE_RESISTANCE effect.
+ */
 public class SustainedEnergyEffect extends ModMobEffect implements ShrinkNutritionMobEffect, ShrinkSaturationMobEffect, CombinationMobEffect {
+
     public SustainedEnergyEffect(int color) {
         super(color);
     }
