@@ -25,7 +25,7 @@ public class HydrationAndPlumpnessEffect extends ModMobEffect implements ShrinkN
     @Override
     public void onEffectStarted(@NotNull LivingEntity livingEntity, int amplifier) {
         if (livingEntity instanceof ServerPlayer player) {
-            player.addEffect(new MobEffectInstance(MobEffects.HEAL, 200, amplifier));
+            player.addEffect(new MobEffectInstance(MobEffects.HEAL, 150, amplifier));
         }
     }
 
