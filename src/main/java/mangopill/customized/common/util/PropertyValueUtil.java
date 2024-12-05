@@ -104,8 +104,10 @@ public final class PropertyValueUtil {
                 }
             }
         }
-        nutritionValue = Math.max(0, (int) (nutritionValue - nutritionValue * getShrinkNutrition(nutrientTotal)));
-        saturationValue = Math.max(0.0F, saturationValue - saturationValue * getShrinkSaturation(nutrientTotal));
+        if (COMBINATION_BUFF.get()){
+            nutritionValue = Math.max(0, (int) (nutritionValue - nutritionValue * getShrinkNutrition(nutrientTotal)));
+            saturationValue = Math.max(0.0F, saturationValue - saturationValue * getShrinkSaturation(nutrientTotal));
+        }
         FoodProperties.Builder builder = new FoodProperties.Builder();
         foodEffect.addAll(getCustomizedFoodEffectList(nutrientTotal));
         if (shardByConsumption){
@@ -158,8 +160,10 @@ public final class PropertyValueUtil {
                 addBuffToList(nutrientValue, foodEffect, getPowerfulBuff(category));
             }
         }
-        Map<NutrientBuff, Float> combinationBuff = getCombinationBuffMap(filteredNutrientTotal);
-        combinationBuff.forEach((n, f) -> addBuffToList(f, foodEffect, n));
+        if (COMBINATION_BUFF.get()) {
+            Map<NutrientBuff, Float> combinationBuff = getCombinationBuffMap(filteredNutrientTotal);
+            combinationBuff.forEach((n, f) -> addBuffToList(f, foodEffect, n));
+        }
         return foodEffect;
     }
 
