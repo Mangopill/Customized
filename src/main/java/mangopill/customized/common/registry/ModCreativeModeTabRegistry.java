@@ -15,7 +15,7 @@ public class ModCreativeModeTabRegistry {
     public static final Supplier<CreativeModeTab> CREATIVE_TAB = CREATIVE_MODE_TAB.register(Customized.MODID,
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.customized"))
-                    .icon(() -> new ItemStack(ModBlcokRegistry.SUSPICIOUS_DIRT.get()))
+                    .icon(() -> new ItemStack(ModBlockRegistry.SUSPICIOUS_DIRT.get()))
                     .displayItems((parameters, output) -> ModItemRegistry.CREATIVE_MODE_TAB.forEach((item) -> output.accept(item.get())))
                     .build());
 }

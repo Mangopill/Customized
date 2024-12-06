@@ -14,10 +14,10 @@ public class ModBlockEntityTypeRegistry {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPE = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Customized.MODID);
     //block
     public static final Supplier<BlockEntityType<ModBrushableBlockEntity>> SUSPICIOUS_DIRT = BLOCK_ENTITY_TYPE.register(
-            "suspicious_dirt", basicBlockEntityType(ModBrushableBlockEntity::new, ModBlcokRegistry.SUSPICIOUS_DIRT));
+            "suspicious_dirt", basicBlockEntityType(ModBrushableBlockEntity::new, ModBlockRegistry.SUSPICIOUS_DIRT));
     //kitchenware block
     public static final Supplier<BlockEntityType<CasseroleBlockEntity>> CASSEROLE = BLOCK_ENTITY_TYPE.register(
-            "casserole", basicBlockEntityType(CasseroleBlockEntity::new, ModBlcokRegistry.CASSEROLE));
+            "casserole", basicBlockEntityType(CasseroleBlockEntity::new, ModBlockRegistry.CASSEROLE));
     public static final Supplier<BlockEntityType<SoupBowlBlockEntity>> SOUP_BOWL = BLOCK_ENTITY_TYPE.register(
-            "soup_bowl", basicBlockEntityType(SoupBowlBlockEntity::new, ModBlcokRegistry.SOUP_BOWL));
+            "soup_bowl", basicBlockEntityType(SoupBowlBlockEntity::new, ModBlockRegistry.SOUP_BOWL));
 }

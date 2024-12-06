@@ -1,8 +1,7 @@
 package mangopill.customized.common.util;
 
 import mangopill.customized.Customized;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
@@ -21,8 +20,16 @@ public final class RegistryUtil {
         return new Item.Properties();
     }
 
+    public static Supplier<Item> basicItem() {
+        return () -> new Item(basicItemProperties());
+    }
+
     public static Supplier<Item> blockItem(Supplier<Block> supplier, Item.Properties properties) {
         return () -> new BlockItem(supplier.get(), properties);
+    }
+
+    public static Supplier<Item> itemNameBlockItem(Supplier<Block> supplier, Item.Properties properties) {
+        return () -> new ItemNameBlockItem(supplier.get(), properties);
     }
 
     public static<T extends BlockEntity> Supplier<BlockEntityType<T>> basicBlockEntityType(BlockEntityType.BlockEntitySupplier<T> blockEntityType, Supplier<Block> supplier) {

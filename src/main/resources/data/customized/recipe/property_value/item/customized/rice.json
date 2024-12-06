@@ -1,0 +1,11 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "customized:rice"
+  ],
+  "value": {
+    "water" : 3.0,
+    "protein" : 2.0,
+    "carbohydrate" : 22.65
+  }
+}

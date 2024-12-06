@@ -7,6 +7,7 @@
     "water" : 15.0,
     "protein" : 20.0,
     "lipid" : 13.0,
-    "mineral" : 1.0
+    "mineral" : 1.0,
+    "fresh" : 10.0
   }
 }

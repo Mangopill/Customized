@@ -2,7 +2,7 @@ package mangopill.customized.common.world.feature;
 
 import com.mojang.serialization.Codec;
 import mangopill.customized.Customized;
-import mangopill.customized.common.registry.ModBlcokRegistry;
+import mangopill.customized.common.registry.ModBlockRegistry;
 import mangopill.customized.common.registry.ModBlockEntityTypeRegistry;
 
 import net.minecraft.core.BlockPos;
@@ -39,7 +39,7 @@ public class FlowerAndDirtFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private static void placeSusDirt(WorldGenLevel level, BlockPos pos) {
-        level.setBlock(pos, ModBlcokRegistry.SUSPICIOUS_DIRT.get().defaultBlockState(), 3);
+        level.setBlock(pos, ModBlockRegistry.SUSPICIOUS_DIRT.get().defaultBlockState(), 3);
         level.getBlockEntity(pos, ModBlockEntityTypeRegistry.SUSPICIOUS_DIRT.get())
                 .ifPresent(Consumer -> Consumer.setLootTable(LOOT_TABLE, pos.asLong()));
     }

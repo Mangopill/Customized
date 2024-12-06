@@ -2,7 +2,7 @@ package mangopill.customized.integration.jei.category;
 
 import mangopill.customized.Customized;
 import mangopill.customized.common.recipe.CasseroleRecipe;
-import mangopill.customized.common.registry.ModBlcokRegistry;
+import mangopill.customized.common.registry.ModBlockRegistry;
 import mangopill.customized.common.registry.ModItemRegistry;
 import mangopill.customized.integration.jei.util.JeiUtil;
 import mezz.jei.api.constants.VanillaTypes;
@@ -30,7 +30,7 @@ public class CasseroleRecipeCategory implements IRecipeCategory<CasseroleRecipe>
     private final IDrawable icon;
 
     public CasseroleRecipeCategory(IGuiHelper helper) {
-        title = Component.translatable(ModBlcokRegistry.CASSEROLE.get().getDescriptionId());
+        title = Component.translatable(ModBlockRegistry.CASSEROLE.get().getDescriptionId());
         background = helper.createDrawable(ResourceLocation.fromNamespaceAndPath(Customized.MODID, "textures/gui/casserole" + ".png"),
                 4, 4, 108, 67);
         icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModItemRegistry.CASSEROLE.get()));

@@ -50,8 +50,8 @@ public class ClientEvent {
     }
     @SubscribeEvent
     public static void registerBlockColorHandlers(RegisterColorHandlersEvent.Block event) {
-        event.register((state, level, pos, tintIndex) -> level == null || pos == null ? -1 : getPotWaterColor(level, state, pos), ModBlcokRegistry.CASSEROLE.get());
-        event.register((state, level, pos, tintIndex) -> level == null || pos == null ? -1 : getPlateBlockWaterColor(level, state, pos), ModBlcokRegistry.SOUP_BOWL.get());
+        event.register((state, level, pos, tintIndex) -> level == null || pos == null ? -1 : getPotWaterColor(level, state, pos), ModBlockRegistry.CASSEROLE.get());
+        event.register((state, level, pos, tintIndex) -> level == null || pos == null ? -1 : getPlateBlockWaterColor(level, state, pos), ModBlockRegistry.SOUP_BOWL.get());
     }
     @SubscribeEvent
     public static void registerItemColorHandlers(RegisterColorHandlersEvent.Item event) {

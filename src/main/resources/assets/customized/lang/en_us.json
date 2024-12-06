@@ -7,6 +7,10 @@
   "item.customized.casserole_lid": "Casserole Lld",
   "item.customized.famous_dish_plate": "Famous Dish Plate",
 
+  "item.customized.rice": "Rice",
+  "item.customized.rice_seed": "Rice Plant Seed",
+  "block.customized.rice_crop": "Rice Plant Crop",
+
   "block.customized.casserole": "Casserole",
   "block.customized.soup_bowl": "Soup Bowl",
   "block.customized.soup_bowl_food": "Stewed Soup",

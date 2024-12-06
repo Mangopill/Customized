@@ -20,10 +20,15 @@ public class ModItemRegistry {
     public static LinkedHashSet<Supplier<Item>> CREATIVE_MODE_TAB = Sets.newLinkedHashSet();
     //item
     public static final Supplier<Item> SOILED_SEED = registerWithCreativeTab(
-            "soiled_seed", () -> new Item(basicItemProperties()));
+            "soiled_seed", basicItem());
     //block
     public static final Supplier<Item> SUSPICIOUS_DIRT = registerWithCreativeTab(
-            "suspicious_dirt", blockItem(ModBlcokRegistry.SUSPICIOUS_DIRT, basicItemProperties()));
+            "suspicious_dirt", blockItem(ModBlockRegistry.SUSPICIOUS_DIRT, basicItemProperties()));
+    //crop
+    public static final Supplier<Item> RICE = registerWithCreativeTab(
+            "rice", basicItem());
+    public static final Supplier<Item> RICE_SEED = registerWithCreativeTab(
+            "rice_seed", itemNameBlockItem(ModBlockRegistry.RICE_CROP, basicItemProperties()));
     //kitchenware item
     public static final Supplier<Item> SPATULA = registerWithCreativeTab(
             "spatula", () -> new ShovelItem(Tiers.IRON, new Item.Properties().attributes(ShovelItem.createAttributes(Tiers.IRON, 2, -3.0F))));
@@ -33,8 +38,8 @@ public class ModItemRegistry {
             "famous_dish_plate", () -> new Item(basicItemProperties()));
     //kitchenware block
     public static final Supplier<Item> CASSEROLE = registerWithCreativeTab(
-            "casserole", blockItem(ModBlcokRegistry.CASSEROLE, basicItemProperties().stacksTo(1)));
+            "casserole", blockItem(ModBlockRegistry.CASSEROLE, basicItemProperties().stacksTo(1)));
     public static final Supplier<Item> SOUP_BOWL = registerWithCreativeTab(
-            "soup_bowl", () -> new SoupBowlItem(ModBlcokRegistry.SOUP_BOWL.get(), basicItemProperties().stacksTo(1).food(FoodValue.NULL)
+            "soup_bowl", () -> new SoupBowlItem(ModBlockRegistry.SOUP_BOWL.get(), basicItemProperties().stacksTo(1).food(FoodValue.NULL)
                     .component(ModDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(new ItemStackHandler(PlateSlotRecord.SOUP_BOWL.ingredientInput() + PlateSlotRecord.SOUP_BOWL.seasoningInput() + 1)))));
 }
