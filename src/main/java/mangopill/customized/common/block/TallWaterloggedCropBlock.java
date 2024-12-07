@@ -17,13 +17,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.CommonHooks;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class TalWaterloggedCropBlock extends BushBlock implements BonemealableBlock, SimpleWaterloggedBlock {
+public abstract class TallWaterloggedCropBlock extends BushBlock implements BonemealableBlock, SimpleWaterloggedBlock {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
     public static final BooleanProperty GROW_PLACED = BooleanProperty.create("grow_placed");
     private final int topMaxAge = BlockStateProperties.MAX_AGE_7;
     private final int bottomMaxAge;
 
-    public TalWaterloggedCropBlock(Properties properties, int bottomMaxAge) {
+    public TallWaterloggedCropBlock(Properties properties, int bottomMaxAge) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(AGE, 0)
                 .setValue(BlockStateProperties.WATERLOGGED, true)
@@ -113,7 +113,7 @@ public abstract class TalWaterloggedCropBlock extends BushBlock implements Bonem
     public boolean canSurvive(@NotNull BlockState state, LevelReader level, @NotNull BlockPos pos) {
         FluidState fluid = level.getFluidState(pos);
         BlockState stateBelow = level.getBlockState(pos.below());
-        if (stateBelow.getBlock() instanceof TalWaterloggedCropBlock && state.getValue(GROW_PLACED)) {
+        if (stateBelow.getBlock() instanceof TallWaterloggedCropBlock && state.getValue(GROW_PLACED)) {
             return !isTop(stateBelow);
         }
         return super.canSurvive(state, level, pos) && fluid.is(FluidTags.WATER) && fluid.isSource();

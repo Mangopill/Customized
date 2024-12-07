@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-public class RiceCropBlock extends TalWaterloggedCropBlock {
+public class RiceCropBlock extends TallWaterloggedCropBlock {
     public static final MapCodec<RiceCropBlock> CODEC = simpleCodec(RiceCropBlock::new);
     public RiceCropBlock(Properties properties) {
         super(properties, BlockStateProperties.MAX_AGE_3);
