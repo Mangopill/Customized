@@ -1,5 +1,6 @@
 {
   "item.customized.soiled_seed": "Soiled Seed",
+  "item.customized.ketchup": "Ketchup",
 
   "block.customized.suspicious_dirt": "Suspicious Dirt",
 
@@ -10,6 +11,9 @@
   "item.customized.rice": "Rice",
   "item.customized.rice_seed": "Rice Plant Seed",
   "block.customized.rice_crop": "Rice Plant Crop",
+  "item.customized.tomato": "Tomato",
+  "item.customized.tomato_seed": "Tomato Seed",
+  "block.customized.tomato_crop": "Tomato Crop",
 
   "block.customized.casserole": "Casserole",
   "block.customized.soup_bowl": "Soup Bowl",

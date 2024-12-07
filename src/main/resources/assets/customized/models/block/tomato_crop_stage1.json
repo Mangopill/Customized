@@ -1,0 +1,38 @@
+{
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "customized:block/tomato_crop_stage1",
+		"particle": "customized:block/tomato_crop_stage1"
+	},
+	"elements": [
+		{
+			"from": [5, 0, 8],
+			"to": [11, 8, 8],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 6, 8], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"south": {"uv": [6, 0, 12, 8], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"up": {"uv": [6, 0, 0, 0], "texture": "#0"},
+				"down": {"uv": [6, 0, 0, 0], "texture": "#0"}
+			}
+		},
+		{
+			"from": [8, 0, 5],
+			"to": [8, 8, 11],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"east": {"uv": [6, 0, 12, 8], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"west": {"uv": [0, 0, 6, 8], "texture": "#0"},
+				"up": {"uv": [6, 0, 0, 0], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [6, 0, 0, 0], "rotation": 90, "texture": "#0"}
+			}
+		}
+	],
+	"display": {}
+}

@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "customized:rice_seed"
+          "name": "customized:tomato_seed"
         }
       ]
     },
@@ -24,25 +24,49 @@
               "formula": "minecraft:binomial_with_bonus_count",
               "parameters": {
                 "extra": 2,
-                "probability": 0.66
+                "probability": 0.33
               }
             }
           ],
-          "name": "customized:rice"
+          "name": "customized:tomato_seed"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "customized:rice_crop",
+          "block": "customized:tomato_crop",
           "properties": {
             "age": "7"
           }
-        },
+        }
+      ]
+    },
+    {
+      "name": "pool2",
+      "rolls": 1.0,
+      "entries": [
         {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "items": "#minecraft:hoes"
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:apply_bonus",
+              "enchantment": "minecraft:fortune",
+              "formula": "minecraft:binomial_with_bonus_count",
+              "parameters": {
+                "extra": 3,
+                "probability": 0.66
+              }
+            }
+          ],
+          "name": "customized:tomato"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "customized:tomato_crop",
+          "properties": {
+            "age": "7"
           }
         }
       ]

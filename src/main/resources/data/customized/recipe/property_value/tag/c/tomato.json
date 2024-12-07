@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:crops/tomato"
+  ],
+  "value": {
+    "water" : 34.0,
+    "vitamin" : 8.99,
+    "dietary_fiber" : 1.5,
+    "sour" : 15.0,
+    "sweet" : 10.0
+  }
+}

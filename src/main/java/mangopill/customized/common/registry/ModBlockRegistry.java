@@ -24,6 +24,8 @@ public class ModBlockRegistry {
     //crop
     public static final Supplier<Block> RICE_CROP = BLOCK.register(
             "rice_crop", () -> new RiceCropBlock(Block.Properties.ofFullCopy(Blocks.WHEAT)));
+    public static final Supplier<Block> TOMATO_CROP = BLOCK.register(
+            "tomato_crop", () -> new TomatoCropBlock(Block.Properties.ofFullCopy(Blocks.WHEAT)));
     //kitchenware block
     public static final Supplier<Block> CASSEROLE = BLOCK.register(
             "casserole", () -> new CasseroleBlock(Block.Properties.of().mapColor(MapColor.STONE).strength(0.6F, 5.0F).sound(SoundType.DECORATED_POT)));

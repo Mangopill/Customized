@@ -1,6 +1,7 @@
 package mangopill.customized.common.util;
 
 import mangopill.customized.Customized;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -22,6 +23,14 @@ public final class RegistryUtil {
 
     public static Supplier<Item> basicItem() {
         return () -> new Item(basicItemProperties());
+    }
+
+    public static Supplier<Item> basicFoodItem(FoodProperties foodProperties) {
+        return () -> new Item(basicItemProperties().food(foodProperties));
+    }
+
+    public static Supplier<Item> drinkItem(FoodProperties foodProperties) {
+        return () -> new Item(basicItemProperties().food(foodProperties).craftRemainder(Items.GLASS_BOTTLE).stacksTo(16));
     }
 
     public static Supplier<Item> blockItem(Supplier<Block> supplier, Item.Properties properties) {

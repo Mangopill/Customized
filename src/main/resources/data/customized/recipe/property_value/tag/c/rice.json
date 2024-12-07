@@ -1,7 +1,7 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "customized:rice"
+  "tag": [
+    "c:crops/rice"
   ],
   "value": {
     "water" : 3.0,

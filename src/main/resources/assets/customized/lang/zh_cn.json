@@ -1,5 +1,6 @@
 {
   "item.customized.soiled_seed": "覆土种子",
+  "item.customized.ketchup": "番茄酱",
 
   "block.customized.suspicious_dirt": "可疑的泥土",
 
@@ -10,6 +11,9 @@
   "item.customized.rice": "稻米",
   "item.customized.rice_seed": "水稻种子",
   "block.customized.rice_crop": "水稻作物",
+  "item.customized.tomato": "番茄",
+  "item.customized.tomato_seed": "番茄种子",
+  "block.customized.tomato_crop": "番茄作物",
 
   "block.customized.casserole": "砂锅",
   "block.customized.soup_bowl": "汤碗",

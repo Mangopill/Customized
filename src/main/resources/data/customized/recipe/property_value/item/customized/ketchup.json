@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "customized:ketchup"
+  ],
+  "value": {
+    "water" : 3.4,
+    "vitamin" : 8.88,
+    "dietary_fiber" : 1.5,
+    "sour" : 30.0,
+    "sweet" : 15.0
+  }
+}

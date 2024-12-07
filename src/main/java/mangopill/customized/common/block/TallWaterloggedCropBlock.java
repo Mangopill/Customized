@@ -33,7 +33,7 @@ public abstract class TallWaterloggedCropBlock extends BushBlock implements Bone
 
     abstract public VoxelShape[] setShapeByAge();
 
-    abstract public int setGrowChance();
+    abstract public int setGrowChance(BlockState blockState, BlockGetter getter, BlockPos pos);
 
     @Override
     public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level,
@@ -42,7 +42,7 @@ public abstract class TallWaterloggedCropBlock extends BushBlock implements Bone
         if (level.getRawBrightness(pos.above(), 0) < 6 || !level.isAreaLoaded(pos, 1)) {
             return;
         }
-        if (!CommonHooks.canCropGrow(level, pos, state, random.nextInt(setGrowChance()) == 0)) {
+        if (!CommonHooks.canCropGrow(level, pos, state, random.nextInt(setGrowChance(state, level, pos)) == 0)) {
             return;
         }
         if (isTop(state)) {

@@ -21,6 +21,8 @@ public class ModItemRegistry {
     //item
     public static final Supplier<Item> SOILED_SEED = registerWithCreativeTab(
             "soiled_seed", basicItem());
+    public static final Supplier<Item> KETCHUP = registerWithCreativeTab(
+            "ketchup", drinkItem(FoodValue.KETCHUP));
     //block
     public static final Supplier<Item> SUSPICIOUS_DIRT = registerWithCreativeTab(
             "suspicious_dirt", blockItem(ModBlockRegistry.SUSPICIOUS_DIRT, basicItemProperties()));
@@ -29,6 +31,10 @@ public class ModItemRegistry {
             "rice", basicItem());
     public static final Supplier<Item> RICE_SEED = registerWithCreativeTab(
             "rice_seed", itemNameBlockItem(ModBlockRegistry.RICE_CROP, basicItemProperties()));
+    public static final Supplier<Item> TOMATO = registerWithCreativeTab(
+            "tomato", basicFoodItem(FoodValue.TOMATO));
+    public static final Supplier<Item> TOMATO_SEED = registerWithCreativeTab(
+            "tomato_seed", itemNameBlockItem(ModBlockRegistry.TOMATO_CROP, basicItemProperties()));
     //kitchenware item
     public static final Supplier<Item> SPATULA = registerWithCreativeTab(
             "spatula", () -> new ShovelItem(Tiers.IRON, new Item.Properties().attributes(ShovelItem.createAttributes(Tiers.IRON, 2, -3.0F))));
