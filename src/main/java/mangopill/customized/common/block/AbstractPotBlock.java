@@ -1,11 +1,10 @@
 package mangopill.customized.common.block;
 
+import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.block.strategy.base.PotStrategyHandler;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.core.*;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -21,6 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+
 import static mangopill.customized.common.block.state.PotState.*;
 
 public abstract class AbstractPotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
@@ -99,5 +99,20 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
             level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
         return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+    }
+
+    @Override
+    protected void onRemove(@NotNull BlockState state, @NotNull Level level,
+                            @NotNull BlockPos pos, @NotNull BlockState newState, boolean movedByPiston) {
+        if (state.getBlock() == newState.getBlock()) {
+            return;
+        }
+        if (level.getBlockEntity(pos) instanceof AbstractPotBlockEntity potBlockEntity) {
+            NonNullList<ItemStack> stackNonNullList = NonNullList.create();
+            stackNonNullList.addAll(potBlockEntity.getItemStackListInPot(false, true));
+            Containers.dropContents(level, pos, stackNonNullList);
+            level.updateNeighbourForOutputSignal(pos, this);
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }
