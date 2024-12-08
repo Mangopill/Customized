@@ -19,6 +19,8 @@ public class ModItemRegistry {
     public static final DeferredRegister.Items ITEM = DeferredRegister.createItems(Customized.MODID);
     public static LinkedHashSet<Supplier<Item>> CREATIVE_MODE_TAB = Sets.newLinkedHashSet();
     //item
+    public static final Supplier<Item> ROCK_SUGAR = registerWithCreativeTab(
+            "rock_sugar", basicItem());
     public static final Supplier<Item> SOILED_SEED = registerWithCreativeTab(
             "soiled_seed", basicItem());
     public static final Supplier<Item> KETCHUP = registerWithCreativeTab(

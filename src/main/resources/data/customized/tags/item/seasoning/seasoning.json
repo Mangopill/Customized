@@ -1,6 +1,8 @@
 {
   "values": [
     "minecraft:honeycomb",
-    "minecraft:sugar"
+    "minecraft:sugar",
+    "customized:ketchup",
+    "customized:rock_sugar"
   ]
 }

@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "customized:rock_sugar"
+  ],
+  "value": {
+    "sweet" : 52.25
+  }
+}

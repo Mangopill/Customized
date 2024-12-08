@@ -7,5 +7,5 @@ public interface ShrinkSaturationMobEffect {
      */
     default float getShrinkSaturationModifier() {
         return 0.1F;
-    };
+    }
 }

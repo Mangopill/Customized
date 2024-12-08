@@ -7,5 +7,5 @@ public interface ShrinkNutritionMobEffect {
      */
     default float getShrinkNutritionModifier() {
         return 0.1F;
-    };
+    }
 }

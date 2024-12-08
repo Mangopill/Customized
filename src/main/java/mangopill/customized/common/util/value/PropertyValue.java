@@ -22,7 +22,7 @@ public class PropertyValue {
     public static final Codec<PropertyValue> CODEC = Codec.unboundedMap(CATEGORY_CODEC, Codec.FLOAT).xmap(
             PropertyValue::putToMap, propertyValues ->
                     propertyValues.toSet().stream().collect(Collectors.toUnmodifiableMap(Pair::getKey, Pair::getValue))
-    );;
+    );
     public static final StreamCodec<FriendlyByteBuf, PropertyValue> STREAM_CODEC = StreamCodec.of(
             PropertyValue::toNetwork, PropertyValue::fromNetwork
     );

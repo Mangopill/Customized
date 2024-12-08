@@ -14,7 +14,7 @@ public class SteamParticle extends TextureSheetParticle {
         this.scale(2.0F);
         this.setSize(0.5F, 0.5F);
         this.lifetime = this.random.nextInt(35) + 35;
-        this.gravity = this.random.nextFloat() + 0.2F;;
+        this.gravity = this.random.nextFloat() + 0.2F;
     }
 
     @Override

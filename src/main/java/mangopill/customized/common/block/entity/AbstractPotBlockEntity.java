@@ -142,6 +142,9 @@ public abstract class AbstractPotBlockEntity extends BlockEntity {
         if (!canCooking()) {
             return false;
         }
+        if (this.level == null) {
+            return false;
+        }
         ItemStack resultStack = recipe.getResultItem(this.level.registryAccess());
         if (resultStack.isEmpty()) {
             return false;
@@ -168,6 +171,9 @@ public abstract class AbstractPotBlockEntity extends BlockEntity {
         getRecipeCookingCompletionTime(holder);
         lidAccelerate(state);
         if (cookingTime < cookingCompletionTime) {
+            return;
+        }
+        if (this.level == null) {
             return;
         }
         ItemStack resultStack = holder.value().getResultItem(this.level.registryAccess()).copy();

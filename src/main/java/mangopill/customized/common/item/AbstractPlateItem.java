@@ -209,11 +209,10 @@ public abstract class AbstractPlateItem extends BlockItem {
     public void addItemStackTooltip(@NotNull ItemStack stack, @NotNull List<Component> tooltipComponents) {
         List<ItemStack> stackList = getItemStackListInPlate(stack, true);
         if (!stackList.isEmpty()) {
-            stackList.forEach(itemStack -> {
-                tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".item_stack",
+            stackList.forEach(itemStack ->
+                    tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".item_stack",
                         itemStack.getCount(),
-                        Component.translatable(itemStack.getItem().getDescriptionId())).withStyle(ChatFormatting.GRAY));
-            });
+                        Component.translatable(itemStack.getItem().getDescriptionId())).withStyle(ChatFormatting.GRAY)));
         }
     }
 
