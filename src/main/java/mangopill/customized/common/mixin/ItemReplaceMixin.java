@@ -18,9 +18,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
+
 @Mixin(ItemEntity.class)
 public abstract class ItemReplaceMixin{
-    private static final ResourceKey<LootTable> LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Customized.MODID, "entities/soiled_seed"));
+    private static final ResourceKey<LootTable> LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Customized.MODID, "gameplay/soiled_seed"));
     private int life = 200;
     @Inject(at = @At("HEAD"), method = "tick")
     public void customized$itemReplace(CallbackInfo ci) {
@@ -35,7 +37,7 @@ public abstract class ItemReplaceMixin{
         }
         LootParams.Builder builder = new LootParams.Builder((ServerLevel) itemEntity.level());
         LootParams params = builder.create(LootContextParamSets.EMPTY);
-        LootTable lootTable = itemEntity.level().getServer().reloadableRegistries().getLootTable(LOOT_TABLE);
+        LootTable lootTable = Objects.requireNonNull(itemEntity.level().getServer()).reloadableRegistries().getLootTable(LOOT_TABLE);
         if(this.life > 0) {
             this.life--;
         }else {
