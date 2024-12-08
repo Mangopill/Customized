@@ -4,9 +4,39 @@
   "ingredient": [
     {
       "item": "customized:soiled_seed"
+    },
+    {
+      "item": "customized:soiled_seed"
+    },
+    {
+      "item": "customized:soiled_seed"
+    },
+    {
+      "item": "customized:soiled_seed"
+    },
+    {
+      "item": "customized:soiled_seed"
+    },
+    {
+      "item": "customized:soiled_seed"
     }
   ],
   "seasoning": [
+    {
+      "tag": "customized:seasoning"
+    },
+    {
+      "tag": "customized:seasoning"
+    },
+    {
+      "tag": "customized:seasoning"
+    },
+    {
+      "tag": "customized:seasoning"
+    },
+    {
+      "tag": "customized:seasoning"
+    },
     {
       "tag": "customized:seasoning"
     }
