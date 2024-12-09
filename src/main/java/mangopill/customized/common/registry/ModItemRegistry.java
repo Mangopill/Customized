@@ -18,6 +18,7 @@ import static mangopill.customized.common.util.RegistryUtil.*;
 public class ModItemRegistry {
     public static final DeferredRegister.Items ITEM = DeferredRegister.createItems(Customized.MODID);
     public static LinkedHashSet<Supplier<Item>> CREATIVE_MODE_TAB = Sets.newLinkedHashSet();
+
     //item
     public static final Supplier<Item> ROCK_SUGAR = registerWithCreativeTab(
             "rock_sugar", basicItem());
@@ -55,5 +56,11 @@ public class ModItemRegistry {
             "casserole", blockItem(ModBlockRegistry.CASSEROLE, basicItemProperties().stacksTo(1)));
     public static final Supplier<Item> SOUP_BOWL = registerWithCreativeTab(
             "soup_bowl", () -> new SoupBowlItem(ModBlockRegistry.SOUP_BOWL.get(), basicItemProperties().stacksTo(1).food(FoodValue.NULL)
-                    .component(ModDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(new ItemStackHandler(PlateSlotRecord.SOUP_BOWL.ingredientInput() + PlateSlotRecord.SOUP_BOWL.seasoningInput() + 1)))));
+                    .component(ModDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(new ItemStackHandler(
+                            PlateSlotRecord.SOUP_BOWL.ingredientInput() + PlateSlotRecord.SOUP_BOWL.seasoningInput() + 1)))));
+    /**
+     * Just for the logo, no other purpose.
+     */
+    public static final Supplier<Item> CHEF_HAT = ITEM.register(
+            "chef_hat", basicItem());
 }
