@@ -17,3 +17,5 @@ immersive interactions within the game. In Customized, all cooking and food buff
 rather than complex menus. Players only need to place the required ingredients in the right spots to begin cooking and enjoy the benefits of the food.
 This approach preserves the core mechanics of Minecraft while enhancing the immersion of the gameplay.
 
+## Feedback & Issues
+If you encounter any issues with balance, bugs, or anything else, feel free to let me know.

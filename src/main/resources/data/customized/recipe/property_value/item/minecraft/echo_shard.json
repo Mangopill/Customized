@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:echo_shard"
+  ],
+  "value": {
+    "ecology" : 20.0
+  }
+}

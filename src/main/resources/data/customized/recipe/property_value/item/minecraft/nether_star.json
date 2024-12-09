@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:nether_star"
+  ],
+  "value": {
+    "dread" : 100.0
+  }
+}
