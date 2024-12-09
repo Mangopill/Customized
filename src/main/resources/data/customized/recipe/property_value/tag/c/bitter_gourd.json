@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:crops/bitter_gourd"
+  ],
+  "value": {
+    "water" : 30.0,
+    "vitamin" : 5.0,
+    "dietary_fiber" : 1.0,
+    "bitter" : 12.25
+  }
+}
