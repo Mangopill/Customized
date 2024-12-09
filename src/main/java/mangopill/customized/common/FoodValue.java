@@ -11,6 +11,9 @@ public class FoodValue {
 
     public static final FoodProperties TOMATO = new FoodProperties.Builder()
             .nutrition(2).saturationModifier(0.2f).build();
+    public static final FoodProperties BITTER_GOURD = new FoodProperties.Builder()
+            .nutrition(3).saturationModifier(0.5f).build();
+
     public static final FoodProperties KETCHUP = new FoodProperties.Builder()
             .nutrition(2).saturationModifier(0.5f).build();
 }
