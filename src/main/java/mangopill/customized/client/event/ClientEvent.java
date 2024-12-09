@@ -38,7 +38,7 @@ public class ClientEvent {
     }
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(ModBlockEntityTypeRegistry.SUSPICIOUS_DIRT.get(), ModBrushableBlockRederer::new);
+        event.registerBlockEntityRenderer(ModBlockEntityTypeRegistry.SUSPICIOUS_DIRT.get(), ModBrushableBlockRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypeRegistry.CASSEROLE.get(), CasseroleBlockRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypeRegistry.SOUP_BOWL.get(), SoupBowlBlockRenderer::new);
     }
