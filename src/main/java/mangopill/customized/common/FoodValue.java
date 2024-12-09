@@ -1,5 +1,7 @@
 package mangopill.customized.common;
 
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 
 public class FoodValue {
@@ -13,6 +15,8 @@ public class FoodValue {
             .nutrition(2).saturationModifier(0.2f).build();
     public static final FoodProperties BITTER_GOURD = new FoodProperties.Builder()
             .nutrition(3).saturationModifier(0.5f).build();
+    public static final FoodProperties BROAD_BEAN = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f).effect(() -> new MobEffectInstance(MobEffects.POISON, 50, 0), 0.4F).build();
 
     public static final FoodProperties KETCHUP = new FoodProperties.Builder()
             .nutrition(2).saturationModifier(0.5f).build();

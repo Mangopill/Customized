@@ -28,6 +28,8 @@ public class ModBlockRegistry {
             "tomato_crop", () -> new TomatoCropBlock(Block.Properties.ofFullCopy(Blocks.WHEAT)));
     public static final Supplier<Block> BITTER_GOURD_CROP = BLOCK.register(
             "bitter_gourd_crop", () -> new BitterGourdCropBlock(Block.Properties.ofFullCopy(Blocks.WHEAT)));
+    public static final Supplier<Block> BROAD_BEAN_CROP = BLOCK.register(
+            "broad_bean_crop", () -> new BroadBeanCropBlock(Block.Properties.ofFullCopy(Blocks.WHEAT)));
     //kitchenware block
     public static final Supplier<Block> CASSEROLE = BLOCK.register(
             "casserole", () -> new CasseroleBlock(Block.Properties.of().mapColor(MapColor.STONE).strength(0.6F, 5.0F).sound(SoundType.DECORATED_POT)));

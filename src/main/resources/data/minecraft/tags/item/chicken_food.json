@@ -1,7 +1,6 @@
 {
   "values": [
     "customized:rice",
-    "customized:tomato_seed",
-    "customized:bitter_gourd"
+    "#customized:mod_seeds/common"
   ]
 }

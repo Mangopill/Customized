@@ -1,0 +1,11 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:crops/broad_bean"
+  ],
+  "value": {
+    "water" : 3.0,
+    "vitamin" : 3.0,
+    "dietary_fiber" : 2.0
+  }
+}

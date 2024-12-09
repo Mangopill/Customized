@@ -41,6 +41,8 @@ public class ModItemRegistry {
             "bitter_gourd", basicFoodItem(FoodValue.BITTER_GOURD));
     public static final Supplier<Item> BITTER_GOURD_SEED = registerWithCreativeTab(
             "bitter_gourd_seed", itemNameBlockItem(ModBlockRegistry.BITTER_GOURD_CROP, basicItemProperties()));
+    public static final Supplier<Item> BROAD_BEAN = registerWithCreativeTab(
+            "broad_bean", itemNameBlockItem(ModBlockRegistry.BROAD_BEAN_CROP, basicItemProperties().food(FoodValue.BROAD_BEAN)));
     //kitchenware item
     public static final Supplier<Item> SPATULA = registerWithCreativeTab(
             "spatula", () -> new ShovelItem(Tiers.IRON, new Item.Properties().attributes(ShovelItem.createAttributes(Tiers.IRON, 2, -3.0F))));
