@@ -16,14 +16,14 @@ import org.jetbrains.annotations.NotNull;
 public class SoybeanCropBlock extends CropBlock {
     public static final MapCodec<SoybeanCropBlock> CODEC = simpleCodec(SoybeanCropBlock::new);
     private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
-            Block.box(7.0, 0.0, 7.0, 9.0, 4.0, 9.0),
-            Block.box(7.0, 0.0, 7.0, 9.0, 4.0, 9.0),
-            Block.box(6.0, 0.0, 6.0, 10.0, 8.0, 10.0),
-            Block.box(6.0, 0.0, 6.0, 10.0, 8.0, 10.0),
-            Block.box(4.0, 0.0, 4.0, 12.0, 16.0, 12.0),
-            Block.box(4.0, 0.0, 4.0, 12.0, 16.0, 12.0),
-            Block.box(4.0, 0.0, 4.0, 12.0, 16.0, 12.0),
-            Block.box(4.0, 0.0, 4.0, 12.0, 16.0, 12.0)
+            Block.box(7.0, 0.0, 7.0, 9.0, 3.0, 9.0),
+            Block.box(7.0, 0.0, 7.0, 9.0, 3.0, 9.0),
+            Block.box(5.0, 0.0, 5.0, 11.0, 6.0, 11.0),
+            Block.box(5.0, 0.0, 5.0, 11.0, 6.0, 11.0),
+            Block.box(5.0, 0.0, 5.0, 11.0, 9.0, 11.0),
+            Block.box(5.0, 0.0, 5.0, 11.0, 9.0, 11.0),
+            Block.box(5.0, 0.0, 5.0, 11.0, 9.0, 11.0),
+            Block.box(5.0, 0.0, 5.0, 11.0, 12.0, 11.0),
     };
 
     @Override
