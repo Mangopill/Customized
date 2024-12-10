@@ -17,5 +17,4 @@ public class ModBrushableBlockEntity extends BrushableBlockEntity {
     {
         return ModBlockEntityTypeRegistry.SUSPICIOUS_DIRT.get();
     }
-
 }
