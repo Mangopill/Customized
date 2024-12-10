@@ -13,7 +13,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-import static net.minecraft.world.level.block.Blocks.DIRT;
+import static mangopill.customized.common.util.RegistryUtil.*;
+import static net.minecraft.world.level.block.Blocks.*;
 
 public class ModBlockRegistry {
     public static final DeferredRegister<Block> BLOCK = DeferredRegister.create(Registries.BLOCK, Customized.MODID);
@@ -23,13 +24,17 @@ public class ModBlockRegistry {
             BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.SNARE).strength(0.25F).sound(SoundType.SUSPICIOUS_GRAVEL).pushReaction(PushReaction.DESTROY)));
     //crop
     public static final Supplier<Block> RICE_CROP = BLOCK.register(
-            "rice_crop", () -> new RiceCropBlock(Block.Properties.ofFullCopy(Blocks.WHEAT)));
+            "rice_crop", () -> new RiceCropBlock(cropBlockProperties()));
     public static final Supplier<Block> TOMATO_CROP = BLOCK.register(
-            "tomato_crop", () -> new TomatoCropBlock(Block.Properties.ofFullCopy(Blocks.WHEAT)));
+            "tomato_crop", () -> new TomatoCropBlock(cropBlockProperties()));
     public static final Supplier<Block> BITTER_GOURD_CROP = BLOCK.register(
-            "bitter_gourd_crop", () -> new BitterGourdCropBlock(Block.Properties.ofFullCopy(Blocks.WHEAT)));
+            "bitter_gourd_crop", () -> new BitterGourdCropBlock(cropBlockProperties()));
     public static final Supplier<Block> BROAD_BEAN_CROP = BLOCK.register(
-            "broad_bean_crop", () -> new BroadBeanCropBlock(Block.Properties.ofFullCopy(Blocks.WHEAT)));
+            "broad_bean_crop", () -> new BroadBeanCropBlock(cropBlockProperties()));
+    public static final Supplier<Block> CHILLI_CROP = BLOCK.register(
+            "chilli_crop", () -> new ChilliCropBlock(cropBlockProperties()));
+    public static final Supplier<Block> SOYBEAN_CROP = BLOCK.register(
+            "soybean_crop", () -> new SoybeanCropBlock(cropBlockProperties()));
     //kitchenware block
     public static final Supplier<Block> CASSEROLE = BLOCK.register(
             "casserole", () -> new CasseroleBlock(Block.Properties.of().mapColor(MapColor.STONE).strength(0.6F, 5.0F).sound(SoundType.DECORATED_POT)));

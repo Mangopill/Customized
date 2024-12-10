@@ -3,6 +3,8 @@
     "#c:crops/rice",
     "#c:crops/tomato",
     "#c:crops/bitter_gourd",
-    "#c:crops/broad_bean"
+    "#c:crops/broad_bean",
+    "#c:crops/chilli",
+    "#c:crops/soybean"
   ]
 }

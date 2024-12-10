@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:crops/soybean"
+  ],
+  "value": {
+    "water": 0.4,
+    "protein": 3.5,
+    "lipid": 3.0,
+    "carbohydrate": 9.8,
+    "dietary_fiber": 3.48
+  }
+}

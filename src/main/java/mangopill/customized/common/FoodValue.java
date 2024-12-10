@@ -17,6 +17,10 @@ public class FoodValue {
             .nutrition(3).saturationModifier(0.5f).build();
     public static final FoodProperties BROAD_BEAN = new FoodProperties.Builder()
             .nutrition(1).saturationModifier(0.2f).effect(() -> new MobEffectInstance(MobEffects.POISON, 50, 0), 0.4F).build();
+    public static final FoodProperties CHILLI = new FoodProperties.Builder()
+            .nutrition(2).saturationModifier(0.4f).build();
+    public static final FoodProperties SOYBEAN = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.3f).effect(() -> new MobEffectInstance(MobEffects.POISON, 60, 0), 0.6F).build();
 
     public static final FoodProperties KETCHUP = new FoodProperties.Builder()
             .nutrition(2).saturationModifier(0.5f).build();

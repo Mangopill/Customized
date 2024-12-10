@@ -43,7 +43,13 @@ public class ModItemRegistry {
     public static final Supplier<Item> BITTER_GOURD_SEED = registerWithCreativeTab(
             "bitter_gourd_seed", itemNameBlockItem(ModBlockRegistry.BITTER_GOURD_CROP, basicItemProperties()));
     public static final Supplier<Item> BROAD_BEAN = registerWithCreativeTab(
-            "broad_bean", itemNameBlockItem(ModBlockRegistry.BROAD_BEAN_CROP, basicItemProperties().food(FoodValue.BROAD_BEAN)));
+            "broad_bean", foodSeedItem(ModBlockRegistry.BROAD_BEAN_CROP, FoodValue.BROAD_BEAN));
+    public static final Supplier<Item> CHILLI = registerWithCreativeTab(
+            "chilli", basicFoodItem(FoodValue.CHILLI));
+    public static final Supplier<Item> CHILLI_SEED = registerWithCreativeTab(
+            "chilli_seed", itemNameBlockItem(ModBlockRegistry.CHILLI_CROP, basicItemProperties()));
+    public static final Supplier<Item> SOYBEAN = registerWithCreativeTab(
+            "soybean", foodSeedItem(ModBlockRegistry.SOYBEAN_CROP, FoodValue.SOYBEAN));
     //kitchenware item
     public static final Supplier<Item> SPATULA = registerWithCreativeTab(
             "spatula", () -> new ShovelItem(Tiers.IRON, new Item.Properties().attributes(ShovelItem.createAttributes(Tiers.IRON, 2, -3.0F))));
@@ -55,9 +61,8 @@ public class ModItemRegistry {
     public static final Supplier<Item> CASSEROLE = registerWithCreativeTab(
             "casserole", blockItem(ModBlockRegistry.CASSEROLE, basicItemProperties().stacksTo(1)));
     public static final Supplier<Item> SOUP_BOWL = registerWithCreativeTab(
-            "soup_bowl", () -> new SoupBowlItem(ModBlockRegistry.SOUP_BOWL.get(), basicItemProperties().stacksTo(1).food(FoodValue.NULL)
-                    .component(ModDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(new ItemStackHandler(
-                            PlateSlotRecord.SOUP_BOWL.ingredientInput() + PlateSlotRecord.SOUP_BOWL.seasoningInput() + 1)))));
+            "soup_bowl", () -> new SoupBowlItem(ModBlockRegistry.SOUP_BOWL.get(), basicPlateItemProperties(
+                    PlateSlotRecord.SOUP_BOWL.ingredientInput() + PlateSlotRecord.SOUP_BOWL.seasoningInput() + 1)));
     /**
      * Just for the logo, no other purpose.
      */

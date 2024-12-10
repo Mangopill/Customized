@@ -1,0 +1,10 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:crops/chilli"
+  ],
+  "value": {
+    "vitamin" : 4.0,
+    "spicy" : 15.0
+  }
+}

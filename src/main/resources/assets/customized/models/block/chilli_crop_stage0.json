@@ -1,0 +1,38 @@
+{
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "customized:block/chilli_crop_stage0",
+		"particle": "customized:block/chilli_crop_stage0"
+	},
+	"elements": [
+		{
+			"from": [3, 0, 8],
+			"to": [13, 8, 8],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 10, 8], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"south": {"uv": [0, 8, 10, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"up": {"uv": [10, 0, 0, 0], "texture": "#0"},
+				"down": {"uv": [10, 0, 0, 0], "texture": "#0"}
+			}
+		},
+		{
+			"from": [8, 0, 3],
+			"to": [8, 8, 13],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"east": {"uv": [0, 8, 10, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"west": {"uv": [0, 0, 10, 8], "texture": "#0"},
+				"up": {"uv": [10, 0, 0, 0], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [10, 0, 0, 0], "rotation": 90, "texture": "#0"}
+			}
+		}
+	],
+	"display": {}
+}
