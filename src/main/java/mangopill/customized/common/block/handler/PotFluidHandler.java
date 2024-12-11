@@ -38,23 +38,23 @@ public class PotFluidHandler implements IFluidHandler {
         return blockState.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE);
     }
 
-    protected void updateDriveState(FluidAction action) {
+    protected void updateDriveState(FluidAction action, PotFluidContent contents) {
         if (!action.execute()) {
             return;
         }
         BlockState blockState = level.getBlockState(pos);
         if (canInput()) {
-            level.setBlockAndUpdate(pos, blockState.setValue(AbstractPotBlock.LID, PotState.WITH_DRIVE));
+            level.setBlockAndUpdate(pos, blockState.setValue(AbstractPotBlock.LID, contents.getEnumProperty()));
         }
     }
 
-    protected void updateWithoutDriveState(FluidAction action) {
+    protected void updateWithoutDriveState(FluidAction action, PotFluidContent contents) {
         if (!action.execute()) {
             return;
         }
         BlockState blockState = level.getBlockState(pos);
         if (canOutput()) {
-            level.setBlockAndUpdate(pos, blockState.setValue(AbstractPotBlock.LID, PotState.WITHOUT_LID));
+            level.setBlockAndUpdate(pos, blockState.setValue(AbstractPotBlock.LID, contents.getEnumProperty()));
         }
     }
 
@@ -85,18 +85,18 @@ public class PotFluidHandler implements IFluidHandler {
         if (fluidStack.isEmpty()) {
             return 0;
         }
-        PotFluidContent potFluidContent = getContent();
-        if (potFluidContent.getFluid() != Fluids.EMPTY && !fluidStack.is(potFluidContent.getFluid())) {
+        PotFluidContent contents = getContentForFill();
+        if (contents.getFluid() != Fluids.EMPTY && !fluidStack.is(contents.getFluid())) {
             return 0;
         }
         int amount = fluidStack.getAmount();
-        if (amount == 100) {
-            amount = amount + 900;
-        }
-        if (canInput() && amount >= FluidType.BUCKET_VOLUME) {
-            PotFluidContent contents = this.getContentForFill();
-            updateDriveState(fluidAction);
-            return contents.getTotalAmount();
+        if (canInput()) {
+            if (amount >= contents.getTotalAmount()){
+                updateDriveState(fluidAction, contents);
+                return contents.getTotalAmount();
+            } else {
+                return 0;
+            }
         } else {
             return 0;
         }
@@ -110,7 +110,7 @@ public class PotFluidHandler implements IFluidHandler {
             return fluidStack.is(this.getContent().getFluid())
                     && fluidStack.getComponents().isEmpty()
                     && canOutput()
-                    && fluidStack.getAmount() >= FluidType.BUCKET_VOLUME
+                    && fluidStack.getAmount() >= getContent().getTotalAmount()
                     ? this.drain(fluidAction) : FluidStack.EMPTY;
         }
     }
@@ -122,7 +122,7 @@ public class PotFluidHandler implements IFluidHandler {
 
     protected FluidStack drain(FluidAction fluidAction) {
         PotFluidContent content = this.getContent();
-        updateWithoutDriveState(fluidAction);
+        updateWithoutDriveState(fluidAction, content);
         return new FluidStack(content.getFluid(), content.getTotalAmount());
     }
 

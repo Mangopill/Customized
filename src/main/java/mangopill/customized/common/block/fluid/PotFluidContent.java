@@ -25,9 +25,9 @@ public class PotFluidContent {
 
     public static PotFluidContent getContent(Level level, BlockPos pos) {
         if (!level.getBlockState(pos).getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID)){
-            return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.WATER, FluidType.BUCKET_VOLUME, PotState.WITH_DRIVE);
+            return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.WATER, FluidType.BUCKET_VOLUME, PotState.WITHOUT_LID);
         } else {
-            return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.EMPTY, 0, PotState.WITH_DRIVE);
+            return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.EMPTY, 0, null);
         }
     }
 
@@ -35,7 +35,7 @@ public class PotFluidContent {
         if (level.getBlockState(pos).getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID)){
             return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.WATER, FluidType.BUCKET_VOLUME, PotState.WITH_DRIVE);
         } else {
-            return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.EMPTY, 0, PotState.WITH_DRIVE);
+            return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.EMPTY, 0, null);
         }
     }
 
