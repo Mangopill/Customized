@@ -5,9 +5,7 @@ import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.record.PlateSlotRecord;
 import mangopill.customized.common.item.SoupBowlItem;
-import mangopill.customized.common.util.record.ItemStackHandlerRecord;
 import net.minecraft.world.item.*;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.LinkedHashSet;
@@ -50,6 +48,12 @@ public class ModItemRegistry {
             "chilli_seed", itemNameBlockItem(ModBlockRegistry.CHILLI_CROP, basicItemProperties()));
     public static final Supplier<Item> SOYBEAN = registerWithCreativeTab(
             "soybean", foodSeedItem(ModBlockRegistry.SOYBEAN_CROP, FoodValue.SOYBEAN));
+    public static final Supplier<Item> SICHUAN_PEPPER = registerWithCreativeTab(
+            "sichuan_pepper", itemNameBlockItem(ModBlockRegistry.SICHUAN_PEPPER_CROP, basicItemProperties()));
+    public static final Supplier<Item> SCALLION = registerWithCreativeTab(
+            "scallion", foodSeedItem(ModBlockRegistry.SCALLION_CROP, FoodValue.SCALLION));
+    public static final Supplier<Item> GINGER = registerWithCreativeTab(
+            "ginger", foodSeedItem(ModBlockRegistry.GINGER_CROP, FoodValue.GINGER));
     //kitchenware item
     public static final Supplier<Item> SPATULA = registerWithCreativeTab(
             "spatula", () -> new ShovelItem(Tiers.IRON, new Item.Properties().attributes(ShovelItem.createAttributes(Tiers.IRON, 2, -3.0F))));

@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "customized:soybean"
+          "name": "customized:ginger"
         }
       ]
     },
@@ -28,13 +28,13 @@
               }
             }
           ],
-          "name": "customized:soybean"
+          "name": "customized:ginger"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "customized:soybean_crop",
+          "block": "customized:ginger_crop",
           "properties": {
             "age": "7"
           }

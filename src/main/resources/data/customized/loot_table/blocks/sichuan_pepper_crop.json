@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "customized:soybean"
+          "name": "customized:sichuan_pepper"
         }
       ]
     },
@@ -28,13 +28,13 @@
               }
             }
           ],
-          "name": "customized:soybean"
+          "name": "customized:sichuan_pepper"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "customized:soybean_crop",
+          "block": "customized:sichuan_pepper_crop",
           "properties": {
             "age": "7"
           }

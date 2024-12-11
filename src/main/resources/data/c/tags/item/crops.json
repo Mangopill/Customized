@@ -5,6 +5,9 @@
     "#c:crops/bitter_gourd",
     "#c:crops/broad_bean",
     "#c:crops/chilli",
-    "#c:crops/soybean"
+    "#c:crops/soybean",
+    "#c:crops/sichuan_pepper",
+    "#c:crops/scallion",
+    "#c:crops/ginger"
   ]
 }

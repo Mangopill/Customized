@@ -35,6 +35,12 @@ public class ModBlockRegistry {
             "chilli_crop", () -> new ChilliCropBlock(cropBlockProperties()));
     public static final Supplier<Block> SOYBEAN_CROP = BLOCK.register(
             "soybean_crop", () -> new SoybeanCropBlock(cropBlockProperties()));
+    public static final Supplier<Block> SICHUAN_PEPPER_CROP = BLOCK.register(
+            "sichuan_pepper_crop", () -> new SichuanPepperCropBlock(cropBlockProperties()));
+    public static final Supplier<Block> SCALLION_CROP = BLOCK.register(
+            "scallion_crop", () -> new ScallionCropBlock(cropBlockProperties()));
+    public static final Supplier<Block> GINGER_CROP = BLOCK.register(
+            "ginger_crop", () -> new GingerCropBlock(cropBlockProperties()));
     //kitchenware block
     public static final Supplier<Block> CASSEROLE = BLOCK.register(
             "casserole", () -> new CasseroleBlock(Block.Properties.of().mapColor(MapColor.STONE).strength(0.6F, 5.0F).sound(SoundType.DECORATED_POT)));

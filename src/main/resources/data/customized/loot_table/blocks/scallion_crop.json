@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "customized:soybean"
+          "name": "customized:scallion"
         }
       ]
     },
@@ -28,13 +28,13 @@
               }
             }
           ],
-          "name": "customized:soybean"
+          "name": "customized:scallion"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "customized:soybean_crop",
+          "block": "customized:scallion_crop",
           "properties": {
             "age": "7"
           }

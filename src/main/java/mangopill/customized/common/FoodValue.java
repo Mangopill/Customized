@@ -21,6 +21,10 @@ public class FoodValue {
             .nutrition(2).saturationModifier(0.4f).build();
     public static final FoodProperties SOYBEAN = new FoodProperties.Builder()
             .nutrition(1).saturationModifier(0.3f).effect(() -> new MobEffectInstance(MobEffects.POISON, 60, 0), 0.6F).build();
+    public static final FoodProperties SCALLION = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f).build();
+    public static final FoodProperties GINGER = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.1f).build();
 
     public static final FoodProperties KETCHUP = new FoodProperties.Builder()
             .nutrition(2).saturationModifier(0.5f).build();
