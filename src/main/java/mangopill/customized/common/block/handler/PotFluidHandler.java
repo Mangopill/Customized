@@ -93,7 +93,6 @@ public class PotFluidHandler implements IFluidHandler {
         if (amount == 100) {
             amount = amount + 900;
         }
-        System.out.println("fluidStack.getAmount()" + amount);
         if (canInput() && amount >= FluidType.BUCKET_VOLUME) {
             PotFluidContent contents = this.getContentForFill();
             updateDriveState(fluidAction);
