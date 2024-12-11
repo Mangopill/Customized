@@ -3,7 +3,7 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"0": "customized:block/soup_bowl",
-		"1": "customized:block/water_in_the_pot",
+		"1": "minecraft:block/water_still",
 		"particle": "customized:block/soup_bowl"
 	},
 	"elements": [

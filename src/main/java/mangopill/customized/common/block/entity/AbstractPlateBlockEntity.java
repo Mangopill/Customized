@@ -200,7 +200,6 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity {
     @Override
     protected void collectImplicitComponents(DataComponentMap.@NotNull Builder component) {
         super.collectImplicitComponents(component);
-        System.out.println(foodProperty);
         if (hasInput()) {
             component.set(ModDataComponentRegistry.CONSUMPTION_COUNT, new ConsumptionCountRecord(consumptionCount));
             component.set(ModDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, new ConsumptionCountTotalRecord(consumptionCountTotal));

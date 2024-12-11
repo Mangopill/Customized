@@ -1,7 +1,9 @@
 package mangopill.customized.common.block.capabilities;
 
 import mangopill.customized.Customized;
+import mangopill.customized.common.block.handler.PotFluidHandler;
 import mangopill.customized.common.block.record.PotRecord;
+import mangopill.customized.common.registry.ModBlockRegistry;
 import net.minecraft.core.Direction;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -22,5 +24,12 @@ public class PotCapabilities {
                     return entity.getOutputHandler();
                 }
         );
+    }
+    @SubscribeEvent
+    public static void registerFluidCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlock(
+                Capabilities.FluidHandler.BLOCK,
+                (level, pos, state, be, context) -> new PotFluidHandler(level, pos),
+                ModBlockRegistry.CASSEROLE.get());
     }
 }
