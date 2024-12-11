@@ -6,7 +6,8 @@ import mangopill.customized.common.block.state.PotState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.fluids.*;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
@@ -83,14 +84,22 @@ public class PotFluidHandler implements IFluidHandler {
     public int fill(@NotNull FluidStack fluidStack, @NotNull FluidAction fluidAction) {
         if (fluidStack.isEmpty()) {
             return 0;
+        }
+        PotFluidContent potFluidContent = getContent();
+        if (potFluidContent.getFluid() != Fluids.EMPTY && !fluidStack.is(potFluidContent.getFluid())) {
+            return 0;
+        }
+        int amount = fluidStack.getAmount();
+        if (amount == 100) {
+            amount = amount + 900;
+        }
+        System.out.println("fluidStack.getAmount()" + amount);
+        if (canInput() && amount >= FluidType.BUCKET_VOLUME) {
+            PotFluidContent contents = this.getContentForFill();
+            updateDriveState(fluidAction);
+            return contents.getTotalAmount();
         } else {
-            if (canInput()) {
-                PotFluidContent contents = this.getContentForFill();
-                updateDriveState(fluidAction);
-                return contents.getTotalAmount();
-            } else {
-                return 0;
-            }
+            return 0;
         }
     }
 
@@ -99,7 +108,10 @@ public class PotFluidHandler implements IFluidHandler {
         if (fluidStack.isEmpty()) {
             return FluidStack.EMPTY;
         } else {
-            return fluidStack.is(this.getContent().getFluid()) && fluidStack.getComponents().isEmpty() && canOutput()
+            return fluidStack.is(this.getContent().getFluid())
+                    && fluidStack.getComponents().isEmpty()
+                    && canOutput()
+                    && fluidStack.getAmount() >= FluidType.BUCKET_VOLUME
                     ? this.drain(fluidAction) : FluidStack.EMPTY;
         }
     }
