@@ -4,9 +4,8 @@
     "customized:ketchup"
   ],
   "value": {
-    "water" : 3.4,
-    "vitamin" : 8.88,
-    "dietary_fiber" : 1.5,
+    "water": 33.33,
+    "vitamin": 50.0,
     "sour" : 30.0,
     "sweet" : 15.0
   }

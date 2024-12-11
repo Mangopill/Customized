@@ -4,11 +4,12 @@
     "minecraft:beetroot"
   ],
   "value": {
-    "water" : 86.0,
-    "protein" : 1.6,
-    "carbohydrate" : 9.6,
-    "vitamin": 0.4,
-    "mineral" : 0.3,
-    "dietary_fiber" : 2.8
+    "water": 58.4,
+    "protein": 3.2,
+    "lipid": 0.4,
+    "carbohydrate": 19.12,
+    "vitamin": 9.8,
+    "mineral": 61.0,
+    "dietary_fiber": 14.0
   }
 }

@@ -4,10 +4,10 @@
     "minecraft:tropical_fish"
   ],
   "value": {
-    "water" : 18.0,
-    "protein" : 18.0,
-    "lipid" : 2.5,
-    "mineral" : 1.0,
+    "water": 37.6,
+    "protein": 36.0,
+    "lipid": 9.0,
+    "mineral": 19.0,
     "fresh" : 5.0
   }
 }

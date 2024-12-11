@@ -4,10 +4,10 @@
     "minecraft:cooked_cod"
   ],
   "value": {
-    "water" : 10.0,
-    "protein" : 36.0,
-    "lipid" : 1.0,
-    "mineral" : 2.0,
-    "fresh" : 20.0
+    "water": 39.3,
+    "protein": 36.0,
+    "lipid": 3.0,
+    "mineral": 15.0,
+    "fresh" : 10.0
   }
 }

@@ -4,9 +4,9 @@
     "minecraft:beef"
   ],
   "value": {
-    "water" : 20.0,
-    "protein" : 22.0,
-    "lipid" : 15.0,
-    "mineral" : 1.0
+    "water": 12.0,
+    "protein": 20.0,
+    "lipid": 15.0,
+    "mineral": 18.0
   }
 }

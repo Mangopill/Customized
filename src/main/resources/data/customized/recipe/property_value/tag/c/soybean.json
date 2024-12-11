@@ -4,10 +4,12 @@
     "c:crops/soybean"
   ],
   "value": {
-    "water": 0.4,
-    "protein": 3.5,
-    "lipid": 3.0,
-    "carbohydrate": 9.8,
-    "dietary_fiber": 3.48
+    "water": 5.33,
+    "protein": 13.0,
+    "lipid": 19.8,
+    "carbohydrate": 10.4,
+    "vitamin": 10.0,
+    "mineral": 16.0,
+    "dietary_fiber": 16.5
   }
 }

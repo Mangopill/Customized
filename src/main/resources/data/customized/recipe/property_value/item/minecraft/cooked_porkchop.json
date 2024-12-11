@@ -4,8 +4,9 @@
     "minecraft:cooked_porkchop"
   ],
   "value": {
-    "water" : 11.0,
-    "protein" : 40.0,
-    "mineral" : 2.0
+    "water": 24.0,
+    "protein": 42.0,
+    "lipid": 36.0,
+    "mineral": 36.0
   }
 }

@@ -4,9 +4,9 @@
     "minecraft:honey_bottle"
   ],
   "value": {
-    "water" : 17.0,
-    "protein" : 0.3,
-    "carbohydrate" : 32.5,
-    "sweet" : 15.0
+    "water": 3.4,
+    "protein": 0.3,
+    "carbohydrate": 82.4,
+    "mineral": 0.8
   }
 }

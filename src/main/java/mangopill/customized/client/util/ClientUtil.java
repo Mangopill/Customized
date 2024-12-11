@@ -81,8 +81,8 @@ public final class ClientUtil {
             ItemStack newStack = stack.copy();
             if (!newStack.isEmpty()) {
                 int count = newStack.getCount();
-                int renderCount = count / 16;
-                if (count % 16 > 0) {
+                int renderCount = count / 4;
+                if (count % 4 > 0) {
                     renderCount++;
                 }
                 for (int i = 0; i < renderCount; i++) {

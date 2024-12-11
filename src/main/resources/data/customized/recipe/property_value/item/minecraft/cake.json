@@ -4,12 +4,13 @@
     "minecraft:cake"
   ],
   "value": {
-    "water" : 30.0,
-    "protein" : 5.0,
-    "lipid" : 10.0,
-    "carbohydrate" : 55.0,
-    "vitamin" : 0.5,
-    "mineral" : 1.0,
-    "dietary_fiber" : 0.5
+    "water": 10.0,
+    "protein": 10.0,
+    "lipid": 30.0,
+    "carbohydrate": 120.0,
+    "vitamin": 2.5,
+    "mineral": 6.0,
+    "dietary_fiber": 10.0,
+    "sweet" : 7.0
   }
 }

@@ -4,9 +4,9 @@
     "minecraft:cooked_mutton"
   ],
   "value": {
-    "water" : 10.0,
-    "protein" : 40.0,
-    "lipid" : 42.0,
-    "mineral" : 2.4
+    "water": 24.6,
+    "protein": 40.0,
+    "lipid": 42.0,
+    "mineral": 30.0
   }
 }

@@ -4,10 +4,12 @@
     "minecraft:wheat"
   ],
   "value": {
-    "water" : 11.0,
-    "protein" : 12.5,
-    "lipid" : 1.5,
-    "carbohydrate" : 22.5,
-    "dietary_fiber" : 11.0
+    "water": 8.0,
+    "protein": 6.0,
+    "lipid": 4.0,
+    "carbohydrate": 30.0,
+    "vitamin": 4.0,
+    "mineral": 6.0,
+    "dietary_fiber": 3.0
   }
 }

@@ -4,9 +4,9 @@
     "minecraft:cooked_rabbit"
   ],
   "value": {
-    "water" : 8.0,
-    "protein" : 42.0,
-    "lipid" : 16.0,
-    "mineral" : 2.0
+    "water": 30.0,
+    "protein": 42.0,
+    "lipid": 9.0,
+    "mineral": 30.0
   }
 }

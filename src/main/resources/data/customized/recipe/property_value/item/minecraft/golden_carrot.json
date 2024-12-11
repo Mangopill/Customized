@@ -4,10 +4,12 @@
     "minecraft:golden_carrot"
   ],
   "value": {
-    "water" : 75.5,
-    "carbohydrate" : 9.6,
-    "vitamin": 5.9,
-    "mineral" : 30.0,
-    "dietary_fiber" : 2.8
+    "water": 58.86,
+    "protein": 1.8,
+    "lipid": 0.4,
+    "carbohydrate": 19.16,
+    "vitamin": 4.18,
+    "mineral": 80.0,
+    "dietary_fiber": 14.0
   }
 }

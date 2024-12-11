@@ -4,8 +4,12 @@
     "c:crops/broad_bean"
   ],
   "value": {
-    "water" : 3.0,
-    "vitamin" : 3.0,
-    "dietary_fiber" : 2.0
+    "water": 6.67,
+    "protein": 5.2,
+    "lipid": 2.8,
+    "carbohydrate": 6.0,
+    "vitamin": 5.0,
+    "mineral": 6.0,
+    "dietary_fiber": 15.0
   }
 }

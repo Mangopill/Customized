@@ -4,10 +4,14 @@
     "c:crops/tomato"
   ],
   "value": {
-    "water" : 34.0,
-    "vitamin" : 8.99,
-    "dietary_fiber" : 1.5,
-    "sour" : 15.0,
-    "sweet" : 10.0
+    "water": 63.33,
+    "protein": 2.0,
+    "lipid": 0.4,
+    "carbohydrate": 8.0,
+    "vitamin": 100.0,
+    "mineral": 2.0,
+    "dietary_fiber": 5.0,
+    "sour" : 10.0,
+    "sweet" : 6.0
   }
 }

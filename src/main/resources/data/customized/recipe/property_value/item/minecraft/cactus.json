@@ -4,8 +4,12 @@
     "minecraft:cactus"
   ],
   "value": {
-    "water" : 45.6,
-    "protein" : 0.5,
-    "dietary_fiber" : 2.5
+    "water": 81.0,
+    "protein": 0.5,
+    "lipid": 0.1,
+    "carbohydrate": 5.0,
+    "vitamin": 1.0,
+    "mineral": 1.8,
+    "dietary_fiber": 3.0
   }
 }

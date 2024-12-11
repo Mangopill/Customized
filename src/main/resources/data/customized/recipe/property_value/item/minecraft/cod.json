@@ -4,10 +4,10 @@
     "minecraft:cod"
   ],
   "value": {
-    "water" : 20.0,
-    "protein" : 18.0,
-    "lipid" : 0.5,
-    "mineral" : 1.0,
+    "water": 14.3,
+    "protein": 13.0,
+    "lipid": 1.5,
+    "mineral": 7.5,
     "fresh" : 10.0
   }
 }

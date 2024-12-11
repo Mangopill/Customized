@@ -4,11 +4,13 @@
     "c:foods/berry"
   ],
   "value": {
-    "water" : 72.0,
-    "carbohydrate" : 7.7,
-    "vitamin": 5.88,
-    "mineral" : 2.06,
-    "dietary_fiber" : 2.0,
-    "sweet" : 10.0
+    "water": 60.67,
+    "protein": 1.6,
+    "lipid": 0.6,
+    "carbohydrate": 15.4,
+    "vitamin": 100.0,
+    "mineral": 2.4,
+    "dietary_fiber": 10.0,
+    "sweet" : 3.0
   }
 }

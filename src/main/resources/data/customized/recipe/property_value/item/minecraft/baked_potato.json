@@ -4,11 +4,12 @@
     "minecraft:baked_potato"
   ],
   "value": {
-    "water" : 45.0,
-    "protein" : 2.0,
-    "carbohydrate" : 17.5,
-    "vitamin": 1.9,
-    "mineral" : 0.5,
-    "dietary_fiber" : 2.2
+    "water": 52.83,
+    "protein": 4.0,
+    "lipid": 0.2,
+    "carbohydrate": 35.16,
+    "vitamin": 98.5,
+    "mineral": 85.8,
+    "dietary_fiber": 11.0
   }
 }

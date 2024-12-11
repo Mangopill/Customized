@@ -4,11 +4,12 @@
     "minecraft:bread"
   ],
   "value": {
-    "water" : 3.5,
-    "protein" : 7.0,
-    "lipid" : 3.0,
-    "carbohydrate" : 50.0,
-    "mineral" : 1.0,
-    "dietary_fiber" : 2.5
+    "water": 23.33,
+    "protein": 16.0,
+    "lipid": 6.0,
+    "carbohydrate": 98.0,
+    "vitamin": 2.0,
+    "mineral": 20.0,
+    "dietary_fiber": 12.5
   }
 }

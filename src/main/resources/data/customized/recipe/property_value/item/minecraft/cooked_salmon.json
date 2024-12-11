@@ -4,10 +4,10 @@
     "minecraft:cooked_salmon"
   ],
   "value": {
-    "water" : 7.5,
-    "protein" : 40.0,
-    "lipid" : 26.0,
-    "mineral" : 2.0,
+    "water": 25.7,
+    "protein": 40.0,
+    "lipid": 39.0,
+    "mineral": 18.0,
     "fresh" : 20.0
   }
 }

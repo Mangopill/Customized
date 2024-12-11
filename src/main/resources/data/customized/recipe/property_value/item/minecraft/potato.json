@@ -5,11 +5,12 @@
     "minecraft:poisonous_potato"
   ],
   "value": {
-    "water" : 22.5,
-    "protein" : 1.0,
-    "carbohydrate" : 8.75,
-    "vitamin": 0.8,
-    "mineral" : 0.25,
-    "dietary_fiber" : 1.1
+    "water": 22.83,
+    "protein": 2.0,
+    "lipid": 0.1,
+    "carbohydrate": 15.16,
+    "vitamin": 28.5,
+    "mineral": 25.8,
+    "dietary_fiber": 5.0
   }
 }

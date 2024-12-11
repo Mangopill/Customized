@@ -4,10 +4,10 @@
     "minecraft:salmon"
   ],
   "value": {
-    "water" : 15.0,
-    "protein" : 20.0,
-    "lipid" : 13.0,
-    "mineral" : 1.0,
+    "water": 12.7,
+    "protein": 20.0,
+    "lipid": 18.0,
+    "mineral": 9.0,
     "fresh" : 10.0
   }
 }

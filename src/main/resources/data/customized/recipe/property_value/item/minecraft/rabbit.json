@@ -4,9 +4,9 @@
     "minecraft:rabbit"
   ],
   "value": {
-    "water" : 16.0,
-    "protein" : 21.0,
-    "lipid" : 8.0,
-    "mineral" : 1.0
+    "water": 15.0,
+    "protein": 21.0,
+    "lipid": 4.5,
+    "mineral": 15.0
   }
 }

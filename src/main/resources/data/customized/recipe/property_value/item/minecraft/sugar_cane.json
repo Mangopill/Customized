@@ -4,8 +4,11 @@
     "minecraft:sugar_cane"
   ],
   "value": {
-    "water" : 57.5,
-    "carbohydrate" : 12.5,
-    "dietary_fiber" : 0.5
+    "water": 56.25,
+    "protein": 0.5,
+    "lipid": 0.2,
+    "carbohydrate": 21.0,
+    "mineral": 2.4,
+    "dietary_fiber": 1.5
   }
 }

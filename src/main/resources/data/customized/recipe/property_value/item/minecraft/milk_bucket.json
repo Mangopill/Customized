@@ -4,10 +4,11 @@
     "minecraft:milk_bucket"
   ],
   "value": {
-    "water" : 87.3,
-    "protein" : 3.2,
-    "lipid" : 3.6,
-    "carbohydrate" : 4.7,
-    "mineral" : 35.0
+    "water": 73.0,
+    "protein": 3.2,
+    "lipid": 3.6,
+    "carbohydrate": 4.8,
+    "vitamin": 0.1,
+    "mineral": 12.0
   }
 }

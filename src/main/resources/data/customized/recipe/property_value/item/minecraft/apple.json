@@ -4,11 +4,13 @@
     "minecraft:apple"
   ],
   "value": {
-    "water" : 68.45,
-    "carbohydrate" : 13.81,
-    "vitamin": 4.60,
-    "mineral" : 1.29,
-    "dietary_fiber" : 2.4,
+    "water": 56.67,
+    "protein": 0.6,
+    "lipid": 0.4,
+    "carbohydrate": 27.6,
+    "vitamin": 23.0,
+    "mineral": 21.4,
+    "dietary_fiber": 12.0,
     "sour" : 5.0,
     "sweet" : 5.0
   }

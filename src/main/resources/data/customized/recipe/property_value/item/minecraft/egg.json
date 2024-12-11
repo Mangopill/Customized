@@ -4,11 +4,11 @@
     "minecraft:egg"
   ],
   "value": {
-    "water" : 43.3,
-    "protein" : 12.5,
-    "lipid" : 9.6,
-    "carbohydrate" : 0.9,
-    "vitamin" : 1.2,
-    "mineral" : 1.2
+    "water": 50.0,
+    "protein": 24.0,
+    "lipid": 20.0,
+    "carbohydrate": 2.0,
+    "vitamin": 1.5,
+    "mineral": 10.0
   }
 }

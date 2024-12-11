@@ -4,9 +4,9 @@
     "minecraft:cooked_beef"
   ],
   "value": {
-    "water" : 10.0,
-    "protein" : 45.0,
-    "lipid" : 30.0,
-    "mineral" : 2.0
+    "water": 24.0,
+    "protein": 40.0,
+    "lipid": 30.0,
+    "mineral": 36.0
   }
 }
