@@ -16,14 +16,14 @@ import org.jetbrains.annotations.NotNull;
 public class GingerCropBlock extends CropBlock {
     public static final MapCodec<GingerCropBlock> CODEC = simpleCodec(GingerCropBlock::new);
     private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
-            Block.box(7.0, 0.0, 7.0, 9.0, 3.0, 9.0),
-            Block.box(7.0, 0.0, 7.0, 9.0, 3.0, 9.0),
-            Block.box(5.0, 0.0, 5.0, 11.0, 6.0, 11.0),
-            Block.box(5.0, 0.0, 5.0, 11.0, 6.0, 11.0),
-            Block.box(5.0, 0.0, 5.0, 11.0, 9.0, 11.0),
-            Block.box(5.0, 0.0, 5.0, 11.0, 9.0, 11.0),
-            Block.box(5.0, 0.0, 5.0, 11.0, 9.0, 11.0),
-            Block.box(5.0, 0.0, 5.0, 11.0, 12.0, 11.0),
+            Block.box(7.0, 0.0, 7.0, 9.0, 4.0, 9.0),
+            Block.box(7.0, 0.0, 7.0, 9.0, 4.0, 9.0),
+            Block.box(7.0, 0.0, 7.0, 9.0, 6.0, 9.0),
+            Block.box(7.0, 0.0, 7.0, 9.0, 6.0, 9.0),
+            Block.box(7.0, 0.0, 7.0, 9.0, 9.0, 9.0),
+            Block.box(7.0, 0.0, 7.0, 9.0, 9.0, 9.0),
+            Block.box(7.0, 0.0, 7.0, 9.0, 9.0, 9.0),
+            Block.box(7.0, 0.0, 7.0, 9.0, 10.0, 9.0),
     };
 
     @Override
