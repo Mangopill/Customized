@@ -67,6 +67,8 @@ public class ModItemRegistry {
     public static final Supplier<Item> SOUP_BOWL = registerWithCreativeTab(
             "soup_bowl", () -> new SoupBowlItem(ModBlockRegistry.SOUP_BOWL.get(), basicPlateItemProperties(
                     PlateSlotRecord.SOUP_BOWL.ingredientInput() + PlateSlotRecord.SOUP_BOWL.seasoningInput() + 1)));
+    public static final Supplier<Item> BREWING_BARREL = registerWithCreativeTab(
+            "brewing_barrel", blockItem(ModBlockRegistry.BREWING_BARREL, basicItemProperties().stacksTo(1)));
     /**
      * Just for the logo, no other purpose.
      */

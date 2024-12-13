@@ -14,36 +14,36 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
 
 public class InsertAndTakeOutItemStrategy implements PotInteractionStrategy {
     // Ensure this strategy is at the end of the registration
     @Override
-    public void interact(@NotNull ItemStack itemStackInHand, @NotNull BlockState state,
-                         @NotNull Level level, @NotNull BlockPos pos,
-                         @NotNull Player player, @NotNull InteractionHand hand,
-                         @NotNull BlockHitResult result) {
+    public boolean interact(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos,
+                            Player player, InteractionHand hand, BlockHitResult result) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AbstractPotBlockEntity potBlockEntity){
             if (state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)){
-                return;
+                return false;
             }
             if (itemStackInHand.isEmpty()){
                 if (player.isShiftKeyDown()){
                     takeOut(state, level, pos, potBlockEntity);
+                    return true;
                 }
             } else {
                 insert(itemStackInHand, level, pos, potBlockEntity);
+                return true;
             }
         }
+        return false;
     }
 
-    private void insert(@NotNull ItemStack itemStackInHand, @NotNull Level level, @NotNull BlockPos pos, AbstractPotBlockEntity potBlockEntity) {
+    private void insert(ItemStack itemStackInHand, Level level, BlockPos pos, AbstractPotBlockEntity potBlockEntity) {
         potBlockEntity.insertItem(itemStackInHand);
         level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT, SoundSource.BLOCKS, 0.8F, 1.0F);
     }
 
-    private void takeOut(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, AbstractPotBlockEntity potBlockEntity) {
+    private void takeOut(BlockState state, Level level, BlockPos pos, AbstractPotBlockEntity potBlockEntity) {
         potBlockEntity.takeOutItem(level, state, pos);
         level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT_FAIL, SoundSource.BLOCKS, 0.8F, 1.0F);
     }

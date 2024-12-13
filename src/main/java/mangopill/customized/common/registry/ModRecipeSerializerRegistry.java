@@ -1,8 +1,7 @@
 package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
-import mangopill.customized.common.recipe.serializer.CasseroleSerializer;
-import mangopill.customized.common.recipe.serializer.PropertyValueSerializer;
+import mangopill.customized.common.recipe.serializer.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -14,4 +13,5 @@ public class  ModRecipeSerializerRegistry {
 
     public static final Supplier<RecipeSerializer<?>> PROPERTY_VALUE = RECIPE_SERIALIZER.register("property_value", PropertyValueSerializer::new);
     public static final Supplier<RecipeSerializer<?>> CASSEROLE = RECIPE_SERIALIZER.register("casserole", CasseroleSerializer::new);
+    public static final Supplier<RecipeSerializer<?>> BREWING_BARREL = RECIPE_SERIALIZER.register("brewing_barrel", BrewingBarrelSerializer::new);
 }

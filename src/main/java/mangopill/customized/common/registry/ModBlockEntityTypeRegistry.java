@@ -20,4 +20,6 @@ public class ModBlockEntityTypeRegistry {
             "casserole", basicBlockEntityType(CasseroleBlockEntity::new, ModBlockRegistry.CASSEROLE));
     public static final Supplier<BlockEntityType<SoupBowlBlockEntity>> SOUP_BOWL = BLOCK_ENTITY_TYPE.register(
             "soup_bowl", basicBlockEntityType(SoupBowlBlockEntity::new, ModBlockRegistry.SOUP_BOWL));
+    public static final Supplier<BlockEntityType<BrewingBarrelBlockEntity>> BREWING_BARREL = BLOCK_ENTITY_TYPE.register(
+            "brewing_barrel", basicBlockEntityType(BrewingBarrelBlockEntity::new, ModBlockRegistry.BREWING_BARREL));
 }

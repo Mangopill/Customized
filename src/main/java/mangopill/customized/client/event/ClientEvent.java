@@ -41,6 +41,7 @@ public class ClientEvent {
         event.registerBlockEntityRenderer(ModBlockEntityTypeRegistry.SUSPICIOUS_DIRT.get(), ModBrushableBlockRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypeRegistry.CASSEROLE.get(), CasseroleBlockRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypeRegistry.SOUP_BOWL.get(), SoupBowlBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntityTypeRegistry.BREWING_BARREL.get(), BrewingBarrelBlockRenderer::new);
     }
     @SubscribeEvent
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {

@@ -11,7 +11,6 @@ import net.neoforged.neoforge.common.util.RecipeMatcher;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractPotRecipe implements ModRecipeInterface<RecipeWrapper> {
@@ -40,20 +39,8 @@ public abstract class AbstractPotRecipe implements ModRecipeInterface<RecipeWrap
 
     @Override
     public boolean matches(@NotNull RecipeWrapper recipeWrapper, @NotNull Level level) {
-        List<ItemStack> ingredient = new ArrayList<>();
-        for (int i = 0; i < ingredientInput; ++i) {
-            ItemStack itemstack = recipeWrapper.getItem(i);
-            if (!itemstack.isEmpty()) {
-                ingredient.add(itemstack);
-            }
-        }
-        List<ItemStack> seasoning = new ArrayList<>();
-        for (int i = ingredientInput; i < ingredientInput + seasoningInput; ++i) {
-            ItemStack stack = recipeWrapper.getItem(i);
-            if (!stack.isEmpty()) {
-                seasoning.add(stack);
-            }
-        }
+        List<ItemStack> ingredient = getListByWrapper(recipeWrapper, 0, ingredientInput);
+        List<ItemStack> seasoning = getListByWrapper(recipeWrapper, ingredientInput, ingredientInput + seasoningInput);;
         return ItemStack.isSameItem(spiceItem.getItems()[0], recipeWrapper.getItem(ingredientInput + seasoningInput))
                 && ingredient.size() == ingredientItem.size()
                 && seasoning.size() == seasoningItem.size()

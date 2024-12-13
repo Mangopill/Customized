@@ -4,6 +4,7 @@ import mangopill.customized.common.block.handler.PotItemHandler;
 import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.recipe.AbstractPotRecipe;
 import mangopill.customized.common.tag.ModTag;
+import mangopill.customized.common.util.CreateItemStackHandler;
 import mangopill.customized.common.util.ModItemStackHandlerHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,11 +36,11 @@ import java.util.Optional;
 import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.block.AbstractPotBlock.*;
 
-public abstract class AbstractPotBlockEntity extends BlockEntity {
+public abstract class AbstractPotBlockEntity extends BlockEntity implements CreateItemStackHandler {
     private final int ingredientInput;
     private final int seasoningInput;
-    private final int SPICE_INPUT = 1;
-    private final int OUTPUT = 1;
+    private static final int SPICE_INPUT = 1;
+    private static final int OUTPUT = 1;
     private final int allSlot;
     private final ItemStackHandler itemStackHandler;
     private final IItemHandler inputHandler;
@@ -57,27 +58,13 @@ public abstract class AbstractPotBlockEntity extends BlockEntity {
         seasoningInput = seasoningCount;
         this.allSlot = ingredientInput + seasoningInput + SPICE_INPUT + OUTPUT;
         this.campfireCheck = RecipeManager.createCheck(RecipeType.CAMPFIRE_COOKING);
-        this.itemStackHandler = createItemStackHandler();
+        this.itemStackHandler = createItemStackHandler(allSlot);
         this.inputHandler = new PotItemHandler(itemStackHandler, Direction.UP, ingredientCount, seasoningCount);
         this.outputHandler = new PotItemHandler(itemStackHandler, Direction.DOWN, ingredientCount, seasoningCount);
         this.potCheck = potCheck;
     }
 
-    protected ItemStackHandler createItemStackHandler() {
-        return new ItemStackHandler(allSlot)
-        {
-            @Override
-            protected void onContentsChanged(int slot) {
-                itemStackHandlerChanged();
-            }
-
-            @Override
-            protected void onLoad() {
-                itemStackHandlerChanged();
-            }
-        };
-    }
-
+    @Override
     public void itemStackHandlerChanged() {
         super.setChanged();
         if (level != null){
@@ -88,9 +75,6 @@ public abstract class AbstractPotBlockEntity extends BlockEntity {
     public static void cookingTick(Level level, BlockPos pos, BlockState state, AbstractPotBlockEntity potBlockEntity) {
         RecipeWrapper wrapper = new RecipeWrapper(potBlockEntity.itemStackHandler);
         Optional<RecipeHolder<? extends AbstractPotRecipe>> potMatchRecipe = potBlockEntity.getPotMatchRecipe(wrapper);
-        if (!potBlockEntity.canCooking()){
-            return;
-        }
         if (!potBlockEntity.isHeated(level, pos)){
             potBlockEntity.clearCookingTime();
             return;
@@ -123,7 +107,8 @@ public abstract class AbstractPotBlockEntity extends BlockEntity {
                 ? potCheck.getRecipeFor(recipeWrapper, this.level).map(holder -> (RecipeHolder<? extends AbstractPotRecipe>) holder)
                 : Optional.empty();
     }
-    private Optional<RecipeHolder<CampfireCookingRecipe>> getCampfireMatchRecipe(ItemStack stack) {
+
+    protected Optional<RecipeHolder<CampfireCookingRecipe>> getCampfireMatchRecipe(ItemStack stack) {
         return hasInput() && level != null ? campfireCheck.getRecipeFor(new SingleRecipeInput(stack), this.level) : Optional.empty();
     }
 
@@ -305,7 +290,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity {
             cookingTime += 1;
         }
     }
-    //getItemStackList
+
     public List<ItemStack> getItemStackListInPot(boolean includeOutput, boolean includeSeasoningAndSpice) {
         if (includeOutput){
             if (includeSeasoningAndSpice){
@@ -325,17 +310,11 @@ public abstract class AbstractPotBlockEntity extends BlockEntity {
     }
 
     public void getOutputInPot(ItemStack itemStackInHand, Player player){
-        ItemStack stackInSlot = itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + SPICE_INPUT);
-        int itemStackInHandCount = itemStackInHand.getCount();
-        int stackInSlotCount = stackInSlot.getCount();
-        int min = Math.min(stackInSlotCount, itemStackInHandCount);
-        ItemStack newStack = stackInSlot.split(min).copy();
-        if (!player.getInventory().add(newStack)) {
-            player.drop(newStack, false);
-        }
-        itemStackInHand.shrink(min);
+        ModItemStackHandlerHelper.getOutputItem(itemStackInHand, player, itemStackHandler, ingredientInput + seasoningInput + SPICE_INPUT);
         itemStackHandlerChanged();
     }
+
+
 
     @Override
     @Nullable

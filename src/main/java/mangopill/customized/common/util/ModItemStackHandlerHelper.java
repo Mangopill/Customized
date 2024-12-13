@@ -1,6 +1,7 @@
 package mangopill.customized.common.util;
 
 import mangopill.customized.common.tag.ModTag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -130,5 +131,17 @@ public final class ModItemStackHandlerHelper {
                 .limit(2)
                 .map(entry -> new ItemStack(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
+    }
+
+    public static void getOutputItem(ItemStack itemStackInHand, Player player, ItemStackHandler itemStackHandler, int slot) {
+        ItemStack stackInSlot = itemStackHandler.getStackInSlot(slot);
+        int itemStackInHandCount = itemStackInHand.getCount();
+        int stackInSlotCount = stackInSlot.getCount();
+        int min = Math.min(stackInSlotCount, itemStackInHandCount);
+        ItemStack newStack = stackInSlot.split(min).copy();
+        if (!player.getInventory().add(newStack)) {
+            player.drop(newStack, false);
+        }
+        itemStackInHand.shrink(min);
     }
 }

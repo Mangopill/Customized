@@ -46,4 +46,6 @@ public class ModBlockRegistry {
             "casserole", () -> new CasseroleBlock(Block.Properties.of().mapColor(MapColor.STONE).strength(0.6F, 5.0F).sound(SoundType.DECORATED_POT)));
     public static final Supplier<Block> SOUP_BOWL = BLOCK.register(
             "soup_bowl", () -> new SoupBowlBlock(Block.Properties.of().mapColor(MapColor.STONE).strength(0.3F, 2.0F).sound(SoundType.STONE)));
+    public static final Supplier<Block> BREWING_BARREL = BLOCK.register(
+            "brewing_barrel", () -> new BrewingBarrelBlock(Block.Properties.ofFullCopy(BARREL)));
 }

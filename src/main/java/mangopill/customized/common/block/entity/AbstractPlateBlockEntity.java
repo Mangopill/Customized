@@ -6,6 +6,7 @@ import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.AbstractPlateBlock;
 import mangopill.customized.common.block.state.PlateState;
 import mangopill.customized.common.registry.ModDataComponentRegistry;
+import mangopill.customized.common.util.CreateItemStackHandler;
 import mangopill.customized.common.util.ModItemStackHandlerHelper;
 import mangopill.customized.common.util.record.*;
 import net.minecraft.core.BlockPos;
@@ -36,10 +37,10 @@ import java.util.*;
 import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.ModItemStackHandlerHelper.clearAllSlot;
 
-public abstract class AbstractPlateBlockEntity extends BlockEntity {
+public abstract class AbstractPlateBlockEntity extends BlockEntity implements CreateItemStackHandler {
     private final int ingredientInput;
     private final int seasoningInput;
-    private final int SPICE_INPUT = 1;
+    private static final int SPICE_INPUT = 1;
     private final int allSlot;
     private final ItemStackHandler itemStackHandler;
     private FoodProperties foodProperty;
@@ -51,24 +52,10 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity {
         this.ingredientInput = ingredientInput;
         this.seasoningInput = seasoningInput;
         this.allSlot = ingredientInput + seasoningInput + SPICE_INPUT;
-        this.itemStackHandler = createItemStackHandler();
+        this.itemStackHandler = createItemStackHandler(allSlot);
     }
 
-    protected ItemStackHandler createItemStackHandler() {
-        return new ItemStackHandler(allSlot)
-        {
-            @Override
-            protected void onContentsChanged(int slot) {
-                itemStackHandlerChanged();
-            }
-
-            @Override
-            protected void onLoad() {
-                itemStackHandlerChanged();
-            }
-        };
-    }
-
+    @Override
     public void itemStackHandlerChanged() {
         super.setChanged();
         if (level != null){
@@ -80,7 +67,6 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity {
         return ModItemStackHandlerHelper.hasInput(itemStackHandler, allSlot);
     }
 
-    //getItemStackList
     public List<ItemStack> getItemStackListInPlate(boolean includeSeasoningAndSpice) {
         return includeSeasoningAndSpice ? ModItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, allSlot) :
                 ModItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, ingredientInput);

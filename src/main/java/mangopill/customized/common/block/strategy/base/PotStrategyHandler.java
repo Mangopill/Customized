@@ -40,10 +40,8 @@ public class PotStrategyHandler {
         count++;
     }
 
-    public ItemInteractionResult useByRegistry(@NotNull String potName, @NotNull ItemStack itemStackInHand, @NotNull BlockState state,
-                                   @NotNull Level level, @NotNull BlockPos pos,
-                                   @NotNull Player player, @NotNull InteractionHand hand,
-                                   @NotNull BlockHitResult result) {
+    public ItemInteractionResult useByRegistry(String potName, ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos,
+                                   Player player, InteractionHand hand, BlockHitResult result) {
         if (level.isClientSide){
             return ItemInteractionResult.SUCCESS;
         }
@@ -53,7 +51,9 @@ public class PotStrategyHandler {
                 PotStrategyRegistry.onPotRegistry();
             }
             for (PotInteractionStrategy strategy : map.get(potName)){
-                strategy.interact(itemStackInHand, state, level, pos, player, hand, result);
+                if (strategy.interact(itemStackInHand, state, level, pos, player, hand, result)) {
+                    break;
+                }
             }
             potBlockEntity.itemStackHandlerChanged();
         }

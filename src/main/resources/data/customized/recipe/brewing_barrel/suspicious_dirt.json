@@ -1,0 +1,25 @@
+{
+  "type": "customized:brewing_barrel",
+  "time": 100,
+  "ingredient": [
+    {
+      "item": "customized:soiled_seed"
+    },
+    {
+      "item": "customized:soiled_seed"
+    },
+    {
+      "item": "customized:soiled_seed"
+    },
+    {
+      "item": "customized:soiled_seed"
+    }
+  ],
+  "container": {
+    "item": "minecraft:apple"
+  },
+  "result": {
+    "count": 1,
+    "id": "customized:suspicious_dirt"
+  }
+}

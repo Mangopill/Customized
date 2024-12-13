@@ -1,6 +1,7 @@
 package mangopill.customized.integration.jei.util;
 
 import mangopill.customized.Customized;
+import mangopill.customized.common.recipe.BrewingBarrelRecipe;
 import mangopill.customized.common.recipe.CasseroleRecipe;
 import mangopill.customized.common.registry.ModItemRegistry;
 import mangopill.customized.common.registry.ModRecipeRegistry;
@@ -12,21 +13,22 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class JeiUtil {
     private JeiUtil() {
     }
     public static final RecipeType<CasseroleRecipe> CASSEROLE = RecipeType.create(Customized.MODID, "casserole", CasseroleRecipe.class);
+    public static final RecipeType<BrewingBarrelRecipe> BREWING_BARREL = RecipeType.create(Customized.MODID, "brewing_barrel", BrewingBarrelRecipe.class);
 
     public static List<CasseroleRecipe> getCasseroleRecipeList() {
-        if (Minecraft.getInstance().level != null) {
-            return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(ModRecipeRegistry.CASSEROLE.get()).stream().map(RecipeHolder::value).toList();
-        } else {
-            return new ArrayList<>();
-        }
+        return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(ModRecipeRegistry.CASSEROLE.get()).stream().map(RecipeHolder::value).toList();
     }
+
+    public static List<BrewingBarrelRecipe> getBrewingBarrelRecipeList() {
+        return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(ModRecipeRegistry.BREWING_BARREL.get()).stream().map(RecipeHolder::value).toList();
+    }
+
     public static boolean canAddTooltip(double mouseX, double mouseY, double xStart, double yStart, double width, double height) {
         return mouseX >= xStart && mouseX <= xStart + width && mouseY >= yStart && mouseY <= yStart + height;
     }

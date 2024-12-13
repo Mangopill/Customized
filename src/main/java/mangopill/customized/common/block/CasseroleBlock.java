@@ -75,7 +75,6 @@ public class CasseroleBlock extends AbstractPotBlock{
         return CODEC;
     }
 
-
     @Override
     public void animateTick(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         BlockEntity blockEntity = level.getBlockEntity(pos);

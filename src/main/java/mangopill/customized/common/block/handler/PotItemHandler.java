@@ -9,16 +9,16 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 
 public class PotItemHandler implements IItemHandler {
-    private static int ingredientInput;
-    private static int seasoningInput;
+    private final int ingredientInput;
+    private final int seasoningInput;
     private static final int SPICE_INPUT = 1;
     private final IItemHandler itemHandler;
     private final Direction side;
 
     public PotItemHandler(IItemHandler itemHandler, @Nullable Direction side, int ingredientCount, int seasoningCount) {
         this.itemHandler = itemHandler;
-        ingredientInput = ingredientCount;
-        seasoningInput = seasoningCount;
+        this.ingredientInput = ingredientCount;
+        this.seasoningInput = seasoningCount;
         this.side = side;
     }
 

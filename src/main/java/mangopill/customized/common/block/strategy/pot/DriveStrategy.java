@@ -13,31 +13,33 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
 
 public class DriveStrategy implements PotInteractionStrategy {
     @Override
-    public void interact(@NotNull ItemStack itemStackInHand, @NotNull BlockState state,
-                         @NotNull Level level, @NotNull BlockPos pos,
-                         @NotNull Player player, @NotNull InteractionHand hand,
-                         @NotNull BlockHitResult result) {
+    public boolean interact(ItemStack itemStackInHand, BlockState state,
+                         Level level, BlockPos pos,
+                         Player player, InteractionHand hand,
+                         BlockHitResult result) {
         if (canAdd(itemStackInHand, state)){
             addDrive(itemStackInHand, state, level, pos, player);
+            return true;
         }
         if (canClear(itemStackInHand, state)){
             clearDrive(itemStackInHand, state, level, pos, player);
+            return true;
         }
+        return false;
     }
 
-    private boolean canAdd(@NotNull ItemStack itemStackInHand, @NotNull BlockState state) {
+    private boolean canAdd(ItemStack itemStackInHand, BlockState state) {
         return !itemStackInHand.isEmpty() && state.getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID) && itemStackInHand.is(Items.WATER_BUCKET);
     }
 
-    private boolean canClear(@NotNull ItemStack itemStackInHand, @NotNull BlockState state) {
+    private boolean canClear(ItemStack itemStackInHand, BlockState state) {
         return !itemStackInHand.isEmpty() && state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE) && itemStackInHand.is(Items.BUCKET);
     }
 
-    private void addDrive(@NotNull ItemStack itemStackInHand, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player) {
+    private void addDrive(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player) {
         level.setBlockAndUpdate(pos, state.setValue(AbstractPotBlock.LID, PotState.WITH_DRIVE));
         itemStackInHand.shrink(1);
         if (!player.getInventory().add(Items.BUCKET.getDefaultInstance())) {
@@ -46,7 +48,7 @@ public class DriveStrategy implements PotInteractionStrategy {
         level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 0.8F, 1.0F);
     }
 
-    private void clearDrive(@NotNull ItemStack itemStackInHand, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player) {
+    private void clearDrive(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player) {
         level.setBlockAndUpdate(pos, state.setValue(AbstractPotBlock.LID, PotState.WITHOUT_LID));
         itemStackInHand.shrink(1);
         if (!player.getInventory().add(Items.WATER_BUCKET.getDefaultInstance())) {
