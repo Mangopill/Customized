@@ -165,7 +165,7 @@ public final class ClientUtil {
         }
         poseStack.translate(x, startY, z);
         poseStack.scale(0.1F, 0.1F, 0.1F);
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()));
+        poseStack.mulPose(Axis.YP.rotationDegrees(360.0F - state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()));
     }
 
     public static void renderModel(@NotNull ItemStack stack, @NotNull ItemDisplayContext displayContext, @NotNull PoseStack poseStack, @NotNull MultiBufferSource multiBufferSource, int light, int overlay) {
