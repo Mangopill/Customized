@@ -77,7 +77,7 @@ public class BrewingBarrelRecipeCategory implements IRecipeCategory<BrewingBarre
         List<Component> tooltipString = new ArrayList<>();
         if (canAddTooltip(mouseX, mouseY, 38, 3, 11, 13)) {
             tooltipString.add(Component.translatable("gui.jei." + Customized.MODID + ".cook_time",
-                    recipe.getCookingTime() / 20));
+                    recipe.getCookingTime() * 13 / 20));
         }
         if (canAddTooltip(mouseX, mouseY, 41, 37, 8, 4)) {
             tooltipString.add(Component.translatable("gui.jei." + Customized.MODID + ".container",
