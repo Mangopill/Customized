@@ -101,11 +101,7 @@ public final class ModItemStackHandlerHelper {
     }
 
     public static int getConsumptionCount(List<ItemStack> stackList) {
-        int consumptionCount = findMinStack(stackList).getCount() / 4;
-        if (findMinStack(stackList).getCount() % 4 > 0) {
-            consumptionCount++;
-        }
-        return consumptionCount;
+        return Math.min(16, findMinStack(stackList).getCount());
     }
 
     public static boolean hasInput(ItemStackHandler itemStackHandler, int endIndex){
