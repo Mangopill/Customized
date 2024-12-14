@@ -30,4 +30,6 @@ public class FoodValue {
             .nutrition(2).saturationModifier(0.5F).build();
     public static final FoodProperties VINEGAR = new FoodProperties.Builder()
             .nutrition(1).saturationModifier(1.0F).build();
+    public static final FoodProperties DOUBAN = new FoodProperties.Builder()
+            .nutrition(4).saturationModifier(0.8F).build();
 }

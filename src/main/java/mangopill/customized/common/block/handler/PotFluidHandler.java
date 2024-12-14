@@ -6,35 +6,33 @@ import mangopill.customized.common.block.state.PotState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.*;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class PotFluidHandler implements IFluidHandler {
-    private final Level level;
-    private final BlockPos pos;
+public class PotFluidHandler extends ModIFluidHandler {
 
     public PotFluidHandler(Level level, BlockPos pos) {
-        this.level = level;
-        this.pos = pos;
+        super(level, pos);
     }
 
+    @Override
     protected PotFluidContent getContent() {
-        return PotFluidContent.getContent(level, pos);
+        return PotFluidContent.getContent(getLevel(), getPos());
     }
-
+    @Override
     protected PotFluidContent getContentForFill() {
-        return PotFluidContent.getContentForFill(level, pos);
+        return PotFluidContent.getContentForFill(getLevel(), getPos());
     }
 
+    @Override
     protected boolean canInput(){
-        BlockState blockState = level.getBlockState(pos);
+        BlockState blockState = getLevel().getBlockState(getPos());
         return blockState.getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID);
     }
 
+    @Override
     protected boolean canOutput(){
-        BlockState blockState = level.getBlockState(pos);
+        BlockState blockState = getLevel().getBlockState(getPos());
         return blockState.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE);
     }
 
@@ -42,9 +40,9 @@ public class PotFluidHandler implements IFluidHandler {
         if (!action.execute()) {
             return;
         }
-        BlockState blockState = level.getBlockState(pos);
         if (canInput()) {
-            level.setBlockAndUpdate(pos, blockState.setValue(AbstractPotBlock.LID, contents.getEnumProperty()));
+            BlockState blockState = getLevel().getBlockState(getPos());
+            getLevel().setBlockAndUpdate(getPos(), blockState.setValue(AbstractPotBlock.LID, contents.getProperty()));
         }
     }
 
@@ -52,85 +50,25 @@ public class PotFluidHandler implements IFluidHandler {
         if (!action.execute()) {
             return;
         }
-        BlockState blockState = level.getBlockState(pos);
         if (canOutput()) {
-            level.setBlockAndUpdate(pos, blockState.setValue(AbstractPotBlock.LID, contents.getEnumProperty()));
+            BlockState blockState = getLevel().getBlockState(getPos());
+            getLevel().setBlockAndUpdate(getPos(), blockState.setValue(AbstractPotBlock.LID, contents.getProperty()));
         }
-    }
-
-    @Override
-    public int getTanks() {
-        return 1;
-    }
-
-    @Override
-    public @NotNull FluidStack getFluidInTank(int i) {
-        PotFluidContent contents = this.getContent();
-        return new FluidStack(contents.getFluid(), contents.getTotalAmount());
-    }
-
-    @Override
-    public int getTankCapacity(int i) {
-        PotFluidContent contents = this.getContent();
-        return contents.getTotalAmount();
-    }
-
-    @Override
-    public boolean isFluidValid(int i, @NotNull FluidStack fluidStack) {
-        return true;
     }
 
     @Override
     public int fill(@NotNull FluidStack fluidStack, @NotNull FluidAction fluidAction) {
-        if (fluidStack.isEmpty()) {
-            return 0;
-        }
         PotFluidContent contents = getContentForFill();
-        if (contents.getFluid() != Fluids.EMPTY && !fluidStack.is(contents.getFluid())) {
-            return 0;
+        if (super.fill(fluidStack, fluidAction) == contents.getTotalAmount()) {
+            updateDriveState(fluidAction, contents);
         }
-        int amount = fluidStack.getAmount();
-        if (canInput()) {
-            if (amount >= contents.getTotalAmount()){
-                updateDriveState(fluidAction, contents);
-                return contents.getTotalAmount();
-            } else {
-                return 0;
-            }
-        } else {
-            return 0;
-        }
+        return super.fill(fluidStack, fluidAction);
     }
 
     @Override
-    public @NotNull FluidStack drain(@NotNull FluidStack fluidStack, @NotNull FluidAction fluidAction) {
-        if (fluidStack.isEmpty()) {
-            return FluidStack.EMPTY;
-        } else {
-            return fluidStack.is(this.getContent().getFluid())
-                    && fluidStack.getComponents().isEmpty()
-                    && canOutput()
-                    && fluidStack.getAmount() >= getContent().getTotalAmount()
-                    ? this.drain(fluidAction) : FluidStack.EMPTY;
-        }
-    }
-
-    @Override
-    public @NotNull FluidStack drain(int maxDrain, @NotNull FluidAction fluidAction) {
-        return maxDrain <= 0 ? FluidStack.EMPTY : this.drain(fluidAction);
-    }
-
     protected FluidStack drain(FluidAction fluidAction) {
         PotFluidContent content = this.getContent();
         updateWithoutDriveState(fluidAction, content);
         return new FluidStack(content.getFluid(), content.getTotalAmount());
-    }
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public BlockPos getPos() {
-        return pos;
     }
 }

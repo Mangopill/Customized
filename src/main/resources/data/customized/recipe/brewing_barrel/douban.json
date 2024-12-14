@@ -1,15 +1,15 @@
 {
   "type": "customized:brewing_barrel",
-  "time": 1200,
+  "time": 1000,
   "ingredient": [
     {
-      "tag": "c:crops/rice"
+      "tag": "c:crops/broad_bean"
     },
     {
-      "tag": "c:crops/wheat"
+      "tag": "c:crops/scallion"
     },
     {
-      "item": "minecraft:sugar"
+      "item": "customized:salt"
     }
   ],
   "container": {
@@ -17,6 +17,6 @@
   },
   "result": {
     "count": 1,
-    "id": "customized:vinegar"
+    "id": "customized:douban"
   }
 }

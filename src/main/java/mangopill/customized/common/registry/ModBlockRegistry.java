@@ -22,6 +22,8 @@ public class ModBlockRegistry {
     public static final Supplier<Block> SUSPICIOUS_DIRT = BLOCK.register(
             "suspicious_dirt", () -> new ModBrushableBlock(DIRT, SoundEvents.BRUSH_GRAVEL, SoundEvents.BRUSH_GRAVEL_COMPLETED,
             BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.SNARE).strength(0.25F).sound(SoundType.SUSPICIOUS_GRAVEL).pushReaction(PushReaction.DESTROY)));
+    public static final Supplier<Block> SALT_PAN = BLOCK.register(
+            "salt_pan", () -> new SaltPanBlock(BlockBehaviour.Properties.ofFullCopy(OAK_PLANKS)));
     //crop
     public static final Supplier<Block> RICE_CROP = BLOCK.register(
             "rice_crop", () -> new RiceCropBlock(cropBlockProperties()));

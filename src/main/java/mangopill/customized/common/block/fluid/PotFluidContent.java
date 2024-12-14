@@ -10,17 +10,10 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidType;
 
-public class PotFluidContent {
-    private final Block block;
-    private final Fluid fluid;
-    private final int totalAmount;
-    private final PotState enumProperty;
+public class PotFluidContent extends ModFluidContent<PotState> {
 
     protected PotFluidContent(Block block, Fluid fluid, int totalAmount, PotState enumProperty) {
-        this.block = block;
-        this.fluid = fluid;
-        this.totalAmount = totalAmount;
-        this.enumProperty = enumProperty;
+        super(block, fluid, totalAmount, enumProperty);
     }
 
     public static PotFluidContent getContent(Level level, BlockPos pos) {
@@ -37,21 +30,5 @@ public class PotFluidContent {
         } else {
             return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.EMPTY, 0, null);
         }
-    }
-
-    public Block getBlock() {
-        return block;
-    }
-
-    public Fluid getFluid() {
-        return fluid;
-    }
-
-    public int getTotalAmount() {
-        return totalAmount;
-    }
-
-    public PotState getEnumProperty() {
-        return enumProperty;
     }
 }

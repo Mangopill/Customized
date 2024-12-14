@@ -26,9 +26,15 @@ public class ModItemRegistry {
             "ketchup", drinkItem(FoodValue.KETCHUP));
     public static final Supplier<Item> VINEGAR = registerWithCreativeTab(
             "vinegar", drinkItem(FoodValue.VINEGAR));
+    public static final Supplier<Item> DOUBAN = registerWithCreativeTab(
+            "douban", drinkItem(FoodValue.DOUBAN));
+    public static final Supplier<Item> SALT = registerWithCreativeTab(
+            "salt", basicItem());
     //block
     public static final Supplier<Item> SUSPICIOUS_DIRT = registerWithCreativeTab(
             "suspicious_dirt", blockItem(ModBlockRegistry.SUSPICIOUS_DIRT, basicItemProperties()));
+    public static final Supplier<Item> SALT_PAN = registerWithCreativeTab(
+            "salt_pan", blockItem(ModBlockRegistry.SALT_PAN, basicItemProperties()));
     //crop
     public static final Supplier<Item> RICE = registerWithCreativeTab(
             "rice", basicItem());
