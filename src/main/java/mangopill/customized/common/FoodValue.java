@@ -3,6 +3,7 @@ package mangopill.customized.common;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Items;
 
 public class FoodValue {
     public static final FoodProperties NULL = new FoodProperties.Builder()
@@ -27,9 +28,9 @@ public class FoodValue {
             .nutrition(1).saturationModifier(0.1F).build();
 
     public static final FoodProperties KETCHUP = new FoodProperties.Builder()
-            .nutrition(2).saturationModifier(0.5F).build();
+            .nutrition(2).saturationModifier(0.5F).usingConvertsTo(Items.GLASS_BOTTLE).build();
     public static final FoodProperties VINEGAR = new FoodProperties.Builder()
-            .nutrition(1).saturationModifier(1.0F).build();
+            .nutrition(1).saturationModifier(1.0F).usingConvertsTo(Items.GLASS_BOTTLE).build();
     public static final FoodProperties DOUBAN = new FoodProperties.Builder()
-            .nutrition(4).saturationModifier(0.8F).build();
+            .nutrition(4).saturationModifier(0.8F).usingConvertsTo(Items.GLASS_BOTTLE).build();
 }

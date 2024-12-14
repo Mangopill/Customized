@@ -2,12 +2,14 @@ package mangopill.customized.common.util;
 
 import mangopill.customized.common.tag.ModTag;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class ModItemStackHandlerHelper {
     private ModItemStackHandlerHelper() {
@@ -141,14 +143,15 @@ public final class ModItemStackHandlerHelper {
         itemStackInHand.shrink(min);
     }
 
-    public static void getRemainingItemSpawn(Player player, List<ItemStack> stackList) {
-        List<ItemStack> remainingList = stackList.stream().flatMap(itemStack -> {
-            ItemStack remainingItem = itemStack.getCraftingRemainingItem();
-            int quantity = itemStack.getCount();
-            remainingItem.setCount(quantity);
-            return java.util.stream.Stream.of(remainingItem);
+    public static void spawnUsingConvertsTo(Player player, List<ItemStack> stackList) {
+        List<ItemStack> spawnList = stackList.stream().flatMap(itemStack -> {
+            Optional<ItemStack> optionalItem = Optional.ofNullable(itemStack.getFoodProperties(null))
+                    .flatMap(FoodProperties::usingConvertsTo);
+            ItemStack finalItem = optionalItem.orElseGet(itemStack::getCraftingRemainingItem);
+            finalItem.setCount(itemStack.getCount());
+            return Stream.of(finalItem);
         }).toList();
-        remainingList.forEach(craftingRemainingItem -> {
+        spawnList.forEach(craftingRemainingItem -> {
             if (!player.getInventory().add(craftingRemainingItem)) {
                 player.drop(craftingRemainingItem, false);
             }

@@ -179,7 +179,7 @@ public abstract class AbstractPlateItem extends BlockItem {
     private InteractionResult getInteractionResult(AbstractPotBlockEntity potBlockEntity, ItemStack itemInHand, Level level, Player player) {
         List<ItemStack> stackList = potBlockEntity.getItemStackListInPot(false, true);
         ItemStackHandler newItemStackHandler = copyItemStackHandlerByComponent(itemInHand);
-        getRemainingItemSpawn(player, stackList);
+        spawnUsingConvertsTo(player, stackList);
         stackList.forEach(itemStack -> insertItem(itemStack, newItemStackHandler));
         List<ItemStack> newStackList = getItemStackListInSlot(newItemStackHandler, 0, newItemStackHandler.getSlots());
         potBlockEntity.itemStackHandlerChanged();
