@@ -5,10 +5,8 @@ import mangopill.customized.common.registry.ModItemRegistry;
 import mangopill.customized.integration.jei.category.*;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.constants.RecipeTypes;
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -31,10 +29,9 @@ public class JeiPlugin implements IModPlugin {
             registration.addRecipes(CASSEROLE, getCasseroleRecipeList());
             registration.addRecipes(BREWING_BARREL, getBrewingBarrelRecipeList());
         }
-        registration.addIngredientInfo(new ItemStack(ModItemRegistry.SOILED_SEED.get()), VanillaTypes.ITEM_STACK,
-                Component.translatable("jei.info." + Customized.MODID + ".soiled_seed"));
-        registration.addIngredientInfo(new ItemStack(ModItemRegistry.SOUP_BOWL.get()), VanillaTypes.ITEM_STACK,
-                Component.translatable("jei.info." + Customized.MODID + ".soup_bowl"));
+        addJEIInfo(registration, ModItemRegistry.SOILED_SEED, ".soiled_seed");
+        addJEIInfo(registration, ModItemRegistry.SOUP_BOWL, ".soup_bowl");
+        addJEIInfo(registration, ModItemRegistry.SALT_PAN, ".salt_pan");
     }
 
     @Override

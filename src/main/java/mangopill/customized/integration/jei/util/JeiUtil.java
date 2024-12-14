@@ -5,15 +5,20 @@ import mangopill.customized.common.recipe.BrewingBarrelRecipe;
 import mangopill.customized.common.recipe.CasseroleRecipe;
 import mangopill.customized.common.registry.ModItemRegistry;
 import mangopill.customized.common.registry.ModRecipeRegistry;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public final class JeiUtil {
     private JeiUtil() {
@@ -69,5 +74,10 @@ public final class JeiUtil {
             tooltipString.add(Component.translatable("gui.jei." + Customized.MODID + ".container",
                     Component.translatable(ModItemRegistry.FAMOUS_DISH_PLATE.get().getDescriptionId())));
         }
+    }
+
+    public static void addJEIInfo(@NotNull IRecipeRegistration registration, Supplier<Item> item, String s) {
+        registration.addIngredientInfo(new ItemStack(item.get()), VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.info." + Customized.MODID + s));
     }
 }
