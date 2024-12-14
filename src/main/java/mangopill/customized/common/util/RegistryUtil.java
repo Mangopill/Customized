@@ -2,7 +2,7 @@ package mangopill.customized.common.util;
 
 import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
-import mangopill.customized.common.block.record.PlateSlotRecord;
+import mangopill.customized.common.item.DrinkableItem;
 import mangopill.customized.common.registry.ModDataComponentRegistry;
 import mangopill.customized.common.util.record.ItemStackHandlerRecord;
 import net.minecraft.world.food.FoodProperties;
@@ -41,7 +41,7 @@ public final class RegistryUtil {
     }
 
     public static Supplier<Item> drinkItem(FoodProperties foodProperties) {
-        return () -> new Item(basicItemProperties().food(foodProperties).craftRemainder(Items.GLASS_BOTTLE).stacksTo(16));
+        return () -> new DrinkableItem(basicItemProperties().food(foodProperties).craftRemainder(Items.GLASS_BOTTLE).stacksTo(16));
     }
 
     public static Supplier<Item> blockItem(Supplier<Block> supplier, Item.Properties properties) {

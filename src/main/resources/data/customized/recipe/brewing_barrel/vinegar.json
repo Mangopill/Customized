@@ -1,0 +1,22 @@
+{
+  "type": "customized:brewing_barrel",
+  "time": 1000,
+  "ingredient": [
+    {
+      "tag": "c:crops/rice"
+    },
+    {
+      "tag": "c:crops/wheat"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "container": {
+    "item": "minecraft:glass_bottle"
+  },
+  "result": {
+    "count": 1,
+    "id": "customized:vinegar"
+  }
+}

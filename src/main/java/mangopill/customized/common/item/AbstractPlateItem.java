@@ -121,7 +121,7 @@ public abstract class AbstractPlateItem extends BlockItem {
             if (!state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE) || !potEntity.isHeated()){
                 return InteractionResult.PASS;
             }
-            return getInteractionResult(getPotEntity(level, pos), itemInHand, level);
+            return getInteractionResult(getPotEntity(level, pos), itemInHand, level, player);
         }
         return player.isShiftKeyDown() ? super.useOn(context) : InteractionResult.PASS;
     }
@@ -176,9 +176,10 @@ public abstract class AbstractPlateItem extends BlockItem {
         return Component.translatable(this.getDescriptionId(stack));
     }
 
-    private InteractionResult getInteractionResult(AbstractPotBlockEntity potBlockEntity, ItemStack itemInHand, Level level) {
+    private InteractionResult getInteractionResult(AbstractPotBlockEntity potBlockEntity, ItemStack itemInHand, Level level, Player player) {
         List<ItemStack> stackList = potBlockEntity.getItemStackListInPot(false, true);
         ItemStackHandler newItemStackHandler = copyItemStackHandlerByComponent(itemInHand);
+        getRemainingItemSpawn(player, stackList);
         stackList.forEach(itemStack -> insertItem(itemStack, newItemStackHandler));
         List<ItemStack> newStackList = getItemStackListInSlot(newItemStackHandler, 0, newItemStackHandler.getSlots());
         potBlockEntity.itemStackHandlerChanged();

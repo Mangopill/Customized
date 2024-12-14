@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "customized:vinegar"
+  ],
+  "value": {
+    "sour" : 89.0
+  }
+}

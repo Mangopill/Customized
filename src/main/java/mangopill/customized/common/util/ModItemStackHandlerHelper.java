@@ -144,4 +144,18 @@ public final class ModItemStackHandlerHelper {
         }
         itemStackInHand.shrink(min);
     }
+
+    public static void getRemainingItemSpawn(Player player, List<ItemStack> stackList) {
+        List<ItemStack> remainingList = stackList.stream().flatMap(itemStack -> {
+            ItemStack remainingItem = itemStack.getCraftingRemainingItem();
+            int quantity = itemStack.getCount();
+            remainingItem.setCount(quantity);
+            return java.util.stream.Stream.of(remainingItem);
+        }).toList();
+        remainingList.forEach(craftingRemainingItem -> {
+            if (!player.getInventory().add(craftingRemainingItem)) {
+                player.drop(craftingRemainingItem, false);
+            }
+        });
+    }
 }
