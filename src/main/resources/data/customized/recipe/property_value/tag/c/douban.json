@@ -1,0 +1,10 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:foods/ketchup"
+  ],
+  "value": {
+    "salty" : 20.0,
+    "fragrant" : 20.0
+  }
+}

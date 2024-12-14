@@ -1,10 +1,9 @@
 {
   "type": "customized:property_value",
   "item": [
-    "customized:douban"
+    "customized:salt"
   ],
   "value": {
-    "salty" : 20.0,
-    "fragrant" : 20.0
+    "salty" : 20.0
   }
 }

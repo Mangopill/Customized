@@ -217,5 +217,6 @@
   "gui.jei.customized.container": "Served on:%s",
   "jei.info.customized.soiled_seed": "Clean it in water to see its true form.",
   "jei.info.customized.soup_bowl": "Sneak right-click the casserole to obtain the stew inside。",
-  "jei.info.customized.salt_pan": "Use a glass bottle to add water and then spread it out to make salt."
+  "jei.info.customized.salt_pan": "Use a glass bottle to add water and then spread it out to make salt.",
+  "jei.info.customized.salt": "Obtain from a salt pan."
 }

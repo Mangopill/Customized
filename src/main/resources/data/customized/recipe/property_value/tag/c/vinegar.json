@@ -1,7 +1,7 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "customized:vinegar"
+  "tag": [
+    "c:foods/vinegar"
   ],
   "value": {
     "sour" : 89.0

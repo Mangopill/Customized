@@ -1,7 +1,7 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "customized:ketchup"
+  "tag": [
+    "c:foods/ketchup"
   ],
   "value": {
     "water": 33.33,
