@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "b": {
+      "item": "minecraft:barrel"
+    }
+  },
+  "pattern": [
+    " r ",
+    "rbr",
+    " r "
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:brewing_barrel"
+  }
+}
