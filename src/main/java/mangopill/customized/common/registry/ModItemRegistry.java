@@ -36,6 +36,12 @@ public class ModItemRegistry {
             "chicken_essence", basicItem());
     public static final Supplier<Item> OYSTER_SAUCE = registerWithCreativeTab(
             "oyster_sauce", drinkItem(FoodValue.OYSTER_SAUCE));
+    public static final Supplier<Item> SWEET_AND_SOUR_REFRESHING_SPICE = registerWithCreativeTab(
+            "sweet_and_sour_refreshing_spice", basicItem());
+    public static final Supplier<Item> RICH_AND_NOURISHING_SPICE = registerWithCreativeTab(
+            "rich_and_nourishing_spice", basicItem());
+    public static final Supplier<Item> LIGHT_AND_FRESH_AROMATIC_SPICE = registerWithCreativeTab(
+            "light_and_fresh_aromatic_spice", basicItem());
     //block
     public static final Supplier<Item> SUSPICIOUS_DIRT = registerWithCreativeTab(
             "suspicious_dirt", blockItem(ModBlockRegistry.SUSPICIOUS_DIRT, basicItemProperties()));

@@ -1,15 +1,15 @@
 package mangopill.customized.common.block.handler;
 
 import mangopill.customized.common.block.fluid.ModFluidContent;
-import mangopill.customized.common.block.fluid.PotFluidContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class ModIFluidHandler implements IFluidHandler {
+public abstract class ModIFluidHandler<T extends Comparable<T>, V extends T> implements IFluidHandler {
     private final Level level;
     private final BlockPos pos;
 
@@ -18,13 +18,33 @@ public abstract class ModIFluidHandler implements IFluidHandler {
         this.pos = pos;
     }
 
-    abstract protected ModFluidContent<?> getContent();
+    abstract protected ModFluidContent<T, V> getContent();
 
-    abstract protected ModFluidContent<?> getContentForFill();
+    abstract protected ModFluidContent<T, V> getContentForFill();
 
     abstract protected boolean canInput();
 
     abstract protected boolean canOutput();
+
+    protected void updateDriveState(FluidAction action, ModFluidContent<T, V> contents) {
+        if (!action.execute()) {
+            return;
+        }
+        if (canInput()) {
+            BlockState blockState = getLevel().getBlockState(getPos());
+            getLevel().setBlockAndUpdate(getPos(), blockState.setValue(contents.getProperty(), contents.getValue()));
+        }
+    }
+
+    protected void updateWithoutDriveState(FluidAction action, ModFluidContent<T, V> contents) {
+        if (!action.execute()) {
+            return;
+        }
+        if (canOutput()) {
+            BlockState blockState = getLevel().getBlockState(getPos());
+            getLevel().setBlockAndUpdate(getPos(), blockState.setValue(contents.getProperty(), contents.getValue()));
+        }
+    }
 
     @Override
     public int getTanks() {
@@ -33,13 +53,13 @@ public abstract class ModIFluidHandler implements IFluidHandler {
 
     @Override
     public @NotNull FluidStack getFluidInTank(int i) {
-        ModFluidContent<?> contents = this.getContent();
+        ModFluidContent<T, V> contents = this.getContent();
         return new FluidStack(contents.getFluid(), contents.getTotalAmount());
     }
 
     @Override
     public int getTankCapacity(int i) {
-        ModFluidContent<?> contents = this.getContent();
+        ModFluidContent<T, V> contents = this.getContent();
         return contents.getTotalAmount();
     }
 
@@ -53,13 +73,14 @@ public abstract class ModIFluidHandler implements IFluidHandler {
         if (fluidStack.isEmpty()) {
             return 0;
         }
-        ModFluidContent<?> contents = getContentForFill();
+        ModFluidContent<T, V> contents = getContentForFill();
         if (contents.getFluid() != Fluids.EMPTY && !fluidStack.is(contents.getFluid())) {
             return 0;
         }
         int amount = fluidStack.getAmount();
         if (canInput()) {
             if (amount >= contents.getTotalAmount()){
+                updateDriveState(fluidAction, contents);
                 return contents.getTotalAmount();
             } else {
                 return 0;
@@ -87,7 +108,11 @@ public abstract class ModIFluidHandler implements IFluidHandler {
         return maxDrain <= 0 ? FluidStack.EMPTY : this.drain(fluidAction);
     }
 
-    abstract protected FluidStack drain(FluidAction fluidAction);
+    protected FluidStack drain(FluidAction fluidAction) {
+        ModFluidContent<T, V> content = this.getContent();
+        updateWithoutDriveState(fluidAction, content);
+        return new FluidStack(content.getFluid(), content.getTotalAmount());
+    }
 
     public Level getLevel() {
         return level;

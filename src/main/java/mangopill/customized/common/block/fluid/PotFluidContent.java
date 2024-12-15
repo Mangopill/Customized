@@ -10,10 +10,10 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidType;
 
-public class PotFluidContent extends ModFluidContent<PotState> {
+public class PotFluidContent extends ModFluidContent<PotState ,PotState> {
 
     protected PotFluidContent(Block block, Fluid fluid, int totalAmount, PotState enumProperty) {
-        super(block, fluid, totalAmount, enumProperty);
+        super(block, fluid, totalAmount, AbstractPotBlock.LID, enumProperty);
     }
 
     public static PotFluidContent getContent(Level level, BlockPos pos) {

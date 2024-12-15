@@ -8,10 +8,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
-public class SaltPanContent extends ModFluidContent<Boolean> {
+public class SaltPanContent extends ModFluidContent<Boolean, Boolean> {
 
     protected SaltPanContent(Block block, Fluid fluid, int totalAmount, Boolean withWater) {
-        super(block, fluid, totalAmount, withWater);
+        super(block, fluid, totalAmount, SaltPanBlock.WITH_WATER, withWater);
     }
 
     public static SaltPanContent getContent(Level level, BlockPos pos) {

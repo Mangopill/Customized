@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"texture_size": [64, 64],
+	"texture_size": [32, 32],
 	"textures": {
 		"0": "customized:block/famous_dish_plate",
 		"particle": "customized:block/famous_dish_plate"
