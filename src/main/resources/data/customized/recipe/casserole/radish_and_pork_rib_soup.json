@@ -1,0 +1,36 @@
+{
+  "type": "customized:casserole",
+  "time": 300,
+  "ingredient": [
+    {
+      "tag": "c:foods/cooked_pork"
+    },
+    {
+      "tag": "c:bones"
+    },
+    {
+      "tag": "c:crops/carrot"
+    }
+  ],
+  "seasoning": [
+    {
+      "tag": "c:foods/scallion"
+    },
+    {
+      "tag": "c:foods/ginger"
+    },
+    {
+      "item": "customized:chicken_essence"
+    },
+    {
+      "item": "customized:salt"
+    }
+  ],
+  "spice": {
+    "item": "customized:light_and_fresh_aromatic_spice"
+  },
+  "result": {
+    "count": 1,
+    "id": "customized:radish_and_pork_rib_soup"
+  }
+}

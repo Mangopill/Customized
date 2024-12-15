@@ -3,10 +3,10 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:raw_fish"
+      "tag": "c:foods/raw_fish"
     },
     {
-      "tag": "c:raw_fish"
+      "tag": "c:foods/raw_fish"
     },
     {
       "item": "minecraft:glass_bottle"

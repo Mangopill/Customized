@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "r": {
+      "item": "customized:rich_and_nourishing_spice"
+    },
+    "c": {
+      "tag": "c:foods/raw_chicken"
+    },
+    "e": {
+      "item": "customized:chicken_essence"
+    }
+  },
+  "pattern": [
+    "crc",
+    "cec",
+    "ccc"
+  ],
+  "result": {
+    "count": 4,
+    "id": "customized:rich_and_nourishing_spice"
+  }
+}

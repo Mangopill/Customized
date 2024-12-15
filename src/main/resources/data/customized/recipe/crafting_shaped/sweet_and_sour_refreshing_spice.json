@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "item": "customized:sweet_and_sour_refreshing_spice"
+    },
+    "k": {
+      "tag": "c:foods/ketchup"
+    },
+    "t": {
+      "tag": "c:foods/tomato"
+    }
+  },
+  "pattern": [
+    "tst",
+    "tkt",
+    "ttt"
+  ],
+  "result": {
+    "count": 4,
+    "id": "customized:sweet_and_sour_refreshing_spice"
+  }
+}

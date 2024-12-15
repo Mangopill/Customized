@@ -122,11 +122,8 @@ public class BrewingBarrelBlockEntity extends BlockEntity implements CreateItemS
         if (!ItemStack.isSameItem(stackInSlot, resultStack)) {
             return false;
         }
-        if (stackInSlot.getCount() + resultStack.getCount() <= itemStackHandler
-                .getSlotLimit(inputSlot)) {
-            return true;
-        }
-        return stackInSlot.getCount() + resultStack.getCount() <= resultStack.getMaxStackSize();
+        return stackInSlot.getCount() + resultStack.getCount() <= itemStackHandler
+                .getSlotLimit(inputSlot);
     }
 
     protected Optional<RecipeHolder<BrewingBarrelRecipe>> getBrewingBarrelMatchRecipe(RecipeWrapper recipeWrapper) {

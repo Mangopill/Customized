@@ -1,0 +1,27 @@
+{
+  "type": "customized:casserole",
+  "time": 300,
+  "ingredient": [
+    {
+      "tag": "c:foods/cooked_chicken"
+    },
+    {
+      "item": "minecraft:golden_carrot"
+    },
+    {
+      "tag": "c:foods/cooked_fish"
+    }
+  ],
+  "seasoning": [
+    {
+      "item": "customized:salt"
+    }
+  ],
+  "spice": {
+    "item": "customized:rich_and_nourishing_spice"
+  },
+  "result": {
+    "count": 1,
+    "id": "customized:fish_maw_and_chicken_soup"
+  }
+}

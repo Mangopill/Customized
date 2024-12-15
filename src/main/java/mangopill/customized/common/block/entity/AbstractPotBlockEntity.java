@@ -144,11 +144,8 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         if (!ItemStack.isSameItem(stackInSlot, resultStack)) {
             return false;
         }
-        if (stackInSlot.getCount() + resultStack.getCount() <= itemStackHandler
-                .getSlotLimit(ingredientInput + seasoningInput + SPICE_INPUT)) {
-            return true;
-        }
-        return stackInSlot.getCount() + resultStack.getCount() <= resultStack.getMaxStackSize();
+        return stackInSlot.getCount() + resultStack.getCount() <= itemStackHandler
+                .getSlotLimit(ingredientInput + seasoningInput + SPICE_INPUT);
     }
 
     protected void cookRecipe(RecipeHolder<? extends AbstractPotRecipe> holder, BlockPos pos, BlockState state) {

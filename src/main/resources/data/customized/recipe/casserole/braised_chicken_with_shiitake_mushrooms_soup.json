@@ -1,0 +1,33 @@
+{
+  "type": "customized:casserole",
+  "time": 300,
+  "ingredient": [
+    {
+      "tag": "c:foods/cooked_chicken"
+    },
+    {
+      "item": "minecraft:brown_mushroom"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    },
+    {
+      "tag": "c:crops/carrot"
+    }
+  ],
+  "seasoning": [
+    {
+      "item": "customized:salt"
+    },
+    {
+      "item": "customized:chicken_essence"
+    }
+  ],
+  "spice": {
+    "item": "customized:rich_and_nourishing_spice"
+  },
+  "result": {
+    "count": 1,
+    "id": "customized:braised_chicken_with_shiitake_mushrooms_soup"
+  }
+}

@@ -47,6 +47,14 @@ public class ModItemRegistry {
             "suspicious_dirt", blockItem(ModBlockRegistry.SUSPICIOUS_DIRT, basicItemProperties()));
     public static final Supplier<Item> SALT_PAN = registerWithCreativeTab(
             "salt_pan", blockItem(ModBlockRegistry.SALT_PAN, basicItemProperties()));
+    public static final Supplier<Item> TOMATO_AND_BEEF_BRISKET_SOUP = registerWithCreativeTab(
+            "tomato_and_beef_brisket_soup", blockItem(ModBlockRegistry.TOMATO_AND_BEEF_BRISKET_SOUP, basicItemProperties()));
+    public static final Supplier<Item> FISH_MAW_AND_CHICKEN_SOUP = registerWithCreativeTab(
+            "fish_maw_and_chicken_soup", blockItem(ModBlockRegistry.FISH_MAW_AND_CHICKEN_SOUP, basicItemProperties()));
+    public static final Supplier<Item> BRAISED_CHICKEN_WITH_SHIITAKE_MUSHROOMS_SOUP = registerWithCreativeTab(
+            "braised_chicken_with_shiitake_mushrooms_soup", blockItem(ModBlockRegistry.BRAISED_CHICKEN_WITH_SHIITAKE_MUSHROOMS_SOUP, basicItemProperties()));
+    public static final Supplier<Item> RADISH_AND_PORK_RIB_SOUP = registerWithCreativeTab(
+            "radish_and_pork_rib_soup", blockItem(ModBlockRegistry.RADISH_AND_PORK_RIB_SOUP, basicItemProperties()));
     //crop
     public static final Supplier<Item> RICE = registerWithCreativeTab(
             "rice", basicItem());

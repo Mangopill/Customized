@@ -1,6 +1,7 @@
 package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
+import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
@@ -24,6 +25,14 @@ public class ModBlockRegistry {
             BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.SNARE).strength(0.25F).sound(SoundType.SUSPICIOUS_GRAVEL).pushReaction(PushReaction.DESTROY)));
     public static final Supplier<Block> SALT_PAN = BLOCK.register(
             "salt_pan", () -> new SaltPanBlock(BlockBehaviour.Properties.ofFullCopy(OAK_PLANKS)));
+    public static final Supplier<Block> TOMATO_AND_BEEF_BRISKET_SOUP = BLOCK.register(
+            "tomato_and_beef_brisket_soup", () -> new FamousDishBlock(famousDishBlockProperties(), FoodValue.TOMATO_AND_BEEF_BRISKET_SOUP));
+    public static final Supplier<Block> FISH_MAW_AND_CHICKEN_SOUP = BLOCK.register(
+            "fish_maw_and_chicken_soup", () -> new FamousDishBlock(famousDishBlockProperties(), FoodValue.FISH_MAW_AND_CHICKEN_SOUP));
+    public static final Supplier<Block> BRAISED_CHICKEN_WITH_SHIITAKE_MUSHROOMS_SOUP = BLOCK.register(
+            "braised_chicken_with_shiitake_mushrooms_soup", () -> new FamousDishBlock(famousDishBlockProperties(), FoodValue.BRAISED_CHICKEN_WITH_SHIITAKE_MUSHROOMS_SOUP));
+    public static final Supplier<Block> RADISH_AND_PORK_RIB_SOUP = BLOCK.register(
+            "radish_and_pork_rib_soup", () -> new FamousDishBlock(famousDishBlockProperties(), FoodValue.RADISH_AND_PORK_RIB_SOUP));
     //crop
     public static final Supplier<Block> RICE_CROP = BLOCK.register(
             "rice_crop", () -> new RiceCropBlock(cropBlockProperties()));

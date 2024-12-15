@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "facing=north,eat=0": {
+      "model": "customized:block/fish_maw_and_chicken_soup_stage0"
+    },
+    "facing=south,eat=0": {
+      "model": "customized:block/fish_maw_and_chicken_soup_stage0",
+      "y": 180
+    },
+    "facing=west,eat=0": {
+      "model": "customized:block/fish_maw_and_chicken_soup_stage0",
+      "y": 270
+    },
+    "facing=east,eat=0": {
+      "model": "customized:block/fish_maw_and_chicken_soup_stage0",
+      "y": 90
+    },
+    "facing=north,eat=1": {
+      "model": "customized:block/fish_maw_and_chicken_soup_stage1"
+    },
+    "facing=south,eat=1": {
+      "model": "customized:block/fish_maw_and_chicken_soup_stage1",
+      "y": 180
+    },
+    "facing=west,eat=1": {
+      "model": "customized:block/fish_maw_and_chicken_soup_stage1",
+      "y": 270
+    },
+    "facing=east,eat=1": {
+      "model": "customized:block/fish_maw_and_chicken_soup_stage1",
+      "y": 90
+    },
+    "facing=north,eat=2": {
+      "model": "customized:block/famous_soup_empty"
+    },
+    "facing=south,eat=2": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 180
+    },
+    "facing=west,eat=2": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 270
+    },
+    "facing=east,eat=2": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 90
+    }
+  }
+}

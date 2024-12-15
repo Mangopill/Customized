@@ -1,0 +1,33 @@
+{
+  "type": "customized:casserole",
+  "time": 800,
+  "ingredient": [
+    {
+      "tag": "c:foods/cooked_beef"
+    },
+    {
+      "tag": "c:foods/tomato"
+    }
+  ],
+  "seasoning": [
+    {
+      "tag": "c:foods/scallion"
+    },
+    {
+      "tag": "c:foods/ginger"
+    },
+    {
+      "item": "customized:salt"
+    },
+    {
+      "item": "customized:rock_sugar"
+    }
+  ],
+  "spice": {
+    "item": "customized:sweet_and_sour_refreshing_spice"
+  },
+  "result": {
+    "count": 1,
+    "id": "customized:tomato_and_beef_brisket_soup"
+  }
+}
