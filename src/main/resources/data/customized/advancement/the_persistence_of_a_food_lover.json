@@ -1,0 +1,25 @@
+{
+    "parent": "customized:root",
+    "criteria": {
+        "inedible": {
+            "trigger": "customized:eat_inedible_stew"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "customized.advancement.the_persistence_of_a_food_lover"
+        },
+        "icon": {
+            "id": "minecraft:poisonous_potato"
+        },
+        "title": {
+            "translate": "customized.advancement.the_persistence_of_a_food_lover.desc"
+        }
+    },
+    "requirements": [
+        [
+            "inedible"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

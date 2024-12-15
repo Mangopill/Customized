@@ -1,0 +1,25 @@
+{
+    "parent": "customized:root",
+    "criteria": {
+        "wash": {
+            "trigger": "customized:wash_seeds"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "customized.advancement.history_reappears"
+        },
+        "icon": {
+            "id": "customized:soiled_seed"
+        },
+        "title": {
+            "translate": "customized.advancement.history_reappears.desc"
+        }
+    },
+    "requirements": [
+        [
+            "wash"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

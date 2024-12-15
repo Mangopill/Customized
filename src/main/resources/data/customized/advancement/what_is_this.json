@@ -1,0 +1,33 @@
+{
+    "parent": "customized:root",
+    "criteria": {
+        "greenhouse": {
+            "trigger": "minecraft:location",
+            "conditions": {
+                "player": [{
+                    "condition": "minecraft:location_check",
+                    "predicate": {
+                        "structures": "customized:greenhouse"
+                    }
+                }]
+            }
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "customized.advancement.what_is_this"
+        },
+        "icon": {
+            "id": "minecraft:glass"
+        },
+        "title": {
+            "translate": "customized.advancement.what_is_this.desc"
+        }
+    },
+    "requirements": [
+        [
+            "greenhouse"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

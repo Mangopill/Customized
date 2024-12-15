@@ -2,12 +2,14 @@ package mangopill.customized.common.mixin;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import mangopill.customized.Customized;
+import mangopill.customized.common.registry.ModAdvancementRegistry;
 import mangopill.customized.common.registry.ModParticleTypeRegistry;
 import mangopill.customized.common.tag.ModTag;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -57,6 +59,9 @@ public abstract class ItemReplaceMixin{
                 i++;
             }
             itemEntity.discard();
+            if (itemEntity.getOwner() instanceof ServerPlayer owner) {
+                ModAdvancementRegistry.WASH_SEEDS.get().trigger(owner);
+            }
         }
     }
 }

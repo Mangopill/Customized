@@ -8,10 +8,12 @@ import mangopill.customized.common.block.entity.AbstractPlateBlockEntity;
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.state.PlateState;
 import mangopill.customized.common.block.state.PotState;
+import mangopill.customized.common.registry.ModAdvancementRegistry;
 import mangopill.customized.common.util.ModItemStackHandlerHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
@@ -82,10 +84,12 @@ public abstract class AbstractPlateItem extends BlockItem {
         int consumptionCount = getConsumptionCount(stack);
         int consumptionCountTotal = getConsumptionCountTotal(stack);
         ItemStackHandler newItemStackHandler = copyItemStackHandlerByComponent(stack);
+        FoodProperties properties = getFoodProperty(stack);
+        plateAdvancement(livingEntity, properties);
         if(consumptionCount >= 1) {
             level.playSound(null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), livingEntity.getEatingSound(stack),
                     SoundSource.NEUTRAL, 1.0F, 1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.4F);
-            AbstractPlateBlockEntity.addEffect(livingEntity, getFoodProperty(stack));
+            AbstractPlateBlockEntity.addEffect(livingEntity, properties);
             if (consumptionCount > 1){
                 reduceItemStackCountByDivision(newItemStackHandler, consumptionCountTotal);
             } else {
@@ -98,6 +102,16 @@ public abstract class AbstractPlateItem extends BlockItem {
             livingEntity.gameEvent(GameEvent.EAT);
         }
         return stack;
+    }
+
+    public static void plateAdvancement(@NotNull LivingEntity livingEntity, FoodProperties properties) {
+        if (livingEntity instanceof ServerPlayer serverPlayer) {
+            if (properties.equals(FoodValue.INEDIBLE)){
+                ModAdvancementRegistry.EAT_INEDIBLE_STEW.get().trigger(serverPlayer);
+            } else {
+                ModAdvancementRegistry.EAT_NORMAL_STEW.get().trigger(serverPlayer);
+            }
+        }
     }
 
     @Override

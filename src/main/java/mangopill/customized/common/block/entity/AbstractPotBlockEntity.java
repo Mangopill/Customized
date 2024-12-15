@@ -3,6 +3,7 @@ package mangopill.customized.common.block.entity;
 import mangopill.customized.common.block.handler.PotItemHandler;
 import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.recipe.AbstractPotRecipe;
+import mangopill.customized.common.registry.ModAdvancementRegistry;
 import mangopill.customized.common.tag.ModTag;
 import mangopill.customized.common.util.CreateItemStackHandler;
 import mangopill.customized.common.util.ModItemStackHandlerHelper;
@@ -11,6 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -308,6 +310,9 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
 
     public void getOutputInPot(ItemStack itemStackInHand, Player player){
         ModItemStackHandlerHelper.getOutputItem(itemStackInHand, player, itemStackHandler, ingredientInput + seasoningInput + SPICE_INPUT);
+        if (player instanceof ServerPlayer serverPlayer) {
+            ModAdvancementRegistry.GET_FAMOUS_DISH.get().trigger(serverPlayer);
+        }
         itemStackHandlerChanged();
     }
 

@@ -1,0 +1,25 @@
+{
+    "parent": "customized:root",
+    "criteria": {
+        "famous": {
+            "trigger": "customized:get_famous_dish"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "customized.advancement.the_legend_on_the_dining_table"
+        },
+        "icon": {
+            "id": "customized:famous_dish_plate"
+        },
+        "title": {
+            "translate": "customized.advancement.the_legend_on_the_dining_table.desc"
+        }
+    },
+    "requirements": [
+        [
+            "famous"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

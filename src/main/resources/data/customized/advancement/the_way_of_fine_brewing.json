@@ -1,0 +1,25 @@
+{
+    "parent": "customized:root",
+    "criteria": {
+        "brewing": {
+            "trigger": "customized:use_brewing_barrel"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "customized.advancement.the_way_of_fine_brewing"
+        },
+        "icon": {
+            "id": "customized:brewing_barrel"
+        },
+        "title": {
+            "translate": "customized.advancement.the_way_of_fine_brewing.desc"
+        }
+    },
+    "requirements": [
+        [
+            "brewing"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

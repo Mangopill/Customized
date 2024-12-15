@@ -3,13 +3,13 @@ package mangopill.customized.common.block.entity;
 import mangopill.customized.common.block.BrewingBarrelBlock;
 import mangopill.customized.common.block.handler.BrewingBarrelItemHandler;
 import mangopill.customized.common.recipe.BrewingBarrelRecipe;
-import mangopill.customized.common.registry.ModBlockEntityTypeRegistry;
-import mangopill.customized.common.registry.ModRecipeRegistry;
+import mangopill.customized.common.registry.*;
 import mangopill.customized.common.util.CreateItemStackHandler;
 import mangopill.customized.common.util.ModItemStackHandlerHelper;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -150,10 +150,14 @@ public class BrewingBarrelBlockEntity extends BlockEntity implements CreateItemS
             }
             ModItemStackHandlerHelper.getOutputItem(itemStackInHand, player, itemStackHandler, inputSlot);
             level.playSound(null, pos, SoundEvents.BARREL_CLOSE, SoundSource.BLOCKS, 0.8F, 1.0F);
+            if (player instanceof ServerPlayer serverPlayer) {
+                ModAdvancementRegistry.USE_BREWING_BARREL.get().trigger(serverPlayer);
+            }
             itemStackHandlerChanged();
         } else {
             insertItem(itemStackInHand);
             level.playSound(null, pos, SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 0.8F, 1.0F);
+            itemStackHandlerChanged();
         }
     }
 

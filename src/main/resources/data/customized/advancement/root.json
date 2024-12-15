@@ -1,0 +1,27 @@
+{
+    "criteria": {
+        "start": {
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+    "display": {
+        "announce_to_chat": false,
+        "background": "minecraft:textures/block/orange_glazed_terracotta.png",
+        "description": {
+            "translate": "customized.advancement.root"
+        },
+        "icon": {
+            "id": "customized:chef_hat"
+        },
+        "show_toast": false,
+        "title": {
+            "translate": "customized.advancement.root.desc"
+        }
+    },
+    "requirements": [
+        [
+            "start"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

@@ -5,6 +5,7 @@ import com.mojang.serialization.DataResult;
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.AbstractPlateBlock;
 import mangopill.customized.common.block.state.PlateState;
+import mangopill.customized.common.item.AbstractPlateItem;
 import mangopill.customized.common.registry.ModDataComponentRegistry;
 import mangopill.customized.common.util.CreateItemStackHandler;
 import mangopill.customized.common.util.ModItemStackHandlerHelper;
@@ -73,6 +74,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
     }
 
     public void eatFood(@NotNull ItemStack stack, @NotNull Level level, @NotNull Player player, @NotNull BlockState state, @NotNull BlockPos pos) {
+        AbstractPlateItem.plateAdvancement(player, foodProperty);
         if(consumptionCount >= 1) {
             level.playSound(null, player.getX(), player.getY(), player.getZ(), player.getEatingSound(stack),
                     SoundSource.NEUTRAL, 1.0F, 1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.4F);
