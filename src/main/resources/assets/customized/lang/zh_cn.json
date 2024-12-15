@@ -57,6 +57,7 @@
   "effect.customized.stress_relief": "身心解压",
   "effect.customized.hydration_and_plumpness": "水润充盈",
 
+  "tooltip.customized.is_ctrl_key_pressed": "<按下ctrl键以显示更多>",
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:饱食度:%s 饱和度:%s",
   "tooltip.customized.estimated_buff": "%s:效果:%s 持续时长:%s",

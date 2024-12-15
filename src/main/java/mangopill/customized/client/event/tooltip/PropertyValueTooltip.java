@@ -1,10 +1,12 @@
 package mangopill.customized.client.event.tooltip;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.util.PropertyValueUtil;
 import mangopill.customized.common.util.value.PropertyValue;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -35,6 +37,13 @@ public class PropertyValueTooltip {
         if (propertyValue.isEmpty()) {
             return;
         }
+        if (!isCtrlKeyPressed()) {
+            if (canShow()) {
+                event.getToolTip().add(Component.translatable("tooltip." + Customized.MODID + ".is_ctrl_key_pressed")
+                        .withStyle(ChatFormatting.GRAY));
+                return;
+            }
+        }
         if (SHOW_NUTRIENT_VALUE_TOOLTIP.get()) {
             propertyValue.toSet().forEach(entry -> {
                 MutableComponent propertyComponent = Component.translatable("tooltip." + Customized.MODID + ".property_value",
@@ -63,5 +72,14 @@ public class PropertyValueTooltip {
                 });
             }
         }
+    }
+
+    private static boolean canShow() {
+        return SHOW_NUTRIENT_VALUE_TOOLTIP.get() || SHOW_NUTRIENT_VALUE_TOOLTIP.get() || SHOW_ESTIMATED_BUFF_TOOLTIP.get();
+    }
+
+    private static boolean isCtrlKeyPressed() {
+        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), InputConstants.KEY_LCONTROL)
+                || InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), InputConstants.KEY_RCONTROL);
     }
 }

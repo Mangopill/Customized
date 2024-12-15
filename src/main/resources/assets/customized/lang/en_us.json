@@ -57,6 +57,7 @@
   "effect.customized.stress_relief": "Stress Relief",
   "effect.customized.hydration_and_plumpness": "Hydration And Plumpness",
 
+  "tooltip.customized.is_ctrl_key_pressed": "<Press the Ctrl key to see more>",
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:Nutrition:%s Saturation:%s",
   "tooltip.customized.estimated_buff": "%s:Buff:%s Duration:%s",
