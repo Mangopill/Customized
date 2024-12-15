@@ -33,4 +33,8 @@ public class FoodValue {
             .nutrition(1).saturationModifier(1.0F).usingConvertsTo(Items.GLASS_BOTTLE).build();
     public static final FoodProperties DOUBAN = new FoodProperties.Builder()
             .nutrition(4).saturationModifier(0.8F).usingConvertsTo(Items.GLASS_BOTTLE).build();
+    public static final FoodProperties SOY_SAUCE = new FoodProperties.Builder()
+            .nutrition(3).saturationModifier(0.8F).usingConvertsTo(Items.GLASS_BOTTLE).build();
+    public static final FoodProperties OYSTER_SAUCE = new FoodProperties.Builder()
+            .nutrition(3).saturationModifier(0.9F).usingConvertsTo(Items.GLASS_BOTTLE).build();
 }

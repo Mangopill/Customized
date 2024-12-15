@@ -87,6 +87,9 @@ public class BrewingBarrelBlockEntity extends BlockEntity implements CreateItemS
             }
             for (int i = 0; i < inputSlot; ++i) {
                 ItemStack slotStack = itemStackHandler.getStackInSlot(i);
+                if (slotStack.hasCraftingRemainingItem()) {
+                    AbstractPotBlockEntity.spawnRemainderItem(slotStack.getCraftingRemainingItem(), getBlockState(), worldPosition, level);
+                }
                 if (!slotStack.isEmpty()){
                     slotStack.shrink(1);
                 }

@@ -1,0 +1,25 @@
+{
+  "type": "customized:brewing_barrel",
+  "time": 1500,
+  "ingredient": [
+    {
+      "tag": "c:crops/wheat"
+    },
+    {
+      "tag": "c:crops/soybean"
+    },
+    {
+      "item": "customized:salt"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    }
+  ],
+  "container": {
+    "item": "minecraft:glass_bottle"
+  },
+  "result": {
+    "count": 1,
+    "id": "customized:soy_sauce"
+  }
+}

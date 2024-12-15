@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "customized:salt"
+    },
+    {
+      "tag": "c:foods/raw_chicken"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:chicken_essence"
+  }
+}

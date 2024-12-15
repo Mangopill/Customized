@@ -171,7 +171,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         for (int i = 0; i < ingredientInput + seasoningInput + SPICE_INPUT; ++i) {
             ItemStack slotStack = itemStackHandler.getStackInSlot(i);
             if (slotStack.hasCraftingRemainingItem()) {
-                spawnRemainderItem(slotStack.getCraftingRemainingItem());
+                spawnRemainderItem(slotStack.getCraftingRemainingItem(), getBlockState(), worldPosition, level);
             }
             if (!slotStack.isEmpty()){
                 slotStack.shrink(1);
@@ -237,11 +237,11 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         cookingCompletionTime = holder.value().getCookingTime();
     }
 
-    protected void spawnRemainderItem(ItemStack remainderStack) {
-        Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
-        double x = worldPosition.getX() + 0.5 + (direction.getStepX() * 0.25);
-        double y = worldPosition.getY() + 0.7;
-        double z = worldPosition.getZ() + 0.5 + (direction.getStepZ() * 0.25);
+    protected static void spawnRemainderItem(ItemStack remainderStack, BlockState state, BlockPos pos, Level level) {
+        Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        double x = pos.getX() + 0.5 + (direction.getStepX() * 0.25);
+        double y = pos.getY() + 0.7;
+        double z = pos.getZ() + 0.5 + (direction.getStepZ() * 0.25);
         if (level != null) {
             ItemEntity entity = new ItemEntity(level, x, y, z, remainderStack);
             entity.setDeltaMovement(direction.getStepX() * 0.1F, 0.3F, direction.getStepZ() * 0.1F);
@@ -313,8 +313,6 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         ModItemStackHandlerHelper.getOutputItem(itemStackInHand, player, itemStackHandler, ingredientInput + seasoningInput + SPICE_INPUT);
         itemStackHandlerChanged();
     }
-
-
 
     @Override
     @Nullable

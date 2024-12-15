@@ -1,0 +1,10 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "customized:chicken_essence"
+  ],
+  "value": {
+    "fresh" : 15.0,
+    "fragrant" : 15.0
+  }
+}

@@ -30,6 +30,12 @@ public class ModItemRegistry {
             "douban", drinkItem(FoodValue.DOUBAN));
     public static final Supplier<Item> SALT = registerWithCreativeTab(
             "salt", basicItem());
+    public static final Supplier<Item> SOY_SAUCE = registerWithCreativeTab(
+            "soy_sauce", drinkItem(FoodValue.SOY_SAUCE));
+    public static final Supplier<Item> CHICKEN_ESSENCE = registerWithCreativeTab(
+            "chicken_essence", basicItem());
+    public static final Supplier<Item> OYSTER_SAUCE = registerWithCreativeTab(
+            "oyster_sauce", drinkItem(FoodValue.OYSTER_SAUCE));
     //block
     public static final Supplier<Item> SUSPICIOUS_DIRT = registerWithCreativeTab(
             "suspicious_dirt", blockItem(ModBlockRegistry.SUSPICIOUS_DIRT, basicItemProperties()));

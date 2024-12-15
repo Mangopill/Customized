@@ -1,0 +1,10 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:foods/soy_sauce"
+  ],
+  "value": {
+    "salty" : 15.0,
+    "fresh" : 8.0
+  }
+}
