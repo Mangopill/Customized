@@ -40,7 +40,7 @@ public class PropertyValueTooltip {
         if (!isCtrlKeyPressed()) {
             if (canShow()) {
                 event.getToolTip().add(Component.translatable("tooltip." + Customized.MODID + ".is_ctrl_key_pressed")
-                        .withStyle(ChatFormatting.GRAY));
+                        .withStyle(ChatFormatting.DARK_GRAY));
                 return;
             }
         }
