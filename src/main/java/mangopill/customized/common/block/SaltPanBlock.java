@@ -73,12 +73,8 @@ public class SaltPanBlock extends Block {
 
     @Override
     protected void tick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
-        if (!level.canSeeSky(pos) || !level.isDay()) {
-            level.scheduleTick(pos, this, Math.max(1000, RandomSource.create().nextInt(2000)));
-            return;
-        }
-        if (state.getValue(WITH_WATER).equals(false)) {
-            level.scheduleTick(pos, this, Math.max(1000, RandomSource.create().nextInt(2000)));
+        if (!level.canSeeSky(pos) || !level.isDay() || state.getValue(WITH_WATER).equals(false)) {
+            level.scheduleTick(pos, this, Math.max(10000, RandomSource.create().nextInt(12000)));
             return;
         }
         level.setBlockAndUpdate(pos, state.setValue(WITH_WATER, false));
@@ -90,7 +86,7 @@ public class SaltPanBlock extends Block {
 
     @Override
     public void onPlace(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState oldState, boolean isMoving) {
-        level.scheduleTick(pos, this, Math.max(1000, RandomSource.create().nextInt(2000)) );
+        level.scheduleTick(pos, this, Math.max(10000, RandomSource.create().nextInt(12000)));
     }
 
     @Override
