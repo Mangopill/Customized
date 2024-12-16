@@ -2,10 +2,12 @@ package mangopill.customized;
 
 import mangopill.customized.common.CustomizedConfig;
 import mangopill.customized.common.registry.*;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
@@ -16,7 +18,9 @@ public class Customized {
     public Customized(IEventBus modBus, ModContainer container) {
         container.registerConfig(ModConfig.Type.COMMON, CustomizedConfig.COMMON_CONFIG);
         container.registerConfig(ModConfig.Type.CLIENT, CustomizedConfig.CLIENT_CONFIG);
-        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+        }
         ModBlockRegistry.BLOCK.register(modBus);
         ModItemRegistry.ITEM.register(modBus);
         ModSoundRegistry.SOUND_EVENT.register(modBus);
