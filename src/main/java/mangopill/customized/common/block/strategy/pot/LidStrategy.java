@@ -40,19 +40,21 @@ public class LidStrategy implements PotInteractionStrategy {
         if (itemStackInHand.is(lid.getItem()) && !state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)){
            if (canInputDrive){
                if (state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE)){
-                   addLid(itemStackInHand, state, level, pos);
+                   addLid(itemStackInHand, state, level, pos, player);
                    return true;
                }
            } else {
-               addLid(itemStackInHand, state, level, pos);
+               addLid(itemStackInHand, state, level, pos, player);
                return true;
            }
         }
         return false;
     }
 
-    private void addLid(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos) {
-        itemStackInHand.shrink(1);
+    private void addLid(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player) {
+        if (!player.isCreative()) {
+            itemStackInHand.shrink(1);
+        }
         level.setBlockAndUpdate(pos, state.setValue(AbstractPotBlock.LID, PotState.WITH_LID));
         level.playSound(null, pos, SoundEvents.DECORATED_POT_PLACE, SoundSource.BLOCKS, 0.8F, 1.0F);
     }

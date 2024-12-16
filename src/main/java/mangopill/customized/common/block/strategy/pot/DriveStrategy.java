@@ -41,18 +41,22 @@ public class DriveStrategy implements PotInteractionStrategy {
 
     private void addDrive(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player) {
         level.setBlockAndUpdate(pos, state.setValue(AbstractPotBlock.LID, PotState.WITH_DRIVE));
-        itemStackInHand.shrink(1);
-        if (!player.getInventory().add(Items.BUCKET.getDefaultInstance())) {
-            player.drop(Items.BUCKET.getDefaultInstance(), false);
+        if (!player.isCreative()) {
+            itemStackInHand.shrink(1);
+            if (!player.getInventory().add(Items.BUCKET.getDefaultInstance())) {
+                player.drop(Items.BUCKET.getDefaultInstance(), false);
+            }
         }
         level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 0.8F, 1.0F);
     }
 
     private void clearDrive(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player) {
         level.setBlockAndUpdate(pos, state.setValue(AbstractPotBlock.LID, PotState.WITHOUT_LID));
-        itemStackInHand.shrink(1);
-        if (!player.getInventory().add(Items.WATER_BUCKET.getDefaultInstance())) {
-            player.drop(Items.WATER_BUCKET.getDefaultInstance(), false);
+        if (!player.isCreative()) {
+            itemStackInHand.shrink(1);
+            if (!player.getInventory().add(Items.WATER_BUCKET.getDefaultInstance())) {
+                player.drop(Items.WATER_BUCKET.getDefaultInstance(), false);
+            }
         }
         level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 0.8F, 1.0F);
     }

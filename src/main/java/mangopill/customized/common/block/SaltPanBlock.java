@@ -61,9 +61,11 @@ public class SaltPanBlock extends Block {
     protected void shrinkAndGive(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player,
                                  Item shrinkItem, Item giveItem, SoundEvent sound, boolean with_water) {
         if (itemStackInHand.is(shrinkItem)){
-            itemStackInHand.shrink(1);
-            if (!player.getInventory().add(giveItem.getDefaultInstance())) {
-                player.drop(giveItem.getDefaultInstance(), false);
+            if (!player.isCreative()) {
+                itemStackInHand.shrink(1);
+                if (!player.getInventory().add(giveItem.getDefaultInstance())) {
+                    player.drop(giveItem.getDefaultInstance(), false);
+                }
             }
             level.setBlockAndUpdate(pos, state.setValue(WITH_WATER, with_water));
             level.playSound(null, pos, sound, SoundSource.BLOCKS, 0.8F, 1.0F);
