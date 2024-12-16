@@ -51,7 +51,6 @@ public class SaltPanBlock extends Block {
         }
         if (state.getValue(WITH_WATER).equals(false)){
             shrinkAndGive(itemStackInHand, state, level, pos, player, Items.POTION, Items.GLASS_BOTTLE, SoundEvents.BOTTLE_EMPTY,true);
-
         } else {
             shrinkAndGive(itemStackInHand, state, level, pos, player, Items.GLASS_BOTTLE, Items.POTION, SoundEvents.BOTTLE_FILL,false);
         }
