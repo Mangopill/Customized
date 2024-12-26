@@ -19,7 +19,7 @@
   "block.customized.braised_chicken_with_shiitake_mushrooms_soup": "Braised Chicken with Shiitake Mushrooms Soup",
   "block.customized.radish_and_pork_rib_soup": "Radish and Pork Rib Soup",
 
-  "item.customized.spatula": "Spatula",
+  "item.customized.spoon": "Spoon",
   "item.customized.casserole_lid": "Casserole Lld",
   "item.customized.famous_dish_plate": "Famous Dish Plate",
 
@@ -123,6 +123,8 @@
   "customized.advancement.what_is_this": "Find a Greenhouse",
   "customized.advancement.the_legend_on_the_dining_table.desc": "The Legend on the Dining Table",
   "customized.advancement.the_legend_on_the_dining_table": "Recreate the Flavor of Famous Dishes",
+  "customized.advancement.master_of_culinary_arts.desc": "Master of Culinary Arts",
+  "customized.advancement.master_of_culinary_arts": "Simultaneously possessing all nutritional effects",
 
   "customized.configuration.nutrient": "Nutrient",
   "customized.configuration.nutrition": "Nutrition",
@@ -246,5 +248,6 @@
   "jei.info.customized.soiled_seed": "Clean it in water to see its true form.",
   "jei.info.customized.soup_bowl": "Sneak right-click the casserole to obtain the stew inside。",
   "jei.info.customized.salt_pan": "Use a glass bottle to add water and then spread it out to make salt.",
-  "jei.info.customized.salt": "Obtain from a salt pan."
+  "jei.info.customized.salt": "Obtain from a salt pan.",
+  "jei.info.customized.spoon": "Right-click the casserole to speed up cooking."
 }

@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class StirFryStrategy implements PotInteractionStrategy {
-    //Will I use it in the future?
     @Override
     public boolean interact(ItemStack itemStackInHand, BlockState state,
                          Level level, BlockPos pos,

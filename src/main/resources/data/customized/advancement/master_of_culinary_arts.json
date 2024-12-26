@@ -1,0 +1,49 @@
+{
+  "parent": "customized:secret_ingredients_in_the_soup",
+  "criteria": {
+    "master_of_culinary_arts": {
+      "conditions": {
+        "effects": {
+          "customized:iced": {},
+          "customized:warm_stomach": {},
+          "customized:vitality": {},
+          "customized:antidote": {},
+          "customized:soar": {},
+          "customized:metabolism": {},
+          "customized:robust": {},
+          "customized:vitality_restoration": {},
+          "customized:calorie_burn": {},
+          "customized:smooth_blood_flow": {},
+          "customized:mental_stimulation": {},
+          "customized:appetite_boost": {},
+          "customized:sustained_energy": {},
+          "customized:stress_relief": {},
+          "customized:hydration_and_plumpness": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "frame": "challenge",
+    "hidden": true,
+    "description": {
+      "translate": "customized.advancement.master_of_culinary_arts"
+    },
+    "icon": {
+      "id": "customized:chef_hat"
+    },
+    "title": {
+      "translate": "customized.advancement.master_of_culinary_arts.desc"
+    }
+  },
+  "requirements": [
+    [
+      "master_of_culinary_arts"
+    ]
+  ],
+  "rewards": {
+    "experience": 600
+  },
+  "sends_telemetry_event": true
+}

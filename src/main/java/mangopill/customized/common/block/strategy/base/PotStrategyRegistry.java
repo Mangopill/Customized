@@ -13,6 +13,7 @@ public class PotStrategyRegistry {
                 new LidStrategy(new ItemStack(ModItemRegistry.CASSEROLE_ILD.get()), true),
                 new DishStrategy(),
                 new DriveStrategy(),
+                new StirFryStrategy(),
                 new InsertAndTakeOutItemStrategy());
     }
 }

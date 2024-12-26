@@ -83,8 +83,8 @@ public class ModItemRegistry {
     public static final Supplier<Item> GINGER = registerWithCreativeTab(
             "ginger", foodSeedItem(ModBlockRegistry.GINGER_CROP, FoodValue.GINGER));
     //kitchenware item
-    public static final Supplier<Item> SPATULA = registerWithCreativeTab(
-            "spatula", () -> new ShovelItem(Tiers.IRON, new Item.Properties().attributes(ShovelItem.createAttributes(Tiers.IRON, 2, -3.0F))));
+    public static final Supplier<Item> SPOON = registerWithCreativeTab(
+            "spoon", () -> new ShovelItem(Tiers.IRON, new Item.Properties().attributes(ShovelItem.createAttributes(Tiers.IRON, 2, -3.0F))));
     public static final Supplier<Item> CASSEROLE_ILD = registerWithCreativeTab(
             "casserole_lid", () -> new Item(basicItemProperties().stacksTo(1)));
     public static final Supplier<Item> FAMOUS_DISH_PLATE = registerWithCreativeTab(

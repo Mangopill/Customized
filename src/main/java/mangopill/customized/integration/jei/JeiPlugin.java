@@ -33,6 +33,7 @@ public class JeiPlugin implements IModPlugin {
         addJEIInfo(registration, ModItemRegistry.SOUP_BOWL, ".soup_bowl");
         addJEIInfo(registration, ModItemRegistry.SALT_PAN, ".salt_pan");
         addJEIInfo(registration, ModItemRegistry.SALT, ".salt");
+        addJEIInfo(registration, ModItemRegistry.SPOON, ".spoon");
     }
 
     @Override

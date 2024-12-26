@@ -19,7 +19,7 @@
   "block.customized.braised_chicken_with_shiitake_mushrooms_soup": "香菇焖鸡煲",
   "block.customized.radish_and_pork_rib_soup": "萝卜排骨汤",
 
-  "item.customized.spatula": "锅铲",
+  "item.customized.spoon": "汤勺",
   "item.customized.casserole_lid": "砂锅盖",
   "item.customized.famous_dish_plate": "名菜餐盘",
 
@@ -123,6 +123,8 @@
   "customized.advancement.what_is_this": "找到一个温室",
   "customized.advancement.the_legend_on_the_dining_table.desc": "餐桌上的传奇",
   "customized.advancement.the_legend_on_the_dining_table": "重现名菜美味",
+  "customized.advancement.master_of_culinary_arts.desc": "膳食大师",
+  "customized.advancement.master_of_culinary_arts": "同时拥有所有营养素状态效果",
 
   "customized.configuration.nutrient": "营养值",
   "customized.configuration.nutrition": "饱食度",
@@ -246,5 +248,6 @@
   "jei.info.customized.soiled_seed": "在水中清洗以看清它的真面目。",
   "jei.info.customized.soup_bowl": "潜行右键砂锅获取里面的炖汤。",
   "jei.info.customized.salt_pan": "使用玻璃瓶加水后摊晒成食盐。",
-  "jei.info.customized.salt": "通过晒盐场获取。"
+  "jei.info.customized.salt": "通过晒盐场获取。",
+  "jei.info.customized.spoon": "右键砂锅加速烹饪。"
 }

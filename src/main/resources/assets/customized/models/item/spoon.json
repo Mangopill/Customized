@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "customized:item/spatula"
+		"layer0": "customized:item/spoon"
 	}
 }
