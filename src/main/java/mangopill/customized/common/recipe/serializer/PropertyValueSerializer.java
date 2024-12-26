@@ -22,8 +22,8 @@ public class PropertyValueSerializer implements RecipeSerializer<PropertyValueRe
                     NeoForgeExtraCodecs.xor(
                             NeoForgeExtraCodecs.setOf(ResourceLocation.CODEC).fieldOf("item"),
                             NeoForgeExtraCodecs.setOf(ResourceLocation.CODEC).fieldOf("tag")
-                    ).forGetter(recipe -> recipe.isItem() ? Either.left(recipe.getName()) : Either.right(recipe.getName())),
-                    PropertyValue.CODEC.fieldOf("value").forGetter(PropertyValueRecipe::getPropertyValue)
+                    ).forGetter(recipe -> recipe.item() ? Either.left(recipe.name()) : Either.right(recipe.name())),
+                    PropertyValue.CODEC.fieldOf("value").forGetter(PropertyValueRecipe::propertyValue)
             ).apply(instance, (itemOrTag, propertyValue) -> {
                 boolean isItem = itemOrTag.left().isPresent();
                 Set<ResourceLocation> name = isItem ? itemOrTag.left().get() : itemOrTag.right().get();
@@ -44,10 +44,10 @@ public class PropertyValueSerializer implements RecipeSerializer<PropertyValueRe
     }
 
     private static void toNetwork(RegistryFriendlyByteBuf buffer, PropertyValueRecipe recipe) {
-        buffer.writeBoolean(recipe.isItem());
-        buffer.writeVarInt(recipe.getName().size());
-        recipe.getName().forEach(buffer::writeResourceLocation);
-        PropertyValue.STREAM_CODEC.encode(buffer, recipe.getPropertyValue());
+        buffer.writeBoolean(recipe.item());
+        buffer.writeVarInt(recipe.name().size());
+        recipe.name().forEach(buffer::writeResourceLocation);
+        PropertyValue.STREAM_CODEC.encode(buffer, recipe.propertyValue());
     }
 
     @Override

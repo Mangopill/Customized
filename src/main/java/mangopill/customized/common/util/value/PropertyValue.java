@@ -27,9 +27,6 @@ public class PropertyValue {
             PropertyValue::toNetwork, PropertyValue::fromNetwork
     );
 
-    public PropertyValue() {
-    }
-
     public static PropertyValue putToMap(@NotNull Map<NutrientCategory, Float> map) {
         PropertyValue propertyValue = new PropertyValue();
         map.forEach(propertyValue::put);

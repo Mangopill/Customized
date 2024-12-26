@@ -137,7 +137,7 @@ public abstract class AbstractPlateItem extends BlockItem {
             }
             return getInteractionResult(getPotEntity(level, pos), itemInHand, level, player);
         }
-        return player.isShiftKeyDown() ? super.useOn(context) : InteractionResult.PASS;
+        return player.isShiftKeyDown() ? super.useOn(context) : use(level, player, context.getHand()).getResult();
     }
 
     @Override
@@ -215,7 +215,6 @@ public abstract class AbstractPlateItem extends BlockItem {
         return ModItemStackHandlerHelper.hasInput(getItemStackHandler(stack), getItemStackHandler(stack).getSlots());
     }
 
-    //getItemStackList
     public List<ItemStack> getItemStackListInPlate(ItemStack stack, boolean includeSeasoningAndSpice) {
         return includeSeasoningAndSpice ? ModItemStackHandlerHelper.getItemStackListInSlot(getItemStackHandler(stack), 0, getItemStackHandler(stack).getSlots()) :
                 ModItemStackHandlerHelper.getItemStackListInSlot(getItemStackHandler(stack), 0, ingredientInput) ;

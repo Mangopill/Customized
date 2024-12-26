@@ -15,10 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public class PropertyValueRecipe implements ModRecipeInterface<RecipeInput>{
-    private final Set<ResourceLocation> name;
-    private final PropertyValue propertyValue;
-    private final boolean item;
+public record PropertyValueRecipe(Set<ResourceLocation> name, PropertyValue propertyValue, boolean item) implements ModRecipeInterface<RecipeInput> {
 
     public PropertyValueRecipe(Set<ResourceLocation> name, PropertyValue propertyValue, boolean item) {
         this.name = ImmutableSet.copyOf(name);
@@ -47,18 +44,6 @@ public class PropertyValueRecipe implements ModRecipeInterface<RecipeInput>{
     @Override
     public @NotNull ItemStack assemble(@NotNull RecipeInput input, HolderLookup.@NotNull Provider registries) {
         return ItemStack.EMPTY;
-    }
-
-    public Set<ResourceLocation> getName() {
-        return name;
-    }
-
-    public PropertyValue getPropertyValue() {
-        return propertyValue;
-    }
-
-    public boolean isItem() {
-        return item;
     }
 
     @Override

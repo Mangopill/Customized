@@ -41,15 +41,15 @@ public final class PropertyValueUtil {
         }
         return recipeHolder.stream()
                 .map(RecipeHolder::value)
-                .filter(PropertyValueRecipe::isItem)
-                .findFirst().map(PropertyValueRecipe::getPropertyValue)
+                .filter(PropertyValueRecipe::item)
+                .findFirst().map(PropertyValueRecipe::propertyValue)
                 .orElseGet(() -> {
                     PropertyValue propertyValue = new PropertyValue();
-                    long maxCount = 0L;
                     HashMap<ResourceLocation, PropertyValue> map = new HashMap<>();
                     recipeHolder.stream().map(RecipeHolder::value).forEach(valueRecipe ->
-                            valueRecipe.getName().forEach(name -> map.put(name, valueRecipe.getPropertyValue()))
+                            valueRecipe.name().forEach(name -> map.put(name, valueRecipe.propertyValue()))
                     );
+                    long maxCount = 0L;
                     for (ResourceLocation tag : stack.getTags().map(TagKey::location).filter(map::containsKey).toList()) {
                         long count = tag.getPath().chars().filter(c -> c == '/').count();
                         if (count >= maxCount) {

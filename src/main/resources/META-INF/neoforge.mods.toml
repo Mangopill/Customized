@@ -17,6 +17,8 @@ logoFile="logo.png"
 
 authors="${mod_authors}"
 
+credits = "N3mur0"
+
 description='''${mod_description}'''
 
 displayURL = "https://github.com/Mangopill/Customized"
