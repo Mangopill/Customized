@@ -19,8 +19,6 @@ public class ModItemRegistry {
     //item
     public static final Supplier<Item> ROCK_SUGAR = registerWithCreativeTab(
             "rock_sugar", basicItem());
-    public static final Supplier<Item> SOILED_SEED = registerWithCreativeTab(
-            "soiled_seed", basicItem());
     public static final Supplier<Item> KETCHUP = registerWithCreativeTab(
             "ketchup", drinkItem(FoodValue.KETCHUP));
     public static final Supplier<Item> VINEGAR = registerWithCreativeTab(
@@ -41,6 +39,8 @@ public class ModItemRegistry {
             "rich_and_nourishing_spice", basicItem());
     public static final Supplier<Item> LIGHT_AND_FRESH_AROMATIC_SPICE = registerWithCreativeTab(
             "light_and_fresh_aromatic_spice", basicItem());
+    public static final Supplier<Item> SOILED_SEED = registerWithCreativeTab(
+            "soiled_seed", basicItem());
     //crop
     public static final Supplier<Item> RICE = registerWithCreativeTab(
             "rice", basicItem());
