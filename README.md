@@ -4,7 +4,7 @@
 
 <br>
 <a href="https://www.curseforge.com/minecraft/mc-mods/customized">
-    <img src="https://cf.way2muchnoise.eu/full_1156112_downloads.svg" alt="CurseForge Downloads">
+    <img src="https://img.shields.io/curseforge/dt/1156112?logo=curseforge&suffix=%20&labelColor=000000&color=F16436&logoColor=FFFFFF" alt="CurseForge Downloads">
 </a>
 <a href="https://modrinth.com/project/customized">
     <img src="https://img.shields.io/modrinth/dt/customized?logo=modrinth&suffix=%20&labelColor=FFFFFF&color=00AF5C&logoColor=00AF5C" alt="Modrinth Downloads">

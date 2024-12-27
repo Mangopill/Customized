@@ -1,3 +1,6 @@
 {
-  "parent": "customized:block/tomato_and_beef_brisket_soup_stage0"
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "customized:item/tomato_and_beef_brisket_soup"
+	}
 }
