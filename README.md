@@ -1,5 +1,5 @@
 # Customized - A Cooking Experience Mod
-<img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png" alt="Customized">
+<img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png" alt="Customized" width="75%">
 <a href="https://www.curseforge.com/minecraft/mc-mods/customized">
     <img src="https://cf.way2muchnoise.eu/full_1156112_downloads.svg" alt="CurseForge Downloads">
 </a>
