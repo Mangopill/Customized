@@ -1,7 +1,6 @@
 {
 	"credit": "Made with Blockbench",
 	"render_type": "minecraft:translucent",
-	"texture_size": [32, 32],
 	"textures": {
 		"0": "customized:block/soup_bowl",
 		"1": "minecraft:block/water_still",
