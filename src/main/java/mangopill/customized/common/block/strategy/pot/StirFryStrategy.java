@@ -39,6 +39,6 @@ public class StirFryStrategy implements PotInteractionStrategy {
 
     private void stirFry(ItemStack itemStackInHand, Level level, BlockPos pos, Player player, InteractionHand hand, AbstractPotBlockEntity potBlockEntity) {
         potBlockEntity.stirFryAccelerate(itemStackInHand, player, hand);
-        level.playSound(null, pos, SoundEvents.METAL_HIT, SoundSource.BLOCKS, 0.8F, 1.0F);
+        level.playSound(null, pos, SoundEvents.METAL_HIT, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 }

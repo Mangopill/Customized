@@ -14,7 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -277,11 +276,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
             return;
         }
         cookingTime += 10;
-        if (hand.equals(InteractionHand.MAIN_HAND)) {
-            itemStackInHand.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
-        } else {
-            itemStackInHand.hurtAndBreak(1, entity, EquipmentSlot.OFFHAND);
-        }
+        itemStackInHand.hurtAndBreak(1, entity, LivingEntity.getSlotForHand(hand));
     }
 
     public void lidAccelerate(BlockState state){
