@@ -57,5 +57,4 @@ public record PropertyValueRecipe(Set<ResourceLocation> name, PropertyValue prop
     public RecipeType<?> getType() {
         return ModRecipeRegistry.PROPERTY_VALUE.get();
     }
-
 }
