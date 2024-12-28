@@ -125,9 +125,7 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
     @Override
     public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
         ItemStack stack = super.getCloneItemStack(level, pos, state);
-        if (level.getBlockEntity(pos) instanceof AbstractPlateBlockEntity plateBlockEntity){
-            stack = plateBlockEntity.getCloneItemStack(stack);
-        }
-        return stack;
+        return level.getBlockEntity(pos) instanceof AbstractPlateBlockEntity plateBlockEntity
+                ? plateBlockEntity.getCloneItemStack(stack) : stack;
     }
 }
