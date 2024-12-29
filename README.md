@@ -1,6 +1,7 @@
 <div style="text-align: center;">
   <img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png?raw=true" alt="Customized" width="30%">
 </div>
+
 # Customized - A Cooking Experience Mod
 <a href="https://www.curseforge.com/minecraft/mc-mods/customized">
     <img src="https://img.shields.io/curseforge/dt/1156112?logo=curseforge&labelColor=000000&color=F16436&logoColor=FFFFFF" alt="CurseForge Downloads">
