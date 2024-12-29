@@ -1,3 +1,4 @@
+<div style="text-align: center;">
 <img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png" alt="Customized" width="30%">
 
 # Customized - A Cooking Experience Mod
@@ -27,3 +28,4 @@ This approach preserves the core mechanics of Minecraft while enhancing the imme
 
 ## Feedback & Issues
 If you encounter any issues with balance, bugs, or anything else, feel free to let me know.
+</div>
