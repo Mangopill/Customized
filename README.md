@@ -7,7 +7,7 @@
 <a href="https://modrinth.com/project/customized">
     <img src="https://img.shields.io/modrinth/dt/customized?logo=modrinth&labelColor=FFFFFF&color=00AF5C&logoColor=00AF5C" alt="Modrinth Downloads">
 </a>
-    <img src="https://img.shields.io/curseforge/v/1156112?label=latest version&labelColor=9BC4FC&color=FFFFFF" alt="Latest version">
+<img src="https://img.shields.io/curseforge/v/1156112?label=latest version&labelColor=9BC4FC&color=FFFFFF" alt="Latest version">
 <br>
 
 **Customized** is a mod for Minecraft that enhances the cooking system by adding new cooking methods, recipes, and dynamic food buffs. Cook delicious meals with various techniques and gain special buffs!
