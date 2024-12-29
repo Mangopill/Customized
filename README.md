@@ -1,7 +1,8 @@
-<div style="text-align: center;">
-    <img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png" alt="Customized" width="30%">
-
-# Customized - A Cooking Experience Mod
+<p align="center">
+<img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png" alt="Customized" width="30%">
+</p>
+<h1 align="center">
+Customized - A Cooking Experience Mod <br>
 <a href="https://www.curseforge.com/minecraft/mc-mods/customized">
     <img src="https://img.shields.io/curseforge/dt/1156112?logo=curseforge&labelColor=000000&color=F16436&logoColor=FFFFFF" alt="CurseForge Downloads">
 </a>
@@ -9,6 +10,7 @@
     <img src="https://img.shields.io/modrinth/dt/customized?logo=modrinth&labelColor=FFFFFF&color=00AF5C&logoColor=00AF5C" alt="Modrinth Downloads">
 </a>
 <img src="https://img.shields.io/curseforge/v/1156112?label=latest version&labelColor=9BC4FC&color=FFFFFF" alt="Latest version">
+</h1>
 
 **Customized** is a mod for Minecraft that enhances the cooking system by adding new cooking methods, recipes, and dynamic food buffs. Cook delicious meals with various techniques and gain special buffs!
 
@@ -28,4 +30,3 @@ This approach preserves the core mechanics of Minecraft while enhancing the imme
 
 ## Feedback & Issues
 If you encounter any issues with balance, bugs, or anything else, feel free to let me know.
-</div>
