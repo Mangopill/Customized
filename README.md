@@ -1,14 +1,15 @@
-<img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png" alt="Customized" width="30%">
+<div style="text-align: center;">
+  <img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png?raw=true" alt="Customized" width="30%">
+</div>
 
 # Customized - A Cooking Experience Mod
-
-<br>
 <a href="https://www.curseforge.com/minecraft/mc-mods/customized">
-    <img src="https://img.shields.io/curseforge/dt/1156112?logo=curseforge&suffix=%20&labelColor=000000&color=F16436&logoColor=FFFFFF" alt="CurseForge Downloads">
+    <img src="https://img.shields.io/curseforge/dt/1156112?logo=curseforge&labelColor=000000&color=F16436&logoColor=FFFFFF" alt="CurseForge Downloads">
 </a>
 <a href="https://modrinth.com/project/customized">
-    <img src="https://img.shields.io/modrinth/dt/customized?logo=modrinth&suffix=%20&labelColor=FFFFFF&color=00AF5C&logoColor=00AF5C" alt="Modrinth Downloads">
+    <img src="https://img.shields.io/modrinth/dt/customized?logo=modrinth&labelColor=FFFFFF&color=00AF5C&logoColor=00AF5C" alt="Modrinth Downloads">
 </a>
+    <img src="https://img.shields.io/curseforge/v/1156112?label=latest version&labelColor=9BC4FC&color=FFFFFF" alt="Latest version">
 <br>
 
 **Customized** is a mod for Minecraft that enhances the cooking system by adding new cooking methods, recipes, and dynamic food buffs. Cook delicious meals with various techniques and gain special buffs!
