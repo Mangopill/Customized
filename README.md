@@ -1,15 +1,17 @@
 <p align="center">
-<img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png" alt="Customized" width="30%">
+    <img src="https://github.com/Mangopill/Customized/blob/1.21.1-neoforge/src/main/resources/logo.png" alt="Customized" width="30%">
 </p>
 <h1 align="center">
-Customized - A Cooking Experience Mod <br>
-<a href="https://www.curseforge.com/minecraft/mc-mods/customized">
-    <img src="https://img.shields.io/curseforge/dt/1156112?logo=curseforge&label=CurseForge Downloads&labelColor=000000&color=F16436&logoColor=FFFFFF" alt="CurseForge Downloads">
-</a>
-<a href="https://modrinth.com/project/customized">
-    <img src="https://img.shields.io/modrinth/dt/customized?logo=modrinth&label=Modrinth Downloads&labelColor=FFFFFF&color=00AF5C&logoColor=00AF5C" alt="Modrinth Downloads">
-</a>
-<img src="https://img.shields.io/curseforge/v/1156112?label=Latest Version&labelColor=9BC4FC&color=FFFFFF" alt="Latest version">
+    Customized - A Cooking Experience Mod <br>
+    <a href="https://www.curseforge.com/minecraft/mc-mods/customized">
+        <img src="https://img.shields.io/curseforge/dt/1156112?logo=curseforge&label=CurseForge Downloads&labelColor=000000&color=F16436&logoColor=FFFFFF" alt="CurseForge Downloads">
+    </a>
+    <a href="https://modrinth.com/project/customized">
+        <img src="https://img.shields.io/modrinth/dt/customized?logo=modrinth&label=Modrinth Downloads&labelColor=FFFFFF&color=00AF5C&logoColor=00AF5C" alt="Modrinth Downloads">
+    </a>
+    <a href="https://www.curseforge.com/minecraft/mc-mods/customized/files">
+        <img src="https://img.shields.io/curseforge/v/1156112?label=Latest Version&labelColor=9BC4FC&color=FFFFFF" alt="Latest version">
+    </a>
 </h1>
 
 **Customized** is a mod for Minecraft that enhances the cooking system by adding new cooking methods, recipes, and dynamic food buffs. Cook delicious meals with various techniques and gain special buffs!
