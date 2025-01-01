@@ -82,7 +82,7 @@ public class BrewingBarrelBlockEntity extends BlockEntity implements CreateItemS
             ItemStack stackInSlot = itemStackHandler.getStackInSlot(inputSlot);
             if (stackInSlot.isEmpty()) {
                 itemStackHandler.setStackInSlot(inputSlot, resultStack);
-            } else if (ItemStack.isSameItem(stackInSlot, resultStack)) {
+            } else if (ItemStack.isSameItemSameComponents(stackInSlot, resultStack)) {
                 stackInSlot.grow(resultStack.getCount());
             }
             for (int i = 0; i < inputSlot; ++i) {

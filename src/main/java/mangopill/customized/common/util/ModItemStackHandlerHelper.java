@@ -31,7 +31,7 @@ public final class ModItemStackHandlerHelper {
                     itemStackHandler.setStackInSlot(i, newItemStackInHand.split(slotLimit));
                 }
             }else {
-                if (!ItemStack.isSameItem(stackInSlot, itemStackInHand)){
+                if (!ItemStack.isSameItemSameComponents(stackInSlot, itemStackInHand)){
                     continue;
                 }
                 if (slotLimit >= stackInSlotCount + itemStackInHandCount){
