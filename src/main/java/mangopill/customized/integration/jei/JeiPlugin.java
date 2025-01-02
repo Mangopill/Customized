@@ -29,11 +29,11 @@ public class JeiPlugin implements IModPlugin {
             registration.addRecipes(CASSEROLE, getCasseroleRecipeList());
             registration.addRecipes(BREWING_BARREL, getBrewingBarrelRecipeList());
         }
-        addJEIInfo(registration, ModItemRegistry.SOILED_SEED, ".soiled_seed");
-        addJEIInfo(registration, ModItemRegistry.SOUP_BOWL, ".soup_bowl");
-        addJEIInfo(registration, ModItemRegistry.SALT_PAN, ".salt_pan");
-        addJEIInfo(registration, ModItemRegistry.SALT, ".salt");
-        addJEIInfo(registration, ModItemRegistry.SPOON, ".spoon");
+        addJeiInfo(registration, ModItemRegistry.SOILED_SEED, ".soiled_seed");
+        addJeiInfo(registration, ModItemRegistry.SOUP_BOWL, ".soup_bowl");
+        addJeiInfo(registration, ModItemRegistry.SALT_PAN, ".salt_pan");
+        addJeiInfo(registration, ModItemRegistry.SALT, ".salt");
+        addJeiInfo(registration, ModItemRegistry.SPOON, ".spoon");
     }
 
     @Override

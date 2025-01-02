@@ -76,7 +76,7 @@ public final class JeiUtil {
         }
     }
 
-    public static void addJEIInfo(@NotNull IRecipeRegistration registration, Supplier<Item> item, String s) {
+    public static void addJeiInfo(@NotNull IRecipeRegistration registration, Supplier<Item> item, String s) {
         registration.addIngredientInfo(new ItemStack(item.get()), VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.info." + Customized.MODID + s));
     }
