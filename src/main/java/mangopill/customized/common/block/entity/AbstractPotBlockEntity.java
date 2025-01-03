@@ -280,8 +280,8 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     }
 
     public void lidAccelerate(BlockState state){
-        if (state.getValue(LID).equals(PotState.WITH_DRIVE)){
-            cookingTime += 1;
+        if (state.getValue(LID).equals(PotState.WITH_LID)){
+            ++cookingTime;
         }
     }
 
