@@ -1,6 +1,6 @@
 {
   "type": "customized:casserole",
-  "time": 1600,
+  "time": 800,
   "ingredient": [
     {
       "tag": "c:foods/cooked_beef"

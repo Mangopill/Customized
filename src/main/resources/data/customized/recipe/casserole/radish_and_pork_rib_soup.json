@@ -1,6 +1,6 @@
 {
   "type": "customized:casserole",
-  "time": 600,
+  "time": 300,
   "ingredient": [
     {
       "tag": "c:foods/cooked_pork"
