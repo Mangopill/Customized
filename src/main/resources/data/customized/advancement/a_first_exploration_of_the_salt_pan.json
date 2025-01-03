@@ -12,13 +12,13 @@
     },
     "display": {
         "description": {
-            "translate": "customized.advancement.a_first_exploration_of_the_salt_field"
+            "translate": "customized.advancement.a_first_exploration_of_the_salt_pan"
         },
         "icon": {
             "id": "customized:salt"
         },
         "title": {
-            "translate": "customized.advancement.a_first_exploration_of_the_salt_field.desc"
+            "translate": "customized.advancement.a_first_exploration_of_the_salt_pan.desc"
         }
     },
     "requirements": [
