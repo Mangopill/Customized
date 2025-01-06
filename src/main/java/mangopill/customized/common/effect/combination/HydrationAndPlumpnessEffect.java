@@ -14,12 +14,20 @@ import java.util.Set;
 import static mangopill.customized.common.util.category.NutrientCategory.*;
 
 /**
- *This MobEffect can give the player the HEAL effect.
+ *This MobEffect can give the player the HEAL effect. On top of that, it will also continuously grant the WATER_BREATHING effect.
  */
 public class HydrationAndPlumpnessEffect extends ModMobEffect implements ShrinkNutritionMobEffect, ShrinkSaturationMobEffect, CombinationMobEffect {
 
     public HydrationAndPlumpnessEffect(int color) {
         super(color);
+    }
+
+    @Override
+    public boolean applyEffectTick(@NotNull LivingEntity livingEntity, int amplifier) {
+        if (livingEntity instanceof ServerPlayer player) {
+            player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 260, amplifier));
+        }
+        return true;
     }
 
     @Override
