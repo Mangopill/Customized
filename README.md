@@ -30,5 +30,11 @@ immersive interactions within the game. In Customized, all cooking and food buff
 rather than complex menus. Players only need to place the required ingredients in the right spots to begin cooking and enjoy the benefits of the food.
 This approach preserves the core mechanics of Minecraft while enhancing the immersion of the gameplay.
 
+## FAQ
+- **Q:** Will you port to older versions of Minecraft?  
+  **A:** No.
+- **Q:** Will you maintain or update content for the mod on older versions of Minecraft?  
+  **A:** The mod for older versions of Minecraft will not receive content updates. The older the version of Minecraft, the less likely it will be maintained.
+
 ## Feedback & Issues
 If you encounter any issues with balance, bugs, or anything else, feel free to let me know.
