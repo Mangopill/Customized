@@ -69,7 +69,12 @@ public abstract class TallWaterloggedCropBlock extends BushBlock implements Bone
     @Override
     public boolean isValidBonemealTarget(@NotNull LevelReader levelReader, @NotNull BlockPos blockPos,
                                          @NotNull BlockState blockState) {
-        return blockState.getValue(AGE) < topMaxAge;
+        if (isTop(blockState)) {
+            return blockState.getValue(AGE) < topMaxAge;
+        } else {
+            BlockState stateAbove = levelReader.getBlockState(blockPos.above());
+            return stateAbove.getBlock() == this ? stateAbove.getValue(AGE) != topMaxAge : blockState.getValue(AGE) <= bottomMaxAge;
+        }
     }
 
     @Override
