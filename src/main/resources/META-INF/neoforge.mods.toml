@@ -17,7 +17,7 @@ logoFile="logo.png"
 
 authors="${mod_authors}"
 
-credits = "N3mur0"
+credits = "${mod_credits}"
 
 description='''${mod_description}'''
 
