@@ -2,17 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "y": {
-      "item": "minecraft:yellow_terracotta"
+    "t": {
+      "item": "minecraft:terracotta"
     },
     "b": {
       "item": "minecraft:black_terracotta"
     }
   },
   "pattern": [
-    " y ",
-    "yby",
-    " y "
+    " t ",
+    "tbt",
+    " t "
   ],
   "result": {
     "count": 1,

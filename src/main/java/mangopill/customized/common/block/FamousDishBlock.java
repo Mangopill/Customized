@@ -25,7 +25,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class FamousDishBlock extends Block {
     public static final IntegerProperty EAT = IntegerProperty.create("eat", 0, 2);
-    protected static final VoxelShape SHAPE = Shapes.or(Block.box(2, 0, 2, 14,1,14));
+    protected static final VoxelShape SHAPE = Shapes.or(
+            Block.box(4, 0, 4, 12, 1, 12),
+            Block.box(3, 1, 4, 4, 3, 12),
+            Block.box(3, 1, 12, 13, 3, 13),
+            Block.box(3, 3, 2, 13, 6, 3),
+            Block.box(2, 3, 3, 3, 6, 13),
+            Block.box(13, 3, 3, 14, 6, 13),
+            Block.box(3, 3, 13, 13, 6, 14),
+            Block.box(3, 1, 3, 13, 3, 4),
+            Block.box(12, 1, 4, 13, 3, 12)
+    );
     private final FoodProperties foodProperties;
 
     public FamousDishBlock(Properties properties, FoodProperties foodProperties) {
