@@ -74,11 +74,11 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
     }
 
     public void eatFood(@NotNull ItemStack stack, @NotNull Level level, @NotNull Player player, @NotNull BlockState state, @NotNull BlockPos pos) {
-        AbstractPlateItem.plateAdvancement(player, foodProperty);
         if(consumptionCount >= 1) {
             level.playSound(null, player.getX(), player.getY(), player.getZ(), player.getEatingSound(stack),
                     SoundSource.NEUTRAL, 1.0F, 1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.4F);
             addEffect(player, foodProperty);
+            AbstractPlateItem.plateAdvancement(player, foodProperty);
             if (consumptionCount > 1){
                 reduceItemStackCountByDivision(itemStackHandler, consumptionCountTotal);
             } else {
