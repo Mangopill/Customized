@@ -68,6 +68,8 @@
   "effect.customized.hydration_and_plumpness": "水润充盈",
 
   "tooltip.customized.is_ctrl_key_pressed": "<按下Ctrl键以显示更多>",
+  "tooltip.customized.food_category_seasoning": "调料",
+  "tooltip.customized.food_category_food": "食材",
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:饱食度:%s 饱和度:%s",
   "tooltip.customized.estimated_buff": "%s:效果:%s 持续时长:%s",

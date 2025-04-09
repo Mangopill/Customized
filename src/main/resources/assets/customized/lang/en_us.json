@@ -68,6 +68,8 @@
   "effect.customized.hydration_and_plumpness": "Hydration And Plumpness",
 
   "tooltip.customized.is_ctrl_key_pressed": "<Press the Ctrl key to see more>",
+  "tooltip.customized.food_category_seasoning": "Seasoning",
+  "tooltip.customized.food_category_food": "Food",
   "tooltip.customized.property_value": "%s:%s",
   "tooltip.customized.estimated_value": "%s:Nutrition:%s Saturation:%s",
   "tooltip.customized.estimated_buff": "%s:Buff:%s Duration:%s",

@@ -3,6 +3,7 @@ package mangopill.customized.client.event.tooltip;
 import com.mojang.blaze3d.platform.InputConstants;
 import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
+import mangopill.customized.common.tag.ModTag;
 import mangopill.customized.common.util.PropertyValueUtil;
 import mangopill.customized.common.util.value.PropertyValue;
 import net.minecraft.ChatFormatting;
@@ -45,6 +46,7 @@ public class PropertyValueTooltip {
             }
         }
         if (SHOW_NUTRIENT_VALUE_TOOLTIP.get()) {
+            addFoodCategory(event, stack);
             propertyValue.toSet().forEach(entry -> {
                 MutableComponent propertyComponent = Component.translatable("tooltip." + Customized.MODID + ".property_value",
                         Component.translatable("property." + Customized.MODID + ".nutrient_category." + entry.getKey().getSerializedName()),
@@ -72,6 +74,12 @@ public class PropertyValueTooltip {
                 });
             }
         }
+    }
+
+    private static void addFoodCategory(ItemTooltipEvent event, ItemStack stack) {
+        event.getToolTip().add(Component.translatable("tooltip." + Customized.MODID +
+                        (stack.is(ModTag.SEASONING) ? ".food_category_seasoning" : ".food_category_food"))
+                .withStyle(ChatFormatting.BLUE));
     }
 
     private static boolean canShow() {
