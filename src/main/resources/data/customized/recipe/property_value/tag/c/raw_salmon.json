@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:foods/raw_salmon"
+  ],
+  "value": {
+    "water": 12.7,
+    "protein": 20.0,
+    "lipid": 18.0,
+    "mineral": 9.0,
+    "fresh" : 10.0
+  }
+}

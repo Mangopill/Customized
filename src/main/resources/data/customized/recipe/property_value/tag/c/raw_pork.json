@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:foods/raw_pork"
+  ],
+  "value": {
+    "water": 14.0,
+    "protein": 22.0,
+    "lipid": 16.0,
+    "mineral": 16.0
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "farmersdelight:rotten_tomato"
+  ],
+  "value": {
+    "water": 30.11,
+    "protein": 1.0,
+    "lipid": 0.2,
+    "carbohydrate": 4.0,
+    "vitamin": 50.0,
+    "mineral": 1.0,
+    "dietary_fiber": 2.5
+  }
+}

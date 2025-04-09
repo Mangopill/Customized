@@ -1,0 +1,15 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:foods/dough"
+  ],
+  "value": {
+    "water": 26.67,
+    "protein": 18.0,
+    "lipid": 2.0,
+    "carbohydrate": 96.0,
+    "vitamin": 1.5,
+    "mineral": 4.0,
+    "dietary_fiber": 10.0
+  }
+}

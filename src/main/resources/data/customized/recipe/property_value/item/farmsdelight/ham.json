@@ -1,0 +1,14 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "farmersdelight:ham"
+  ],
+  "value": {
+    "water": 45.33,
+    "protein": 40.0,
+    "lipid": 12.0,
+    "carbohydrate": 2.0,
+    "vitamin": 2.5,
+    "mineral": 160.0
+  }
+}

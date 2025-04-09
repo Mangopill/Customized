@@ -1,0 +1,15 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "farmersdelight:pumpkin_slice"
+  ],
+  "value": {
+    "water": 60.0,
+    "protein": 0.2,
+    "lipid": 2.0,
+    "carbohydrate": 14.0,
+    "vitamin": 25.0,
+    "mineral": 2.0,
+    "dietary_fiber": 7.5
+  }
+}

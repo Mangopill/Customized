@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:foods/raw_beef"
+  ],
+  "value": {
+    "water": 12.0,
+    "protein": 20.0,
+    "lipid": 15.0,
+    "mineral": 18.0
+  }
+}

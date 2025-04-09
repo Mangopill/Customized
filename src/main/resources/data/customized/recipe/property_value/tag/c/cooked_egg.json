@@ -1,0 +1,14 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:foods/cooked_egg"
+  ],
+  "value": {
+    "water": 40.0,
+    "protein": 26.0,
+    "lipid": 30.0,
+    "carbohydrate": 2.0,
+    "vitamin": 20.0,
+    "mineral": 9.0
+  }
+}

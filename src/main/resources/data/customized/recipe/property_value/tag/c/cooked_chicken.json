@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "c:foods/cooked_chicken"
+  ],
+  "value": {
+    "water": 29.6,
+    "protein": 44.0,
+    "lipid": 9.0,
+    "mineral": 25.0
+  }
+}

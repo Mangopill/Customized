@@ -1,7 +1,7 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:cooked_mutton"
+  "tag": [
+    "c:foods/cooked_mutton"
   ],
   "value": {
     "water": 25.7,
