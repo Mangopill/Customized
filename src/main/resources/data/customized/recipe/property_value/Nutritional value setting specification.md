@@ -1,6 +1,6 @@
 # Each hundred grams of ingredients corresponds to the nutritional value divided by the corresponding reference value multiplied by one percent.
 # For the food to be cooked, the raw value is usually half of the cooked value.
-## For example: 100g of apples contain 85g of water, 85g / 1.5g × 1% = 8.5%
+## For example: 100g of apples contain 85g of water, (85g / 1.5g)% -> 56.67%
 "water" -> **1.5g** = 1% <br>
 "protein" -> **0.5g** = 1% <br>
 "lipid" -> **0.5g** = 1% <br>
