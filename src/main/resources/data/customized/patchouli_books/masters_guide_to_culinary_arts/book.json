@@ -1,0 +1,14 @@
+{
+    "name": "patchouli.book.name",
+    "landing_text": "patchouli.landing_text",
+    "version": "1",
+    "creative_tab": "customized:customized",
+    "use_resource_pack": true,
+    "book_texture": "customized:textures/gui/book_texture.png",
+    "filler_texture": "customized:textures/gui/page_filler.png",
+    "model": "customized:patchouli_book",
+    "i18n": true,
+    "index_icon": "customized:textures/item/chef_hat.png",
+    "text_overflow_mode": "resize",
+    "show_progress": false
+}

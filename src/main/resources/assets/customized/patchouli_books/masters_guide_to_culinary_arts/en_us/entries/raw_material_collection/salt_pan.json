@@ -1,0 +1,19 @@
+{
+    "name": "patchouli.entry.salt_pan.name",
+    "icon": "customized:salt_pan",
+    "category": "customized:raw_material_collection",
+    "pages": [
+        {
+            "type": "patchouli:image",
+            "images": [
+                "customized:textures/gui/gallery/salt_pan1.png"
+            ],
+            "border": true,
+            "text": "patchouli.entry.salt_pan.pages.1.text"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "customized:crafting_shaped/salt_pan"
+        }
+    ]
+}

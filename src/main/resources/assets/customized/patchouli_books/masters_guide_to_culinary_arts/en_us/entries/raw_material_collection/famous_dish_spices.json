@@ -1,0 +1,12 @@
+{
+    "name": "patchouli.entry.famous_dish_spices.name",
+    "icon": "customized:sweet_and_sour_refreshing_spice",
+    "category": "customized:raw_material_collection",
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+            "recipe": "customized:crafting_shaped/sweet_and_sour_refreshing_spice",
+            "text": "patchouli.entry.famous_dish_spices.pages.1.text"
+        }
+    ]
+}

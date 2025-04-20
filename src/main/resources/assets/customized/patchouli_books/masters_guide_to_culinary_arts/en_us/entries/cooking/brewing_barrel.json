@@ -1,0 +1,20 @@
+{
+    "name": "patchouli.entry.brewing_barrel.name",
+    "icon": "customized:brewing_barrel",
+    "category": "customized:cooking",
+    "pages": [
+        {
+            "type": "patchouli:image",
+            "images": [
+                "customized:textures/gui/gallery/brewing_barrel1.png",
+                "customized:textures/gui/gallery/brewing_barrel2.png"
+            ],
+            "border": true,
+            "text": "patchouli.entry.brewing_barrel.pages.1.text"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "customized:crafting_shaped/brewing_barrel"
+        }
+    ]
+}

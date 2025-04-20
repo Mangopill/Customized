@@ -1,0 +1,19 @@
+{
+    "name": "patchouli.entry.soup_bowl.name",
+    "icon": "customized:soup_bowl",
+    "category": "customized:cooking",
+    "pages": [
+        {
+            "type": "patchouli:image",
+            "images": [
+                "customized:textures/gui/gallery/soup_bowl1.png"
+            ],
+            "border": true,
+            "text": "patchouli.entry.soup_bowl.pages.1.text"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "customized:crafting_shaped/soup_bowl"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "name": "patchouli.entry.plant_rice.name",
+    "icon": "customized:rice",
+    "category": "customized:raw_material_collection",
+    "pages": [
+        {
+            "type": "patchouli:image",
+            "images": [
+                "customized:textures/gui/gallery/plant_rice1.png"
+            ],
+            "border": true,
+            "text": "patchouli.entry.plant_rice.pages.1.text"
+        }
+    ]
+}
