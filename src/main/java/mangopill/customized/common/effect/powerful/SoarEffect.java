@@ -14,7 +14,7 @@ public class SoarEffect extends ModMobEffect {
 
     public SoarEffect(int color) {
         super(color);
-        super.addAttributeModifier(Attributes.MOVEMENT_SPEED, ResourceLocation.withDefaultNamespace("effect.speed"), 0.3F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        super.addAttributeModifier(Attributes.MOVEMENT_SPEED, ResourceLocation.withDefaultNamespace("effect.soar_speed"), 0.3F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     }
 
     @Override

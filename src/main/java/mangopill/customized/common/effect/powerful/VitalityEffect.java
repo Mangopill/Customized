@@ -12,10 +12,10 @@ public class VitalityEffect extends ModMobEffect {
 
     public VitalityEffect(int color) {
         super(color);
-        super.addAttributeModifier(Attributes.MOVEMENT_SPEED, ResourceLocation.withDefaultNamespace("effect.speed"), 0.6F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-        super.addAttributeModifier(Attributes.ATTACK_SPEED, ResourceLocation.withDefaultNamespace("effect.haste"), 0.3F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-        super.addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.withDefaultNamespace("effect.health_boost"), 12.0, AttributeModifier.Operation.ADD_VALUE);
-        super.addAttributeModifier(Attributes.ATTACK_DAMAGE, ResourceLocation.withDefaultNamespace("effect.strength"), 9.0, AttributeModifier.Operation.ADD_VALUE);
+        super.addAttributeModifier(Attributes.MOVEMENT_SPEED, ResourceLocation.withDefaultNamespace("effect.vitality_speed"), 0.6F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        super.addAttributeModifier(Attributes.ATTACK_SPEED, ResourceLocation.withDefaultNamespace("effect.vitality_haste"), 0.3F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        super.addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.withDefaultNamespace("effect.vitality_health_boost"), 12.0, AttributeModifier.Operation.ADD_VALUE);
+        super.addAttributeModifier(Attributes.ATTACK_DAMAGE, ResourceLocation.withDefaultNamespace("effect.vitality_strength"), 9.0, AttributeModifier.Operation.ADD_VALUE);
     }
 
     @Override

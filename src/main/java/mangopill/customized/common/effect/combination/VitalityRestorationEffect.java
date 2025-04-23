@@ -23,7 +23,7 @@ public class VitalityRestorationEffect extends ModMobEffect implements ShrinkSat
 
     public VitalityRestorationEffect(int color) {
         super(color);
-        super.addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.withDefaultNamespace("effect.health_boost"), 4.0, AttributeModifier.Operation.ADD_VALUE);
+        super.addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.withDefaultNamespace("effect.vitality_restoration_health_boost"), 4.0, AttributeModifier.Operation.ADD_VALUE);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class MentalStimulationEffect extends ModMobEffect implements ShrinkNutri
 
     public MentalStimulationEffect(int color) {
         super(color);
-        super.addAttributeModifier(Attributes.LUCK, ResourceLocation.withDefaultNamespace("effect.luck"), 0.6, AttributeModifier.Operation.ADD_VALUE);
+        super.addAttributeModifier(Attributes.LUCK, ResourceLocation.withDefaultNamespace("effect.mental_stimulation_luck"), 0.6, AttributeModifier.Operation.ADD_VALUE);
     }
 
     @Override

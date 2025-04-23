@@ -24,8 +24,8 @@ public class RobustEffect extends ModMobEffect implements CombinationMobEffect {
 
     public RobustEffect(int color) {
         super(color);
-        super.addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.withDefaultNamespace("effect.health_boost"), 5.0, AttributeModifier.Operation.ADD_VALUE);
-        super.addAttributeModifier(Attributes.ATTACK_DAMAGE, ResourceLocation.withDefaultNamespace("effect.strength"), 4.0, AttributeModifier.Operation.ADD_VALUE);
+        super.addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.withDefaultNamespace("effect.robust_health_boost"), 5.0, AttributeModifier.Operation.ADD_VALUE);
+        super.addAttributeModifier(Attributes.ATTACK_DAMAGE, ResourceLocation.withDefaultNamespace("effect.robust_strength"), 4.0, AttributeModifier.Operation.ADD_VALUE);
     }
 
     @Override

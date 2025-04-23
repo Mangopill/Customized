@@ -18,7 +18,7 @@ public class AppetiteBoostEffect extends ModMobEffect implements ShrinkNutrition
 
     public AppetiteBoostEffect(int color) {
         super(color);
-        super.addAttributeModifier(Attributes.ATTACK_DAMAGE, ResourceLocation.withDefaultNamespace("effect.strength"), 4.0, AttributeModifier.Operation.ADD_VALUE);
+        super.addAttributeModifier(Attributes.ATTACK_DAMAGE, ResourceLocation.withDefaultNamespace("effect.appetite_boost_strength"), 4.0, AttributeModifier.Operation.ADD_VALUE);
     }
 
     @Override
