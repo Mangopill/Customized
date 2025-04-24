@@ -41,6 +41,12 @@ public enum NutrientCategory implements StringRepresentable {
         return color;
     }
 
+    public int getColorWithAlpha() {
+        int rgb = this.color.getValue();
+        int alpha = 0xCC;
+        return (alpha << 24) | (rgb & 0x00FFFFFF);
+    }
+
     @Override
     public @NotNull String getSerializedName() {
         return name;

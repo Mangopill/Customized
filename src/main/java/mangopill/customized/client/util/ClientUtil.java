@@ -51,7 +51,7 @@ public final class ClientUtil {
                 maxCategory = entry.getKey();
             }
         }
-        return maxCategory != null ? maxCategory.getColor().getValue() : 0x3F76E4;
+        return maxCategory != null ? maxCategory.getColorWithAlpha() : 0xCC3F76E4;
     }
 
     public static void renderDrivePot(AbstractPotBlockEntity potBlockEntity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
