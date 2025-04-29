@@ -73,188 +73,188 @@ public final class CustomizedConfig {
 
         commonBuilder.comment(NUTRITION).push(NUTRITION);
         WATER_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.water_nutrition_value")
-                .defineInRange("waterNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("waterNutritionValue", 0.00D, 0.0D, 100.0D);
         PROTEIN_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.005D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.05D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.protein_nutrition_value")
-                .defineInRange("proteinNutritionValue", 0.005D, 0.0D, 100.0D);
+                .defineInRange("proteinNutritionValue", 0.05D, 0.0D, 100.0D);
         LIPID_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.002D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.02D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.lipid_nutrition_value")
-                .defineInRange("lipidNutritionValue", 0.002D, 0.0D, 100.0D);
+                .defineInRange("lipidNutritionValue", 0.02D, 0.0D, 100.0D);
         CARBOHYDRATE_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.001D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.01D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.carbohydrate_nutrition_value")
-                .defineInRange("carbohydrateNutritionValue", 0.001D, 0.0D, 100.0D);
+                .defineInRange("carbohydrateNutritionValue", 0.01D, 0.0D, 100.0D);
         VITAMIN_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.vitamin_nutrition_value")
-                .defineInRange("vitaminNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("vitaminNutritionValue", 0.00D, 0.0D, 100.0D);
         MINERAL_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.001D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.01D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.mineral_nutrition_value")
-                .defineInRange("mineralNutritionValue", 0.001D, 0.0D, 100.0D);
+                .defineInRange("mineralNutritionValue", 0.01D, 0.0D, 100.0D);
         DIETARY_FIBER_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.003D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.03D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.dietary_fiber_nutrition_value")
-                .defineInRange("dietaryFiberNutritionValue", 0.003D, 0.0D, 100.0D);
+                .defineInRange("dietaryFiberNutritionValue", 0.03D, 0.0D, 100.0D);
         COLD_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.cold_nutrition_value")
-                .defineInRange("coldNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("coldNutritionValue", 0.00D, 0.0D, 100.0D);
         WARM_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.warm_nutrition_value")
-                .defineInRange("warmNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("warmNutritionValue", 0.00D, 0.0D, 100.0D);
         ECOLOGY_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.ecology_nutrition_value")
-                .defineInRange("ecologyNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("ecologyNutritionValue", 0.00D, 0.0D, 100.0D);
         DREAD_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.dread_nutrition_value")
-                .defineInRange("dreadNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("dreadNutritionValue", 0.00D, 0.0D, 100.0D);
         NOTHINGNESS_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.nothingness_nutrition_value")
-                .defineInRange("nothingnessNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("nothingnessNutritionValue", 0.00D, 0.0D, 100.0D);
         SOUR_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.sour_nutrition_value")
-                .defineInRange("sourNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("sourNutritionValue", 0.00D, 0.0D, 100.0D);
         SWEET_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.sweet_nutrition_value")
-                .defineInRange("sweetNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("sweetNutritionValue", 0.00D, 0.0D, 100.0D);
         BITTER_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.bitter_nutrition_value")
-                .defineInRange("bitterNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("bitterNutritionValue", 0.00D, 0.0D, 100.0D);
         SPICY_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.spicy_nutrition_value")
-                .defineInRange("spicyNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("spicyNutritionValue", 0.00D, 0.0D, 100.0D);
         SALTY_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.salty_nutrition_value")
-                .defineInRange("saltyNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("saltyNutritionValue", 0.00D, 0.0D, 100.0D);
         NUMBING_NUTRITION_VALUE = commonBuilder
-                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the nutrition provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.numbing_nutrition_value")
-                .defineInRange("numbingNutritionValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("numbingNutritionValue", 0.00D, 0.0D, 100.0D);
         commonBuilder.pop();
 
         commonBuilder.comment(SATURATION).push(SATURATION);
         WATER_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.003D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.03D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.water_saturation_value")
-                .defineInRange("waterSaturationValue", 0.003D, 0.0D, 100.0D);
+                .defineInRange("waterSaturationValue", 0.03D, 0.0D, 100.0D);
         PROTEIN_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.protein_saturation_value")
-                .defineInRange("proteinSaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("proteinSaturationValue", 0.00D, 0.0D, 100.0D);
         LIPID_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.002D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.02D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.lipid_saturation_value")
-                .defineInRange("lipidSaturationValue", 0.002D, 0.0D, 100.0D);
+                .defineInRange("lipidSaturationValue", 0.02D, 0.0D, 100.0D);
         CARBOHYDRATE_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.004D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.04D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.carbohydrate_saturation_value")
-                .defineInRange("carbohydrateSaturationValue", 0.004D, 0.0D, 100.0D);
+                .defineInRange("carbohydrateSaturationValue", 0.04D, 0.0D, 100.0D);
         VITAMIN_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.001D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.01D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.vitamin_saturation_value")
-                .defineInRange("vitaminSaturationValue", 0.001D, 0.0D, 100.0D);
+                .defineInRange("vitaminSaturationValue", 0.01D, 0.0D, 100.0D);
         MINERAL_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.mineral_saturation_value")
-                .defineInRange("mineralSaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("mineralSaturationValue", 0.00D, 0.0D, 100.0D);
         DIETARY_FIBER_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.dietary_fiber_saturation_value")
-                .defineInRange("dietaryFiberSaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("dietaryFiberSaturationValue", 0.00D, 0.0D, 100.0D);
         COLD_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.cold_saturation_value")
-                .defineInRange("coldSaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("coldSaturationValue", 0.00D, 0.0D, 100.0D);
         WARM_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.warm_saturation_value")
-                .defineInRange("warmSaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("warmSaturationValue", 0.00D, 0.0D, 100.0D);
         ECOLOGY_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.ecology_saturation_value")
-                .defineInRange("ecologySaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("ecologySaturationValue", 0.00D, 0.0D, 100.0D);
         DREAD_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.dread_saturation_value")
-                .defineInRange("dreadSaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("dreadSaturationValue", 0.00D, 0.0D, 100.0D);
         NOTHINGNESS_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.nothingness_saturation_value")
-                .defineInRange("nothingnessSaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("nothingnessSaturationValue", 0.00D, 0.0D, 100.0D);
         SOUR_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.sour_saturation_value")
-                .defineInRange("sourSaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("sourSaturationValue", 0.00D, 0.0D, 100.0D);
         SWEET_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.sweet_saturation_value")
-                .defineInRange("sweetSaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("sweetSaturationValue", 0.00D, 0.0D, 100.0D);
         BITTER_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.bitter_saturation_value")
-                .defineInRange("bitterSaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("bitterSaturationValue", 0.00D, 0.0D, 100.0D);
         SPICY_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.spicy_saturation_value")
-                .defineInRange("spicySaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("spicySaturationValue", 0.00D, 0.0D, 100.0D);
         SALTY_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.salty_saturation_value")
-                .defineInRange("saltySaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("saltySaturationValue", 0.00D, 0.0D, 100.0D);
         NUMBING_SATURATION_VALUE = commonBuilder
-                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.000D")
+                .comment("This value corresponds to the saturation provided by every 0.1% of this nutrient value.\n(0.0D, 100.0D)\ndefault: 0.00D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.numbing_saturation_value")
-                .defineInRange("numbingSaturationValue", 0.000D, 0.0D, 100.0D);
+                .defineInRange("numbingSaturationValue", 0.00D, 0.0D, 100.0D);
         commonBuilder.pop();
 
         commonBuilder.comment(BUFF).push(BUFF);

@@ -76,6 +76,8 @@ public final class PropertyValueUtil {
             nutrientTotal.put(category, 0.0F);
         }
         List<FoodProperties.PossibleEffect> foodEffect = new ArrayList<>();
+        int nutritionValue = 0;
+        float saturationValue = 0.0F;
         for (ItemStack stack : stackList) {
             @NotNull PropertyValue propertyValue = getPropertyValue(stack, level);
             FoodProperties food = stack.getFoodProperties(null);
@@ -92,18 +94,18 @@ public final class PropertyValueUtil {
                 }
             } else {
                 if (food != null) {
+                    nutritionValue += food.nutrition() * stack.getCount();
+                    saturationValue += food.saturation() * stack.getCount();
                     continue;
                 }
                 return FoodValue.INEDIBLE;
             }
         }
-        int nutritionValue = 0;
-        float saturationValue = 0.0F;
         for (NutrientCategory category : nutrientTotal.keySet()){
             for (NutrientFoodValue value : NutrientFoodValue.values()) {
                 if (category.name().equals(value.name())){
-                    nutritionValue += (int) Math.round((nutrientTotal.get(category) * 10 * value.getNutrition()));
-                    saturationValue += (float) (nutrientTotal.get(category) * 10.0F * value.getSaturation());
+                    nutritionValue += (int) Math.round((nutrientTotal.get(category) * value.getNutrition()));
+                    saturationValue += (float) (nutrientTotal.get(category) * value.getSaturation());
                 }
             }
         }
@@ -120,13 +122,13 @@ public final class PropertyValueUtil {
             } else {
                 builder.nutrition(0);
             }
-            if (nutritionValue * 2L != 0){
+            if (nutritionValue != 0){
                 BigDecimal newSaturationValue = new BigDecimal(saturationValue)
-                        .divide(BigDecimal.valueOf(nutritionValue * 2L), 6, RoundingMode.HALF_UP)
+                        .divide(BigDecimal.valueOf(nutritionValue), 6, RoundingMode.HALF_UP)
                         .divide(BigDecimal.valueOf(consumptionCount), 5, RoundingMode.HALF_UP);
-                builder.saturationModifier(newSaturationValue.floatValue() * 6);
+                builder.saturationModifier(newSaturationValue.floatValue() * 12);
             } else {
-                builder.saturationModifier(0.0F);
+                builder.saturationModifier(saturationValue / consumptionCount);
             }
             if (!foodEffect.isEmpty()) {
                 for (FoodProperties.PossibleEffect pair : foodEffect) {
@@ -135,12 +137,12 @@ public final class PropertyValueUtil {
             }
         } else {
             builder.nutrition(nutritionValue);
-            if (nutritionValue * 2L != 0){
+            if (nutritionValue != 0){
                 BigDecimal newSaturationValue = new BigDecimal(saturationValue)
-                        .divide(BigDecimal.valueOf(nutritionValue * 2L), 5, RoundingMode.HALF_UP);
-                builder.saturationModifier(newSaturationValue.floatValue() * 6);
+                        .divide(BigDecimal.valueOf(nutritionValue), 5, RoundingMode.HALF_UP);
+                builder.saturationModifier(newSaturationValue.floatValue() * 12);
             } else {
-                builder.saturationModifier(0.0F);
+                builder.saturationModifier(saturationValue);
             }
             if (!foodEffect.isEmpty()) {
                 for (FoodProperties.PossibleEffect pair : foodEffect) {
