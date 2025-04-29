@@ -91,6 +91,9 @@ public final class PropertyValueUtil {
                     nutrientTotal.put(category, nutrientTotal.get(category) + value);
                 }
             } else {
+                if (food != null) {
+                    continue;
+                }
                 return FoodValue.INEDIBLE;
             }
         }
