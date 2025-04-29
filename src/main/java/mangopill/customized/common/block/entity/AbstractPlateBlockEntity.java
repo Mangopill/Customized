@@ -16,7 +16,9 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.*;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -77,6 +79,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         if(consumptionCount >= 1) {
             level.playSound(null, player.getX(), player.getY(), player.getZ(), player.getEatingSound(stack),
                     SoundSource.NEUTRAL, 1.0F, 1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.4F);
+            player.getFoodData().eat(foodProperty);
             addEffect(player, foodProperty);
             AbstractPlateItem.plateAdvancement(player, foodProperty);
             if (consumptionCount > 1){
