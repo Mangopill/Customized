@@ -25,7 +25,7 @@ public class SustainedEnergyEffect extends ModMobEffect implements ShrinkNutriti
     @Override
     public void onEffectStarted(@NotNull LivingEntity livingEntity, int amplifier) {
         if (livingEntity instanceof ServerPlayer player) {
-            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, amplifier));
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, (amplifier + 1) * 600, amplifier));
         }
     }
 

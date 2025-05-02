@@ -305,10 +305,10 @@ public final class CustomizedConfig {
                 .translation(MOD_ID + ".config.combination_buff_probability")
                 .defineInRange("combinationBuffProbability", 0.001D, 0.0D, 100.0D);
         BUFF_AMPLIFIER = commonBuilder
-                .comment("This value corresponds to how much nutrient value can increase one level of BUFF.\n(0.0D, 100000.0D)\ndefault: 350D")
+                .comment("This value corresponds to how much nutrient value can increase one level of BUFF.\n(0.0D, 100000.0D)\ndefault: 1000D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.buff_amplifier")
-                .defineInRange("buffAmplifier", 350D, 0.0D, 100000.0D);
+                .defineInRange("buffAmplifier", 1000D, 0.0D, 100000.0D);
         commonBuilder.pop();
 
         commonBuilder.pop();

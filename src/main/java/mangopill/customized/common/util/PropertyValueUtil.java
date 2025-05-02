@@ -233,7 +233,7 @@ public final class PropertyValueUtil {
         int duration = Math.round(nutrientValue * (float) nutrientBuff.getDuration());
         float probability = (float) (nutrientValue * nutrientBuff.getProbability());
         foodEffect.add(new FoodProperties.PossibleEffect(
-                () -> new MobEffectInstance(nutrientBuff.getEffect(), duration, (int) (nutrientValue / BUFF_AMPLIFIER.get())), Math.min(probability, 1.0F)));
+                () -> new MobEffectInstance(nutrientBuff.getEffect(), duration, Math.min((int) (nutrientValue / BUFF_AMPLIFIER.get()), 9)), Math.min(probability, 1.0F)));
     }
 
     public static @Nullable NutrientBuff getNormalBuff(NutrientCategory category){

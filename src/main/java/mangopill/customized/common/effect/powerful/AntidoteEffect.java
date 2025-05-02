@@ -18,7 +18,7 @@ public class AntidoteEffect extends ModMobEffect {
         for (MobEffectInstance effectInstance : livingEntity.getActiveEffects()) {
             if (effectInstance.getEffect().value().getCategory().equals(MobEffectCategory.HARMFUL)) {
                 if (livingEntity.getHealth() < livingEntity.getMaxHealth()){
-                    livingEntity.heal(2.0F);
+                    livingEntity.heal((amplifier + 1) * 2.0F);
                 }
                 livingEntity.removeEffect(effectInstance.getEffect());
             }

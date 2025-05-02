@@ -31,7 +31,7 @@ public class RobustEffect extends ModMobEffect implements CombinationMobEffect {
     @Override
     public void onEffectStarted(@NotNull LivingEntity livingEntity, int amplifier) {
         if (livingEntity instanceof ServerPlayer player) {
-            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 500, amplifier));
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, (amplifier + 1) * 500, amplifier));
         }
     }
 
