@@ -4,7 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import mangopill.customized.Customized;
+import mangopill.customized.common.block.AbstractPotBlock;
 import mangopill.customized.common.block.entity.*;
+import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.item.AbstractPlateItem;
 import mangopill.customized.common.util.PropertyValueUtil;
 import mangopill.customized.common.util.category.NutrientCategory;
@@ -57,13 +59,14 @@ public final class ClientUtil {
     public static void renderDrivePot(AbstractPotBlockEntity potBlockEntity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
                                       float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
         List<ItemStack> stackList = potBlockEntity.getItemStackListInPot(true, false);
-        renderDrive(potBlockEntity.getLevel(), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight);
+        boolean dynamic = potBlockEntity.getBlockState().getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE);
+        renderDrive(potBlockEntity.getLevel(), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, dynamic);
     }
 
     public static void renderDrivePlate(AbstractPlateBlockEntity plateBlockEntity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
                                         float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
         List<ItemStack> stackList = plateBlockEntity.getItemStackListInPlate(false);
-        renderDrive(plateBlockEntity.getLevel(), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight);
+        renderDrive(plateBlockEntity.getLevel(), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, true);
     }
 
     public static void renderDrivePlateItem(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
@@ -71,13 +74,13 @@ public final class ClientUtil {
         if (stack.getItem() instanceof AbstractPlateItem plateItem){
             List<ItemStack> stackList = plateItem.getItemStackListInPlate(stack, false);
             if (Minecraft.getInstance().player != null) {
-                renderDrive(Minecraft.getInstance().player.level(), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight);
+                renderDrive(Minecraft.getInstance().player.level(), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, true);
             }
         }
     }
 
     public static void renderDrive(Level level, List<ItemStack> stackList, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
-                                   float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
+                                   float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight, boolean dynamic) {
         float globalTime = (level != null) ?
                 (level.getGameTime() % 24000) * 0.05f :
                 System.currentTimeMillis() * 0.001f;
@@ -95,7 +98,7 @@ public final class ClientUtil {
                     float randZ = startWidth + (random.nextFloat(endWidth - startWidth));
                     float phase = (seed % 1000) * 0.1f;
                     float deltaY = (float) Math.sin(globalTime * 0.8f + phase) * 0.03f;
-                    float animatedY = baseY + deltaY;
+                    float animatedY = dynamic ? baseY + deltaY : baseY;
                     poseStack.pushPose();
                     poseStack.translate(randX, animatedY, randZ);
                     poseStack.mulPose(Axis.ZP.rotationDegrees(random.nextFloat(360)));

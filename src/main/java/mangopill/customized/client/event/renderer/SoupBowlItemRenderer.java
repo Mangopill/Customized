@@ -16,8 +16,8 @@ public class SoupBowlItemRenderer extends BlockEntityWithoutLevelRenderer {
 
     @Override
     public void renderByItem(@NotNull ItemStack stack, @NotNull ItemDisplayContext displayContext, @NotNull PoseStack poseStack, @NotNull MultiBufferSource multiBufferSource, int light, int overlay) {
-        renderModel(stack, displayContext, poseStack, multiBufferSource, light, overlay);
         renderDrivePlateItem(stack, poseStack, multiBufferSource, light, overlay, 0.25F, 0.25F, 0.25F, 0.75F, 0.75F, 0.3125F);
+        renderModel(stack, displayContext, poseStack, multiBufferSource, light, overlay);
     }
 
     public static class SoupBowlItemExtensions implements IClientItemExtensions {
