@@ -77,24 +77,27 @@ public final class ClientUtil {
     }
 
     public static void renderDrive(Level level, List<ItemStack> stackList, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
-                                      float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
+                                   float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
+        float globalTime = (level != null) ?
+                (level.getGameTime() % 24000) * 0.05f :
+                System.currentTimeMillis() * 0.001f;
         for (ItemStack stack : stackList) {
             ItemStack newStack = stack.copy();
             if (!newStack.isEmpty()) {
                 int count = newStack.getCount();
-                int renderCount = count / 4;
-                if (count % 4 > 0) {
-                    renderCount++;
-                }
+                int renderCount = count / 4 + (count % 4 > 0 ? 1 : 0);
                 for (int i = 0; i < renderCount; i++) {
-                    Random rand = new Random(stackList.lastIndexOf(stack));
+                    Random rand = new Random(stackList.lastIndexOf(stack) + i);
                     int seed = Item.getId(newStack.getItem()) + rand.nextInt() + i;
                     Random random = new Random(seed);
                     float randX = startLength + (random.nextFloat(endLength - startLength));
-                    float randY = startHeight + (random.nextFloat(endHeight - startHeight));
+                    float baseY = startHeight + (random.nextFloat(endHeight - startHeight));
                     float randZ = startWidth + (random.nextFloat(endWidth - startWidth));
+                    float phase = (seed % 1000) * 0.1f;
+                    float deltaY = (float) Math.sin(globalTime * 0.8f + phase) * 0.03f;
+                    float animatedY = baseY + deltaY;
                     poseStack.pushPose();
-                    poseStack.translate(randX, randY, randZ);
+                    poseStack.translate(randX, animatedY, randZ);
                     poseStack.mulPose(Axis.ZP.rotationDegrees(random.nextFloat(360)));
                     poseStack.mulPose(Axis.XP.rotationDegrees(random.nextFloat(360)));
                     poseStack.mulPose(Axis.YP.rotationDegrees(random.nextFloat(360)));

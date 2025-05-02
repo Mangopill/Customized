@@ -16,6 +16,6 @@ public class CasseroleBlockRenderer implements BlockEntityRenderer<CasseroleBloc
 
     @Override
     public void render(@NotNull CasseroleBlockEntity casseroleBlockEntity, float v, @NotNull PoseStack poseStack, @NotNull MultiBufferSource multiBufferSource, int light, int overlay) {
-        renderDrivePot(casseroleBlockEntity, poseStack, multiBufferSource, light, overlay, 0.25F, 0.25F, 0.1F, 0.75F, 0.75F, 0.45F);
+        renderDrivePot(casseroleBlockEntity, poseStack, multiBufferSource, light, overlay, 0.1875F, 0.1875F, 0.125F, 0.8125F, 0.8125F, 0.5F);
     }
 }
