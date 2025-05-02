@@ -57,6 +57,7 @@ public final class CustomizedConfig {
     public static final ModConfigSpec.BooleanValue COMBINATION_BUFF;
     public static final ModConfigSpec.DoubleValue COMBINATION_BUFF_DURATION;
     public static final ModConfigSpec.DoubleValue COMBINATION_BUFF_PROBABILITY;
+    public static final ModConfigSpec.DoubleValue BUFF_AMPLIFIER;
     public static final String POT = "pot";
     public static final ModConfigSpec.BooleanValue CUSTOM_COOKING;
     public static final ModConfigSpec.BooleanValue RECIPE_COOKING;
@@ -264,27 +265,27 @@ public final class CustomizedConfig {
                 .translation(MOD_ID + ".config.normal_buff")
                 .define("enabledNormalBuff", true);
         NORMAL_BUFF_DURATION = commonBuilder
-                .comment("This value determines the duration of the normal buff for every 1% of the nutrient value.\n(0.0D, 100.0D)\ndefault: 0.01D")
+                .comment("This value determines the duration of the normal buff for every 1% of the nutrient value.\n(0.0D, 100.0D)\ndefault: 1D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.normal_buff_duration")
-                .defineInRange("normalBuffDuration", 0.1D, 0.0D, 100.0D);
+                .defineInRange("normalBuffDuration", 1D, 0.0D, 100.0D);
         NORMAL_BUFF_PROBABILITY = commonBuilder
-                .comment("This value corresponds to the normal buff probability for each 1% of the nutrition value.\n(0.0D, 100.0D)\ndefault: 0.0003D")
+                .comment("This value corresponds to the normal buff probability for each 1% of the nutrient value.\n(0.0D, 100.0D)\ndefault: 0.003D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.normal_buff_probability")
-                .defineInRange("normalBuffProbability", 0.0003D, 0.0D, 100.0D);
+                .defineInRange("normalBuffProbability", 0.003D, 0.0D, 100.0D);
         POWERFUL_BUFF = commonBuilder
                 .comment("This boolean value corresponds to whether the powerful buff effects in custom food are enabled.\n(true, false)\ndefault: true")
                 .worldRestart()
                 .translation(MOD_ID + ".config.powerful_buff")
                 .define("enabledPowerfulBuff", true);
         POWERFUL_BUFF_DURATION = commonBuilder
-                .comment("This value determines the duration of the powerful buff for every 1% of the nutrient value.\n(0.0D, 100.0D)\ndefault: 0.01D")
+                .comment("This value determines the duration of the powerful buff for every 1% of the nutrient value.\n(0.0D, 100.0D)\ndefault: 1D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.powerful_buff_duration")
                 .defineInRange("powerfulBuffDuration", 1D, 0.0D, 100.0D);
         POWERFUL_BUFF_PROBABILITY = commonBuilder
-                .comment("This value corresponds to the powerful buff probability for each 1% of the nutrition value.\n(0.0D, 100.0D)\ndefault: 0.0002D")
+                .comment("This value corresponds to the powerful buff probability for each 1% of the nutrient value.\n(0.0D, 100.0D)\ndefault: 0.002D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.powerful_buff_probability")
                 .defineInRange("powerfulBuffProbability", 0.002D, 0.0D, 100.0D);
@@ -294,15 +295,20 @@ public final class CustomizedConfig {
                 .translation(MOD_ID + ".config.combination_buff")
                 .define("enabledCombinationBuff", true);
         COMBINATION_BUFF_DURATION = commonBuilder
-                .comment("This value determines the duration of the combination buff for every 1% of the nutrient value.\n(0.0D, 100.0D)\ndefault: 0.01D")
+                .comment("This value determines the duration of the combination buff for every 1% of the nutrient value.\n(0.0D, 100.0D)\ndefault: 1D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.combination_buff_duration")
                 .defineInRange("combinationBuffDuration", 1D, 0.0D, 100.0D);
         COMBINATION_BUFF_PROBABILITY = commonBuilder
-                .comment("This value corresponds to the combination buff probability for each 1% of the nutrition value.\n(0.0D, 100.0D)\ndefault: 0.0001D")
+                .comment("This value corresponds to the combination buff probability for each 1% of the nutrient value.\n(0.0D, 100.0D)\ndefault: 0.001D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.combination_buff_probability")
                 .defineInRange("combinationBuffProbability", 0.001D, 0.0D, 100.0D);
+        BUFF_AMPLIFIER = commonBuilder
+                .comment("This value corresponds to how much nutrient value can increase one level of BUFF.\n(0.0D, 100000.0D)\ndefault: 350D")
+                .gameRestart()
+                .translation(MOD_ID + ".config.buff_amplifier")
+                .defineInRange("buffAmplifier", 350D, 0.0D, 100000.0D);
         commonBuilder.pop();
 
         commonBuilder.pop();

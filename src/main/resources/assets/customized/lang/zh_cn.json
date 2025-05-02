@@ -235,6 +235,7 @@
   "customized.config.combination_buff.tooltip": "此布尔值对应于自定义食物中的组合效果是否启用。",
   "customized.config.combination_buff_duration.tooltip": "此值对应每1%的营养值提供的组合BUFF持续时间。",
   "customized.config.combination_buff_probability.tooltip": "此值对应每1%的营养值提供的组合BUFF概率。",
+  "customized.config.buff_amplifier.tooltip": "此值对应多少营养值可以增加一次BUFF等级。",
   "customized.configuration.pot.tooltip": "锅",
   "customized.config.custom_cooking.tooltip": "此布尔值对应于自定义烹饪是否启用。",
   "customized.config.recipe_cooking.tooltip": "此布尔值对应于配方烹饪是否启用。",
