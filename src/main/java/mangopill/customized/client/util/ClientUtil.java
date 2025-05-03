@@ -82,8 +82,8 @@ public final class ClientUtil {
     public static void renderDrive(Level level, List<ItemStack> stackList, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
                                    float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight, boolean dynamic) {
         float globalTime = (level != null) ?
-                (level.getGameTime() % 24000) * 0.05f :
-                System.currentTimeMillis() * 0.001f;
+                (level.getGameTime() % 24000) * 0.05F :
+                System.currentTimeMillis() * 0.001F;
         for (ItemStack stack : stackList) {
             ItemStack newStack = stack.copy();
             if (!newStack.isEmpty()) {
@@ -96,8 +96,8 @@ public final class ClientUtil {
                     float randX = startLength + (random.nextFloat(endLength - startLength));
                     float baseY = startHeight + (random.nextFloat(endHeight - startHeight));
                     float randZ = startWidth + (random.nextFloat(endWidth - startWidth));
-                    float phase = (seed % 1000) * 0.1f;
-                    float deltaY = (float) Math.sin(globalTime * 0.8f + phase) * 0.03f;
+                    float phase = (seed % 1000) * 0.1F;
+                    float deltaY = (float) Math.sin(globalTime * 0.8F + phase) * 0.03F;
                     float animatedY = dynamic ? baseY + deltaY : baseY;
                     poseStack.pushPose();
                     poseStack.translate(randX, animatedY, randZ);
