@@ -81,7 +81,7 @@ public final class ClientUtil {
 
     public static void renderDrive(Level level, List<ItemStack> stackList, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
                                    float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight, boolean dynamic) {
-        float globalTime = level.getGameTime() % 24000 * 0.05f;
+        float globalTime = level.getGameTime() % 24000 * 0.05F;
         for (ItemStack stack : stackList) {
             ItemStack newStack = stack.copy();
             if (!newStack.isEmpty()) {
