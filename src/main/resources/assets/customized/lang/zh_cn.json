@@ -177,6 +177,7 @@
   "customized.config.combination_buff": "组合效果",
   "customized.config.combination_buff_duration": "组合效果持续时长",
   "customized.config.combination_buff_probability": "组合效果概率",
+  "customized.config.buff_amplifier": "效果等级",
   "customized.configuration.pot": "锅",
   "customized.config.custom_cooking": "自定义烹饪",
   "customized.config.recipe_cooking": "配方烹饪",
