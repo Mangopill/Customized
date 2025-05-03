@@ -81,9 +81,7 @@ public final class ClientUtil {
 
     public static void renderDrive(Level level, List<ItemStack> stackList, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
                                    float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight, boolean dynamic) {
-        float globalTime = (level != null) ?
-                (level.getGameTime() % 24000) * 0.05F :
-                System.currentTimeMillis() * 0.001F;
+        float globalTime = level.getGameTime() % 24000;
         for (ItemStack stack : stackList) {
             ItemStack newStack = stack.copy();
             if (!newStack.isEmpty()) {
@@ -105,11 +103,9 @@ public final class ClientUtil {
                     poseStack.mulPose(Axis.XP.rotationDegrees(random.nextFloat(360)));
                     poseStack.mulPose(Axis.YP.rotationDegrees(random.nextFloat(360)));
                     poseStack.scale(0.3F, 0.3F, 0.3F);
-                    if (level != null) {
-                        ItemStack renderItemStack = newStack.copy();
-                        renderItemStack.setCount(1);
-                        Minecraft.getInstance().getItemRenderer().renderStatic(renderItemStack, ItemDisplayContext.FIXED, light, overlay, poseStack, buffer, null, seed);
-                    }
+                    ItemStack renderItemStack = newStack.copy();
+                    renderItemStack.setCount(1);
+                    Minecraft.getInstance().getItemRenderer().renderStatic(renderItemStack, ItemDisplayContext.FIXED, light, overlay, poseStack, buffer, null, seed);
                     poseStack.popPose();
                 }
             }
