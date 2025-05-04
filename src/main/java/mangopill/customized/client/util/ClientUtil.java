@@ -60,13 +60,13 @@ public final class ClientUtil {
                                       float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
         List<ItemStack> stackList = potBlockEntity.getItemStackListInPot(true, false);
         boolean dynamic = potBlockEntity.getBlockState().getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE);
-        renderDrive(potBlockEntity.getLevel(), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, dynamic);
+        renderDrive(Objects.requireNonNull(potBlockEntity.getLevel()), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, dynamic);
     }
 
     public static void renderDrivePlate(AbstractPlateBlockEntity plateBlockEntity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
                                         float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
         List<ItemStack> stackList = plateBlockEntity.getItemStackListInPlate(false);
-        renderDrive(plateBlockEntity.getLevel(), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, true);
+        renderDrive(Objects.requireNonNull(plateBlockEntity.getLevel()), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, true);
     }
 
     public static void renderDrivePlateItem(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
