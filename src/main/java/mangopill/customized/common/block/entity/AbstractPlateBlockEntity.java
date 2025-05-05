@@ -12,13 +12,10 @@ import mangopill.customized.common.util.ModItemStackHandlerHelper;
 import mangopill.customized.common.util.record.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.component.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,6 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -46,6 +44,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
     private static final int SPICE_INPUT = 1;
     private final int allSlot;
     private final ItemStackHandler itemStackHandler;
+    private final ItemStackHandler initialItemStackHandler;
     private FoodProperties foodProperty;
     private int consumptionCount;
     private int consumptionCountTotal;
@@ -56,6 +55,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         this.seasoningInput = seasoningInput;
         this.allSlot = ingredientInput + seasoningInput + SPICE_INPUT;
         this.itemStackHandler = createItemStackHandler(allSlot);
+        this.initialItemStackHandler = createItemStackHandler(allSlot);
     }
 
     @Override
@@ -83,9 +83,10 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
             addEffect(player, foodProperty);
             AbstractPlateItem.plateAdvancement(player, foodProperty);
             if (consumptionCount > 1){
-                reduceItemStackCountByDivision(itemStackHandler, consumptionCountTotal);
+                reduceItemStackCountByDivision(itemStackHandler, initialItemStackHandler, consumptionCountTotal);
             } else {
                 clearAllSlot(itemStackHandler);
+                clearAllSlot(initialItemStackHandler);
                 clearFoodPropertyAndCountTotal();
                 level.setBlockAndUpdate(pos, state.setValue(AbstractPlateBlock.DRIVE, PlateState.WITHOUT_DRIVE));
             }
@@ -142,6 +143,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         consumptionCount = compound.getInt("ConsumptionCount");
         consumptionCountTotal = compound.getInt("ConsumptionCountTotal");
         itemStackHandler.deserializeNBT(registries, compound.getCompound("ItemStackHandler"));
+        initialItemStackHandler.deserializeNBT(registries, compound.getCompound("InitialItemStackHandler"));
         if (compound.contains("FoodProperty")) {
             CompoundTag foodPropertyTag = compound.getCompound("FoodProperty");
             DataResult<Pair<FoodProperties, Tag>> decodeResult = FoodProperties.DIRECT_CODEC.decode(NbtOps.INSTANCE, foodPropertyTag);
@@ -162,6 +164,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         compound.putInt("ConsumptionCount", consumptionCount);
         compound.putInt("ConsumptionCountTotal", consumptionCountTotal);
         compound.put("ItemStackHandler", itemStackHandler.serializeNBT(registries));
+        compound.put("InitialItemStackHandler", initialItemStackHandler.serializeNBT(registries));
         final CompoundTag[] foodPropertyTagWrapper = getFoodPropertyTagWrapper();
         compound.put("FoodProperty", foodPropertyTagWrapper[0]);
     }
@@ -175,6 +178,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         tag.putInt("ConsumptionCount", consumptionCount);
         tag.putInt("ConsumptionCountTotal", consumptionCountTotal);
         tag.put("ItemStackHandler", itemStackHandler.serializeNBT(registries));
+        tag.put("InitialItemStackHandler", initialItemStackHandler.serializeNBT(registries));
         final CompoundTag[] foodPropertyTagWrapper = getFoodPropertyTagWrapper();
         tag.put("FoodProperty", foodPropertyTagWrapper[0]);
         return tag;
@@ -185,6 +189,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         tag.remove("ConsumptionCount");
         tag.remove("ConsumptionCountTotal");
         tag.remove("ItemStackHandler");
+        tag.remove("InitialItemStackHandler");
         tag.remove("FoodProperty");
     }
 
@@ -196,6 +201,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
             component.set(ModDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, new ConsumptionCountTotalRecord(consumptionCountTotal));
             component.set(DataComponents.FOOD, foodProperty);
             component.set(ModDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(itemStackHandler));
+            component.set(ModDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, new ItemStackHandlerRecord(initialItemStackHandler));
         }
     }
 
@@ -205,10 +211,20 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         consumptionCount = componentInput.getOrDefault(ModDataComponentRegistry.CONSUMPTION_COUNT, ConsumptionCountRecord.NULL).consumptionCount();
         consumptionCountTotal = componentInput.getOrDefault(ModDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, ConsumptionCountTotalRecord.NULL).consumptionCountTotal();
         foodProperty = componentInput.getOrDefault(DataComponents.FOOD, FoodValue.NULL);
-        ItemStackHandler componentItemStackHandler = componentInput.getOrDefault(ModDataComponentRegistry.ITEM_STACK_HANDLER, ItemStackHandlerRecord.NULL).itemStackHandler();
-        List<ItemStack> stackList = getItemStackListInSlot(componentItemStackHandler, 0, allSlot);
-        stackList.forEach(stack -> insertItem(stack.copy(), itemStackHandler, ingredientInput, seasoningInput, allSlot));
-        itemStackHandlerChanged();
+        processComponentStack(componentInput, ModDataComponentRegistry.ITEM_STACK_HANDLER, itemStackHandler);
+        processComponentStack(componentInput, ModDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, initialItemStackHandler);
+    }
+
+    protected void processComponentStack(BlockEntity.@NotNull DataComponentInput componentInput,
+                                       DeferredHolder<DataComponentType<?>, DataComponentType<ItemStackHandlerRecord>> componentType,
+                                       ItemStackHandler itemStackHandler) {
+        ItemStackHandler componentHandler = componentInput
+                .getOrDefault(componentType, ItemStackHandlerRecord.NULL)
+                .itemStackHandler();
+        List<ItemStack> stacks = getItemStackListInSlot(componentHandler, 0, allSlot);
+        stacks.forEach(stack ->
+                insertItem(stack.copy(), itemStackHandler, ingredientInput, seasoningInput, allSlot)
+        );
     }
 
     public int getIngredientInput() {
@@ -221,6 +237,10 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
 
     public ItemStackHandler getItemStackHandler() {
         return itemStackHandler;
+    }
+
+    public ItemStackHandler getInitialItemStackHandler() {
+        return initialItemStackHandler;
     }
 
     public FoodProperties getFoodProperty() {

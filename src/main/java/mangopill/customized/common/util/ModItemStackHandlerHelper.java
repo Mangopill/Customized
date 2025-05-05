@@ -69,16 +69,21 @@ public final class ModItemStackHandlerHelper {
         return stackList;
     }
 
-    public static void reduceItemStackCountByDivision(ItemStackHandler itemStackHandler, int consumptionCount) {
+    public static void reduceItemStackCountByDivision(ItemStackHandler itemStackHandler, ItemStackHandler initialItemStackHandler, int consumptionCountTotal) {
         for (int i = 0; i < itemStackHandler.getSlots(); ++i) {
             ItemStack stack = itemStackHandler.getStackInSlot(i);
+            System.out.println("stack" + stack);
+            ItemStack initialStack = initialItemStackHandler.getStackInSlot(i);
+            System.out.println("initialStack" + initialStack);
             if (!stack.isEmpty()) {
-                int shrinkCount = Math.round((float) stack.getCount() / consumptionCount);
+                int shrinkCount = Math.round((float) initialStack.getCount() / consumptionCountTotal);
+                System.out.println("shrinkCount" + shrinkCount);
                 if (shrinkCount >= stack.getCount()) {
                     stack.copyAndClear();
                     continue;
                 }
                 stack.shrink(shrinkCount);
+                System.out.println("shrinkStack" + stack);
             }
         }
     }

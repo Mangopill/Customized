@@ -21,6 +21,10 @@ public final class PlateComponentUtil {
         return stack.getOrDefault(ModDataComponentRegistry.ITEM_STACK_HANDLER, ItemStackHandlerRecord.NULL).itemStackHandler();
     }
 
+    public static ItemStackHandler getInitialItemStackHandler(ItemStack stack) {
+        return stack.getOrDefault(ModDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, ItemStackHandlerRecord.NULL).itemStackHandler();
+    }
+
     public static int getConsumptionCount(ItemStack stack) {
         return stack.getOrDefault(ModDataComponentRegistry.CONSUMPTION_COUNT, ConsumptionCountRecord.NULL).consumptionCount();
     }
@@ -37,6 +41,10 @@ public final class PlateComponentUtil {
         stack.set(ModDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(itemStackHandler));
     }
 
+    public static void setInitialItemStackHandler(ItemStack stack, ItemStackHandler itemStackHandler) {
+        stack.set(ModDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, new ItemStackHandlerRecord(itemStackHandler));
+    }
+
     public static void setConsumptionCount(ItemStack stack, int consumptionCount) {
         stack.set(ModDataComponentRegistry.CONSUMPTION_COUNT, new ConsumptionCountRecord(consumptionCount));
     }
@@ -45,8 +53,9 @@ public final class PlateComponentUtil {
         stack.set(ModDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, new ConsumptionCountTotalRecord(consumptionCountTotal));
     }
 
-    public static void updateAll(ItemStack stack, ItemStackHandler itemStackHandler, FoodProperties foodProperty, int consumptionCount, int consumptionCountTotal) {
+    public static void updateAll(ItemStack stack, ItemStackHandler itemStackHandler, ItemStackHandler initialItemStackHandler, FoodProperties foodProperty, int consumptionCount, int consumptionCountTotal) {
         setItemStackHandler(stack, itemStackHandler);
+        setInitialItemStackHandler(stack, initialItemStackHandler);
         setFoodProperty(stack, foodProperty);
         setConsumptionCount(stack, consumptionCount);
         setConsumptionCountTotal(stack, consumptionCountTotal);

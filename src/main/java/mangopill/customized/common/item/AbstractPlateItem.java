@@ -84,7 +84,6 @@ public abstract class AbstractPlateItem extends BlockItem {
         }
         int consumptionCount = getConsumptionCount(stack);
         int consumptionCountTotal = getConsumptionCountTotal(stack);
-        ItemStackHandler newItemStackHandler = copyItemStackHandlerByComponent(stack);
         FoodProperties properties = getFoodProperty(stack);
         plateAdvancement(livingEntity, properties);
         if(consumptionCount >= 1) {
@@ -96,13 +95,13 @@ public abstract class AbstractPlateItem extends BlockItem {
             }
             AbstractPlateBlockEntity.addEffect(livingEntity, properties);
             if (consumptionCount > 1){
-                reduceItemStackCountByDivision(newItemStackHandler, consumptionCountTotal);
+                reduceItemStackCountByDivision(getItemStackHandler(stack), getInitialItemStackHandler(stack), consumptionCountTotal);
             } else {
-                clearAllSlot(newItemStackHandler);
+                clearAllSlot(getItemStackHandler(stack));
+                clearAllSlot(getInitialItemStackHandler(stack));
                 setFoodProperty(stack, FoodValue.NULL);
                 setConsumptionCountTotal(stack, 0);
             }
-            setItemStackHandler(stack, newItemStackHandler);
             setConsumptionCount(stack, --consumptionCount);
             livingEntity.gameEvent(GameEvent.EAT);
         }
@@ -201,8 +200,10 @@ public abstract class AbstractPlateItem extends BlockItem {
         spawnUsingConvertsTo(player, stackList);
         stackList.forEach(itemStack -> insertItem(itemStack, newItemStackHandler));
         List<ItemStack> newStackList = getItemStackListInSlot(newItemStackHandler, 0, newItemStackHandler.getSlots());
+        ItemStackHandler initialItemStackHandler = new ItemStackHandler(newItemStackHandler.getSlots());
+        newStackList.forEach(itemStack -> insertItem(itemStack.copy(), initialItemStackHandler));
         potBlockEntity.itemStackHandlerChanged();
-        updateAll(itemInHand, newItemStackHandler, getFoodPropertyByPropertyValue(level, newStackList, true), getConsumptionCount(newStackList), getConsumptionCount(newStackList));
+        updateAll(itemInHand, newItemStackHandler, initialItemStackHandler, getFoodPropertyByPropertyValue(level, newStackList, true), getConsumptionCount(newStackList), getConsumptionCount(newStackList));
         return InteractionResult.SUCCESS;
     }
 
@@ -212,7 +213,7 @@ public abstract class AbstractPlateItem extends BlockItem {
 
     public ItemStackHandler copyItemStackHandlerByComponent(ItemStack stack){
         ItemStackHandler newItemStackHandler = new ItemStackHandler(getItemStackHandler(stack).getSlots());
-        getItemStackListInPlate(stack, true).forEach(itemStack -> insertItem(itemStack, newItemStackHandler));
+        getItemStackListInPlate(stack, true).forEach(itemStack -> insertItem(itemStack.copy(), newItemStackHandler));
         return newItemStackHandler;
     }
 
@@ -222,7 +223,7 @@ public abstract class AbstractPlateItem extends BlockItem {
 
     public List<ItemStack> getItemStackListInPlate(ItemStack stack, boolean includeSeasoningAndSpice) {
         return includeSeasoningAndSpice ? ModItemStackHandlerHelper.getItemStackListInSlot(getItemStackHandler(stack), 0, getItemStackHandler(stack).getSlots()) :
-                ModItemStackHandlerHelper.getItemStackListInSlot(getItemStackHandler(stack), 0, ingredientInput) ;
+                ModItemStackHandlerHelper.getItemStackListInSlot(getItemStackHandler(stack), 0, ingredientInput);
     }
 
     public void addItemStackTooltip(@NotNull ItemStack stack, @NotNull List<Component> tooltipComponents) {
