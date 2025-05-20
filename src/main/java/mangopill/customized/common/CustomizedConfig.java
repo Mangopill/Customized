@@ -58,6 +58,8 @@ public final class CustomizedConfig {
     public static final ModConfigSpec.DoubleValue COMBINATION_BUFF_DURATION;
     public static final ModConfigSpec.DoubleValue COMBINATION_BUFF_PROBABILITY;
     public static final ModConfigSpec.DoubleValue BUFF_AMPLIFIER;
+    public static final ModConfigSpec.DoubleValue SHRINK_NUTRITION;
+    public static final ModConfigSpec.DoubleValue SHRINK_SATURATION;
     public static final String POT = "pot";
     public static final ModConfigSpec.BooleanValue CUSTOM_COOKING;
     public static final ModConfigSpec.BooleanValue RECIPE_COOKING;
@@ -305,10 +307,20 @@ public final class CustomizedConfig {
                 .translation(MOD_ID + ".config.combination_buff_probability")
                 .defineInRange("combinationBuffProbability", 0.001D, 0.0D, 100.0D);
         BUFF_AMPLIFIER = commonBuilder
-                .comment("This value corresponds to how much nutrient value can increase one level of BUFF.\n(0.0D, 100000.0D)\ndefault: 1000D")
+                .comment("This value corresponds to how much nutrient value can increase one level of buff.\n(0.0D, 100000.0D)\ndefault: 3500D")
                 .gameRestart()
                 .translation(MOD_ID + ".config.buff_amplifier")
-                .defineInRange("buffAmplifier", 1000D, 0.0D, 100000.0D);
+                .defineInRange("buffAmplifier", 3500D, 0.0D, 100000.0D);
+        SHRINK_NUTRITION = commonBuilder
+                .comment("This value determines the percentage by which each buff that reduces nutrition decreases the nutrition value.\n(0.0D, 100.0D)\ndefault: 0.1D")
+                .gameRestart()
+                .translation(MOD_ID + ".config.shrink_nutrition")
+                .defineInRange("shrinkNutrition", 0.1D, 0.0D, 100.0D);
+        SHRINK_SATURATION = commonBuilder
+                .comment("This value determines the percentage by which each buff that reduces saturation decreases the saturation value.\n(0.0D, 100.0D)\ndefault: 0.1D")
+                .gameRestart()
+                .translation(MOD_ID + ".config.shrink_saturation")
+                .defineInRange("shrinkSaturation", 0.1D, 0.0D, 100.0D);
         commonBuilder.pop();
 
         commonBuilder.pop();

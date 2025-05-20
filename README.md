@@ -18,7 +18,7 @@
 
 ## Features
 - **New Cooking Methods**: Custom cook and more!
-- **Food Buffs**: Gain special buffs like walking on powder snow, or removing fire from your body by eating specific dishes.
+- **Food Buffs**: Gain special buffs like walking on powder snow, removing fire from your body, or preventing phantom spawns by eating specific dishes.
 - **Customizable Recipes**: Modify and create your own recipes.
 
 ## Configuration

@@ -3,7 +3,6 @@ package mangopill.customized.common.util.value;
 import mangopill.customized.common.registry.ModEffectRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
 
 import static mangopill.customized.common.CustomizedConfig.*;
 
@@ -15,7 +14,7 @@ public enum NutrientBuff {
     ANTIDOTE(ModEffectRegistry.ANTIDOTE, POWERFUL_BUFF_DURATION.get(), POWERFUL_BUFF_PROBABILITY.get()),
     SOAR(ModEffectRegistry.SOAR, POWERFUL_BUFF_DURATION.get(), POWERFUL_BUFF_PROBABILITY.get()),
 
-    SATURATION(MobEffects.SATURATION, COMBINATION_BUFF_DURATION.get(), COMBINATION_BUFF_PROBABILITY.get()),
+    NOCTENERGY_SURGE(ModEffectRegistry.NOCTENERGY_SURGE, COMBINATION_BUFF_DURATION.get(), COMBINATION_BUFF_PROBABILITY.get()),
     METABOLISM(ModEffectRegistry.METABOLISM, COMBINATION_BUFF_DURATION.get(), COMBINATION_BUFF_PROBABILITY.get()),
     ROBUST(ModEffectRegistry.ROBUST, COMBINATION_BUFF_DURATION.get(), COMBINATION_BUFF_PROBABILITY.get()),
     VITALITY_RESTORATION(ModEffectRegistry.VITALITY_RESTORATION, COMBINATION_BUFF_DURATION.get(), COMBINATION_BUFF_PROBABILITY.get()),

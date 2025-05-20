@@ -36,7 +36,7 @@
         },
         {
             "type": "customized:mob_effect_template",
-            "image": "minecraft:textures/mob_effect/saturation.png",
+            "image": "customized:textures/mob_effect/noctenergy_surge.png",
             "text": "patchouli.entry.effects_of_nutritional_values.pages.7.text",
             "title": "patchouli.entry.effects_of_nutritional_values.pages.6.title"
         },

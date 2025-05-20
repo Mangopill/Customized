@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 
 import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.category.NutrientCategory.*;
 import static mangopill.customized.common.util.value.NutrientBuff.*;
 
 public final class PropertyValueUtil {
@@ -181,9 +180,6 @@ public final class PropertyValueUtil {
     public static Map<NutrientBuff, Float> getCombinationBuffMap(Map<NutrientCategory, Float> filteredNutrientTotal) {
         Map<NutrientBuff, Float> combinationBuff = new HashMap<>();
         Set<NutrientBuff> nutrientTotal = EnumSet.allOf(NutrientBuff.class);
-        Set<NutrientCategory> saturation1 = Set.of(WATER, PROTEIN);
-        Set<NutrientCategory> saturation2 = Set.of(WATER, DIETARY_FIBER);
-        putCombinationBuffByContains(filteredNutrientTotal, combinationBuff, NutrientBuff.SATURATION, List.of(saturation1, saturation2));
         nutrientTotal.forEach(nutrientBuff -> {
             if (nutrientBuff.getEffect().value() instanceof CombinationMobEffect combinationMobEffect) {
                 putCombinationBuffByContains(filteredNutrientTotal, combinationBuff, nutrientBuff, combinationMobEffect.getCategorySet());
