@@ -131,7 +131,7 @@ public final class PropertyValueUtil {
             }
             if (!foodEffect.isEmpty()) {
                 for (FoodProperties.PossibleEffect pair : foodEffect) {
-                    builder.effect(pair.effectSupplier(), pair.probability());
+                    builder.effect(pair.effectSupplier(), Math.min(pair.probability(), 1.0F));
                 }
             }
         } else {
