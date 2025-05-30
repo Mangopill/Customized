@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "customized:item/rich_and_nourishing_spice"
+	}
+}

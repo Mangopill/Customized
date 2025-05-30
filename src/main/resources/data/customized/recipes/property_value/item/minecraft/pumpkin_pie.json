@@ -1,0 +1,16 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:pumpkin_pie"
+  ],
+  "value": {
+    "water": 40.0,
+    "protein": 4.0,
+    "lipid": 20.0,
+    "carbohydrate": 66.0,
+    "vitamin": 50.0,
+    "mineral": 10.0,
+    "dietary_fiber": 7.5,
+    "sweet" : 5.0
+  }
+}

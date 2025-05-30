@@ -1,0 +1,22 @@
+{
+  "type": "customized:brewing_barrel",
+  "time": 1000,
+  "ingredient": [
+    {
+      "tag": "forge:crops/broad_bean"
+    },
+    {
+      "tag": "forge:crops/scallion"
+    },
+    {
+      "item": "customized:salt"
+    }
+  ],
+  "container": {
+    "item": "minecraft:glass_bottle"
+  },
+  "result": {
+    "count": 1,
+    "item": "customized:douban"
+  }
+}

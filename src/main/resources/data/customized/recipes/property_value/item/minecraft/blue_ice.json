@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:blue_ice"
+  ],
+  "value": {
+    "cold" : 810.0
+  }
+}

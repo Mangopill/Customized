@@ -1,0 +1,15 @@
+{
+    "name": "patchouli.entry.crafting_a_famous_dish.name",
+    "icon": "customized:famous_dish_plate",
+    "category": "customized:famous_dishes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "patchouli.entry.crafting_a_famous_dish.pages.1.text"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "customized:crafting_shapeless/famous_dish_plate"
+        }
+    ]
+}

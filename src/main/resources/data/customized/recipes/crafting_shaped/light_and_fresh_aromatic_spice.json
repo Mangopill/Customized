@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "l": {
+      "item": "customized:light_and_fresh_aromatic_spice"
+    },
+    "r": {
+      "tag": "forge:raw_pork"
+    },
+    "e": {
+      "item": "customized:chicken_essence"
+    }
+  },
+  "pattern": [
+    "rlr",
+    "rer",
+    "rrr"
+  ],
+  "result": {
+    "count": 4,
+    "item": "customized:light_and_fresh_aromatic_spice"
+  }
+}

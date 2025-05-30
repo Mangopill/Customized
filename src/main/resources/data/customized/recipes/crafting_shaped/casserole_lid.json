@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "t": {
+      "item": "minecraft:terracotta"
+    },
+    "b": {
+      "item": "minecraft:black_terracotta"
+    }
+  },
+  "pattern": [
+    " t ",
+    "tbt",
+    " t "
+  ],
+  "result": {
+    "count": 1,
+    "item": "customized:casserole_lid"
+  }
+}

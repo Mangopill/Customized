@@ -1,0 +1,27 @@
+{
+    "name": "patchouli.entry.mod_seeds.name",
+    "icon": "customized:soiled_seed",
+    "category": "customized:raw_material_collection",
+    "pages": [
+        {
+            "type": "patchouli:image",
+            "images": [
+                "customized:textures/gui/gallery/mod_seeds1.png"
+            ],
+            "border": true,
+            "text": "patchouli.entry.mod_seeds.pages.1.text"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "minecraft:brush"
+        },
+        {
+            "type": "patchouli:image",
+            "images": [
+                "customized:textures/gui/gallery/mod_seeds2.png"
+            ],
+            "border": true,
+            "text": "patchouli.entry.mod_seeds.pages.2.text"
+        }
+    ]
+}

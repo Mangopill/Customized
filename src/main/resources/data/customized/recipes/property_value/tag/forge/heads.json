@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "forge:heads"
+  ],
+  "value": {
+    "dread" : 100.0
+  }
+}

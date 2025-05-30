@@ -1,0 +1,14 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:milk_bucket"
+  ],
+  "value": {
+    "water": 73.0,
+    "protein": 3.2,
+    "lipid": 3.6,
+    "carbohydrate": 4.8,
+    "vitamin": 0.1,
+    "mineral": 12.0
+  }
+}

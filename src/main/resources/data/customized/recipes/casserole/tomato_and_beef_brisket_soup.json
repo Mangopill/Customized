@@ -1,0 +1,33 @@
+{
+  "type": "customized:casserole",
+  "time": 800,
+  "ingredient": [
+    {
+      "tag": "forge:cooked_beef"
+    },
+    {
+      "tag": "forge:vegetables/tomato"
+    }
+  ],
+  "seasoning": [
+    {
+      "tag": "forge:vegetables/scallion"
+    },
+    {
+      "tag": "forge:vegetables/ginger"
+    },
+    {
+      "item": "customized:salt"
+    },
+    {
+      "item": "customized:rock_sugar"
+    }
+  ],
+  "spice": {
+    "item": "customized:sweet_and_sour_refreshing_spice"
+  },
+  "result": {
+    "count": 1,
+    "item": "customized:tomato_and_beef_brisket_soup"
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "patchouli.entry.nutritional_values.name",
+    "icon": "minecraft:bone",
+    "category": "customized:nutrient_system",
+    "pages": [
+        {
+            "type": "patchouli:image",
+            "images": [
+                "customized:textures/gui/gallery/nutritional_values1.png"
+            ],
+            "border": true,
+            "text": "patchouli.entry.nutritional_values.pages.1.text"
+        }
+    ]
+}

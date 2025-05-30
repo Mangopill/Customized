@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "forge:gems/quartz"
+    },
+    {
+      "tag": "forge:gems/quartz"
+    },
+    {
+      "tag": "forge:dyes/pink"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "item": "customized:famous_dish_plate"
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "customized:abandoned_farmland",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 1,
+            "element": {
+                "projection": "rigid",
+                "element_type": "minecraft:legacy_single_pool_element",
+                "processors": "minecraft:empty",
+                "location": "customized:abandoned_farmland/abandoned_farmland"
+            }
+        }
+    ]
+}

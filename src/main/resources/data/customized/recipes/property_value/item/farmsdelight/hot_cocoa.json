@@ -1,0 +1,16 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "farmersdelight:hot_cocoa"
+  ],
+  "value": {
+    "water": 56.67,
+    "protein": 7.0,
+    "lipid": 8.0,
+    "carbohydrate": 24.0,
+    "vitamin": 3.0,
+    "mineral": 30.0,
+    "dietary_fiber": 6.0,
+    "sweet": 15.0
+  }
+}

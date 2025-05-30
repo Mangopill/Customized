@@ -1,0 +1,16 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "forge:berries"
+  ],
+  "value": {
+    "water": 60.67,
+    "protein": 1.6,
+    "lipid": 0.6,
+    "carbohydrate": 15.4,
+    "vitamin": 100.0,
+    "mineral": 2.4,
+    "dietary_fiber": 10.0,
+    "sweet" : 3.0
+  }
+}

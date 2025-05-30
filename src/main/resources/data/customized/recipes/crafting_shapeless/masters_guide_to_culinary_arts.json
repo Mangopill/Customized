@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "forge:bones"
+    },
+    {
+      "tag": "minecraft:bookshelf_books"
+    },
+    {
+      "item": "minecraft:apple"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "item": "patchouli:guide_book",
+    "components": {
+      "patchouli:book": "customized:masters_guide_to_culinary_arts"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:rotten_flesh"
+  ],
+  "value": {
+    "water" : 8.0,
+    "protein" : 20.0,
+    "lipid" : 25.0,
+    "carbohydrate" : 5.0,
+    "vitamin" : 0.5,
+    "mineral" : 3.0
+  }
+}

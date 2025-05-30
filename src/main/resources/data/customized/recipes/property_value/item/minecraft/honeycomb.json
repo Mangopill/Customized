@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:honeycomb"
+  ],
+  "value": {
+    "sweet" : 30.0
+  }
+}

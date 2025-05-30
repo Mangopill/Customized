@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "forge:cooked_fishes/salmon"
+  ],
+  "value": {
+    "water": 25.7,
+    "protein": 40.0,
+    "lipid": 39.0,
+    "mineral": 18.0,
+    "fresh" : 20.0
+  }
+}

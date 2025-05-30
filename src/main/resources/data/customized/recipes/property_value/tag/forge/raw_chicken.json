@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "forge:raw_chicken"
+  ],
+  "value": {
+    "water": 14.6,
+    "protein": 22.0,
+    "lipid": 4.0,
+    "mineral": 12.5
+  }
+}

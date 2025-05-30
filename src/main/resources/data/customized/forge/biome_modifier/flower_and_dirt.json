@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "customized:flower_and_dirt",
+  "step": "surface_structures"
+}

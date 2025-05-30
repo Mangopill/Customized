@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "forge:rods/blaze"
+  ],
+  "value": {
+    "warm" : 30.0
+  }
+}

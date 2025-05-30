@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "customized:item/light_and_fresh_aromatic_spice"
+	}
+}

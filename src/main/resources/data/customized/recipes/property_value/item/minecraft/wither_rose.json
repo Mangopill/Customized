@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:wither_rose"
+  ],
+  "value": {
+    "dread" : 6.0
+  }
+}

@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "customized:item/braised_chicken_with_shiitake_mushrooms_soup"
+	}
+}

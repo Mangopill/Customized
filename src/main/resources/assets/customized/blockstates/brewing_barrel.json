@@ -1,0 +1,199 @@
+{
+  "variants": {
+    "facing=north,progress=0": {
+      "model": "customized:block/brewing_barrel_stage0"
+    },
+    "facing=north,progress=1": {
+      "model": "customized:block/brewing_barrel_stage1"
+    },
+    "facing=north,progress=2": {
+      "model": "customized:block/brewing_barrel_stage2"
+    },
+    "facing=north,progress=3": {
+      "model": "customized:block/brewing_barrel_stage3"
+    },
+    "facing=north,progress=4": {
+      "model": "customized:block/brewing_barrel_stage4"
+    },
+    "facing=north,progress=5": {
+      "model": "customized:block/brewing_barrel_stage5"
+    },
+    "facing=north,progress=6": {
+      "model": "customized:block/brewing_barrel_stage6"
+    },
+    "facing=north,progress=7": {
+      "model": "customized:block/brewing_barrel_stage7"
+    },
+    "facing=north,progress=8": {
+      "model": "customized:block/brewing_barrel_stage8"
+    },
+    "facing=north,progress=9": {
+      "model": "customized:block/brewing_barrel_stage9"
+    },
+    "facing=north,progress=10": {
+      "model": "customized:block/brewing_barrel_stage10"
+    },
+    "facing=north,progress=11": {
+      "model": "customized:block/brewing_barrel_stage11"
+    },
+    "facing=north,progress=12": {
+      "model": "customized:block/brewing_barrel_stage12"
+    },
+    "facing=south,progress=0": {
+      "model": "customized:block/brewing_barrel_stage0",
+      "y": 180
+    },
+    "facing=south,progress=1": {
+      "model": "customized:block/brewing_barrel_stage1",
+      "y": 180
+    },
+    "facing=south,progress=2": {
+      "model": "customized:block/brewing_barrel_stage2",
+      "y": 180
+    },
+    "facing=south,progress=3": {
+      "model": "customized:block/brewing_barrel_stage3",
+      "y": 180
+    },
+    "facing=south,progress=4": {
+      "model": "customized:block/brewing_barrel_stage4",
+      "y": 180
+    },
+    "facing=south,progress=5": {
+      "model": "customized:block/brewing_barrel_stage5",
+      "y": 180
+    },
+    "facing=south,progress=6": {
+      "model": "customized:block/brewing_barrel_stage6",
+      "y": 180
+    },
+    "facing=south,progress=7": {
+      "model": "customized:block/brewing_barrel_stage7",
+      "y": 180
+    },
+    "facing=south,progress=8": {
+      "model": "customized:block/brewing_barrel_stage8",
+      "y": 180
+    },
+    "facing=south,progress=9": {
+      "model": "customized:block/brewing_barrel_stage9",
+      "y": 180
+    },
+    "facing=south,progress=10": {
+      "model": "customized:block/brewing_barrel_stage10",
+      "y": 180
+    },
+    "facing=south,progress=11": {
+      "model": "customized:block/brewing_barrel_stage11",
+      "y": 180
+    },
+    "facing=south,progress=12": {
+      "model": "customized:block/brewing_barrel_stage12",
+      "y": 180
+    },
+    "facing=west,progress=0": {
+      "model": "customized:block/brewing_barrel_stage0",
+      "y": 270
+    },
+    "facing=west,progress=1": {
+      "model": "customized:block/brewing_barrel_stage1",
+      "y": 270
+    },
+    "facing=west,progress=2": {
+      "model": "customized:block/brewing_barrel_stage2",
+      "y": 270
+    },
+    "facing=west,progress=3": {
+      "model": "customized:block/brewing_barrel_stage3",
+      "y": 270
+    },
+    "facing=west,progress=4": {
+      "model": "customized:block/brewing_barrel_stage4",
+      "y": 270
+    },
+    "facing=west,progress=5": {
+      "model": "customized:block/brewing_barrel_stage5",
+      "y": 270
+    },
+    "facing=west,progress=6": {
+      "model": "customized:block/brewing_barrel_stage6",
+      "y": 270
+    },
+    "facing=west,progress=7": {
+      "model": "customized:block/brewing_barrel_stage7",
+      "y": 270
+    },
+    "facing=west,progress=8": {
+      "model": "customized:block/brewing_barrel_stage8",
+      "y": 270
+    },
+    "facing=west,progress=9": {
+      "model": "customized:block/brewing_barrel_stage9",
+      "y": 270
+    },
+    "facing=west,progress=10": {
+      "model": "customized:block/brewing_barrel_stage10",
+      "y": 270
+    },
+    "facing=west,progress=11": {
+      "model": "customized:block/brewing_barrel_stage11",
+      "y": 270
+    },
+    "facing=west,progress=12": {
+      "model": "customized:block/brewing_barrel_stage12",
+      "y": 270
+    },
+    "facing=east,progress=0": {
+      "model": "customized:block/brewing_barrel_stage0",
+      "y": 90
+    },
+    "facing=east,progress=1": {
+      "model": "customized:block/brewing_barrel_stage1",
+      "y": 90
+    },
+    "facing=east,progress=2": {
+      "model": "customized:block/brewing_barrel_stage2",
+      "y": 90
+    },
+    "facing=east,progress=3": {
+      "model": "customized:block/brewing_barrel_stage3",
+      "y": 90
+    },
+    "facing=east,progress=4": {
+      "model": "customized:block/brewing_barrel_stage4",
+      "y": 90
+    },
+    "facing=east,progress=5": {
+      "model": "customized:block/brewing_barrel_stage5",
+      "y": 90
+    },
+    "facing=east,progress=6": {
+      "model": "customized:block/brewing_barrel_stage6",
+      "y": 90
+    },
+    "facing=east,progress=7": {
+      "model": "customized:block/brewing_barrel_stage7",
+      "y": 90
+    },
+    "facing=east,progress=8": {
+      "model": "customized:block/brewing_barrel_stage8",
+      "y": 90
+    },
+    "facing=east,progress=9": {
+      "model": "customized:block/brewing_barrel_stage9",
+      "y": 90
+    },
+    "facing=east,progress=10": {
+      "model": "customized:block/brewing_barrel_stage10",
+      "y": 90
+    },
+    "facing=east,progress=11": {
+      "model": "customized:block/brewing_barrel_stage11",
+      "y": 90
+    },
+    "facing=east,progress=12": {
+      "model": "customized:block/brewing_barrel_stage12",
+      "y": 90
+    }
+  }
+}

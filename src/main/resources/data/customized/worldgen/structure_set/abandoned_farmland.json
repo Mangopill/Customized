@@ -1,0 +1,14 @@
+{
+    "structures": [
+        {
+            "structure": "customized:abandoned_farmland",
+            "weight": 1
+        }
+    ],
+    "placement": {
+        "type": "minecraft:random_spread",
+        "spacing": 72,
+        "separation": 36,
+        "salt": 132747
+    }
+}

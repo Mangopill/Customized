@@ -1,0 +1,15 @@
+{
+    "name": "patchouli.entry.eating_a_famous_dish.name",
+    "icon": "customized:tomato_and_beef_brisket_soup",
+    "category": "customized:famous_dishes",
+    "pages": [
+        {
+            "type": "patchouli:image",
+            "images": [
+                "customized:textures/gui/gallery/eating_a_famous_dish1.png"
+            ],
+            "border": true,
+            "text": "patchouli.entry.eating_a_famous_dish.pages.1.text"
+        }
+    ]
+}

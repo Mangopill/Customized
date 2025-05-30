@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "customized:item/radish_and_pork_rib_soup"
+	}
+}

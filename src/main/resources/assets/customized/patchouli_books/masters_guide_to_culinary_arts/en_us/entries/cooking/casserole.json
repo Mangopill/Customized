@@ -1,0 +1,19 @@
+{
+    "name": "patchouli.entry.casserole.name",
+    "icon": "customized:casserole",
+    "category": "customized:cooking",
+    "pages": [
+        {
+            "type": "patchouli:image",
+            "images": [
+                "customized:textures/gui/gallery/casserole1.png"
+            ],
+            "border": true,
+            "text": "patchouli.entry.casserole.pages.1.text"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "customized:crafting_shaped/casserole"
+        }
+    ]
+}

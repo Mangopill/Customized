@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "minecraft:black_terracotta"
+    },
+    "w": {
+      "item": "minecraft:white_terracotta"
+    },
+    "r": {
+      "item": "minecraft:brown_terracotta"
+    }
+  },
+  "pattern": [
+    "w w",
+    "wrw",
+    "bbb"
+  ],
+  "result": {
+    "count": 1,
+    "item": "customized:casserole"
+  }
+}

@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "customized:item/fish_maw_and_chicken_soup"
+	}
+}

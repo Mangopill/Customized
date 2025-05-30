@@ -1,0 +1,12 @@
+{
+    "boiling_water_without_lid": {
+        "sounds": [
+            "customized:common/boiling_water_without_lid"
+        ]
+    },
+    "boiling_water_with_lid": {
+        "sounds": [
+            "customized:common/boiling_water_with_lid"
+        ]
+    }
+}

@@ -1,0 +1,39 @@
+{
+  "values": [
+    "minecraft:sugar",
+    "minecraft:honeycomb",
+    "minecraft:honey_bottle",
+    "minecraft:milk_bucket",
+    "customized:ketchup",
+    "customized:rock_sugar",
+    "customized:sichuan_pepper",
+    "customized:scallion",
+    "customized:ginger",
+    "customized:vinegar",
+    "customized:douban",
+    "customized:salt",
+    "customized:soy_sauce",
+    "customized:chicken_essence",
+    "customized:oyster_sauce",
+    {
+      "id": "farmersdelight:milk_bottle",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:hot_cocoa",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:apple_cider",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:melon_juice",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:tomato_sauce",
+      "required": false
+    }
+  ]
+}

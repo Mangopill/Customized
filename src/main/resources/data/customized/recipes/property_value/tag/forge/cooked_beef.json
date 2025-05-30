@@ -1,0 +1,12 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "forge:cooked_beef"
+  ],
+  "value": {
+    "water": 24.0,
+    "protein": 40.0,
+    "lipid": 30.0,
+    "mineral": 36.0
+  }
+}

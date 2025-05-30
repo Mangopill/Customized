@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "customized:block/plate"
+    },
+    "facing=south": {
+      "model": "customized:block/plate",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "customized:block/plate",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "customized:block/plate",
+      "y": 90
+    }
+  }
+}

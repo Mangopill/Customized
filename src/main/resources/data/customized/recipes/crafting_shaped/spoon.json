@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "l": {
+      "tag": "forge:dyes/light_blue"
+    },
+    "w": {
+      "tag": "forge:dyes/white"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    " i ",
+    " w ",
+    " l "
+  ],
+  "result": {
+    "count": 1,
+    "item": "customized:spoon"
+  }
+}

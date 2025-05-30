@@ -1,0 +1,104 @@
+{
+    "name": "patchouli.entry.effects_of_nutritional_values.name",
+    "icon": "minecraft:milk_bucket",
+    "category": "customized:nutrient_system",
+    "pages": [
+        "patchouli.entry.effects_of_nutritional_values.pages.1.text",
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/iced.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.2.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.1.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/warm_stomach.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.3.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.2.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/vitality.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.4.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.3.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/antidote.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.5.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.4.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/soar.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.6.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.5.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/noctenergy_surge.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.7.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.6.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/metabolism.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.8.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.7.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/robust.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.9.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.8.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/vitality_restoration.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.10.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.9.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/calorie_burn.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.11.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.10.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/smooth_blood_flow.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.12.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.11.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/mental_stimulation.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.13.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.12.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/appetite_boost.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.14.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.13.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/sustained_energy.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.15.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.14.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/stress_relief.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.16.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.15.title"
+        },
+        {
+            "type": "customized:mob_effect_template",
+            "image": "customized:textures/mob_effect/hydration_and_plumpness.png",
+            "text": "patchouli.entry.effects_of_nutritional_values.pages.17.text",
+            "title": "patchouli.entry.effects_of_nutritional_values.pages.16.title"
+        }
+    ]
+}

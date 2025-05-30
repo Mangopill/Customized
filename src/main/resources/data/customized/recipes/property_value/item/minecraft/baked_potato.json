@@ -1,0 +1,15 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:baked_potato"
+  ],
+  "value": {
+    "water": 52.83,
+    "protein": 4.0,
+    "lipid": 0.2,
+    "carbohydrate": 35.16,
+    "vitamin": 98.5,
+    "mineral": 85.8,
+    "dietary_fiber": 11.0
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "customized:property_value",
+  "item": [
+    "minecraft:kelp"
+  ],
+  "value": {
+    "water": 52.44,
+    "protein": 6.0,
+    "lipid": 1.0,
+    "carbohydrate": 19.2,
+    "vitamin": 6.0,
+    "mineral": 120.0,
+    "dietary_fiber": 16.0
+  }
+}

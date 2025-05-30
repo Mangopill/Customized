@@ -1,0 +1,43 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "name": "pool0",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "customized:fish_maw_and_chicken_soup"
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:block_state_property",
+                    "block": "customized:fish_maw_and_chicken_soup",
+                    "properties": {
+                        "eat": "0"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "pool1",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "customized:famous_dish_plate"
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:block_state_property",
+                    "block": "customized:fish_maw_and_chicken_soup",
+                    "properties": {
+                        "eat": "2"
+                    }
+                }
+            ]
+        }
+    ]
+}

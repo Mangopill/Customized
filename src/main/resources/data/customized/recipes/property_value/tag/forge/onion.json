@@ -1,0 +1,16 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "forge:crops/onion"
+  ],
+  "value": {
+    "water": 59.33,
+    "protein": 2.2,
+    "lipid": 0.2,
+    "carbohydrate": 18.6,
+    "vitamin": 37.0,
+    "mineral": 5.0,
+    "dietary_fiber": 8.5,
+    "fragrant": 5.0
+  }
+}

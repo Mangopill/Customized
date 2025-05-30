@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "mangopill.customized.common.mixin",
+  "refmap": "customized.refmap.json",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ItemReplaceMixin",
+    "WarmStomachEffectMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

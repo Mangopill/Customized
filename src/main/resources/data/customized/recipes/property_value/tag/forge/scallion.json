@@ -1,0 +1,9 @@
+{
+  "type": "customized:property_value",
+  "tag": [
+    "forge:crops/scallion"
+  ],
+  "value": {
+    "fragrant": 10.0
+  }
+}
