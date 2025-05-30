@@ -30,7 +30,9 @@ public class BrewingBarrelBlock extends BaseEntityBlock {
                 .setValue(PROGRESS, 0)
         );
     }
+
     @NotNull
+    @Override
     public ItemInteractionResult useItemOn(
             @NotNull ItemStack itemStackInHand, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
             @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult result) {
@@ -61,6 +63,7 @@ public class BrewingBarrelBlock extends BaseEntityBlock {
     }
 
     @Nullable
+    @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> blockEntityType) {
         if (level.isClientSide) {
             return null;

@@ -86,12 +86,13 @@ public class CasseroleBlock extends AbstractPotBlock{
                 SoundEvent sound = state.getValue(LID).equals(PotState.WITH_LID)
                         ? ModSoundRegistry.BOILING_WATER_WITH_LID.get()
                         : ModSoundRegistry.BOILING_WATER_WITHOUT_LID.get();
-                level.playLocalSound(x, y, z, sound, SoundSource.BLOCKS, random.nextFloat() + 0.3F, 0.8F, false);
+                level.playLocalSound(x, y, z, sound, SoundSource.BLOCKS, random.nextFloat() * 0.4F + 0.3F, 0.8F, false);
             }
         }
     }
 
     @Nullable
+    @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> blockEntityType) {
         if (!state.getValue(LID).equals(PotState.WITHOUT_LID)){
             if (level.isClientSide) {

@@ -53,7 +53,7 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AbstractPlateBlockEntity plateBlockEntity){
-            plateBlockEntity.eatFood(stack, level, player, state, pos);
+            plateBlockEntity.eatFood(level, player, state, pos);
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }

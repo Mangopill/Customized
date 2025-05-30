@@ -15,6 +15,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -75,10 +76,9 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
                 ModItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, ingredientInput);
     }
 
-    public void eatFood(@NotNull ItemStack stack, @NotNull Level level, @NotNull Player player, @NotNull BlockState state, @NotNull BlockPos pos) {
+    public void eatFood(@NotNull Level level, @NotNull Player player, @NotNull BlockState state, @NotNull BlockPos pos) {
         if(consumptionCount >= 1) {
-            level.playSound(null, player.getX(), player.getY(), player.getZ(), player.getEatingSound(stack),
-                    SoundSource.NEUTRAL, 1.0F, 1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.4F);
+            level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
             player.getFoodData().eat(foodProperty);
             addEffect(player, foodProperty);
             AbstractPlateItem.plateAdvancement(player, foodProperty);
@@ -111,7 +111,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
 
     public void clearFoodPropertyAndCountTotal() {
        foodProperty = FoodValue.NULL;
-       consumptionCount = 0;
+       consumptionCountTotal = 0;
     }
 
     public @NotNull ItemStack getCloneItemStack(ItemStack stack) {

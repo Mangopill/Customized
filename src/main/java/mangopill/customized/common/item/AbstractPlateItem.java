@@ -14,6 +14,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
@@ -87,8 +88,7 @@ public abstract class AbstractPlateItem extends BlockItem {
         FoodProperties properties = getFoodProperty(stack);
         plateAdvancement(livingEntity, properties);
         if(consumptionCount >= 1) {
-            level.playSound(null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), livingEntity.getEatingSound(stack),
-                    SoundSource.NEUTRAL, 1.0F, 1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.4F);
+            level.playSound(null, livingEntity, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
             if (livingEntity instanceof ServerPlayer player) {
                 player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
                 player.getFoodData().eat(properties);
