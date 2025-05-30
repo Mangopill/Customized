@@ -13,7 +13,7 @@ public class ModAdvancementRegistry {
     public static final BasicTrigger GET_FAMOUS_DISH = new BasicTrigger(getId("get_famous_dish"));
 
     public static ResourceLocation getId(String name) {
-        return ResourceLocation.fromNamespaceAndPath(Customized.MODID, name);
+        return new ResourceLocation(Customized.MODID, name);
     }
 
     public static void register() {

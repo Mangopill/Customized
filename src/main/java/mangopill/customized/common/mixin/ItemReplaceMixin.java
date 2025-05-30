@@ -22,7 +22,7 @@ import java.util.Objects;
 
 @Mixin(ItemEntity.class)
 public abstract class ItemReplaceMixin{
-    private static final ResourceLocation LOOT_TABLE = ResourceLocation.fromNamespaceAndPath(Customized.MODID, "gameplay/soiled_seed");
+    private static final ResourceLocation LOOT_TABLE = new ResourceLocation("gameplay/soiled_seed");
     private int life = 200;
     @Inject(at = @At("HEAD"), method = "tick")
     public void customized$itemReplace(CallbackInfo ci) {

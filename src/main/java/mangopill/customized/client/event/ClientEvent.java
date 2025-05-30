@@ -7,7 +7,6 @@ import mangopill.customized.common.item.*;
 import mangopill.customized.common.registry.*;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,13 +14,14 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import static mangopill.customized.client.event.tinting.Tinting.*;
+import static mangopill.customized.common.registry.ModAdvancementRegistry.getId;
 
 @Mod.EventBusSubscriber(modid = Customized.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvent {
     @SubscribeEvent
     public static void registerOverride(final FMLClientSetupEvent event) {
         event.enqueueWork(() -> ItemProperties.register(ModItemRegistry.SOUP_BOWL.get(),
-                ResourceLocation.fromNamespaceAndPath(Customized.MODID, "drive"),
+                getId("drive"),
                 (stack, level, player, seed) -> stack.getItem() instanceof SoupBowlItem ?
                         ((SoupBowlItem) stack.getItem()).hasInput(stack) ? 1.0F : 0.0F : 0.0F));
     }

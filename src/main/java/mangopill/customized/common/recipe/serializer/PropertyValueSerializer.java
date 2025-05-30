@@ -20,7 +20,7 @@ public class PropertyValueSerializer implements RecipeSerializer<PropertyValueRe
         Set<ResourceLocation> name = new HashSet<>();
         PropertyValue propertyValue = PropertyValue.fromJson(GsonHelper.getAsJsonObject(jsonObject, "value"));
         boolean isItem = jsonObject.has("item");
-        GsonHelper.getAsJsonArray(jsonObject, isItem ? "item" : "tag").forEach(n -> name.add(ResourceLocation.parse(GsonHelper.convertToString(n, isItem ? "item" : "tag"))));
+        GsonHelper.getAsJsonArray(jsonObject, isItem ? "item" : "tag").forEach(n -> name.add(new ResourceLocation(GsonHelper.convertToString(n, isItem ? "item" : "tag"))));
         return new PropertyValueRecipe(name, propertyValue, isItem, id);
     }
 

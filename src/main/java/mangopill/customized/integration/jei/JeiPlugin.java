@@ -1,6 +1,5 @@
 package mangopill.customized.integration.jei;
 
-import mangopill.customized.Customized;
 import mangopill.customized.common.registry.ModItemRegistry;
 import mangopill.customized.integration.jei.category.*;
 import mezz.jei.api.IModPlugin;
@@ -12,11 +11,12 @@ import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
+import static mangopill.customized.common.registry.ModAdvancementRegistry.getId;
 import static mangopill.customized.integration.jei.util.JeiUtil.*;
 
 @mezz.jei.api.JeiPlugin
 public class JeiPlugin implements IModPlugin {
-    public static final ResourceLocation JEI_PLUGIN_UID = ResourceLocation.fromNamespaceAndPath(Customized.MODID, "jei_plugin");
+    public static final ResourceLocation JEI_PLUGIN_UID = getId("jei_plugin");
 
     @Override
     public void registerCategories(@Nonnull IRecipeCategoryRegistration registration) {

@@ -13,13 +13,13 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.*;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static mangopill.customized.common.registry.ModAdvancementRegistry.getId;
 import static mangopill.customized.integration.jei.util.JeiUtil.*;
 
 public class CasseroleRecipeCategory implements IRecipeCategory<CasseroleRecipe> {
@@ -29,7 +29,7 @@ public class CasseroleRecipeCategory implements IRecipeCategory<CasseroleRecipe>
 
     public CasseroleRecipeCategory(IGuiHelper helper) {
         title = Component.translatable(ModBlockRegistry.CASSEROLE.get().getDescriptionId());
-        background = helper.createDrawable(ResourceLocation.fromNamespaceAndPath(Customized.MODID, "textures/gui/casserole" + ".png"),
+        background = helper.createDrawable(getId("textures/gui/casserole" + ".png"),
                 4, 4, 108, 67);
         icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModItemRegistry.CASSEROLE.get()));
     }

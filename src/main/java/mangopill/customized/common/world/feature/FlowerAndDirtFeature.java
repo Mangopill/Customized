@@ -1,12 +1,10 @@
 package mangopill.customized.common.world.feature;
 
 import com.mojang.serialization.Codec;
-import mangopill.customized.Customized;
 import mangopill.customized.common.registry.ModBlockRegistry;
 import mangopill.customized.common.registry.ModBlockEntityTypeRegistry;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,6 +12,8 @@ import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+
+import static mangopill.customized.common.registry.ModAdvancementRegistry.getId;
 
 public class FlowerAndDirtFeature extends Feature<NoneFeatureConfiguration> {
     private static final BlockStatePredicate IS_GRASS_BLOCK = BlockStatePredicate.forBlock(Blocks.GRASS_BLOCK);
@@ -37,7 +37,7 @@ public class FlowerAndDirtFeature extends Feature<NoneFeatureConfiguration> {
     private static void placeSusDirt(WorldGenLevel level, BlockPos pos) {
         level.setBlock(pos, ModBlockRegistry.SUSPICIOUS_DIRT.get().defaultBlockState(), 3);
         level.getBlockEntity(pos, ModBlockEntityTypeRegistry.SUSPICIOUS_DIRT.get())
-                .ifPresent(Consumer -> Consumer.setLootTable(ResourceLocation.fromNamespaceAndPath(Customized.MODID, "archaeology/flower_and_dirt"), pos.asLong()));
+                .ifPresent(Consumer -> Consumer.setLootTable(getId("archaeology/flower_and_dirt"), pos.asLong()));
     }
 
 }
