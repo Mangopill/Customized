@@ -1,7 +1,6 @@
 package mangopill.customized.common.util;
 
 import com.mojang.datafixers.util.Pair;
-import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.record.PlateSlotRecord;
 import net.minecraft.nbt.*;
 import net.minecraft.world.effect.MobEffect;
@@ -23,15 +22,12 @@ public final class PlateComponentUtil {
     }
 
     public static FoodProperties getFoodProperty(ItemStack stack) {
-        return deserializeFoodProperties(stack.getTag().getCompound(FOOD_KEY));
+        return deserializeFoodProperties(stack.getOrCreateTag().getCompound(FOOD_KEY));
     }
 
     public static ItemStackHandler getItemStackHandler(ItemStack stack, @Nullable Integer slot) {
-        if (!stack.hasTag()) {
-            stack.setTag(new CompoundTag());
-        }
-        if (stack.getTag().contains("HandlerCache")) {
-            CompoundTag cache = stack.getTag().getCompound("HandlerCache");
+        if (stack.getOrCreateTag().contains("HandlerCache")) {
+            CompoundTag cache = stack.getOrCreateTag().getCompound("HandlerCache");
             if (cache.contains(ITEM_HANDLER_KEY)) {
                 CompoundTag handlerTag = cache.getCompound(ITEM_HANDLER_KEY);
                 int actualSlots = handlerTag.getList("Items", Tag.TAG_COMPOUND).size();
@@ -40,32 +36,29 @@ public final class PlateComponentUtil {
                 return handler;
             }
         }
-        if (!stack.getTag().contains(ITEM_HANDLER_KEY)) {
+        if (!stack.getOrCreateTag().contains(ITEM_HANDLER_KEY)) {
             int defaultSlots = slot == null ? PlateSlotRecord.SOUP_BOWL.ingredientInput() + PlateSlotRecord.SOUP_BOWL.seasoningInput() + 1 : slot;
             ItemStackHandler handler = new ItemStackHandler(defaultSlots);
-            stack.getTag().put(ITEM_HANDLER_KEY, handler.serializeNBT());
+            stack.getOrCreateTag().put(ITEM_HANDLER_KEY, handler.serializeNBT());
         }
-        CompoundTag handlerTag = stack.getTag().getCompound(ITEM_HANDLER_KEY);
+        CompoundTag handlerTag = stack.getOrCreateTag().getCompound(ITEM_HANDLER_KEY);
         int actualSlots = handlerTag.getList("Items", Tag.TAG_COMPOUND).size();
         ItemStackHandler handler = new ItemStackHandler(actualSlots);
         handler.deserializeNBT(handlerTag);
         CompoundTag cache = new CompoundTag();
         cache.put(ITEM_HANDLER_KEY, handler.serializeNBT());
-        stack.getTag().put("HandlerCache", cache);
+        stack.getOrCreateTag().put("HandlerCache", cache);
         return handler;
     }
 
     public static ItemStackHandler getInitialItemStackHandler(ItemStack stack) {
-        if (!stack.hasTag()) {
-            stack.setTag(new CompoundTag());
-        }
-        if (!stack.getTag().contains(INITIAL_HANDLER_KEY)) {
-            CompoundTag mainHandlerTag = stack.getTag().getCompound(ITEM_HANDLER_KEY);
+        if (!stack.getOrCreateTag().contains(INITIAL_HANDLER_KEY)) {
+            CompoundTag mainHandlerTag = stack.getOrCreateTag().getCompound(ITEM_HANDLER_KEY);
             int defaultSlots = mainHandlerTag.getList("Items", Tag.TAG_COMPOUND).size();
             ItemStackHandler handler = new ItemStackHandler(defaultSlots);
-            stack.getTag().put(INITIAL_HANDLER_KEY, handler.serializeNBT());
+            stack.getOrCreateTag().put(INITIAL_HANDLER_KEY, handler.serializeNBT());
         }
-        CompoundTag handlerTag = stack.getTag().getCompound(INITIAL_HANDLER_KEY);
+        CompoundTag handlerTag = stack.getOrCreateTag().getCompound(INITIAL_HANDLER_KEY);
         int actualSlots = handlerTag.getList("Items", Tag.TAG_COMPOUND).size();
         ItemStackHandler handler = new ItemStackHandler(actualSlots);
         handler.deserializeNBT(handlerTag);
@@ -73,11 +66,11 @@ public final class PlateComponentUtil {
     }
 
     public static int getConsumptionCount(ItemStack stack) {
-        return stack.getTag().getInt(CONSUMPTION_KEY);
+        return stack.getOrCreateTag().getInt(CONSUMPTION_KEY);
     }
 
     public static int getConsumptionCountTotal(ItemStack stack) {
-        return stack.getTag().getInt(CONSUMPTION_TOTAL_KEY);
+        return stack.getOrCreateTag().getInt(CONSUMPTION_TOTAL_KEY);
     }
 
     public static void setFoodProperty(ItemStack stack, FoodProperties foodProperties) {
@@ -88,7 +81,7 @@ public final class PlateComponentUtil {
         stack.getOrCreateTag().put(ITEM_HANDLER_KEY, itemStackHandler.serializeNBT());
         CompoundTag cache = new CompoundTag();
         cache.put(ITEM_HANDLER_KEY, itemStackHandler.serializeNBT());
-        stack.getTag().put("HandlerCache", cache);
+        stack.getOrCreateTag().put("HandlerCache", cache);
     }
 
     public static void setInitialItemStackHandler(ItemStack stack, ItemStackHandler itemStackHandler) {

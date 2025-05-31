@@ -211,10 +211,8 @@ public abstract class AbstractPlateItem extends BlockItem {
     protected boolean updateCustomBlockEntityTag(@Nonnull BlockPos pos, Level level, @Nullable Player player,
                                                  @Nonnull ItemStack stack, @Nonnull BlockState state) {
         if (level.getBlockEntity(pos) instanceof AbstractPlateBlockEntity plateEntity) {
-            CompoundTag tag = stack.getTag();
-            if (tag != null) {
-                plateEntity.load(tag);
-            }
+            CompoundTag tag = stack.getOrCreateTag();
+            plateEntity.load(tag);
             plateEntity.setChanged();
             return true;
         }
