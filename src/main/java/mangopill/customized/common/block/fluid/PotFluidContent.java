@@ -17,7 +17,7 @@ public class PotFluidContent extends ModFluidContent<PotState, PotState> {
     }
 
     public static PotFluidContent getContent(Level level, BlockPos pos) {
-        if (level.getBlockState(pos).getBlock() instanceof AbstractPotBlock && !level.getBlockState(pos).getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID)){
+        if (!level.getBlockState(pos).getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID)){
             return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.WATER, FluidType.BUCKET_VOLUME, PotState.WITHOUT_LID);
         } else {
             return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.EMPTY, 0, null);
@@ -25,7 +25,7 @@ public class PotFluidContent extends ModFluidContent<PotState, PotState> {
     }
 
     public static PotFluidContent getContentForFill(Level level, BlockPos pos) {
-        if (level.getBlockState(pos).getBlock() instanceof AbstractPotBlock && level.getBlockState(pos).getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID)){
+        if (level.getBlockState(pos).getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID)){
             return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.WATER, FluidType.BUCKET_VOLUME, PotState.WITH_DRIVE);
         } else {
             return new PotFluidContent(ModBlockRegistry.CASSEROLE.get(), Fluids.EMPTY, 0, null);
