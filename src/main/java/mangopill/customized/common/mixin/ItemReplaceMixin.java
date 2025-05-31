@@ -1,7 +1,6 @@
 package mangopill.customized.common.mixin;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import mangopill.customized.Customized;
 import mangopill.customized.common.registry.ModAdvancementRegistry;
 import mangopill.customized.common.registry.ModParticleTypeRegistry;
 import mangopill.customized.common.tag.ModTag;
@@ -20,9 +19,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
+import static mangopill.customized.common.registry.ModAdvancementRegistry.getId;
+
 @Mixin(ItemEntity.class)
 public abstract class ItemReplaceMixin{
-    private static final ResourceLocation LOOT_TABLE = new ResourceLocation("gameplay/soiled_seed");
+    private static final ResourceLocation LOOT_TABLE = getId("gameplay/soiled_seed");
     private int life = 200;
     @Inject(at = @At("HEAD"), method = "tick")
     public void customized$itemReplace(CallbackInfo ci) {
