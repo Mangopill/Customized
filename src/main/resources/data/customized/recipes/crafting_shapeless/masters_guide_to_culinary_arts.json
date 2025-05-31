@@ -15,7 +15,7 @@
   "result": {
     "count": 1,
     "item": "patchouli:guide_book",
-    "components": {
+    "nbt": {
       "patchouli:book": "customized:masters_guide_to_culinary_arts"
     }
   }
