@@ -1,6 +1,6 @@
 package mangopill.customized.common.block.entity;
 
-import mangopill.customized.common.block.handler.PotFluidHandler;
+import mangopill.customized.common.block.handler.SaltPanFluidHandler;
 import mangopill.customized.common.registry.ModBlockEntityTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,11 +14,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class SaltPanBlockEntity extends BlockEntity {
-    private final LazyOptional<PotFluidHandler> fluidHandler;
+    private final LazyOptional<SaltPanFluidHandler> fluidHandler;
 
     public SaltPanBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntityTypeRegistry.SALT_PAN.get(), pos, state);
-        this.fluidHandler = LazyOptional.of(() ->  new PotFluidHandler(level, pos));
+        this.fluidHandler = LazyOptional.of(() ->  new SaltPanFluidHandler(level, pos));
     }
 
     @Override
