@@ -296,9 +296,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         }
         cookingTime += 10;
         if (entity instanceof Player player) {
-            itemStackInHand.hurtAndBreak(1, player, (p) -> {
-                    player.broadcastBreakEvent(hand);
-            });
+            itemStackInHand.hurtAndBreak(1, player, (p) -> player.broadcastBreakEvent(hand));
         }
     }
 

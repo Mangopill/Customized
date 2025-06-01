@@ -24,7 +24,7 @@ public class PropertyValueSerializer implements RecipeSerializer<PropertyValueRe
         return new PropertyValueRecipe(name, propertyValue, isItem, id);
     }
 
-    public PropertyValueRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+    public PropertyValueRecipe fromNetwork(@Nonnull ResourceLocation id, FriendlyByteBuf buffer) {
         boolean isItem = buffer.readBoolean();
         HashSet<ResourceLocation> name = new HashSet<>();
         int length = buffer.readVarInt();

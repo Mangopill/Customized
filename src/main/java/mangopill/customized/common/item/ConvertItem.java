@@ -5,13 +5,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nonnull;
+
 public class ConvertItem extends Item {
     public ConvertItem(Properties properties) {
         super(properties);
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
+    public @Nonnull ItemStack finishUsingItem(@Nonnull ItemStack stack, @Nonnull Level level, @Nonnull LivingEntity livingEntity) {
         if (!this.isEdible()) {
             return stack;
         }

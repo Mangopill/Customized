@@ -29,7 +29,7 @@ public class BrewingBarrelSerializer implements RecipeSerializer<BrewingBarrelRe
 
     @Nullable
     @Override
-    public BrewingBarrelRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+    public BrewingBarrelRecipe fromNetwork(@Nonnull ResourceLocation id, FriendlyByteBuf buffer) {
         int ingredientLength = buffer.readVarInt();
         NonNullList<Ingredient> ingredient = NonNullList.withSize(ingredientLength, Ingredient.EMPTY);
         ingredient.replaceAll(i -> Ingredient.fromNetwork(buffer));

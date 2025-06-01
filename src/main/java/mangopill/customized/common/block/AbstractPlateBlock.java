@@ -148,7 +148,7 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
     }
 
     @Override
-    public List<ItemStack> getDrops(@Nonnull BlockState state, @Nonnull LootParams.Builder builder) {
+    public @Nonnull List<ItemStack> getDrops(@Nonnull BlockState state, @Nonnull LootParams.Builder builder) {
         List<ItemStack> drops = super.getDrops(state, builder);
         BlockEntity blockEntity = builder.getParameter(LootContextParams.BLOCK_ENTITY);
         if (blockEntity instanceof AbstractPlateBlockEntity plateEntity) {

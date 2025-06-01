@@ -32,7 +32,7 @@ public class CasseroleSerializer implements RecipeSerializer<CasseroleRecipe> {
 
     @Nullable
     @Override
-    public CasseroleRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+    public CasseroleRecipe fromNetwork(@Nonnull ResourceLocation id, FriendlyByteBuf buffer) {
         int ingredientLength = buffer.readVarInt();
         NonNullList<Ingredient> ingredient = NonNullList.withSize(ingredientLength, Ingredient.EMPTY);
         ingredient.replaceAll(i -> Ingredient.fromNetwork(buffer));
