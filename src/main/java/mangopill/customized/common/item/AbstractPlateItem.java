@@ -94,7 +94,6 @@ public abstract class AbstractPlateItem extends BlockItem {
         }
         ItemStackHandler handler = getItemStackHandler(stack, null);
         ItemStackHandler initialHandler = getInitialItemStackHandler(stack);
-
         int consumptionCount = getConsumptionCount(stack);
         int consumptionCountTotal = getConsumptionCountTotal(stack);
         FoodProperties properties = getFoodProperty(stack);
