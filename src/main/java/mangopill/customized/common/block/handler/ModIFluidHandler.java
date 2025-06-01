@@ -97,7 +97,7 @@ public abstract class ModIFluidHandler<T extends Comparable<T>, V extends T> imp
             return FluidStack.EMPTY;
         } else {
             return fluidStack.getFluid().equals(this.getContent().getFluid())
-                    && fluidStack.isEmpty()
+                    && fluidStack.getTag().isEmpty()
                     && canOutput()
                     && fluidStack.getAmount() >= getContent().getTotalAmount()
                     ? this.drain(fluidAction) : FluidStack.EMPTY;
