@@ -123,7 +123,7 @@ public abstract class AbstractPlateItem extends BlockItem {
 
     public static void plateAdvancement(@Nonnull LivingEntity livingEntity, FoodProperties properties) {
         if (livingEntity instanceof ServerPlayer serverPlayer) {
-            if (properties.equals(FoodValue.INEDIBLE)){
+            if (!properties.canAlwaysEat()){
                 ModAdvancementRegistry.EAT_INEDIBLE_STEW.trigger(serverPlayer);
             } else {
                 ModAdvancementRegistry.EAT_NORMAL_STEW.trigger(serverPlayer);
