@@ -120,7 +120,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         return itemStack;
     }
 
-    public CompoundTag @NotNull [] getFoodPropertyTagWrapper() {
+    public @NotNull CompoundTag[] getFoodPropertyTagWrapper() {
         final CompoundTag[] foodPropertyTagWrapper = new CompoundTag[1];
         DataResult<Tag> encodeResult = FoodProperties.DIRECT_CODEC.encodeStart(NbtOps.INSTANCE, foodProperty);
         encodeResult.result().ifPresent(tag -> {
@@ -221,7 +221,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         ItemStackHandler componentHandler = componentInput
                 .getOrDefault(componentType, ItemStackHandlerRecord.NULL)
                 .itemStackHandler();
-        List<ItemStack> stacks = getItemStackListInSlot(componentHandler, 0, allSlot);
+        List<ItemStack> stacks = getItemStackListInSlot(componentHandler, 0, componentHandler.getSlots());
         stacks.forEach(stack ->
                 insertItem(stack.copy(), itemStackHandler, ingredientInput, seasoningInput, allSlot)
         );
