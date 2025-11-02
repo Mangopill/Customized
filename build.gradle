@@ -51,6 +51,15 @@ minecraft {
 }
 
 repositories {
+    maven {
+        url = "https://libraries.minecraft.net/"
+    }
+    maven {
+        url = "https://neoforged.forgecdn.net/releases"
+    }
+    maven {
+        url = "https://neoforged.forgecdn.net/mojang-meta"
+    }
     // CurseMaven
     exclusiveContent {
         forRepository {

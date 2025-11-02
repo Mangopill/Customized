@@ -28,7 +28,7 @@ public class StressReliefEffect extends ModMobEffect implements ShrinkNutritionM
 
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
-        return duration % (80 / (amplifier + 1)) == 0;
+        return duration % (80 / Math.min(80 , amplifier + 1)) == 0;
     }
 
     @Override

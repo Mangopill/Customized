@@ -28,6 +28,6 @@ public class VitalityEffect extends ModMobEffect {
 
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
-        return duration % (40 / (amplifier + 1)) == 0;
+        return duration % (40 / Math.min(40 , amplifier + 1)) == 0;
     }
 }

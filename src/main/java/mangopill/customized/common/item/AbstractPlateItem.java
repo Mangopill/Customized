@@ -10,7 +10,6 @@ import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.state.PlateState;
 import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.registry.ModAdvancementRegistry;
-import mangopill.customized.common.util.CreateItemStackHandler;
 import mangopill.customized.common.util.ModItemStackHandlerHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

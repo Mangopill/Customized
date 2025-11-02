@@ -36,17 +36,16 @@ public class PotItemHandler implements IItemHandler {
     @Override
     @Nonnull
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        if (side == null || side.equals(Direction.UP)) {
-            return slot < ingredientInput ? itemHandler.insertItem(slot, stack, simulate) : stack;
-        } else {
-            if (slot < seasoningInput + ingredientInput && slot >= ingredientInput){
-                return stack.is(ModTag.SEASONING) ? itemHandler.insertItem(slot, stack, simulate) : stack;
-            }
-            if (slot == seasoningInput + ingredientInput){
-                return stack.is(ModTag.FAMOUS_SPICE) ? itemHandler.insertItem(slot, stack, simulate) : stack;
-            }
+        if (side == null || !side.equals(Direction.UP)) {
             return stack;
         }
+        if (stack.is(ModTag.SEASONING)) {
+            return slot < seasoningInput + ingredientInput && slot >= ingredientInput ? itemHandler.insertItem(slot, stack, simulate) : stack;
+        }
+        if (stack.is(ModTag.FAMOUS_SPICE)) {
+            return slot == seasoningInput + ingredientInput ? itemHandler.insertItem(slot, stack, simulate) : stack;
+        }
+        return slot < ingredientInput ? itemHandler.insertItem(slot, stack, simulate) : stack;
     }
 
     @Override

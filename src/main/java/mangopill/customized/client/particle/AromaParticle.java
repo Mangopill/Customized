@@ -13,10 +13,10 @@ public class AromaParticle extends TextureSheetParticle {
     public AromaParticle(ClientLevel level, double x, double y, double z, double ySpeed) {
         super(level, x, y, z, 0.0, ySpeed, 0.0);
 
-        this.setSize(0.3F, 0.3F); // 设置粒子尺寸
-        this.scale(1.0F); // 设置粒子初始大小
+        this.setSize(0.3F, 0.3F);
+        this.scale(1.0F);
         this.lifetime = this.random.nextInt(40) + 40;
-        this.gravity = 0.0F; // 不受重力影响
+        this.gravity = 0.0F;
     }
 
     @Override

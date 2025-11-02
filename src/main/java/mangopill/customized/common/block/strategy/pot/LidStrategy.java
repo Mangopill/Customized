@@ -15,38 +15,31 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import static mangopill.customized.common.block.state.PotState.WITHOUT_LID;
 
-public class LidStrategy implements PotInteractionStrategy {
-    private final ItemStack lid;
-    private final boolean canInputDrive;
-
-    public LidStrategy(ItemStack lid, boolean canInputDrive) {
-        this.lid = lid;
-        this.canInputDrive = canInputDrive;
-    }
+public record LidStrategy(ItemStack lid, boolean canInputDrive) implements PotInteractionStrategy {
 
     @Override
     public boolean interact(ItemStack itemStackInHand, BlockState state,
-                                          Level level, BlockPos pos,
-                                          Player player, InteractionHand hand,
-                                          BlockHitResult result) {
-        if (itemStackInHand.isEmpty() && state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)){
-            if (canInputDrive){
+                            Level level, BlockPos pos,
+                            Player player, InteractionHand hand,
+                            BlockHitResult result) {
+        if (itemStackInHand.isEmpty() && state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)) {
+            if (canInputDrive) {
                 removeTheLidDrive(state, level, pos, player);
             } else {
                 removeTheLid(state, level, pos, player);
             }
             return true;
         }
-        if (itemStackInHand.is(lid.getItem()) && !state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)){
-           if (canInputDrive){
-               if (state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE)){
-                   addLid(itemStackInHand, state, level, pos, player);
-                   return true;
-               }
-           } else {
-               addLid(itemStackInHand, state, level, pos, player);
-               return true;
-           }
+        if (itemStackInHand.is(lid.getItem()) && !state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)) {
+            if (canInputDrive) {
+                if (state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE)) {
+                    addLid(itemStackInHand, state, level, pos, player);
+                    return true;
+                }
+            } else {
+                addLid(itemStackInHand, state, level, pos, player);
+                return true;
+            }
         }
         return false;
     }
@@ -73,13 +66,5 @@ public class LidStrategy implements PotInteractionStrategy {
             player.drop(lid.copy(), false);
         }
         level.playSound(null, pos, SoundEvents.DECORATED_POT_HIT, SoundSource.BLOCKS, 0.8F, 1.0F);
-    }
-
-    public ItemStack getLid() {
-        return lid;
-    }
-
-    public boolean isCanInputDrive() {
-        return canInputDrive;
     }
 }
