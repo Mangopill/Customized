@@ -15,7 +15,6 @@ import net.minecraft.world.level.material.*;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.CommonHooks;
-import org.jetbrains.annotations.NotNull;
 
 public abstract class TallWaterloggedCropBlock extends BushBlock implements BonemealableBlock, SimpleWaterloggedBlock {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
@@ -36,8 +35,7 @@ public abstract class TallWaterloggedCropBlock extends BushBlock implements Bone
     abstract public int setGrowChance(BlockState blockState, BlockGetter getter, BlockPos pos);
 
     @Override
-    public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level,
-                           @NotNull BlockPos pos, @NotNull RandomSource random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.tick(state, level, pos, random);
         if (level.getRawBrightness(pos.above(), 0) < 6 || !level.isAreaLoaded(pos, 1)) {
             return;
@@ -67,8 +65,7 @@ public abstract class TallWaterloggedCropBlock extends BushBlock implements Bone
     }
 
     @Override
-    public boolean isValidBonemealTarget(@NotNull LevelReader levelReader, @NotNull BlockPos blockPos,
-                                         @NotNull BlockState blockState) {
+    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
         if (isTop(blockState)) {
             return blockState.getValue(AGE) < topMaxAge;
         } else {
@@ -78,14 +75,12 @@ public abstract class TallWaterloggedCropBlock extends BushBlock implements Bone
     }
 
     @Override
-    public boolean isBonemealSuccess(@NotNull Level level, @NotNull RandomSource randomSource,
-                                     @NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+    public boolean isBonemealSuccess(Level level, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
         return true;
     }
 
     @Override
-    public void performBonemeal(@NotNull ServerLevel serverLevel, @NotNull RandomSource randomSource,
-                                @NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+    public void performBonemeal(ServerLevel serverLevel, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
         int bottomAge = blockState.getValue(AGE);
         int newBottomAge = Math.min(bottomAge + Mth.nextInt(randomSource, 1, 3), bottomMaxAge);
         if (!isTop(blockState) && bottomAge < bottomMaxAge) {
@@ -109,13 +104,12 @@ public abstract class TallWaterloggedCropBlock extends BushBlock implements Bone
     }
 
     @Override
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level,
-                                        @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return setShapeByAge()[state.getValue(AGE)];
     }
 
     @Override
-    public boolean canSurvive(@NotNull BlockState state, LevelReader level, @NotNull BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         FluidState fluid = level.getFluidState(pos);
         BlockState stateBelow = level.getBlockState(pos.below());
         if (stateBelow.getBlock() instanceof TallWaterloggedCropBlock && state.getValue(GROW_PLACED)) {
@@ -125,18 +119,18 @@ public abstract class TallWaterloggedCropBlock extends BushBlock implements Bone
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(AGE, BlockStateProperties.WATERLOGGED, GROW_PLACED);
     }
 
     @Override
-    public @NotNull FluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public @NotNull BlockState updateShape(@NotNull BlockState state, @NotNull Direction facing, @NotNull BlockState facingState, @NotNull LevelAccessor level, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         if (state.getValue(BlockStateProperties.WATERLOGGED)) {
             level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }

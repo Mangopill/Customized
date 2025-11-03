@@ -26,6 +26,9 @@
   "spice": {
     "item": "customized:rich_and_nourishing_spice"
   },
+  "container": {
+    "item": "customized:famous_dish_plate"
+  },
   "result": {
     "count": 1,
     "id": "customized:braised_chicken_with_shiitake_mushrooms_soup"

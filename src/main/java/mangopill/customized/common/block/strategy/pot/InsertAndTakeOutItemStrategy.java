@@ -31,15 +31,15 @@ public class InsertAndTakeOutItemStrategy implements PotInteractionStrategy {
                     return true;
                 }
             } else {
-                insert(itemStackInHand, level, pos, potBlockEntity);
+                insert(itemStackInHand, level, pos, potBlockEntity, player);
                 return true;
             }
         }
         return false;
     }
 
-    private void insert(ItemStack itemStackInHand, Level level, BlockPos pos, AbstractPotBlockEntity potBlockEntity) {
-        potBlockEntity.insertItem(itemStackInHand);
+    private void insert(ItemStack itemStackInHand, Level level, BlockPos pos, AbstractPotBlockEntity potBlockEntity, Player player) {
+        potBlockEntity.insertItem(itemStackInHand, player);
         level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT, SoundSource.BLOCKS, 0.8F, 1.0F);
     }
 

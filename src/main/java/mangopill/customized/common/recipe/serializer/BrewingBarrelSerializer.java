@@ -10,17 +10,12 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import org.jetbrains.annotations.NotNull;
 
 public class BrewingBarrelSerializer implements RecipeSerializer<BrewingBarrelRecipe> {
     private static final MapCodec<BrewingBarrelRecipe> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredient").xmap(ingredient -> {
-                        NonNullList<Ingredient> ingredientList = NonNullList.create();
-                        ingredientList.addAll(ingredient);
-                        return ingredientList;
-                    }, ingredient -> ingredient).forGetter(BrewingBarrelRecipe::getIngredientItem),
-                    Ingredient.CODEC_NONEMPTY.fieldOf("container").forGetter(BrewingBarrelRecipe::getContainerItem),
+                    Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredient").xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(BrewingBarrelRecipe::getIngredientItem),
+                    Ingredient.CODEC_NONEMPTY.optionalFieldOf("container", Ingredient.EMPTY).forGetter(BrewingBarrelRecipe::getContainerItem),
                     ItemStack.STRICT_CODEC.fieldOf("result").forGetter(BrewingBarrelRecipe::getOutput),
                     Codec.INT.optionalFieldOf("time", 200).forGetter(BrewingBarrelRecipe::getCookingTime)
             ).apply(instance, BrewingBarrelRecipe::new));
@@ -28,12 +23,12 @@ public class BrewingBarrelSerializer implements RecipeSerializer<BrewingBarrelRe
     public static final StreamCodec<RegistryFriendlyByteBuf, BrewingBarrelRecipe> STREAM_CODEC = StreamCodec.of(BrewingBarrelSerializer::toNetwork, BrewingBarrelSerializer::fromNetwork);
 
     @Override
-    public @NotNull MapCodec<BrewingBarrelRecipe> codec() {
+    public MapCodec<BrewingBarrelRecipe> codec() {
         return CODEC;
     }
 
     @Override
-    public @NotNull StreamCodec<RegistryFriendlyByteBuf, BrewingBarrelRecipe> streamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, BrewingBarrelRecipe> streamCodec() {
         return STREAM_CODEC;
     }
 

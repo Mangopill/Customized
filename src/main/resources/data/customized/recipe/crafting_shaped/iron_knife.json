@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "l": {
+      "tag": "c:dyes/light_blue"
+    },
+    "i": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    "   ",
+    " i ",
+    "il "
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:iron_knife"
+  }
+}

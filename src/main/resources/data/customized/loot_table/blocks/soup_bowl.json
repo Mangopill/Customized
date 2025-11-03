@@ -15,7 +15,9 @@
                 "customized:initial_item_stack_handler",
                 "customized:consumption_count",
                 "customized:consumption_count_total",
-                "minecraft:food"
+                "minecraft:food",
+                "customized:uuid",
+                "customized:advancement_has_progress"
               ],
               "source": "block_entity"
             }

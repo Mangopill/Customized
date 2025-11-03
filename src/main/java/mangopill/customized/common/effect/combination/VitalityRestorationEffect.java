@@ -9,7 +9,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Set;
@@ -19,7 +18,7 @@ import static mangopill.customized.common.util.category.NutrientCategory.*;
 /**
  *This MobEffect grants the player the DAMAGE_RESISTANCE effect upon activation and increases their maximum health.
  */
-public class VitalityRestorationEffect extends ModMobEffect implements ShrinkSaturationMobEffect, CombinationMobEffect {
+public class VitalityRestorationEffect extends CMobEffect implements ShrinkSaturationMobEffect, CombinationMobEffect {
 
     public VitalityRestorationEffect(int color) {
         super(color);
@@ -27,7 +26,7 @@ public class VitalityRestorationEffect extends ModMobEffect implements ShrinkSat
     }
 
     @Override
-    public void onEffectStarted(@NotNull LivingEntity livingEntity, int amplifier) {
+    public void onEffectStarted(LivingEntity livingEntity, int amplifier) {
         if (livingEntity instanceof ServerPlayer player) {
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, (amplifier + 1) * 600, amplifier));
         }

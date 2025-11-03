@@ -19,7 +19,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 
 import static mangopill.customized.common.block.state.PotState.*;
 
@@ -36,9 +35,9 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
     }
 
     @Override
-    public @NotNull ItemInteractionResult useItemOn(
-            @NotNull ItemStack itemStackInHand, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
-            @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult result) {
+    public ItemInteractionResult useItemOn(
+            ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult result) {
         return PotStrategyHandler.getInstance().useByRegistry(this.getDescriptionId(), itemStackInHand, state, level, pos, player, hand, result);
     }
 
@@ -49,7 +48,7 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
     abstract public VoxelShape setShapeWithDrive();
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(BlockStateProperties.WATERLOGGED);
         builder.add(BlockStateProperties.HORIZONTAL_FACING);
@@ -57,12 +56,12 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
     }
 
     @Override
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(LID)){
             case WITHOUT_LID -> setShapeWithoutLid();
             case WITH_LID -> setShapeWithLid();
@@ -71,7 +70,7 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
     }
 
     @Override
-    public @NotNull VoxelShape getCollisionShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(LID)){
             case WITHOUT_LID -> setShapeWithoutLid();
             case WITH_LID -> setShapeWithLid();
@@ -89,12 +88,13 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
     }
 
     @Override
-    public @NotNull FluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public @NotNull BlockState updateShape(@NotNull BlockState state, @NotNull Direction facing, @NotNull BlockState facingState, @NotNull LevelAccessor level, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level,
+                                  BlockPos currentPos, BlockPos facingPos) {
         if (state.getValue(BlockStateProperties.WATERLOGGED)) {
             level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
@@ -102,14 +102,13 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
     }
 
     @Override
-    protected void onRemove(@NotNull BlockState state, @NotNull Level level,
-                            @NotNull BlockPos pos, @NotNull BlockState newState, boolean movedByPiston) {
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (state.getBlock() == newState.getBlock()) {
             return;
         }
         if (level.getBlockEntity(pos) instanceof AbstractPotBlockEntity potBlockEntity) {
             NonNullList<ItemStack> stackNonNullList = NonNullList.create();
-            stackNonNullList.addAll(potBlockEntity.getItemStackListInPot(false, true));
+            stackNonNullList.addAll(potBlockEntity.getItemStackListInPot(true, true));
             Containers.dropContents(level, pos, stackNonNullList);
             level.updateNeighbourForOutputSignal(pos, this);
         }

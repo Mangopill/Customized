@@ -14,7 +14,7 @@ import static mangopill.customized.common.util.category.NutrientCategory.*;
 /**
  *This MobEffect can increase the player's attack speed, movement speed, and mining speed.
  */
-public class CalorieBurnEffect extends ModMobEffect implements ShrinkNutritionMobEffect, CombinationMobEffect {
+public class CalorieBurnEffect extends CMobEffect implements ShrinkNutritionMobEffect, CombinationMobEffect {
 
     public CalorieBurnEffect(int color) {
         super(color);

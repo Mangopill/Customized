@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "f": {
+      "tag": "minecraft:wooden_fences"
+    }
+  },
+  "pattern": [
+    "fsf",
+    "s s",
+    "fsf"
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:crate"
+  }
+}

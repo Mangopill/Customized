@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "w": {
+      "tag": "c:rods/wooden"
+    },
+    "p": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "   ",
+    " p ",
+    "w  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:wooden_knife"
+  }
+}

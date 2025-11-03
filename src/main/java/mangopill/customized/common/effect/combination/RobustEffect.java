@@ -1,7 +1,7 @@
 package mangopill.customized.common.effect.combination;
 
 import mangopill.customized.common.effect.CombinationMobEffect;
-import mangopill.customized.common.effect.ModMobEffect;
+import mangopill.customized.common.effect.CMobEffect;
 import mangopill.customized.common.util.category.NutrientCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -10,7 +10,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Set;
@@ -20,7 +19,7 @@ import static mangopill.customized.common.util.category.NutrientCategory.*;
 /**
  *This MobEffect can increase MAX_HEALTH, ATTACK_DAMAGE, and grant DAMAGE_RESISTANCE.
  */
-public class RobustEffect extends ModMobEffect implements CombinationMobEffect {
+public class RobustEffect extends CMobEffect implements CombinationMobEffect {
 
     public RobustEffect(int color) {
         super(color);
@@ -29,7 +28,7 @@ public class RobustEffect extends ModMobEffect implements CombinationMobEffect {
     }
 
     @Override
-    public void onEffectStarted(@NotNull LivingEntity livingEntity, int amplifier) {
+    public void onEffectStarted(LivingEntity livingEntity, int amplifier) {
         if (livingEntity instanceof ServerPlayer player) {
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, (amplifier + 1) * 500, amplifier));
         }

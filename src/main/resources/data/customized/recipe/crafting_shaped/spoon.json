@@ -9,7 +9,7 @@
       "tag": "c:dyes/white"
     },
     "i": {
-      "item": "minecraft:iron_ingot"
+      "tag": "c:ingots/iron"
     }
   },
   "pattern": [

@@ -1,8 +1,8 @@
 package mangopill.customized.common.recipe;
 
 import com.google.common.collect.ImmutableSet;
-import mangopill.customized.common.registry.ModRecipeRegistry;
-import mangopill.customized.common.registry.ModRecipeSerializerRegistry;
+import mangopill.customized.common.registry.CRecipeRegistry;
+import mangopill.customized.common.registry.CRecipeSerializerRegistry;
 import mangopill.customized.common.util.value.PropertyValue;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -11,11 +11,10 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public record PropertyValueRecipe(Set<ResourceLocation> name, PropertyValue propertyValue, boolean item) implements ModRecipeInterface<RecipeInput> {
+public record PropertyValueRecipe(Set<ResourceLocation> name, PropertyValue propertyValue, boolean item) implements CRecipeInterface<RecipeInput> {
 
     public PropertyValueRecipe(Set<ResourceLocation> name, PropertyValue propertyValue, boolean item) {
         this.name = ImmutableSet.copyOf(name);
@@ -24,7 +23,7 @@ public record PropertyValueRecipe(Set<ResourceLocation> name, PropertyValue prop
     }
 
     @Override
-    public boolean matches(RecipeInput input, @NotNull Level level) {
+    public boolean matches(RecipeInput input, Level level) {
         ItemStack stack = input.getItem(0);
         return item ?
                 name.stream().anyMatch(name -> name.equals(BuiltInRegistries.ITEM.getKey(stack.getItem()))) :
@@ -37,24 +36,22 @@ public record PropertyValueRecipe(Set<ResourceLocation> name, PropertyValue prop
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registries) {
+    public ItemStack getResultItem(HolderLookup.Provider registries) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull RecipeInput input, HolderLookup.@NotNull Provider registries) {
+    public ItemStack assemble(RecipeInput input, HolderLookup.Provider registries) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    @NotNull
     public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializerRegistry.PROPERTY_VALUE.get();
+        return CRecipeSerializerRegistry.PROPERTY_VALUE.get();
     }
 
     @Override
-    @NotNull
     public RecipeType<?> getType() {
-        return ModRecipeRegistry.PROPERTY_VALUE.get();
+        return CRecipeRegistry.PROPERTY_VALUE.get();
     }
 }

@@ -1,57 +1,28 @@
 package mangopill.customized.common.block.handler;
 
-import net.minecraft.core.Direction;
+import mangopill.customized.common.block.entity.BrewingBarrelBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
-import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
+import java.util.List;
 
-public class BrewingBarrelItemHandler implements IItemHandler {
-    private final int inputSlot;
-    private final IItemHandler itemHandler;
-    private final Direction side;
+import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 
-    public BrewingBarrelItemHandler(IItemHandler itemHandler, @Nullable Direction side, int inputSlot) {
-        this.inputSlot = inputSlot;
-        this.itemHandler = itemHandler;
-        this.side = side;
+public class BrewingBarrelItemHandler extends CIItemHandler<BrewingBarrelBlockEntity> {
+    public BrewingBarrelItemHandler(BrewingBarrelBlockEntity entity, IItemHandler itemHandler) {
+        super(entity, itemHandler);
     }
 
     @Override
-    public int getSlots() {
-        return itemHandler.getSlots();
-    }
-
-    @Override
-    @NotNull
-    public ItemStack getStackInSlot(int slot) {
-        return itemHandler.getStackInSlot(slot);
-    }
-
-    @Override
-    @NotNull
-    public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-        return slot < inputSlot ? itemHandler.insertItem(slot, stack, simulate) : stack;
-    }
-
-    @Override
-    @NotNull
-    public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        if (side == null || side.equals(Direction.UP)) {
-            return slot < inputSlot ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
-        } else {
-            return slot == inputSlot ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+    public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+        if (containsSameItem(List.of(getEntity().getContainerItem().getItems()), stack)) {
+            return slot == getEntity().getInputSlot() ? getItemHandler().insertItem(slot, stack, simulate) : stack;
         }
+        return slot < getEntity().getInputSlot() ? getItemHandler().insertItem(slot, stack, simulate) : stack;
     }
 
     @Override
-    public int getSlotLimit(int slot) {
-        return itemHandler.getSlotLimit(slot);
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-        return itemHandler.isItemValid(slot, stack);
+    public ItemStack extractItem(int slot, int amount, boolean simulate) {
+        return slot == getEntity().getInputSlot() ? getItemHandler().extractItem(slot, amount, simulate) : ItemStack.EMPTY;
     }
 }

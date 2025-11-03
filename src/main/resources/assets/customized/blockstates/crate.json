@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "customized:block/crate"
+    },
+    "facing=south": {
+      "model": "customized:block/crate",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "customized:block/crate",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "customized:block/crate",
+      "y": 90
+    },
+    "facing=up": {
+      "model": "customized:block/crate",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "customized:block/crate",
+      "x": 90
+    }
+  }
+}

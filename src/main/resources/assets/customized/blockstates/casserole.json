@@ -1,49 +1,49 @@
 {
   "variants": {
     "facing=north,lid=with_lid": {
-      "model": "customized:block/casserole_with_lid"
+      "model": "customized:block/casserole_with_lid",
+      "y": 90
     },
     "facing=south,lid=with_lid": {
       "model": "customized:block/casserole_with_lid",
-      "y": 180
+      "y": 270
     },
     "facing=west,lid=with_lid": {
-      "model": "customized:block/casserole_with_lid",
-      "y": 270
+      "model": "customized:block/casserole_with_lid"
     },
     "facing=east,lid=with_lid": {
       "model": "customized:block/casserole_with_lid",
-      "y": 90
+      "y": 180
     },
     "facing=north,lid=without_lid": {
-      "model": "customized:block/casserole_without_lid"
+      "model": "customized:block/casserole_without_lid",
+      "y": 90
     },
     "facing=south,lid=without_lid": {
       "model": "customized:block/casserole_without_lid",
-      "y": 180
+      "y": 270
     },
     "facing=west,lid=without_lid": {
-      "model": "customized:block/casserole_without_lid",
-      "y": 270
+      "model": "customized:block/casserole_without_lid"
     },
     "facing=east,lid=without_lid": {
       "model": "customized:block/casserole_without_lid",
-      "y": 90
+      "y": 180
     },
     "facing=north,lid=with_drive": {
-      "model": "customized:block/casserole_with_drive"
+      "model": "customized:block/casserole_with_drive",
+      "y": 90
     },
     "facing=south,lid=with_drive": {
       "model": "customized:block/casserole_with_drive",
-      "y": 180
+      "y": 270
     },
     "facing=west,lid=with_drive": {
-      "model": "customized:block/casserole_with_drive",
-      "y": 270
+      "model": "customized:block/casserole_with_drive"
     },
     "facing=east,lid=with_drive": {
       "model": "customized:block/casserole_with_drive",
-      "y": 90
+      "y": 180
     }
   }
 }

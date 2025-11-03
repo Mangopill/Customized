@@ -7,7 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class PotFluidHandler extends ModIFluidHandler<PotState, PotState> {
+public class PotFluidHandler extends CIFluidHandler<PotState, PotState> {
 
     public PotFluidHandler(Level level, BlockPos pos) {
         super(level, pos);

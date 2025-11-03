@@ -5,7 +5,7 @@ import mangopill.customized.common.effect.ShrinkNutritionMobEffect;
 import mangopill.customized.common.effect.ShrinkSaturationMobEffect;
 import mangopill.customized.common.effect.CombinationMobEffect;
 import mangopill.customized.common.recipe.PropertyValueRecipe;
-import mangopill.customized.common.registry.ModRecipeRegistry;
+import mangopill.customized.common.registry.CRecipeRegistry;
 import mangopill.customized.common.util.category.NutrientCategory;
 import mangopill.customized.common.util.value.*;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +17,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
@@ -26,15 +25,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static mangopill.customized.common.CustomizedConfig.*;
-import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.value.NutrientBuff.*;
 
 public final class PropertyValueUtil {
     private PropertyValueUtil() {
     }
-    @NotNull
+
     public static PropertyValue getPropertyValue(ItemStack stack, Level level) {
-        List<RecipeHolder<PropertyValueRecipe>> recipeHolder = level.getRecipeManager().getRecipesFor(ModRecipeRegistry.PROPERTY_VALUE.get(), new SingleRecipeInput(stack), level);
+        List<RecipeHolder<PropertyValueRecipe>> recipeHolder = level.getRecipeManager().getRecipesFor(CRecipeRegistry.PROPERTY_VALUE.get(), new SingleRecipeInput(stack), level);
         if (recipeHolder.isEmpty()) {
             return new PropertyValue();
         }
@@ -67,7 +66,7 @@ public final class PropertyValueUtil {
     }
 
     public static FoodProperties getFoodPropertyByPropertyValue(Level level, List<ItemStack> stackList, boolean shardByConsumption) {
-        if (stackList == null || stackList.isEmpty()) {
+        if (stackList.isEmpty()) {
             return FoodValue.NULL;
         }
         Map<NutrientCategory, Float> nutrientTotal = new EnumMap<>(NutrientCategory.class);
@@ -78,7 +77,7 @@ public final class PropertyValueUtil {
         int nutritionValue = 0;
         float saturationValue = 0.0F;
         for (ItemStack stack : stackList) {
-            @NotNull PropertyValue propertyValue = getPropertyValue(stack, level);
+            PropertyValue propertyValue = getPropertyValue(stack, level);
             FoodProperties food = stack.getFoodProperties(null);
             if (food != null) {
                 if (!food.effects().isEmpty()) {
@@ -171,7 +170,7 @@ public final class PropertyValueUtil {
         return foodEffect;
     }
 
-    public static @NotNull Map<NutrientCategory, Float> getFilteredNutrientTotal(Map<NutrientCategory, Float> nutrientTotal) {
+    public static Map<NutrientCategory, Float> getFilteredNutrientTotal(Map<NutrientCategory, Float> nutrientTotal) {
         return nutrientTotal.entrySet().stream()
                 .filter(entry -> entry.getValue() > 0.0F)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -222,7 +221,7 @@ public final class PropertyValueUtil {
         }
     }
 
-    public static void addBuffToList(float nutrientValue, List<FoodProperties.PossibleEffect> foodEffect, NutrientBuff nutrientBuff) {
+    public static void addBuffToList(float nutrientValue, List<FoodProperties.PossibleEffect> foodEffect, @Nullable NutrientBuff nutrientBuff) {
         if (nutrientBuff == null){
             return;
         }
@@ -232,7 +231,8 @@ public final class PropertyValueUtil {
                 () -> new MobEffectInstance(nutrientBuff.getEffect(), duration, Math.min((int) (nutrientValue / BUFF_AMPLIFIER.get()), 9)), Math.min(probability, 1.0F)));
     }
 
-    public static @Nullable NutrientBuff getNormalBuff(NutrientCategory category){
+    @Nullable
+    public static NutrientBuff getNormalBuff(NutrientCategory category){
         return switch (category) {
             case COLD -> ICED;
             case WARM -> WARM_STOMACH;
@@ -240,7 +240,8 @@ public final class PropertyValueUtil {
         };
     }
 
-    public static @Nullable NutrientBuff getPowerfulBuff(NutrientCategory category){
+    @Nullable
+    public static NutrientBuff getPowerfulBuff(NutrientCategory category){
         return switch (category) {
             case ECOLOGY -> VITALITY;
             case DREAD -> ANTIDOTE;

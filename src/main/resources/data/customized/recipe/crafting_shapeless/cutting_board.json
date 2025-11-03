@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "minecraft:logs"
+    },
+    {
+      "tag": "c:tools/knife"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:cutting_board"
+  }
+}

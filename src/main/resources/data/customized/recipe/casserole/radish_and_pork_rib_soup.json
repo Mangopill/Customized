@@ -29,6 +29,9 @@
   "spice": {
     "item": "customized:light_and_fresh_aromatic_spice"
   },
+  "container": {
+    "item": "customized:famous_dish_plate"
+  },
   "result": {
     "count": 1,
     "id": "customized:radish_and_pork_rib_soup"

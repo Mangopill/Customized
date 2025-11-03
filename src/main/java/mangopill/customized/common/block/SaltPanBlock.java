@@ -1,6 +1,6 @@
 package mangopill.customized.common.block;
 
-import mangopill.customized.common.registry.ModItemRegistry;
+import mangopill.customized.common.registry.CItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
-import org.jetbrains.annotations.NotNull;
 
 public class SaltPanBlock extends Block {
     public static final BooleanProperty WITH_WATER = BooleanProperty.create("with_water");
@@ -42,10 +41,8 @@ public class SaltPanBlock extends Block {
     }
 
     @Override
-    @NotNull
-    public ItemInteractionResult useItemOn(
-            @NotNull ItemStack itemStackInHand, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
-            @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult result) {
+    public ItemInteractionResult useItemOn(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player,
+                                           InteractionHand hand, BlockHitResult result) {
         if (level.isClientSide){
             return ItemInteractionResult.SUCCESS;
         }
@@ -72,42 +69,42 @@ public class SaltPanBlock extends Block {
     }
 
     @Override
-    protected void tick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
+    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!level.canSeeSky(pos) || !level.isDay() || state.getValue(WITH_WATER).equals(false)) {
             level.scheduleTick(pos, this, Math.max(10000, RandomSource.create().nextInt(13000)));
             return;
         }
         level.setBlockAndUpdate(pos, state.setValue(WITH_WATER, false));
         ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY() + 0.5D, pos.getZ(),
-                ModItemRegistry.SALT.get().getDefaultInstance());
+                CItemRegistry.SALT.get().getDefaultInstance());
         itemEntity.setDeltaMovement(0.0D, 0.01D, 0.0D);
         level.addFreshEntity(itemEntity);
     }
 
     @Override
-    public void onPlace(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState oldState, boolean isMoving) {
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         level.scheduleTick(pos, this, Math.max(10000, RandomSource.create().nextInt(13000)));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(BlockStateProperties.HORIZONTAL_FACING);
         builder.add(WITH_WATER);
     }
 
     @Override
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    public BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState()
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection())
                 .setValue(WITH_WATER, false);

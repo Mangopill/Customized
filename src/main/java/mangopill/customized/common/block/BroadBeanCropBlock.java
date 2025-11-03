@@ -1,7 +1,7 @@
 package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
-import mangopill.customized.common.registry.ModItemRegistry;
+import mangopill.customized.common.registry.CItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 
 public class BroadBeanCropBlock extends CropBlock {
     public static final MapCodec<BroadBeanCropBlock> CODEC = simpleCodec(BroadBeanCropBlock::new);
@@ -27,7 +26,7 @@ public class BroadBeanCropBlock extends CropBlock {
     };
 
     @Override
-    public @NotNull MapCodec<BroadBeanCropBlock> codec() {
+    public MapCodec<BroadBeanCropBlock> codec() {
         return CODEC;
     }
 
@@ -36,13 +35,12 @@ public class BroadBeanCropBlock extends CropBlock {
     }
 
     @Override
-    protected @NotNull ItemLike getBaseSeedId() {
-        return ModItemRegistry.BROAD_BEAN.get();
+    protected ItemLike getBaseSeedId() {
+        return CItemRegistry.BROAD_BEAN.get();
     }
 
     @Override
-    protected @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level,
-                                           @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE_BY_AGE[this.getAge(state)];
     }
 }

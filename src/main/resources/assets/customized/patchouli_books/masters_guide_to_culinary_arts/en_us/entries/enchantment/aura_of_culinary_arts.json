@@ -1,0 +1,16 @@
+{
+    "name": "enchantment.customized.aura_of_culinary_arts",
+    "icon": "minecraft:enchanted_book",
+    "category": "customized:enchantment",
+    "advancement": "customized:master_of_culinary_arts",
+    "pages": [
+        {
+            "type": "patchouli:spotlight",
+            "item": {
+                "item": "minecraft:enchanted_book"
+            },
+            "text": "patchouli.entry.aura_of_culinary_arts.pages.1.text",
+            "title": "enchantment.customized.aura_of_culinary_arts"
+        }
+    ]
+}

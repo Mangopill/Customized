@@ -4,8 +4,8 @@ import com.mojang.serialization.MapCodec;
 import mangopill.customized.common.block.entity.CasseroleBlockEntity;
 import mangopill.customized.common.block.record.PotRecord;
 import mangopill.customized.common.block.state.PotState;
-import mangopill.customized.common.registry.ModItemRegistry;
-import mangopill.customized.common.registry.ModSoundRegistry;
+import mangopill.customized.common.registry.CItemRegistry;
+import mangopill.customized.common.registry.CSoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -21,11 +21,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.block.state.PotState.WITH_LID;
 
 public class CasseroleBlock extends AbstractPotBlock{
@@ -71,29 +71,29 @@ public class CasseroleBlock extends AbstractPotBlock{
     }
 
     @Override
-    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public void animateTick(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull RandomSource random) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof CasseroleBlockEntity cookingPotEntity && cookingPotEntity.isHeated() && !state.getValue(LID).equals(PotState.WITHOUT_LID)) {
             double x = (double) pos.getX() + 0.4D;
             double y = pos.getY();
             double z = (double) pos.getZ() + 0.4D;
-            if (random.nextInt(8) == 0) {
+            if (random.nextInt(8) == 0 && CASSEROLE_SOUND.get()) {
                 SoundEvent sound = state.getValue(LID).equals(PotState.WITH_LID)
-                        ? ModSoundRegistry.BOILING_WATER_WITH_LID.get()
-                        : ModSoundRegistry.BOILING_WATER_WITHOUT_LID.get();
-                level.playLocalSound(x, y, z, sound, SoundSource.BLOCKS, random.nextFloat() * 0.4F + 0.3F, 0.8F, false);
+                        ? CSoundRegistry.BOILING_WATER_WITH_LID.get()
+                        : CSoundRegistry.BOILING_WATER_WITHOUT_LID.get();
+                level.playLocalSound(x, y, z, sound, SoundSource.BLOCKS, random.nextFloat() * 0.6F, 0.8F, false);
             }
         }
     }
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> blockEntityType) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         if (!state.getValue(LID).equals(PotState.WITHOUT_LID)){
             if (level.isClientSide) {
                 return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::animationTick);
@@ -105,32 +105,32 @@ public class CasseroleBlock extends AbstractPotBlock{
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return PotRecord.CASSEROLE.entityType().create(pos, state);
     }
 
     @Override
-    public @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootParams.@NotNull Builder builder) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         if (state.getValue(LID).equals(WITH_LID)){
             List<ItemStack> getDrops = super.getDrops(state,builder);
-            getDrops.add(new ItemStack(ModItemRegistry.CASSEROLE_ILD.get()));
+            getDrops.add(new ItemStack(CItemRegistry.CASSEROLE_ILD.get()));
             return getDrops;
         }
         return super.getDrops(state,builder);
     }
 
     @Override
-    public @NotNull VoxelShape setShapeWithoutLid() {
+    public VoxelShape setShapeWithoutLid() {
         return BLOCK_SHAPE_WITHOUT_LID;
     }
 
     @Override
-    public @NotNull VoxelShape setShapeWithLid() {
+    public VoxelShape setShapeWithLid() {
         return BLOCK_SHAPE_WITH_LID;
     }
 
     @Override
-    public @NotNull VoxelShape setShapeWithDrive() {
+    public VoxelShape setShapeWithDrive() {
         return BLOCK_SHAPE_WITHOUT_LID;
     }
 }

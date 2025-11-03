@@ -1,7 +1,8 @@
 package mangopill.customized.common.block.entity;
 
 import mangopill.customized.common.block.record.PotRecord;
-import mangopill.customized.common.registry.ModParticleTypeRegistry;
+import mangopill.customized.common.item.AbstractPlateItem;
+import mangopill.customized.common.registry.CParticleTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
@@ -10,7 +11,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class CasseroleBlockEntity extends AbstractPotBlockEntity{
     public CasseroleBlockEntity(BlockPos pos, BlockState blockState) {
-        super(PotRecord.CASSEROLE.entityType(), pos, blockState, PotRecord.CASSEROLE.ingredientCount(), PotRecord.CASSEROLE.seasoningCount(), PotRecord.CASSEROLE.potCheck());
+        super(PotRecord.CASSEROLE.entityType(), pos, blockState, PotRecord.CASSEROLE.ingredientCount(), PotRecord.CASSEROLE.seasoningCount(), PotRecord.CASSEROLE.spiceCount(), PotRecord.CASSEROLE.potCheck());
+    }
+
+    @Override
+    public AbstractPlateItem getPlateItem() {
+        return PotRecord.CASSEROLE.plateItem();
     }
 
     @Override
@@ -26,7 +32,7 @@ public class CasseroleBlockEntity extends AbstractPotBlockEntity{
             double x = (double) pos.getX() + 0.4D + (random.nextDouble() * 0.6D - 0.2D);
             double y = (double) pos.getY() + 0.4D;
             double z = (double) pos.getZ() + 0.4D + (random.nextDouble() * 0.6D - 0.2D);
-            level.addParticle(ModParticleTypeRegistry.STEAM.get(), x, y, z, 0.0D, 0.0D, 0.0D);
+            level.addParticle(CParticleTypeRegistry.STEAM.get(), x, y, z, 0.0D, 0.0D, 0.0D);
         }
     }
 }

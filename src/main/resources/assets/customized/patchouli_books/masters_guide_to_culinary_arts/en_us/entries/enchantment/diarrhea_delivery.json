@@ -1,0 +1,16 @@
+{
+    "name": "enchantment.customized.diarrhea_delivery",
+    "icon": "minecraft:enchanted_book",
+    "category": "customized:enchantment",
+    "advancement": "customized:master_of_culinary_arts",
+    "pages": [
+        {
+            "type": "patchouli:spotlight",
+            "item": {
+                "item": "minecraft:enchanted_book"
+            },
+            "text": "patchouli.entry.diarrhea_delivery.pages.1.text",
+            "title": "enchantment.customized.diarrhea_delivery"
+        }
+    ]
+}

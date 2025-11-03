@@ -2,8 +2,11 @@ package mangopill.customized.common.util;
 
 import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
-import mangopill.customized.common.registry.ModDataComponentRegistry;
+import mangopill.customized.common.item.KnifeItem;
+import mangopill.customized.common.item.ModHatItem;
+import mangopill.customized.common.registry.CDataComponentRegistry;
 import mangopill.customized.common.util.record.ItemStackHandlerRecord;
+import net.minecraft.core.Holder;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Recipe;
@@ -19,8 +22,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.function.Supplier;
 
-import static mangopill.customized.common.registry.ModItemRegistry.CREATIVE_MODE_TAB;
-import static mangopill.customized.common.registry.ModItemRegistry.ITEM;
+import static mangopill.customized.common.registry.CItemRegistry.*;
 
 public final class RegistryUtil {
     private RegistryUtil() {
@@ -31,7 +33,7 @@ public final class RegistryUtil {
 
     public static Item.Properties basicPlateItemProperties(int slot) {
         return basicItemProperties().stacksTo(1).food(FoodValue.NULL)
-                .component(ModDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(new ItemStackHandler(slot)));
+                .component(CDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(new ItemStackHandler(slot)));
     }
 
     public static Supplier<Item> basicItem() {
@@ -56,6 +58,14 @@ public final class RegistryUtil {
 
     public static Supplier<Item> foodSeedItem(Supplier<Block> supplier, FoodProperties foodProperties) {
         return itemNameBlockItem(supplier, basicItemProperties().food(foodProperties));
+    }
+
+    public static Supplier<Item> modKnifeItem(Tier tier, float chanceLevel) {
+        return () -> new KnifeItem(tier, new Item.Properties().attributes(SwordItem.createAttributes(tier, 1.5F, -2.1F)), chanceLevel);
+    }
+
+    public static Supplier<Item> modHatItem(Holder<ArmorMaterial> material, Rarity rarity, int durabilityFactor, double translateY, float scale) {
+        return () -> new ModHatItem(material, ArmorItem.Type.HELMET, basicItemProperties().durability(net.minecraft.world.item.ArmorItem.Type.HELMET.getDurability(durabilityFactor)).rarity(rarity), translateY, scale);
     }
 
     public static Block.Properties cropBlockProperties() {

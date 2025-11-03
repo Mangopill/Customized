@@ -3,16 +3,15 @@ package mangopill.customized.common.item;
 import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.AbstractPlateBlock;
-import mangopill.customized.common.block.AbstractPotBlock;
 import mangopill.customized.common.block.entity.AbstractPlateBlockEntity;
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.state.PlateState;
-import mangopill.customized.common.block.state.PotState;
-import mangopill.customized.common.registry.ModAdvancementRegistry;
-import mangopill.customized.common.util.ModItemStackHandlerHelper;
+import mangopill.customized.common.registry.CAdvancementRegistry;
+import mangopill.customized.common.util.CItemStackHandlerHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -33,29 +32,30 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Supplier;
 
-import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.PlateComponentUtil.*;
-import static mangopill.customized.common.util.PropertyValueUtil.*;
+import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.component.PlateComponentUtil.*;
 
 public abstract class AbstractPlateItem extends BlockItem {
     private final int ingredientInput;
     private final int seasoningInput;
+    private final int spiceInput;
     private final boolean canInputDrive;
 
-    public AbstractPlateItem(Block block, Properties properties, int ingredientInput, int seasoningInput, boolean canInputDrive) {
-        super(block, properties);
+    public AbstractPlateItem(Supplier<Block> block, Properties properties, int ingredientInput, int seasoningInput, int spiceInput, boolean canInputDrive) {
+        super(block.get(), properties);
         this.ingredientInput = ingredientInput;
         this.seasoningInput = seasoningInput;
+        this.spiceInput = spiceInput;
         this.canInputDrive = canInputDrive;
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, Item.@NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".consumption_count_total", getConsumptionCountTotal(stack)).withStyle(ChatFormatting.GRAY));
         tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".consumption_count", getConsumptionCount(stack)).withStyle(ChatFormatting.GRAY));
@@ -63,11 +63,12 @@ public abstract class AbstractPlateItem extends BlockItem {
         if (getFoodProperty(stack).equals(FoodValue.INEDIBLE)) {
             tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".inedible").withStyle(ChatFormatting.DARK_RED));
         }
+        addUuidTooltip(stack, tooltipComponents, context);
         addEffectTooltip(stack, context, tooltipComponents);
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack itemstack = player.getItemInHand(usedHand);
         if (level.isClientSide) {
             return InteractionResultHolder.success(itemstack);
@@ -79,7 +80,7 @@ public abstract class AbstractPlateItem extends BlockItem {
     }
 
     @Override
-    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity livingEntity) {
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         if (level.isClientSide) {
             return stack;
         }
@@ -108,44 +109,33 @@ public abstract class AbstractPlateItem extends BlockItem {
         return stack;
     }
 
-    public static void plateAdvancement(@NotNull LivingEntity livingEntity, FoodProperties properties) {
+    public static void plateAdvancement(LivingEntity livingEntity, FoodProperties properties) {
         if (livingEntity instanceof ServerPlayer serverPlayer) {
             if (properties.equals(FoodValue.INEDIBLE)){
-                ModAdvancementRegistry.EAT_INEDIBLE_STEW.get().trigger(serverPlayer);
+                CAdvancementRegistry.EAT_INEDIBLE_STEW.get().trigger(serverPlayer);
             } else {
-                ModAdvancementRegistry.EAT_NORMAL_STEW.get().trigger(serverPlayer);
+                CAdvancementRegistry.EAT_NORMAL_STEW.get().trigger(serverPlayer);
             }
         }
     }
 
     @Override
-    public FoodProperties getFoodProperties(@NotNull ItemStack stack, @Nullable LivingEntity entity) {
+    public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
         return getFoodProperty(stack);
     }
 
     @Override
-    public @NotNull InteractionResult useOn(@NotNull UseOnContext context) {
+    public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        ItemStack itemInHand = context.getItemInHand();
         Player player = context.getPlayer();
-        BlockPos pos = context.getClickedPos();
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        AbstractPotBlockEntity potEntity = getPotEntity(level, pos);
-        BlockState state = level.getBlockState(pos);
         if (level.isClientSide || player == null) {
             return InteractionResult.SUCCESS;
-        }
-        if (blockEntity != null && blockEntity.equals(potEntity) && player.isShiftKeyDown()) {
-            if (!state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE) || !potEntity.isHeated()){
-                return InteractionResult.PASS;
-            }
-            return getInteractionResult(getPotEntity(level, pos), itemInHand, level, player);
         }
         return player.isShiftKeyDown() ? super.useOn(context) : use(level, player, context.getHand()).getResult();
     }
 
     @Override
-    public @NotNull InteractionResult place(@NotNull BlockPlaceContext context) {
+    public InteractionResult place(BlockPlaceContext context) {
         super.place(context);
         BlockPos pos = context.getClickedPos();
         BlockState state = context.getLevel().getBlockState(pos);
@@ -160,55 +150,42 @@ public abstract class AbstractPlateItem extends BlockItem {
     }
 
     @Override
-    public boolean isBarVisible(@NotNull ItemStack stack) {
+    public boolean isBarVisible(ItemStack stack) {
         return getConsumptionCountTotal(stack) > 0;
     }
 
     @Override
-    public int getBarWidth(@NotNull ItemStack stack) {
+    public int getBarWidth(ItemStack stack) {
         int consumptionCount = getConsumptionCount(stack);
         int consumptionCountTotal = getConsumptionCountTotal(stack);
         return (int) Math.ceil((double) consumptionCount / consumptionCountTotal * 13);
     }
 
     @Override
-    public int getBarColor(@NotNull ItemStack stack) {
+    public int getBarColor(ItemStack stack) {
         return 5592575;
     }
 
     @Override
-    public @NotNull Component getName(@NotNull ItemStack stack) {
+    public Component getName(ItemStack stack) {
         List<ItemStack> stackList = getItemStackListInPlate(stack, false);
         List<ItemStack> topTwoItems = getTopTwoItemsByCount(stackList);
         if (topTwoItems.size() == 1) {
             ItemStack aStack = getTopTwoItemsByCount(stackList).getFirst();
-            return Component.translatable("").append(aStack.getDisplayName())
+            return Component.empty().append(aStack.getDisplayName())
                     .append(":").append(Component.translatable(this.getDescriptionId(stack) + "_food"));
         }
         if (topTwoItems.size() == 2) {
             ItemStack aStack = getTopTwoItemsByCount(stackList).getFirst();
             ItemStack bStack = getTopTwoItemsByCount(stackList).get(1);
-            return Component.translatable("").append(aStack.getDisplayName()).append("&").append(bStack.getDisplayName())
+            return Component.empty().append(aStack.getDisplayName()).append("&").append(bStack.getDisplayName())
                     .append(":").append(Component.translatable(this.getDescriptionId(stack) + "_food"));
         }
         return Component.translatable(this.getDescriptionId(stack));
     }
 
-    private InteractionResult getInteractionResult(AbstractPotBlockEntity potBlockEntity, ItemStack itemInHand, Level level, Player player) {
-        List<ItemStack> stackList = potBlockEntity.getItemStackListInPot(false, true);
-        ItemStackHandler newItemStackHandler = copyItemStackHandlerByComponent(itemInHand);
-        spawnUsingConvertsTo(player, stackList);
-        stackList.forEach(itemStack -> insertItem(itemStack, newItemStackHandler));
-        List<ItemStack> newStackList = getItemStackListInSlot(newItemStackHandler, 0, newItemStackHandler.getSlots());
-        ItemStackHandler initialItemStackHandler = new ItemStackHandler(newItemStackHandler.getSlots());
-        newStackList.forEach(itemStack -> insertItem(itemStack.copy(), initialItemStackHandler));
-        potBlockEntity.itemStackHandlerChanged();
-        updateAll(itemInHand, newItemStackHandler, initialItemStackHandler, getFoodPropertyByPropertyValue(level, newStackList, true), getConsumptionCount(newStackList), getConsumptionCount(newStackList));
-        return InteractionResult.SUCCESS;
-    }
-
     public void insertItem(ItemStack stack, ItemStackHandler newItemStackHandler) {
-        ModItemStackHandlerHelper.insertItem(stack, newItemStackHandler, ingredientInput, seasoningInput, 1);
+        CItemStackHandlerHelper.insertItem(stack, newItemStackHandler, ingredientInput, seasoningInput, spiceInput, 0, null);
     }
 
     public ItemStackHandler copyItemStackHandlerByComponent(ItemStack stack){
@@ -218,15 +195,15 @@ public abstract class AbstractPlateItem extends BlockItem {
     }
 
     public boolean hasInput(ItemStack stack) {
-        return ModItemStackHandlerHelper.hasInput(getItemStackHandler(stack), getItemStackHandler(stack).getSlots());
+        return CItemStackHandlerHelper.hasInput(getItemStackHandler(stack), getItemStackHandler(stack).getSlots());
     }
 
     public List<ItemStack> getItemStackListInPlate(ItemStack stack, boolean includeSeasoningAndSpice) {
-        return includeSeasoningAndSpice ? ModItemStackHandlerHelper.getItemStackListInSlot(getItemStackHandler(stack), 0, getItemStackHandler(stack).getSlots()) :
-                ModItemStackHandlerHelper.getItemStackListInSlot(getItemStackHandler(stack), 0, ingredientInput);
+        return includeSeasoningAndSpice ? CItemStackHandlerHelper.getItemStackListInSlot(getItemStackHandler(stack), 0, getItemStackHandler(stack).getSlots()) :
+                CItemStackHandlerHelper.getItemStackListInSlot(getItemStackHandler(stack), 0, ingredientInput);
     }
 
-    public void addItemStackTooltip(@NotNull ItemStack stack, @NotNull List<Component> tooltipComponents) {
+    public void addItemStackTooltip(ItemStack stack, List<Component> tooltipComponents) {
         List<ItemStack> stackList = getItemStackListInPlate(stack, true);
         if (!stackList.isEmpty()) {
             stackList.forEach(itemStack ->
@@ -236,7 +213,23 @@ public abstract class AbstractPlateItem extends BlockItem {
         }
     }
 
-    public void addEffectTooltip(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents) {
+    public void addUuidTooltip(ItemStack stack, List<Component> tooltipComponents, TooltipContext context) {
+        Level level = context.level();
+        if (level == null) {
+            return;
+        }
+        Player player = level.getPlayerByUUID(getLastInteractPlayerId(stack));
+        if (player == null) {
+            return;
+        }
+        MutableComponent Uuid = Component.translatable("item_text." + Customized.MODID + ".last_interact_player_id", player.getDisplayName()).withStyle(ChatFormatting.YELLOW);
+        if (getAdvancementHasProgress(stack)) {
+            Uuid.append(Component.translatable("item_text." + Customized.MODID + ".master_of_culinary_arts")).withStyle(ChatFormatting.GOLD);
+        }
+        tooltipComponents.add(Uuid);
+    }
+
+    public void addEffectTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents) {
         if (!getFoodProperty(stack).effects().isEmpty()) {
             getFoodProperty(stack).effects().forEach(buff -> {
                 int i = Mth.floor((float) buff.effectSupplier().get().getDuration());
@@ -251,14 +244,16 @@ public abstract class AbstractPlateItem extends BlockItem {
         }
     }
 
-    abstract public AbstractPotBlockEntity getPotEntity(Level level, BlockPos pos);
-
     public int getIngredientInput() {
         return ingredientInput;
     }
 
     public int getSeasoningInput() {
         return seasoningInput;
+    }
+
+    public int getSpiceInput() {
+        return spiceInput;
     }
 
     public boolean isCanInputDrive() {

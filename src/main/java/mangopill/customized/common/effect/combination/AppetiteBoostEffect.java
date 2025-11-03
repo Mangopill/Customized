@@ -14,7 +14,7 @@ import static mangopill.customized.common.util.category.NutrientCategory.*;
 /**
  * This MobEffect can increase the player's damage.
  */
-public class AppetiteBoostEffect extends ModMobEffect implements ShrinkNutritionMobEffect, ShrinkSaturationMobEffect ,CombinationMobEffect {
+public class AppetiteBoostEffect extends CMobEffect implements ShrinkNutritionMobEffect, ShrinkSaturationMobEffect ,CombinationMobEffect {
 
     public AppetiteBoostEffect(int color) {
         super(color);

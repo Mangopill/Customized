@@ -20,6 +20,9 @@
   "spice": {
     "item": "customized:rich_and_nourishing_spice"
   },
+  "container": {
+    "item": "customized:famous_dish_plate"
+  },
   "result": {
     "count": 1,
     "id": "customized:fish_maw_and_chicken_soup"

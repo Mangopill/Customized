@@ -5,21 +5,18 @@ import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.NotNull;
-
 public class AromaParticle extends TextureSheetParticle {
 
     public AromaParticle(ClientLevel level, double x, double y, double z, double ySpeed) {
         super(level, x, y, z, 0.0, ySpeed, 0.0);
-
-        this.setSize(0.3F, 0.3F); // 设置粒子尺寸
-        this.scale(1.0F); // 设置粒子初始大小
+        this.setSize(0.3F, 0.3F);
+        this.scale(1.0F);
         this.lifetime = this.random.nextInt(40) + 40;
-        this.gravity = 0.0F; // 不受重力影响
+        this.gravity = 0.0F;
     }
 
     @Override
-    public @NotNull ParticleRenderType getRenderType() {
+    public ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
@@ -49,7 +46,7 @@ public class AromaParticle extends TextureSheetParticle {
         }
 
         @Override
-        public Particle createParticle(@NotNull SimpleParticleType typeIn, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             AromaParticle particle = new AromaParticle(level, x, y, z, ySpeed);
             particle.setAlpha(0.8F);
             particle.pickSprite(sprite);

@@ -1,7 +1,6 @@
 package mangopill.customized.common.block.state;
 
 import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.NotNull;
 
 public enum PotState implements StringRepresentable {
     WITHOUT_LID("without_lid"),
@@ -20,7 +19,7 @@ public enum PotState implements StringRepresentable {
     }
 
     @Override
-    public @NotNull String getSerializedName() {
+    public String getSerializedName() {
         return this.name;
     }
 }

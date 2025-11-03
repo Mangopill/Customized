@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Set;
@@ -16,14 +15,14 @@ import static mangopill.customized.common.util.category.NutrientCategory.*;
 /**
  *This MobEffect can give the player the DAMAGE_RESISTANCE effect.
  */
-public class SustainedEnergyEffect extends ModMobEffect implements ShrinkNutritionMobEffect, ShrinkSaturationMobEffect, CombinationMobEffect {
+public class SustainedEnergyEffect extends CMobEffect implements ShrinkNutritionMobEffect, ShrinkSaturationMobEffect, CombinationMobEffect {
 
     public SustainedEnergyEffect(int color) {
         super(color);
     }
 
     @Override
-    public void onEffectStarted(@NotNull LivingEntity livingEntity, int amplifier) {
+    public void onEffectStarted(LivingEntity livingEntity, int amplifier) {
         if (livingEntity instanceof ServerPlayer player) {
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, (amplifier + 1) * 600, amplifier));
         }

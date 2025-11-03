@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "c": {
+      "item": "customized:chef_hat"
+    },
+    "f": {
+      "tag": "customized:famous_spice"
+    }
+  },
+  "pattern": [
+    "fff",
+    "fcf",
+    "fff"
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:culinary_masters_hat"
+  }
+}

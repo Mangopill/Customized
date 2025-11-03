@@ -1,0 +1,16 @@
+{
+    "name": "enchantment.customized.aroma_pervasion",
+    "icon": "minecraft:enchanted_book",
+    "category": "customized:enchantment",
+    "advancement": "customized:master_of_culinary_arts",
+    "pages": [
+        {
+            "type": "patchouli:spotlight",
+            "item": {
+                "item": "minecraft:enchanted_book"
+            },
+            "text": "patchouli.entry.aroma_pervasion.pages.1.text",
+            "title": "enchantment.customized.aroma_pervasion"
+        }
+    ]
+}

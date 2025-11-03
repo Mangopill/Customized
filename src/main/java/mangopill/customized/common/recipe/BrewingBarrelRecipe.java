@@ -1,7 +1,7 @@
 package mangopill.customized.common.recipe;
 
-import mangopill.customized.common.registry.ModRecipeRegistry;
-import mangopill.customized.common.registry.ModRecipeSerializerRegistry;
+import mangopill.customized.common.registry.CRecipeRegistry;
+import mangopill.customized.common.registry.CRecipeSerializerRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
@@ -9,11 +9,10 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class BrewingBarrelRecipe implements ModRecipeInterface<RecipeWrapper>{
+public class BrewingBarrelRecipe implements CRecipeInterface<RecipeWrapper> {
     private final NonNullList<Ingredient> ingredientItem;
     private final Ingredient containerItem;
     private final ItemStack output;
@@ -29,34 +28,38 @@ public class BrewingBarrelRecipe implements ModRecipeInterface<RecipeWrapper>{
     }
 
     @Override
-    public boolean matches(@NotNull RecipeWrapper recipeWrapper, @NotNull Level level) {
+    public boolean matches(RecipeWrapper recipeWrapper, Level level) {
         List<ItemStack> ingredient = getListByWrapper(recipeWrapper, 0, ingredientInput);
-        return ingredient.size() == ingredientItem.size() && RecipeMatcher.findMatches(ingredient, ingredientItem) != null;
+        return ingredient.size() == ingredientItem.size()
+                && RecipeMatcher.findMatches(ingredient, ingredientItem) != null;
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull RecipeWrapper recipeWrapper, HolderLookup.@NotNull Provider provider) {
+    public ItemStack assemble(RecipeWrapper recipeWrapper, HolderLookup.Provider provider) {
         return this.output.copy();
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider provider) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return this.output;
     }
 
     @Override
-    public @NotNull NonNullList<Ingredient> getIngredients() {
-        return ingredientItem;
+    public NonNullList<Ingredient> getIngredients() {
+        NonNullList<Ingredient> combinedIngredient = NonNullList.create();
+        combinedIngredient.addAll(ingredientItem);
+        combinedIngredient.add(containerItem);
+        return combinedIngredient;
     }
 
     @Override
-    public @NotNull RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializerRegistry.BREWING_BARREL.get();
+    public RecipeSerializer<?> getSerializer() {
+        return CRecipeSerializerRegistry.BREWING_BARREL.get();
     }
 
     @Override
-    public @NotNull RecipeType<?> getType() {
-        return ModRecipeRegistry.BREWING_BARREL.get();
+    public RecipeType<?> getType() {
+        return CRecipeRegistry.BREWING_BARREL.get();
     }
 
     public NonNullList<Ingredient> getIngredientItem() {
@@ -73,9 +76,5 @@ public class BrewingBarrelRecipe implements ModRecipeInterface<RecipeWrapper>{
 
     public int getCookingTime() {
         return cookingTime;
-    }
-
-    public int getIngredientInput() {
-        return ingredientInput;
     }
 }

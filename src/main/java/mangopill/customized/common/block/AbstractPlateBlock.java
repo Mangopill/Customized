@@ -2,7 +2,7 @@ package mangopill.customized.common.block;
 
 import mangopill.customized.common.block.entity.AbstractPlateBlockEntity;
 import mangopill.customized.common.block.state.PlateState;
-import mangopill.customized.common.registry.ModParticleTypeRegistry;
+import mangopill.customized.common.registry.CParticleTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -23,7 +23,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 
 import static mangopill.customized.common.block.state.PlateState.*;
 
@@ -44,10 +43,8 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
     abstract public VoxelShape setShapeWithDrive();
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
-                                                       @NotNull Level level, @NotNull BlockPos pos,
-                                                       @NotNull Player player, @NotNull InteractionHand hand,
-                                                       @NotNull BlockHitResult hitResult) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+                                              InteractionHand hand, BlockHitResult hitResult) {
         if (level.isClientSide) {
             return ItemInteractionResult.SUCCESS;
         }
@@ -59,7 +56,7 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(BlockStateProperties.WATERLOGGED);
         builder.add(BlockStateProperties.HORIZONTAL_FACING);
@@ -67,12 +64,12 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
     }
 
     @Override
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(DRIVE)){
             case WITHOUT_DRIVE -> setShapeWithoutDrive();
             case WITH_DRIVE -> setShapeWithDrive();
@@ -80,7 +77,7 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
     }
 
     @Override
-    public @NotNull VoxelShape getCollisionShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(DRIVE)){
             case WITHOUT_DRIVE -> setShapeWithoutDrive();
             case WITH_DRIVE -> setShapeWithDrive();
@@ -97,12 +94,12 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
     }
 
     @Override
-    public @NotNull FluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public @NotNull BlockState updateShape(@NotNull BlockState state, @NotNull Direction facing, @NotNull BlockState facingState, @NotNull LevelAccessor level, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         if (state.getValue(BlockStateProperties.WATERLOGGED)) {
             level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
@@ -110,20 +107,20 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
     }
 
     @Override
-    public void animateTick(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull RandomSource random) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AbstractPlateBlockEntity && state.getValue(DRIVE).equals(WITH_DRIVE)) {
             if (random.nextFloat() <= 0.3F) {
                 double x = (double) pos.getX() + 0.2D + (random.nextDouble() * 0.3D);
                 double y = (double) pos.getY() + 0.2D;
                 double z = (double) pos.getZ() + 0.2D + (random.nextDouble() * 0.3D);
-                level.addParticle(ModParticleTypeRegistry.AROMA.get(), x, y, z, 0.0D, 0.0D, 0.0D);
+                level.addParticle(CParticleTypeRegistry.AROMA.get(), x, y, z, 0.0D, 0.0D, 0.0D);
             }
         }
     }
 
     @Override
-    public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
         ItemStack stack = super.getCloneItemStack(level, pos, state);
         return level.getBlockEntity(pos) instanceof AbstractPlateBlockEntity plateBlockEntity
                 ? plateBlockEntity.getCloneItemStack(stack) : stack;

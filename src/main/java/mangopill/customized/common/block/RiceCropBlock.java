@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 
 public class RiceCropBlock extends TallWaterloggedCropBlock {
     public static final MapCodec<RiceCropBlock> CODEC = simpleCodec(RiceCropBlock::new);
@@ -36,7 +35,7 @@ public class RiceCropBlock extends TallWaterloggedCropBlock {
     }
 
     @Override
-    protected @NotNull MapCodec<? extends BushBlock> codec() {
+    protected MapCodec<? extends BushBlock> codec() {
         return CODEC;
     }
 }

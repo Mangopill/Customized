@@ -7,7 +7,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,20 +26,21 @@ public class PropertyValue {
             PropertyValue::toNetwork, PropertyValue::fromNetwork
     );
 
-    public static PropertyValue putToMap(@NotNull Map<NutrientCategory, Float> map) {
+    public static PropertyValue putToMap(Map<NutrientCategory, Float> map) {
         PropertyValue propertyValue = new PropertyValue();
         map.forEach(propertyValue::put);
         return propertyValue;
     }
 
-    public boolean has(@NotNull NutrientCategory category) {
+    public boolean has(NutrientCategory category) {
         return value[category.ordinal()] > 0.0F;
     }
-    public boolean notHas(@NotNull NutrientCategory category) {
+
+    public boolean notHas(NutrientCategory category) {
         return !this.has(category);
     }
 
-    public void put(@NotNull NutrientCategory category, float value) {
+    public void put(NutrientCategory category, float value) {
         if (Float.isNaN(value) || value <= 0.0F) {
             this.remove(category);
             return;
@@ -51,7 +51,7 @@ public class PropertyValue {
         this.value[category.ordinal()] = value;
     }
 
-    public void remove(@NotNull NutrientCategory category) {
+    public void remove(NutrientCategory category) {
         if (notHas(category)) {
             return;
         }
@@ -98,7 +98,7 @@ public class PropertyValue {
         size = 0;
     }
 
-    public float getBigger(@NotNull NutrientCategory category) {
+    public float getBigger(NutrientCategory category) {
         return Math.max(value[category.ordinal()], 0.0F);
     }
 

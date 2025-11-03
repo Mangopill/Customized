@@ -17,8 +17,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Collections;
 
 import static mangopill.customized.common.CustomizedConfig.*;
@@ -30,10 +28,10 @@ public class PropertyValueTooltip {
     public static void onItemTooltip(final ItemTooltipEvent event) {
         Player player = event.getEntity();
         ItemStack stack = event.getItemStack();
-        if (player == null || player.level() == null) {
+        if (player == null ||  player.level() == null) {
             return;
         }
-        @NotNull PropertyValue propertyValue = PropertyValueUtil.getPropertyValue(stack, player.level());
+        PropertyValue propertyValue = PropertyValueUtil.getPropertyValue(stack, player.level());
         FoodProperties foodProperty = getFoodPropertyByPropertyValue(player.level(), Collections.singletonList(stack), false);
         if (propertyValue.isEmpty()) {
             return;

@@ -1,14 +1,12 @@
 package mangopill.customized.common.block.entity;
 
-import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.DataResult;
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.AbstractPlateBlock;
 import mangopill.customized.common.block.state.PlateState;
 import mangopill.customized.common.item.AbstractPlateItem;
-import mangopill.customized.common.registry.ModDataComponentRegistry;
+import mangopill.customized.common.registry.CDataComponentRegistry;
 import mangopill.customized.common.util.CreateItemStackHandler;
-import mangopill.customized.common.util.ModItemStackHandlerHelper;
+import mangopill.customized.common.util.CItemStackHandlerHelper;
 import mangopill.customized.common.util.record.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -31,32 +29,34 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.*;
 
-import static mangopill.customized.common.util.ModItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.ModItemStackHandlerHelper.clearAllSlot;
-
+import static mangopill.customized.common.util.CompoundTagHelper.*;
+import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 public abstract class AbstractPlateBlockEntity extends BlockEntity implements CreateItemStackHandler {
     private final int ingredientInput;
     private final int seasoningInput;
-    private static final int SPICE_INPUT = 1;
+    private final int spiceInput;
     private final int allSlot;
     private final ItemStackHandler itemStackHandler;
     private final ItemStackHandler initialItemStackHandler;
     private FoodProperties foodProperty;
     private int consumptionCount;
     private int consumptionCountTotal;
+    private UUID lastInteractPlayerId;
+    private Boolean advancementHasProgress;
 
-    public AbstractPlateBlockEntity(BlockEntityType<? extends AbstractPlateBlockEntity> type, BlockPos pos, BlockState blockState, int ingredientInput, int seasoningInput) {
+    protected AbstractPlateBlockEntity(BlockEntityType<? extends AbstractPlateBlockEntity> type, BlockPos pos, BlockState blockState, int ingredientInput, int seasoningInput, int spiceInput) {
         super(type, pos, blockState);
         this.ingredientInput = ingredientInput;
         this.seasoningInput = seasoningInput;
-        this.allSlot = ingredientInput + seasoningInput + SPICE_INPUT;
+        this.spiceInput = spiceInput;
+        this.allSlot = ingredientInput + seasoningInput + spiceInput;
         this.itemStackHandler = createItemStackHandler(allSlot);
         this.initialItemStackHandler = createItemStackHandler(allSlot);
+        this.lastInteractPlayerId = UUIDRecord.NULL.uuid();
     }
 
     @Override
@@ -68,15 +68,15 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
     }
 
     public boolean hasInput() {
-        return ModItemStackHandlerHelper.hasInput(itemStackHandler, allSlot);
+        return CItemStackHandlerHelper.hasInput(itemStackHandler, allSlot);
     }
 
     public List<ItemStack> getItemStackListInPlate(boolean includeSeasoningAndSpice) {
-        return includeSeasoningAndSpice ? ModItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, allSlot) :
-                ModItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, ingredientInput);
+        return includeSeasoningAndSpice ? CItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, allSlot) :
+                CItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, ingredientInput);
     }
 
-    public void eatFood(@NotNull Level level, @NotNull Player player, @NotNull BlockState state, @NotNull BlockPos pos) {
+    public void eatFood(Level level, Player player, BlockState state, BlockPos pos) {
         if(consumptionCount >= 1) {
             level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
             player.getFoodData().eat(foodProperty);
@@ -114,21 +114,10 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
        consumptionCountTotal = 0;
     }
 
-    public @NotNull ItemStack getCloneItemStack(ItemStack stack) {
+    public ItemStack getCloneItemStack(ItemStack stack) {
         ItemStack itemStack = new ItemStack(stack.getItem());
         itemStack.applyComponents(collectComponents());
         return itemStack;
-    }
-
-    public @NotNull CompoundTag[] getFoodPropertyTagWrapper() {
-        final CompoundTag[] foodPropertyTagWrapper = new CompoundTag[1];
-        DataResult<Tag> encodeResult = FoodProperties.DIRECT_CODEC.encodeStart(NbtOps.INSTANCE, foodProperty);
-        encodeResult.result().ifPresent(tag -> {
-            if (tag instanceof CompoundTag) {
-                foodPropertyTagWrapper[0] = (CompoundTag) tag;
-            }
-        });
-        return foodPropertyTagWrapper;
     }
 
     @Override
@@ -138,49 +127,35 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
     }
 
     @Override
-    public void loadAdditional(@NotNull CompoundTag compound, HolderLookup.@NotNull Provider registries) {
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.loadAdditional(compound, registries);
         consumptionCount = compound.getInt("ConsumptionCount");
         consumptionCountTotal = compound.getInt("ConsumptionCountTotal");
         itemStackHandler.deserializeNBT(registries, compound.getCompound("ItemStackHandler"));
         initialItemStackHandler.deserializeNBT(registries, compound.getCompound("InitialItemStackHandler"));
         if (compound.contains("FoodProperty")) {
-            CompoundTag foodPropertyTag = compound.getCompound("FoodProperty");
-            DataResult<Pair<FoodProperties, Tag>> decodeResult = FoodProperties.DIRECT_CODEC.decode(NbtOps.INSTANCE, foodPropertyTag);
-            decodeResult.result().ifPresent(pair -> {
-                Tag tag = pair.getSecond();
-                if (tag instanceof CompoundTag) {
-                    foodProperty = FoodProperties.DIRECT_CODEC.parse(NbtOps.INSTANCE, tag).getOrThrow();
-                }
-            });
-        } else {
-            foodProperty = FoodValue.NULL;
+            foodProperty = deserializeFoodPropertyNBT(compound);
         }
+        lastInteractPlayerId = compound.getUUID("LastInteractPlayerId");
+        advancementHasProgress = compound.getBoolean("AdvancementHasProgress");
     }
 
     @Override
-    public void saveAdditional(@NotNull CompoundTag compound, HolderLookup.@NotNull Provider registries) {
+    public void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.saveAdditional(compound, registries);
         compound.putInt("ConsumptionCount", consumptionCount);
         compound.putInt("ConsumptionCountTotal", consumptionCountTotal);
         compound.put("ItemStackHandler", itemStackHandler.serializeNBT(registries));
         compound.put("InitialItemStackHandler", initialItemStackHandler.serializeNBT(registries));
-        final CompoundTag[] foodPropertyTagWrapper = getFoodPropertyTagWrapper();
-        compound.put("FoodProperty", foodPropertyTagWrapper[0]);
+        putFoodPropertyTag(compound, foodProperty);
+        compound.putUUID("LastInteractPlayerId", lastInteractPlayerId);
+        compound.putBoolean("AdvancementHasProgress", advancementHasProgress);
     }
 
-
-
     @Override
-    public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider registries) {
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
-        super.saveAdditional(tag, registries);
-        tag.putInt("ConsumptionCount", consumptionCount);
-        tag.putInt("ConsumptionCountTotal", consumptionCountTotal);
-        tag.put("ItemStackHandler", itemStackHandler.serializeNBT(registries));
-        tag.put("InitialItemStackHandler", initialItemStackHandler.serializeNBT(registries));
-        final CompoundTag[] foodPropertyTagWrapper = getFoodPropertyTagWrapper();
-        tag.put("FoodProperty", foodPropertyTagWrapper[0]);
+        saveAdditional(tag, registries);
         return tag;
     }
 
@@ -191,31 +166,37 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         tag.remove("ItemStackHandler");
         tag.remove("InitialItemStackHandler");
         tag.remove("FoodProperty");
+        tag.remove("LastInteractPlayerId");
+        tag.remove("AdvancementHasProgress");
     }
 
     @Override
-    protected void collectImplicitComponents(DataComponentMap.@NotNull Builder component) {
+    protected void collectImplicitComponents(DataComponentMap.Builder component) {
         super.collectImplicitComponents(component);
         if (hasInput()) {
-            component.set(ModDataComponentRegistry.CONSUMPTION_COUNT, new ConsumptionCountRecord(consumptionCount));
-            component.set(ModDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, new ConsumptionCountTotalRecord(consumptionCountTotal));
+            component.set(CDataComponentRegistry.CONSUMPTION_COUNT, new ConsumptionCountRecord(consumptionCount));
+            component.set(CDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, new ConsumptionCountTotalRecord(consumptionCountTotal));
             component.set(DataComponents.FOOD, foodProperty);
-            component.set(ModDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(itemStackHandler));
-            component.set(ModDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, new ItemStackHandlerRecord(initialItemStackHandler));
+            component.set(CDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(itemStackHandler));
+            component.set(CDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, new ItemStackHandlerRecord(initialItemStackHandler));
+            component.set(CDataComponentRegistry.UUID, new UUIDRecord(lastInteractPlayerId));
+            component.set(CDataComponentRegistry.ADVANCEMENT_HAS_PROGRESS, advancementHasProgress);
         }
     }
 
     @Override
-    protected void applyImplicitComponents(BlockEntity.@NotNull DataComponentInput componentInput) {
+    protected void applyImplicitComponents(BlockEntity.DataComponentInput componentInput) {
         super.applyImplicitComponents(componentInput);
-        consumptionCount = componentInput.getOrDefault(ModDataComponentRegistry.CONSUMPTION_COUNT, ConsumptionCountRecord.NULL).consumptionCount();
-        consumptionCountTotal = componentInput.getOrDefault(ModDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, ConsumptionCountTotalRecord.NULL).consumptionCountTotal();
+        consumptionCount = componentInput.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT, ConsumptionCountRecord.NULL).consumptionCount();
+        consumptionCountTotal = componentInput.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, ConsumptionCountTotalRecord.NULL).consumptionCountTotal();
         foodProperty = componentInput.getOrDefault(DataComponents.FOOD, FoodValue.NULL);
-        processComponentStack(componentInput, ModDataComponentRegistry.ITEM_STACK_HANDLER, itemStackHandler);
-        processComponentStack(componentInput, ModDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, initialItemStackHandler);
+        processComponentStack(componentInput, CDataComponentRegistry.ITEM_STACK_HANDLER, itemStackHandler);
+        processComponentStack(componentInput, CDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, initialItemStackHandler);
+        lastInteractPlayerId = componentInput.getOrDefault(CDataComponentRegistry.UUID, UUIDRecord.NULL).uuid();
+        advancementHasProgress = componentInput.getOrDefault(CDataComponentRegistry.ADVANCEMENT_HAS_PROGRESS, false);
     }
 
-    protected void processComponentStack(BlockEntity.@NotNull DataComponentInput componentInput,
+    protected void processComponentStack(BlockEntity.DataComponentInput componentInput,
                                        DeferredHolder<DataComponentType<?>, DataComponentType<ItemStackHandlerRecord>> componentType,
                                        ItemStackHandler itemStackHandler) {
         ItemStackHandler componentHandler = componentInput
@@ -223,7 +204,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
                 .itemStackHandler();
         List<ItemStack> stacks = getItemStackListInSlot(componentHandler, 0, componentHandler.getSlots());
         stacks.forEach(stack ->
-                insertItem(stack.copy(), itemStackHandler, ingredientInput, seasoningInput, allSlot)
+                insertItem(stack.copy(), itemStackHandler, ingredientInput, seasoningInput, spiceInput, 0, null)
         );
     }
 
@@ -233,6 +214,10 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
 
     public int getSeasoningInput() {
         return seasoningInput;
+    }
+
+    public int geSpiceInput() {
+        return spiceInput;
     }
 
     public ItemStackHandler getItemStackHandler() {
@@ -253,5 +238,13 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
 
     public int getConsumptionCount() {
         return consumptionCount;
+    }
+
+    public UUID getLastInteractPlayerId() {
+        return lastInteractPlayerId;
+    }
+
+    public Boolean getAdvancementHasProgress() {
+        return advancementHasProgress;
     }
 }

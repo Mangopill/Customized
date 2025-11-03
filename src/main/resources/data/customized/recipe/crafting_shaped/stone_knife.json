@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "w": {
+      "tag": "c:rods/wooden"
+    },
+    "s": {
+      "tag": "minecraft:stone_tool_materials"
+    }
+  },
+  "pattern": [
+    "   ",
+    " s ",
+    "w  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:stone_knife"
+  }
+}

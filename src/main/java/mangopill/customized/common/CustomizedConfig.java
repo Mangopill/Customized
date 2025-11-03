@@ -63,11 +63,21 @@ public final class CustomizedConfig {
     public static final String POT = "pot";
     public static final ModConfigSpec.BooleanValue CUSTOM_COOKING;
     public static final ModConfigSpec.BooleanValue RECIPE_COOKING;
+    public static final String ENCHANTMENT = "enchantment";
+    public static final ModConfigSpec.BooleanValue AURA_OF_CULINARY_ARTS_MESSAGE;
+    public static final String INTEGRATION = "integration";
+    public static final String CURIOS = "curios";
+    public static final String CULINARY_MASTERS_HAT = "culinary_masters_hat";
+    public static final ModConfigSpec.BooleanValue CULINARY_MASTERS_HAT_MESSAGE;
 
     public static final String TOOLTIP = "tooltip";
     public static final ModConfigSpec.BooleanValue SHOW_NUTRIENT_VALUE_TOOLTIP;
     public static final ModConfigSpec.BooleanValue SHOW_ESTIMATED_VALUE_TOOLTIP;
     public static final ModConfigSpec.BooleanValue SHOW_ESTIMATED_BUFF_TOOLTIP;
+    public static final String SOUND = "sound";
+    public static final ModConfigSpec.BooleanValue CASSEROLE_SOUND;
+    public static final String OVERLAY = "overlay";
+    public static final ModConfigSpec.BooleanValue POT_OVERLAY;
 
     static {
         ModConfigSpec.Builder commonBuilder = new ModConfigSpec.Builder();
@@ -338,6 +348,30 @@ public final class CustomizedConfig {
                 .define("enabledRecipeCooking", true);
         commonBuilder.pop();
 
+        commonBuilder.comment(ENCHANTMENT).push(ENCHANTMENT);
+        AURA_OF_CULINARY_ARTS_MESSAGE = commonBuilder
+                .comment("This boolean value corresponds to whether aura of culinary arts message is enabled.\n(true, false)\ndefault: true")
+                .worldRestart()
+                .translation(MOD_ID + ".config.aura_of_culinary_arts_message")
+                .define("enabledAuraOfCulinaryArtsMessage", true);
+        commonBuilder.pop();
+
+        commonBuilder.comment(INTEGRATION).push(INTEGRATION);
+
+        commonBuilder.comment(CURIOS).push(CURIOS);
+
+        commonBuilder.comment(CULINARY_MASTERS_HAT).push(CULINARY_MASTERS_HAT);
+        CULINARY_MASTERS_HAT_MESSAGE = commonBuilder
+                .comment("This boolean value corresponds to whether culinary masters hat message is enabled.\n(true, false)\ndefault: true")
+                .worldRestart()
+                .translation(MOD_ID + ".config.culinary_masters_hat_message")
+                .define("enabledCulinaryMastersHatMessage", true);
+        commonBuilder.pop();
+
+        commonBuilder.pop();
+
+        commonBuilder.pop();
+
         COMMON_CONFIG = commonBuilder.build();
 
         ModConfigSpec.Builder clientBuilder = new ModConfigSpec.Builder();
@@ -355,6 +389,20 @@ public final class CustomizedConfig {
                 .comment("This boolean value corresponds to whether to show the estimated buff tooltip.\n(true, false)\ndefault: true")
                 .translation(MOD_ID + ".config.show_estimated_buff_tooltip")
                 .define("showEstimatedBuffTooltip", true);
+        clientBuilder.pop();
+
+        clientBuilder.comment(SOUND).push(SOUND);
+        CASSEROLE_SOUND = clientBuilder
+                .comment("This boolean value corresponds to whether to enable the casserole sound.\n(true, false)\ndefault: true")
+                .translation(MOD_ID + ".config.casserole_sound")
+                .define("casseroleSound", true);
+        clientBuilder.pop();
+
+        clientBuilder.comment(OVERLAY).push(OVERLAY);
+        POT_OVERLAY = clientBuilder
+                .comment("This boolean value corresponds to whether to enable the casserole sound.\n(true, false)\ndefault: true")
+                .translation(MOD_ID + ".config.casserole_sound")
+                .define("potOverlay", true);
         clientBuilder.pop();
 
         CLIENT_CONFIG = clientBuilder.build();

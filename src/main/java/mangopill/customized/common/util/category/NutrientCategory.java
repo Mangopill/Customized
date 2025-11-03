@@ -2,7 +2,6 @@ package mangopill.customized.common.util.category;
 
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.NotNull;
 
 public enum NutrientCategory implements StringRepresentable {
     WATER("water", 0x5A8FE9),
@@ -48,7 +47,7 @@ public enum NutrientCategory implements StringRepresentable {
     }
 
     @Override
-    public @NotNull String getSerializedName() {
+    public String getSerializedName() {
         return name;
     }
 }

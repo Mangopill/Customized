@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.server.level.ServerPlayer;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 public class BasicTrigger extends SimpleCriterionTrigger<BasicTrigger.TriggerInstance> {
@@ -13,7 +12,7 @@ public class BasicTrigger extends SimpleCriterionTrigger<BasicTrigger.TriggerIns
     }
 
     @Override
-    public @NotNull Codec<TriggerInstance> codec() {
+    public Codec<TriggerInstance> codec() {
         return TriggerInstance.CODEC;
     }
 

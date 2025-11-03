@@ -1,6 +1,6 @@
 package mangopill.customized.common.mixin;
 
-import mangopill.customized.common.registry.ModEffectRegistry;
+import mangopill.customized.common.registry.CEffectRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +22,7 @@ public abstract class WarmStomachEffectMixin {
 
     @Inject(at = @At("HEAD"), method = "canEntityWalkOnPowderSnow(Lnet/minecraft/world/entity/Entity;)Z", cancellable = true)
     private static void customized$warmStomachEffect(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-        if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(ModEffectRegistry.WARM_STOMACH)) {
+        if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(CEffectRegistry.WARM_STOMACH)) {
             cir.setReturnValue(true);
         }
     }

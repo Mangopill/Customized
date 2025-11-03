@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "l": {
+      "tag": "c:dyes/light_blue"
+    },
+    "i": {
+      "tag": "c:ingots/iron"
+    },
+    "g": {
+      "tag": "c:ingots/gold"
+    }
+  },
+  "pattern": [
+    "   ",
+    " g ",
+    "il "
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:golden_knife"
+  }
+}

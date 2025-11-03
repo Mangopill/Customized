@@ -11,8 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Map;
 
 public class PotStrategyHandler {
@@ -32,7 +30,7 @@ public class PotStrategyHandler {
         return registry;
     }
 
-    public void registry(@NotNull String potName, @NotNull PotInteractionStrategy... strategy) {
+    public void registry(String potName, PotInteractionStrategy... strategy) {
         if(map.containsKey(potName)){
             return;
         }

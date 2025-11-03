@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "l": {
+      "tag": "c:dyes/light_blue"
+    },
+    "i": {
+      "tag": "c:ingots/iron"
+    },
+    "d": {
+      "tag": "c:gems/diamond"
+    }
+  },
+  "pattern": [
+    "   ",
+    " d ",
+    "il "
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:diamond_knife"
+  }
+}

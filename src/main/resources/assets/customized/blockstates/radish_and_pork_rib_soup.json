@@ -41,7 +41,127 @@
       "model": "customized:block/famous_soup_empty",
       "y": 270
     },
+    "facing=north,eat=3": {
+      "model": "customized:block/famous_soup_empty"
+    },
+    "facing=south,eat=3": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 180
+    },
+    "facing=west,eat=3": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 270
+    },
+    "facing=east,eat=3": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 90
+    },
     "facing=east,eat=2": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 90
+    },
+    "facing=north,eat=4": {
+      "model": "customized:block/famous_soup_empty"
+    },
+    "facing=south,eat=4": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 180
+    },
+    "facing=west,eat=4": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 270
+    },
+    "facing=east,eat=4": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 90
+    },
+    "facing=north,eat=5": {
+      "model": "customized:block/famous_soup_empty"
+    },
+    "facing=south,eat=5": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 180
+    },
+    "facing=west,eat=5": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 270
+    },
+    "facing=east,eat=5": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 90
+    },
+    "facing=north,eat=6": {
+      "model": "customized:block/famous_soup_empty"
+    },
+    "facing=south,eat=6": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 180
+    },
+    "facing=west,eat=6": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 270
+    },
+    "facing=east,eat=6": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 90
+    },
+    "facing=north,eat=7": {
+      "model": "customized:block/famous_soup_empty"
+    },
+    "facing=south,eat=7": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 180
+    },
+    "facing=west,eat=7": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 270
+    },
+    "facing=east,eat=7": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 90
+    },
+    "facing=north,eat=8": {
+      "model": "customized:block/famous_soup_empty"
+    },
+    "facing=south,eat=8": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 180
+    },
+    "facing=west,eat=8": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 270
+    },
+    "facing=east,eat=8": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 90
+    },
+    "facing=north,eat=9": {
+      "model": "customized:block/famous_soup_empty"
+    },
+    "facing=south,eat=9": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 180
+    },
+    "facing=west,eat=9": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 270
+    },
+    "facing=east,eat=9": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 90
+    },
+    "facing=north,eat=10": {
+      "model": "customized:block/famous_soup_empty"
+    },
+    "facing=south,eat=10": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 180
+    },
+    "facing=west,eat=10": {
+      "model": "customized:block/famous_soup_empty",
+      "y": 270
+    },
+    "facing=east,eat=10": {
       "model": "customized:block/famous_soup_empty",
       "y": 90
     }

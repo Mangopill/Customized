@@ -1,16 +1,15 @@
 package mangopill.customized.common.effect.powerful;
 
-import mangopill.customized.common.effect.ModMobEffect;
+import mangopill.customized.common.effect.CMobEffect;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import org.jetbrains.annotations.NotNull;
 /**
  *This MobEffect allows the player to stay flying, but prevents them from landing.
  */
-public class SoarEffect extends ModMobEffect {
+public class SoarEffect extends CMobEffect {
 
     public SoarEffect(int color) {
         super(color);
@@ -18,7 +17,7 @@ public class SoarEffect extends ModMobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity livingEntity, int amplifier) {
+    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
         if (livingEntity instanceof Player player) {
             player.getAbilities().flying = true;
             player.onUpdateAbilities();

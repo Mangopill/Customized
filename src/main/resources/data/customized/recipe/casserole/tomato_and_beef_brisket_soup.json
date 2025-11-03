@@ -26,6 +26,9 @@
   "spice": {
     "item": "customized:sweet_and_sour_refreshing_spice"
   },
+  "container": {
+    "item": "customized:famous_dish_plate"
+  },
   "result": {
     "count": 1,
     "id": "customized:tomato_and_beef_brisket_soup"

@@ -1,66 +1,52 @@
 package mangopill.customized.common.mixin;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import mangopill.customized.Customized;
-import mangopill.customized.common.registry.ModAdvancementRegistry;
-import mangopill.customized.common.registry.ModParticleTypeRegistry;
+import mangopill.customized.common.registry.CAdvancementRegistry;
+import mangopill.customized.common.registry.CParticleTypeRegistry;
 import mangopill.customized.common.tag.ModTag;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Objects;
+import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.ResourceUtil.*;
+import static mangopill.customized.common.util.LootTableUtil.*;
 
 @Mixin(ItemEntity.class)
 public abstract class ItemReplaceMixin{
-    private static final ResourceKey<LootTable> LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Customized.MODID, "gameplay/soiled_seed"));
     private int life = 200;
     @Inject(at = @At("HEAD"), method = "tick")
     public void customized$itemReplace(CallbackInfo ci) {
         ItemEntity itemEntity = (ItemEntity)(Object)this;
         ItemStack itemStack = itemEntity.getItem().copy();
+        Level level = itemEntity.level();
         if (!(itemStack.is(ModTag.SOILED_SEED)) || !(itemEntity.isInWaterRainOrBubble())) {
             return;
         }
-        itemEntity.level().addParticle(ModParticleTypeRegistry.DIRT.get(), itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 0.0D, 0.0D, 0.0D);
-        if (itemEntity.level().isClientSide() || itemEntity.level().getServer() == null) {
+        level.addParticle(CParticleTypeRegistry.DIRT.get(), itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 0.0D, 0.0D, 0.0D);
+        if (level.isClientSide() || level.getServer() == null) {
             return;
         }
-        LootParams.Builder builder = new LootParams.Builder((ServerLevel) itemEntity.level());
-        LootParams params = builder.create(LootContextParamSets.EMPTY);
-        LootTable lootTable = Objects.requireNonNull(itemEntity.level().getServer()).reloadableRegistries().getLootTable(LOOT_TABLE);
         if(this.life > 0) {
             this.life--;
         }else {
             int i = 0;
             while (i < itemStack.getCount()){
-                ObjectArrayList<ItemStack> objectArrayList = lootTable.getRandomItems(params);
-                if (objectArrayList.isEmpty()) {
-                    return;
-                }
-                ItemStack randomItem = objectArrayList.get(itemEntity.level().random.nextInt(objectArrayList.size())).copy();
-                ItemEntity newItemEntity = new ItemEntity(itemEntity.level(),
-                        itemEntity.getX(),
-                        itemEntity.getY(),
-                        itemEntity.getZ(),
-                        randomItem.copy());
-                itemEntity.level().addFreshEntity(newItemEntity);
+                spawnItemEntity(level, getRandomLootTableItemStack((ServerLevel) level, ResourceKey.create(Registries.LOOT_TABLE,
+                        getCLoc("gameplay/" + BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath()))), null, itemEntity.getOnPos());
                 i++;
             }
             itemEntity.discard();
             if (itemEntity.getOwner() instanceof ServerPlayer owner) {
-                ModAdvancementRegistry.WASH_SEEDS.get().trigger(owner);
+                CAdvancementRegistry.WASH_SEEDS.get().trigger(owner);
             }
         }
     }

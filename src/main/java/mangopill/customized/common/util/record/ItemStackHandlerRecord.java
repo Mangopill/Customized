@@ -15,19 +15,19 @@ public record ItemStackHandlerRecord(ItemStackHandler itemStackHandler) {
     public static final ItemStackHandlerRecord NULL = new ItemStackHandlerRecord(new ItemStackHandler());
     public static final Codec<ItemStackHandler> ITEM_STACK_HANDLER_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(Codec.INT.fieldOf("Slots").forGetter(ItemStackHandler::getSlots),
-                    Codec.list(ItemStack.OPTIONAL_CODEC).fieldOf("Items").forGetter(handler -> {
+                    ItemStack.OPTIONAL_CODEC.listOf().fieldOf("Items").forGetter(handler -> {
                         List<ItemStack> stacks = new ArrayList<>();
                         for (int i = 0; i < handler.getSlots(); i++) {
                             stacks.add(handler.getStackInSlot(i).copy());
                         }
                         return stacks;
                     })).apply(instance, (slots, items) -> {
-                ItemStackHandler handler = new ItemStackHandler(slots);
-                for (int i = 0; i < items.size(); i++) {
-                    handler.setStackInSlot(i, items.get(i).copy());
-                }
-                return handler;
-            }));
+                        ItemStackHandler handler = new ItemStackHandler(slots);
+                        for (int i = 0; i < items.size(); i++) {
+                            handler.setStackInSlot(i, items.get(i).copy());
+                        }
+                        return handler;
+                    }));
     public static final StreamCodec<RegistryFriendlyByteBuf, ItemStackHandler> ITEM_STACK_HANDLER_STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.INT,
             ItemStackHandler::getSlots,

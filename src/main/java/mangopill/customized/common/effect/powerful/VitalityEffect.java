@@ -1,14 +1,13 @@
 package mangopill.customized.common.effect.powerful;
 
-import mangopill.customized.common.effect.ModMobEffect;
+import mangopill.customized.common.effect.CMobEffect;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
-import org.jetbrains.annotations.NotNull;
 /**
  *This MobEffect can increase the player's health regeneration speed, as well as MOVEMENT_SPEED, ATTACK_SPEED, MAX_HEALTH, and ATTACK_DAMAGE.
  */
-public class VitalityEffect extends ModMobEffect {
+public class VitalityEffect extends CMobEffect {
 
     public VitalityEffect(int color) {
         super(color);
@@ -19,7 +18,7 @@ public class VitalityEffect extends ModMobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity livingEntity, int amplifier) {
+    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
         if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
             livingEntity.heal(1.0F);
         }
@@ -28,6 +27,6 @@ public class VitalityEffect extends ModMobEffect {
 
     @Override
     public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
-        return duration % (40 / (amplifier + 1)) == 0;
+        return duration % (40 / Math.min(40 , amplifier + 1)) == 0;
     }
 }

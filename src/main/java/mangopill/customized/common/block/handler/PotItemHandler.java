@@ -1,71 +1,43 @@
 package mangopill.customized.common.block.handler;
 
+import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
+import mangopill.customized.common.item.AbstractPlateItem;
 import mangopill.customized.common.tag.ModTag;
-import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
-import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
+import java.util.List;
 
-public class PotItemHandler implements IItemHandler {
+import static mangopill.customized.common.util.CItemStackHandlerHelper.containsSameItem;
+
+public class PotItemHandler extends CIItemHandler<AbstractPotBlockEntity> {
     private final int ingredientInput;
     private final int seasoningInput;
-    private static final int SPICE_INPUT = 1;
-    private final IItemHandler itemHandler;
-    private final Direction side;
+    private final int spiceInput;
 
-    public PotItemHandler(IItemHandler itemHandler, @Nullable Direction side, int ingredientCount, int seasoningCount) {
-        this.itemHandler = itemHandler;
-        this.ingredientInput = ingredientCount;
-        this.seasoningInput = seasoningCount;
-        this.side = side;
+    public PotItemHandler(AbstractPotBlockEntity entity, IItemHandler itemHandler) {
+        super(entity, itemHandler);
+        this.ingredientInput = entity.getIngredientInput();
+        this.seasoningInput = entity.getSeasoningInput();
+        this.spiceInput = entity.getSpiceInput();
     }
 
     @Override
-    public int getSlots() {
-        return itemHandler.getSlots();
-    }
-
-    @Override
-    @NotNull
-    public ItemStack getStackInSlot(int slot) {
-        return itemHandler.getStackInSlot(slot);
-    }
-
-    @Override
-    @NotNull
-    public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-        if (side == null || side.equals(Direction.UP)) {
-            return slot < ingredientInput ? itemHandler.insertItem(slot, stack, simulate) : stack;
-        } else {
-            if (slot < seasoningInput + ingredientInput && slot >= ingredientInput){
-                return stack.is(ModTag.SEASONING) ? itemHandler.insertItem(slot, stack, simulate) : stack;
-            }
-            if (slot == seasoningInput + ingredientInput){
-                return stack.is(ModTag.FAMOUS_SPICE) ? itemHandler.insertItem(slot, stack, simulate) : stack;
-            }
-            return stack;
+    public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+        if (stack.is(ModTag.SEASONING)) {
+            return slot < seasoningInput + ingredientInput && slot >= ingredientInput ? getItemHandler().insertItem(slot, stack, simulate) : stack;
         }
+        if (stack.is(ModTag.FAMOUS_SPICE)) {
+            return slot == seasoningInput + ingredientInput ? getItemHandler().insertItem(slot, stack, simulate) : stack;
+        }
+        if (stack.getItem() instanceof AbstractPlateItem || containsSameItem(List.of(getEntity().getContainerItem().getItems()), stack)) {
+            return slot == seasoningInput + ingredientInput + spiceInput ? getItemHandler().insertItem(slot, stack, simulate) : stack;
+        }
+        return slot < ingredientInput ? getItemHandler().insertItem(slot, stack, simulate) : stack;
     }
 
     @Override
-    @NotNull
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        if (side == null || side.equals(Direction.UP)) {
-            return slot < seasoningInput + ingredientInput + SPICE_INPUT ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
-        } else {
-            return slot == seasoningInput + ingredientInput + SPICE_INPUT ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
-        }
-    }
-
-    @Override
-    public int getSlotLimit(int slot) {
-        return itemHandler.getSlotLimit(slot);
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-        return itemHandler.isItemValid(slot, stack);
+        return slot == seasoningInput + ingredientInput + spiceInput ? getItemHandler().extractItem(slot, amount, simulate) : ItemStack.EMPTY;
     }
 }

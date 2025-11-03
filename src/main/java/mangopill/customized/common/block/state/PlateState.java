@@ -1,7 +1,6 @@
 package mangopill.customized.common.block.state;
 
 import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.NotNull;
 
 public enum PlateState implements StringRepresentable {
     WITHOUT_DRIVE("without_drive"),
@@ -19,7 +18,7 @@ public enum PlateState implements StringRepresentable {
     }
 
     @Override
-    public @NotNull String getSerializedName() {
+    public String getSerializedName() {
         return this.name;
     }
 }

@@ -9,15 +9,15 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
-public abstract class AbstractPotRecipe implements ModRecipeInterface<RecipeWrapper> {
+import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 
+public abstract class AbstractPotRecipe implements CRecipeInterface<RecipeWrapper> {
     private final NonNullList<Ingredient> ingredientItem;
     private final NonNullList<Ingredient> seasoningItem;
     private final Ingredient spiceItem;
+    private final Ingredient containerItem;
     private final ItemStack output;
     private final int cookingTime;
     private final RecipeSerializer<?> recipeSerializer;
@@ -25,10 +25,14 @@ public abstract class AbstractPotRecipe implements ModRecipeInterface<RecipeWrap
     private final int ingredientInput;
     private final int seasoningInput;
 
-    public AbstractPotRecipe(NonNullList<Ingredient> ingredientItem, NonNullList<Ingredient> seasoningItem, Ingredient spiceItem, ItemStack output, int cookingTime, RecipeSerializer<?> recipeSerializer, RecipeType<?> recipeType,int ingredientSlot,int seasoningSlot) {
+    public AbstractPotRecipe(NonNullList<Ingredient> ingredientItem, NonNullList<Ingredient> seasoningItem,
+                             Ingredient spiceItem, Ingredient containerItem, ItemStack output,
+                             int cookingTime, RecipeSerializer<?> recipeSerializer, RecipeType<?> recipeType,
+                             int ingredientSlot, int seasoningSlot) {
         this.ingredientItem = ingredientItem;
         this.seasoningItem = seasoningItem;
         this.spiceItem = spiceItem;
+        this.containerItem = containerItem;
         this.output = output;
         this.cookingTime = cookingTime;
         this.recipeSerializer = recipeSerializer;
@@ -38,44 +42,44 @@ public abstract class AbstractPotRecipe implements ModRecipeInterface<RecipeWrap
     }
 
     @Override
-    public boolean matches(@NotNull RecipeWrapper recipeWrapper, @NotNull Level level) {
+    public boolean matches(RecipeWrapper recipeWrapper, Level level) {
         List<ItemStack> ingredient = getListByWrapper(recipeWrapper, 0, ingredientInput);
-        List<ItemStack> seasoning = getListByWrapper(recipeWrapper, ingredientInput, ingredientInput + seasoningInput);;
-        return ItemStack.isSameItem(spiceItem.getItems()[0], recipeWrapper.getItem(ingredientInput + seasoningInput))
-                && ingredient.size() == ingredientItem.size()
+        List<ItemStack> seasoning = getListByWrapper(recipeWrapper, ingredientInput, ingredientInput + seasoningInput);
+        ItemStack spice = recipeWrapper.getItem(ingredientInput + seasoningInput);
+        return ingredient.size() == ingredientItem.size()
                 && seasoning.size() == seasoningItem.size()
                 && RecipeMatcher.findMatches(ingredient, ingredientItem) != null
-                && RecipeMatcher.findMatches(seasoning, seasoningItem) != null;
+                && RecipeMatcher.findMatches(seasoning, seasoningItem) != null
+                && containsSameItem(List.of(spiceItem.getItems()), spice);
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull RecipeWrapper recipeWrapper, HolderLookup.@NotNull Provider provider) {
+    public ItemStack assemble(RecipeWrapper recipeWrapper, HolderLookup.Provider provider) {
         return this.output.copy();
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider provider) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return this.output;
     }
 
     @Override
-    public @NotNull NonNullList<Ingredient> getIngredients() {
+    public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> combinedIngredient = NonNullList.create();
         combinedIngredient.addAll(ingredientItem);
         combinedIngredient.addAll(seasoningItem);
-        if (spiceItem != null && !spiceItem.isEmpty()) {
-            combinedIngredient.add(spiceItem);
-        }
+        combinedIngredient.add(spiceItem);
+        combinedIngredient.add(containerItem);
         return combinedIngredient;
     }
 
     @Override
-    public @NotNull RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return recipeSerializer;
     }
 
     @Override
-    public @NotNull RecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return recipeType;
     }
 
@@ -89,6 +93,10 @@ public abstract class AbstractPotRecipe implements ModRecipeInterface<RecipeWrap
 
     public Ingredient getSpiceItem() {
         return spiceItem;
+    }
+
+    public Ingredient getContainerItem() {
+        return containerItem;
     }
 
     public ItemStack getOutput() {

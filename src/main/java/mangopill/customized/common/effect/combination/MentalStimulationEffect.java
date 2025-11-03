@@ -14,7 +14,7 @@ import static mangopill.customized.common.util.category.NutrientCategory.*;
 /**
  * This MobEffect can make the player luckier.
  */
-public class MentalStimulationEffect extends ModMobEffect implements ShrinkNutritionMobEffect, CombinationMobEffect {
+public class MentalStimulationEffect extends CMobEffect implements ShrinkNutritionMobEffect, CombinationMobEffect {
 
     public MentalStimulationEffect(int color) {
         super(color);

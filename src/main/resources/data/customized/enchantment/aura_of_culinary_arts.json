@@ -1,0 +1,30 @@
+{
+    "description": {
+        "translate": "enchantment.customized.aura_of_culinary_arts"
+    },
+    "supported_items": "#c:enchantable/hat",
+    "weight": 1,
+    "max_level": 3,
+    "max_cost": {
+        "base": 60,
+        "per_level_above_first": 20
+    },
+    "min_cost": {
+        "base": 10,
+        "per_level_above_first": 20
+    },
+    "anvil_cost": 8,
+    "slots": [
+        "head"
+    ],
+    "effects": {
+        "customized:aura_of_culinary_arts": {
+            "type": "minecraft:add",
+            "value": {
+                "type": "minecraft:linear",
+                "base": 1,
+                "per_level_above_first": 0
+            }
+        }
+    }
+}

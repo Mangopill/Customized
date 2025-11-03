@@ -1,6 +1,8 @@
 {
   "values": [
     "customized:brewing_barrel",
-    "customized:salt_pan"
+    "customized:salt_pan",
+    "customized:crate",
+    "customized:cutting_board"
   ]
 }

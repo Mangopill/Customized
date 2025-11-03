@@ -2,8 +2,9 @@ package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
 import mangopill.customized.common.block.entity.*;
-import mangopill.customized.common.registry.ModBlockEntityTypeRegistry;
+import mangopill.customized.common.registry.CBlockEntityTypeRegistry;
 import net.minecraft.core.*;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -16,10 +17,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class BrewingBarrelBlock extends BaseEntityBlock {
+public class BrewingBarrelBlock extends BaseEntityBlock implements CSimpleInteractableBlock {
     public static final MapCodec<BrewingBarrelBlock> CODEC = simpleCodec(BrewingBarrelBlock::new);
     public static final IntegerProperty PROGRESS = IntegerProperty.create("progress", 0, 12);
 
@@ -31,31 +31,20 @@ public class BrewingBarrelBlock extends BaseEntityBlock {
         );
     }
 
-    @NotNull
     @Override
-    public ItemInteractionResult useItemOn(
-            @NotNull ItemStack itemStackInHand, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
-            @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult result) {
-        if (level.isClientSide){
-            return ItemInteractionResult.SUCCESS;
-        }
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof BrewingBarrelBlockEntity barrelBlockEntity) {
-            barrelBlockEntity.interact(itemStackInHand, player, level, pos);
-            return ItemInteractionResult.SUCCESS;
-        }
-        return ItemInteractionResult.SUCCESS;
+    public ItemInteractionResult useItemOn(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player,
+                                           InteractionHand hand, BlockHitResult result) {
+        return simpleInteract(itemStackInHand, state, level, pos, player, hand, SoundEvents.BARREL_CLOSE, SoundEvents.BARREL_OPEN);
     }
 
     @Override
-    protected void onRemove(@NotNull BlockState state, @NotNull Level level,
-                            @NotNull BlockPos pos, @NotNull BlockState newState, boolean movedByPiston) {
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (state.getBlock() == newState.getBlock()) {
             return;
         }
         if (level.getBlockEntity(pos) instanceof BrewingBarrelBlockEntity brewingBarrelBlockEntity) {
             NonNullList<ItemStack> stackNonNullList = NonNullList.create();
-            stackNonNullList.addAll(brewingBarrelBlockEntity.getItemStackListInBrewingBarrel(false));
+            stackNonNullList.addAll(brewingBarrelBlockEntity.getItemStackListInBlockEntity(true));
             Containers.dropContents(level, pos, stackNonNullList);
             level.updateNeighbourForOutputSignal(pos, this);
         }
@@ -64,22 +53,22 @@ public class BrewingBarrelBlock extends BaseEntityBlock {
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> blockEntityType) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         if (level.isClientSide) {
             return null;
         }
-        return createTickerHelper(blockEntityType, ModBlockEntityTypeRegistry.BREWING_BARREL.get(), BrewingBarrelBlockEntity::cookingTick);
+        return createTickerHelper(blockEntityType, CBlockEntityTypeRegistry.BREWING_BARREL.get(), BrewingBarrelBlockEntity::cookingTick);
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(BlockStateProperties.HORIZONTAL_FACING);
         builder.add(PROGRESS);
     }
 
     @Override
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -91,12 +80,13 @@ public class BrewingBarrelBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-        return ModBlockEntityTypeRegistry.BREWING_BARREL.get().create(blockPos, blockState);
+    @Nullable
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return CBlockEntityTypeRegistry.BREWING_BARREL.get().create(blockPos, blockState);
     }
 }

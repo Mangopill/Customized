@@ -44,7 +44,10 @@
     ]
   ],
   "rewards": {
-    "experience": 600
+    "experience": 600,
+    "loot": [
+      "customized:gameplay/master_of_culinary_arts"
+    ]
   },
   "sends_telemetry_event": true
 }
