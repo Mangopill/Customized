@@ -1,18 +1,12 @@
 package mangopill.customized.common.effect.combination;
 
 import mangopill.customized.common.effect.*;
-import mangopill.customized.common.util.category.NutrientCategory;
 import net.minecraft.world.entity.LivingEntity;
-
-import java.util.List;
-import java.util.Set;
-
-import static mangopill.customized.common.util.category.NutrientCategory.*;
 
 /**
  * This MobEffect can accelerate the player's health regeneration.
  */
-public class StressReliefEffect extends CMobEffect implements ShrinkNutritionMobEffect, ShrinkSaturationMobEffect, CombinationMobEffect {
+public class StressReliefEffect extends CMobEffect {
 
     public StressReliefEffect(int color) {
         super(color);
@@ -29,20 +23,5 @@ public class StressReliefEffect extends CMobEffect implements ShrinkNutritionMob
     @Override
     public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return duration % (80 / Math.min(80 , amplifier + 1)) == 0;
-    }
-
-    @Override
-    public float getShrinkNutritionModifier() {
-        return -0.05F;
-    }
-
-    @Override
-    public float getShrinkSaturationModifier() {
-        return -0.05F;
-    }
-
-    @Override
-    public List<Set<NutrientCategory>> getCategorySet() {
-        return List.of(Set.of(BITTER, NUMBING));
     }
 }

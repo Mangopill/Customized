@@ -1,0 +1,13 @@
+{
+  "type": "customized:nutrient_buff",
+  "effect": "customized:metabolism",
+  "nutrient_category": [
+    {
+      "mineral": 20.0,
+      "vitamin": 20.0,
+      "dietary_fiber": 20.0
+    }
+  ],
+  "duration": 1.0,
+  "probability": 0.001
+}

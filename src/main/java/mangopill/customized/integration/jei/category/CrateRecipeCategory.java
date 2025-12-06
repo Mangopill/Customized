@@ -4,81 +4,55 @@ import mangopill.customized.Customized;
 import mangopill.customized.common.recipe.CrateRecipe;
 import mangopill.customized.common.registry.CBlockRegistry;
 import mangopill.customized.common.registry.CItemRegistry;
-import mangopill.customized.integration.jei.util.JeiUtil;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.*;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.*;
-import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import static mangopill.customized.common.util.ResourceUtil.*;
+import static mangopill.customized.common.util.StringUtil.*;
 import static mangopill.customized.integration.jei.util.JeiUtil.*;
 
-public class CrateRecipeCategory implements IRecipeCategory<CrateRecipe> {
-    private final Component title;
-    private final IDrawable background;
-    private final IDrawable icon;
+public class CrateRecipeCategory extends CRecipeCategory<CrateRecipe> {
 
     public CrateRecipeCategory(IGuiHelper helper) {
-        title = Component.translatable(CBlockRegistry.CRATE.get().getDescriptionId());
-        background = helper.createDrawable(getCLoc("textures/gui/crate" + ".png"),
-                4, 4, 162, 71);
+        super(CRATE, getCPngLoc("textures/gui/crate"));
+        title = getComponent(CBlockRegistry.CRATE.get().getDescriptionId());
+        background = helper.createDrawable(image, 4, 4, 77, 65);
         icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(CItemRegistry.CRATE.get()));
-    }
-
-    @Override
-    public RecipeType<CrateRecipe> getRecipeType() {
-        return JeiUtil.CRATE;
-    }
-
-    @Override
-    public Component getTitle() {
-        return title;
-    }
-
-    @Override
-    public IDrawable getBackground() {
-        return background;
-    }
-
-    @Override
-    @Nullable
-    public IDrawable getIcon() {
-        return icon;
+        drive = helper.createDrawable(image, 85, 0, 16, 16);
+        arrow = helper.drawableBuilder(image, 85, 16, 15, 22).buildAnimated(TICKS_PER_CYCLE, IDrawableAnimated.StartDirection.TOP, false);
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, CrateRecipe recipe, IFocusGroup focuses) {
-        int slotSize = 18;
-        for (int col = 0; col < 9; ++col) {
-            if (col < recipe.getIngredientItem().size()) {
-                builder.addSlot(RecipeIngredientRole.INPUT, col * slotSize + 1, slotSize)
-                        .addIngredients(recipe.getIngredientItem().get(col));
-            }
-        }
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 73, 54)
-                .addItemStack(recipe.getOutput());
+        List<ItemStack> itemStacks = Arrays.stream(recipe.getIngredientItem().getItems()).map(ItemStack::copy).peek(itemStack -> itemStack.setCount(recipe.getIngredientCount())).toList();
+        builder.addSlot(RecipeIngredientRole.INPUT, 5, 30).addItemStacks(itemStacks);
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 59, 47).addItemStack(recipe.getOutput());
     }
 
     @Override
     public void getTooltip(ITooltipBuilder tooltip, CrateRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         List<Component> tooltipString = new ArrayList<>();
-        if (canAddTooltip(mouseX, mouseY, 74, 36, 14, 15)) {
-            tooltipString.add(Component.translatable("jei.gui." + Customized.MODID + ".cook_time",
-                    recipe.getCookingTime() * 13 / 20));
-        }
-        if (canAddTooltip(mouseX, mouseY, 73, 0, 16, 16)) {
-            tooltipString.add(Component.translatable("jei.gui." + Customized.MODID + ".sunny"));
+        addTooltipIfInArea(mouseX, mouseY, tooltipString, 59, 22, 15, 22, getComponent("jei.gui." + Customized.MODID + ".cook_time", recipe.getCookingTime() / 20));
+        if (recipe.isSunny()) {
+            addTooltipIfInArea(mouseX, mouseY, tooltipString, 59, 0, 16, 16, getComponent("jei.gui." + Customized.MODID + ".sunny"));
         }
         tooltip.addAll(tooltipString);
+    }
+
+    @Override
+    public void draw(CrateRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        if (recipe.isSunny()) {
+            drive.draw(guiGraphics, 59, 0);
+        }
+        arrow.draw(guiGraphics, 59, 22);
     }
 }

@@ -45,9 +45,6 @@ public class PotStrategyHandler {
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AbstractPotBlockEntity potBlockEntity) {
-            if (count == 0){
-                PotStrategyRegistry.onPotRegistry();
-            }
             for (PotInteractionStrategy strategy : map.get(potName)){
                 if (strategy.interact(itemStackInHand, state, level, pos, player, hand, result)) {
                     break;

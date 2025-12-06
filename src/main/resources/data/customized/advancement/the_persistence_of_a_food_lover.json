@@ -13,7 +13,7 @@
             "id": "minecraft:poisonous_potato"
         },
         "title": {
-            "translate": "customized.advancement.the_persistence_of_a_food_lover.desc"
+            "translate": "customized.advancement.the_persistence_of_a_food_lover.title"
         }
     },
     "requirements": [

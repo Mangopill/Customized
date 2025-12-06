@@ -1,22 +1,21 @@
 package mangopill.customized.common.util;
 
+import com.mojang.datafixers.util.Pair;
 import mangopill.customized.common.FoodValue;
-import mangopill.customized.common.effect.ShrinkNutritionMobEffect;
-import mangopill.customized.common.effect.ShrinkSaturationMobEffect;
-import mangopill.customized.common.effect.CombinationMobEffect;
-import mangopill.customized.common.recipe.PropertyValueRecipe;
+import mangopill.customized.common.recipe.*;
+import mangopill.customized.common.recipe.serializer.PropertyValueSerializer;
 import mangopill.customized.common.registry.CRecipeRegistry;
-import mangopill.customized.common.util.category.NutrientCategory;
 import mangopill.customized.common.util.value.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
-import org.apache.commons.lang3.tuple.Pair;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
@@ -26,227 +25,154 @@ import java.util.stream.Collectors;
 
 import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.value.NutrientBuff.*;
 
 public final class PropertyValueUtil {
+
     private PropertyValueUtil() {
     }
 
     public static PropertyValue getPropertyValue(ItemStack stack, Level level) {
-        List<RecipeHolder<PropertyValueRecipe>> recipeHolder = level.getRecipeManager().getRecipesFor(CRecipeRegistry.PROPERTY_VALUE.get(), new SingleRecipeInput(stack), level);
-        if (recipeHolder.isEmpty()) {
+        List<PropertyValueRecipe> recipes = level.getRecipeManager().getRecipesFor(CRecipeRegistry.PROPERTY_VALUE.get(), new SingleRecipeInput(stack), level).stream().map(RecipeHolder::value).toList();
+        return getPropertyValue(stack, recipes);
+    }
+
+    public static PropertyValue getPropertyValue(ItemStack stack, List<PropertyValueRecipe> recipes) {
+        if (recipes.isEmpty()) {
             return new PropertyValue();
         }
-        return recipeHolder.stream()
-                .map(RecipeHolder::value)
-                .filter(PropertyValueRecipe::item)
-                .findFirst().map(PropertyValueRecipe::propertyValue)
-                .orElseGet(() -> {
-                    PropertyValue propertyValue = new PropertyValue();
-                    HashMap<ResourceLocation, PropertyValue> map = new HashMap<>();
-                    recipeHolder.stream().map(RecipeHolder::value).forEach(valueRecipe ->
-                            valueRecipe.name().forEach(name -> map.put(name, valueRecipe.propertyValue()))
-                    );
-                    long maxCount = 0L;
-                    for (ResourceLocation tag : stack.getTags().map(TagKey::location).filter(map::containsKey).toList()) {
-                        long count = tag.getPath().chars().filter(c -> c == '/').count();
-                        if (count >= maxCount) {
-                            if (count > maxCount) {
-                                maxCount = count;
-                                propertyValue.replace();
-                            }
-                            map.get(tag).toSet().forEach(entry ->
-                                    propertyValue.put(entry.getKey(),
-                                            Math.max(propertyValue.getBigger(entry.getKey()), entry.getValue()))
-                            );
-                        }
-                    }
-                    return propertyValue;
-                });
+        Optional<PropertyValue> directMatch = recipes.stream().flatMap(recipe -> recipe.groups().stream())
+                .filter(group -> group.items().contains(BuiltInRegistries.ITEM.getKey(stack.getItem())))
+                .findFirst().map(PropertyValueSerializer.PropertyValueGroup::propertyValue);
+        if (directMatch.isPresent()) {
+            return directMatch.get();
+        }
+        Map<ResourceLocation, PropertyValue> tagValueMap = recipes.stream().flatMap(recipe -> recipe.groups().stream())
+                .flatMap(group -> group.tags().stream().map(tag -> Map.entry(tag, group.propertyValue())))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> v1));
+        return stack.getTags().map(TagKey::location).filter(tagValueMap::containsKey)
+                .max(Comparator.comparingLong(tag -> tag.getPath().chars().filter(c -> c == '/').count()))
+                .map(tagValueMap::get).orElse(new PropertyValue());
+    }
+
+    public static boolean matchesGroup(ItemStack stack, PropertyValueSerializer.PropertyValueGroup group) {
+        if (group.items().contains(BuiltInRegistries.ITEM.getKey(stack.getItem()))) {
+            return true;
+        }
+        return stack.getTags().map(TagKey::location).anyMatch(group.tags()::contains);
     }
 
     public static FoodProperties getFoodPropertyByPropertyValue(Level level, List<ItemStack> stackList, boolean shardByConsumption) {
+        return getFoodPropertyByPropertyValue(level, stackList, null, shardByConsumption);
+    }
+
+    public static FoodProperties getFoodPropertyByPropertyValue(Level level, List<ItemStack> stackList, @Nullable Block block, boolean shardByConsumption) {
         if (stackList.isEmpty()) {
-            return FoodValue.NULL;
+            return FoodValue.EMPTY;
         }
-        Map<NutrientCategory, Float> nutrientTotal = new EnumMap<>(NutrientCategory.class);
-        for (NutrientCategory category : NutrientCategory.values()) {
-            nutrientTotal.put(category, 0.0F);
-        }
+        Map<String, Float> nutrientTotal = new HashMap<>();
         List<FoodProperties.PossibleEffect> foodEffect = new ArrayList<>();
         int nutritionValue = 0;
         float saturationValue = 0.0F;
         for (ItemStack stack : stackList) {
             PropertyValue propertyValue = getPropertyValue(stack, level);
             FoodProperties food = stack.getFoodProperties(null);
-            if (food != null) {
-                if (!food.effects().isEmpty()) {
-                    foodEffect.addAll(food.effects());
-                }
+            if (food != null && !food.effects().isEmpty()) {
+                foodEffect.addAll(food.effects());
             }
             if (!propertyValue.isEmpty()) {
-                for (Pair<NutrientCategory, Float> entry : propertyValue.toSet()) {
-                    NutrientCategory category = entry.getKey();
-                    float value = entry.getValue() * stack.getCount();
-                    nutrientTotal.put(category, nutrientTotal.get(category) + value);
-                }
+                propertyValue.getValue().forEach((category, value) -> nutrientTotal.merge(category, value * stack.getCount(), Float::sum));
             } else {
-                if (food != null) {
-                    nutritionValue += food.nutrition() * stack.getCount();
-                    saturationValue += food.saturation() * stack.getCount();
-                    continue;
-                }
-                return FoodValue.INEDIBLE;
+                if (food == null) return FoodValue.INEDIBLE;
+                nutritionValue += food.nutrition() * stack.getCount();
+                saturationValue += food.saturation() * stack.getCount();
             }
         }
-        for (NutrientCategory category : nutrientTotal.keySet()){
-            for (NutrientFoodValue value : NutrientFoodValue.values()) {
-                if (category.name().equals(value.name())){
-                    nutritionValue += (int) Math.round((nutrientTotal.get(category) * value.getNutrition()));
-                    saturationValue += (float) (nutrientTotal.get(category) * value.getSaturation());
+        for (Map.Entry<String, Float> entry : nutrientTotal.entrySet()) {
+            String category = entry.getKey();
+            float value = entry.getValue();
+            for (RecipeHolder<NutrientCategoryRecipe> recipeHolder : level.getRecipeManager().getAllRecipesFor(CRecipeRegistry.NUTRIENT_CATEGORY.get())) {
+                if (category.equals(recipeHolder.value().name())) {
+                    nutritionValue += Math.round(value * recipeHolder.value().nutrition());
+                    saturationValue += value * recipeHolder.value().saturation();
                 }
             }
         }
-        if (COMBINATION_BUFF.get()){
-            nutritionValue = Math.max(0, (int) (nutritionValue - nutritionValue * getShrinkNutrition(nutrientTotal)));
-            saturationValue = Math.max(0.0F, saturationValue - saturationValue * getShrinkSaturation(nutrientTotal));
-        }
+        nutritionValue = Math.max(0, (int) (nutritionValue - nutritionValue * getShrinkData(nutrientTotal, level).shrinkNutrition));
+        saturationValue = Math.max(0.0F, saturationValue - saturationValue * getShrinkData(nutrientTotal, level).shrinkSaturation);
         FoodProperties.Builder builder = new FoodProperties.Builder();
-        foodEffect.addAll(getCustomizedFoodEffectList(nutrientTotal));
-        if (shardByConsumption){
-            int consumptionCount = getConsumptionCount(stackList);
-            if (consumptionCount != 0){
-                builder.nutrition(nutritionValue / consumptionCount);
-            } else {
-                builder.nutrition(0);
-            }
-            if (nutritionValue != 0){
-                BigDecimal newSaturationValue = new BigDecimal(saturationValue)
-                        .divide(BigDecimal.valueOf(nutritionValue), 6, RoundingMode.HALF_UP)
-                        .divide(BigDecimal.valueOf(consumptionCount), 5, RoundingMode.HALF_UP);
-                builder.saturationModifier(newSaturationValue.floatValue() * 12);
-            } else {
-                builder.saturationModifier(saturationValue / consumptionCount);
-            }
-            if (!foodEffect.isEmpty()) {
-                for (FoodProperties.PossibleEffect pair : foodEffect) {
-                    builder.effect(pair.effectSupplier(), Math.min(pair.probability(), 1.0F));
-                }
-            }
-        } else {
-            builder.nutrition(nutritionValue);
-            if (nutritionValue != 0){
-                BigDecimal newSaturationValue = new BigDecimal(saturationValue)
-                        .divide(BigDecimal.valueOf(nutritionValue), 5, RoundingMode.HALF_UP);
-                builder.saturationModifier(newSaturationValue.floatValue() * 12);
-            } else {
-                builder.saturationModifier(saturationValue);
-            }
-            if (!foodEffect.isEmpty()) {
-                for (FoodProperties.PossibleEffect pair : foodEffect) {
-                    builder.effect(pair.effectSupplier(), pair.probability());
-                }
-            }
+        foodEffect.addAll(getCustomizedFoodEffectList(nutrientTotal, level, block));
+        int consumptionCount = getConsumptionCount(stackList);
+        builder.nutrition(shardByConsumption ? new BigDecimal(nutritionValue).divide(BigDecimal.valueOf(consumptionCount), 2, RoundingMode.HALF_UP).intValue() : nutritionValue);
+        BigDecimal saturationCalc = new BigDecimal(saturationValue).divide(BigDecimal.valueOf(2.0F), 6, RoundingMode.HALF_UP);
+        builder.saturationModifier(shardByConsumption ? saturationCalc.divide(BigDecimal.valueOf(consumptionCount), 6, RoundingMode.HALF_UP).floatValue() : saturationCalc.floatValue());
+        if (!foodEffect.isEmpty()) {
+            foodEffect.forEach(pair -> builder.effect(pair.effectSupplier(), pair.probability()));
         }
         return builder.alwaysEdible().build();
     }
 
-    public static List<FoodProperties.PossibleEffect> getCustomizedFoodEffectList(Map<NutrientCategory, Float> nutrientTotal){
-        Map<NutrientCategory, Float> filteredNutrientTotal = getFilteredNutrientTotal(nutrientTotal);
+    public static List<FoodProperties.PossibleEffect> getCustomizedFoodEffectList(Map<String, Float> nutrientTotal, Level level, @Nullable Block block) {
+        Map<String, Float> filteredNutrientTotal = getFilteredNutrientTotal(nutrientTotal);
         List<FoodProperties.PossibleEffect> foodEffect = new ArrayList<>();
-        for (NutrientCategory category : filteredNutrientTotal.keySet()){
-            float nutrientValue = filteredNutrientTotal.get(category);
-            if (NORMAL_BUFF.get()) {
-                addBuffToList(nutrientValue, foodEffect, getNormalBuff(category));
-            }
-            if (POWERFUL_BUFF.get()) {
-                addBuffToList(nutrientValue, foodEffect, getPowerfulBuff(category));
-            }
-        }
-        if (COMBINATION_BUFF.get()) {
-            Map<NutrientBuff, Float> combinationBuff = getCombinationBuffMap(filteredNutrientTotal);
-            combinationBuff.forEach((n, f) -> addBuffToList(f, foodEffect, n));
-        }
+        getMatchedBuffRecipes(filteredNutrientTotal, level).forEach(matched -> addBuffToList(matched.getSecond(), foodEffect, matched.getFirst(), block));
         return foodEffect;
     }
 
-    public static Map<NutrientCategory, Float> getFilteredNutrientTotal(Map<NutrientCategory, Float> nutrientTotal) {
-        return nutrientTotal.entrySet().stream()
-                .filter(entry -> entry.getValue() > 0.0F)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    public static Map<String, Float> getFilteredNutrientTotal(Map<String, Float> nutrientTotal) {
+        return nutrientTotal.entrySet().stream().filter(entry -> entry.getValue() > 0.0F).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public static Map<NutrientBuff, Float> getCombinationBuffMap(Map<NutrientCategory, Float> filteredNutrientTotal) {
-        Map<NutrientBuff, Float> combinationBuff = new HashMap<>();
-        Set<NutrientBuff> nutrientTotal = EnumSet.allOf(NutrientBuff.class);
-        nutrientTotal.forEach(nutrientBuff -> {
-            if (nutrientBuff.getEffect().value() instanceof CombinationMobEffect combinationMobEffect) {
-                putCombinationBuffByContains(filteredNutrientTotal, combinationBuff, nutrientBuff, combinationMobEffect.getCategorySet());
+    public static List<Pair<NutrientBuffRecipe, Float>> getMatchedBuffRecipes(Map<String, Float> filteredNutrientTotal, Level level) {
+        return level.getRecipeManager().getAllRecipesFor(CRecipeRegistry.NUTRIENT_BUFF.get()).stream()
+                .map(RecipeHolder::value).map(recipe -> Pair.of(recipe, checkRecipeMatch(filteredNutrientTotal, recipe.nutrientCategory())))
+                .filter(pair -> pair.getSecond() > 0.0F).toList();
+    }
+
+    public static Float checkRecipeMatch(Map<String, Float> filteredNutrientTotal, List<HashSet<Pair<String, Float>>> nutrientCategories) {
+        return nutrientCategories.stream().map(categorySet -> {
+            float totalValue = 0.0F;
+            for (Pair<String, Float> requirement : categorySet) {
+                Float actualValue = filteredNutrientTotal.get(requirement.getFirst());
+                if (actualValue == null || actualValue < requirement.getSecond()) {
+                    return null;
+                }
+                totalValue += actualValue;
             }
-        });
-        return combinationBuff;
+            return totalValue;
+        }).filter(Objects::nonNull).findFirst().orElse(0.0F);
     }
 
-    public static float getShrinkNutrition(Map<NutrientCategory, Float> nutrientTotal) {
-        Map<NutrientBuff, Float> buffMap = getCombinationBuffMap(getFilteredNutrientTotal(nutrientTotal));
-        float i = 0.0F;
-        for (NutrientBuff nutrient : buffMap.keySet()) {
-            if (nutrient.getEffect().value() instanceof ShrinkNutritionMobEffect effect) {
-                i += effect.getShrinkNutritionModifier();
+    public static ShrinkData getShrinkData(Map<String, Float> nutrientTotal, Level level) {
+        Map<String, Float> filteredNutrientTotal = getFilteredNutrientTotal(nutrientTotal);
+        List<Pair<NutrientBuffRecipe, Float>> matchedRecipes = getMatchedBuffRecipes(filteredNutrientTotal, level);
+        float shrinkNutritionTotal = 0.0F;
+        float shrinkSaturationTotal = 0.0F;
+        for (Pair<NutrientBuffRecipe, Float> matched : matchedRecipes) {
+            NutrientBuffRecipe recipe = matched.getFirst();
+            shrinkNutritionTotal += recipe.shrinkNutrition();
+            shrinkSaturationTotal += recipe.shrinkSaturation();
+        }
+        return new ShrinkData(shrinkNutritionTotal, shrinkSaturationTotal);
+    }
+
+    public static List<RecipeHolder<NutrientCategoryRecipe>> getNutrientCategoryByName(Level level, String name) {
+        return level.getRecipeManager().getAllRecipesFor(CRecipeRegistry.NUTRIENT_CATEGORY.get()).stream()
+                .filter(recipeHolder -> recipeHolder.value().name().equals(name)).toList();
+    }
+
+    public record ShrinkData(float shrinkNutrition, float shrinkSaturation) {}
+
+    public static void addBuffToList(float nutrientValue, List<FoodProperties.PossibleEffect> foodEffect, NutrientBuffRecipe recipe, @Nullable Block block) {
+        if (block != null && !recipe.pot().isEmpty()) {
+            boolean potMatches = recipe.pot().stream()
+                    .anyMatch(ingredient -> ingredient.test(block.asItem().getDefaultInstance()));
+            if (!potMatches) {
+                return;
             }
         }
-        return i;
-    }
-
-    public static float getShrinkSaturation(Map<NutrientCategory, Float> nutrientTotal) {
-        Map<NutrientBuff, Float> buffMap = getCombinationBuffMap(getFilteredNutrientTotal(nutrientTotal));
-        float i = 0.0F;
-        for (NutrientBuff nutrient : buffMap.keySet()) {
-            if (nutrient.getEffect().value() instanceof ShrinkSaturationMobEffect effect) {
-                i += effect.getShrinkSaturationModifier();
-            }
-        }
-        return i;
-    }
-
-    public static void putCombinationBuffByContains(Map<NutrientCategory, Float> filteredNutrientTotal, Map<NutrientBuff, Float> combinationBuffMap, NutrientBuff combinationBuff, List<Set<NutrientCategory>> sets) {
-        for (Set<NutrientCategory> set : sets) {
-            if (filteredNutrientTotal.keySet().containsAll(set)) {
-                float totalValue = (float) filteredNutrientTotal.entrySet().stream()
-                        .filter(entry -> set.contains(entry.getKey()))
-                        .mapToDouble(Map.Entry::getValue)
-                        .sum();
-                combinationBuffMap.put(combinationBuff, totalValue);
-            }
-        }
-    }
-
-    public static void addBuffToList(float nutrientValue, List<FoodProperties.PossibleEffect> foodEffect, @Nullable NutrientBuff nutrientBuff) {
-        if (nutrientBuff == null){
-            return;
-        }
-        int duration = Math.round(nutrientValue * (float) nutrientBuff.getDuration());
-        float probability = (float) (nutrientValue * nutrientBuff.getProbability());
-        foodEffect.add(new FoodProperties.PossibleEffect(
-                () -> new MobEffectInstance(nutrientBuff.getEffect(), duration, Math.min((int) (nutrientValue / BUFF_AMPLIFIER.get()), 9)), Math.min(probability, 1.0F)));
-    }
-
-    @Nullable
-    public static NutrientBuff getNormalBuff(NutrientCategory category){
-        return switch (category) {
-            case COLD -> ICED;
-            case WARM -> WARM_STOMACH;
-            default -> null;
-        };
-    }
-
-    @Nullable
-    public static NutrientBuff getPowerfulBuff(NutrientCategory category){
-        return switch (category) {
-            case ECOLOGY -> VITALITY;
-            case DREAD -> ANTIDOTE;
-            case NOTHINGNESS -> SOAR;
-            default -> null;
-        };
+        int duration = Math.round(nutrientValue * recipe.duration());
+        float probability = nutrientValue * recipe.probability();
+        int amplifier = Math.min((int) (nutrientValue / BUFF_AMPLIFIER.get()), 9);
+        foodEffect.add(new FoodProperties.PossibleEffect(() -> new MobEffectInstance(recipe.effect(), duration, amplifier), Math.min(probability, 1.0F)));
     }
 }

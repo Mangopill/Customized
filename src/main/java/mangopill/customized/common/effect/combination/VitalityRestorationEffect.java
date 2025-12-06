@@ -1,7 +1,6 @@
 package mangopill.customized.common.effect.combination;
 
 import mangopill.customized.common.effect.*;
-import mangopill.customized.common.util.category.NutrientCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -10,15 +9,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-import java.util.List;
-import java.util.Set;
-
-import static mangopill.customized.common.util.category.NutrientCategory.*;
-
 /**
  *This MobEffect grants the player the DAMAGE_RESISTANCE effect upon activation and increases their maximum health.
  */
-public class VitalityRestorationEffect extends CMobEffect implements ShrinkSaturationMobEffect, CombinationMobEffect {
+public class VitalityRestorationEffect extends CMobEffect {
 
     public VitalityRestorationEffect(int color) {
         super(color);
@@ -30,10 +24,5 @@ public class VitalityRestorationEffect extends CMobEffect implements ShrinkSatur
         if (livingEntity instanceof ServerPlayer player) {
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, (amplifier + 1) * 600, amplifier));
         }
-    }
-
-    @Override
-    public List<Set<NutrientCategory>> getCategorySet() {
-        return List.of(Set.of(SOUR, SWEET));
     }
 }

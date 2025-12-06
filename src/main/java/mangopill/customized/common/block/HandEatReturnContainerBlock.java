@@ -24,6 +24,8 @@ import net.minecraft.world.phys.shapes.*;
 
 import java.util.function.Supplier;
 
+import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+
 public class HandEatReturnContainerBlock extends Block {
     public static final IntegerProperty EAT = IntegerProperty.create("eat", 0, 10);
     protected static final VoxelShape SHAPE = Shapes.or(
@@ -63,9 +65,7 @@ public class HandEatReturnContainerBlock extends Block {
                 eat(level, player, pos);
                 level.setBlockAndUpdate(pos, state.setValue(EAT, eat + 1));
             } else {
-                if (!player.getInventory().add(container.get().getDefaultInstance())) {
-                    player.drop(container.get().getDefaultInstance(), false);
-                }
+                addItemToPlayer(player, container.get().getDefaultInstance());
                 level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.PLAYERS, 0.8F, 1.0F);
                 level.removeBlock(pos, false);
             }

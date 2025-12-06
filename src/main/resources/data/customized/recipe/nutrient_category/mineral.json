@@ -1,0 +1,7 @@
+{
+  "type": "customized:nutrient_category",
+  "icon": "customized:textures/gui/nutrient_category/mineral.png",
+  "name": "mineral",
+  "color": "0x574D39",
+  "nutrition": 0.01
+}

@@ -1,0 +1,17 @@
+{
+  "type": "customized:property_value",
+  "group": [
+    {
+      "tag": [
+        "c:drinks/honey"
+      ],
+      "value": {
+        "water": 3.4,
+        "protein": 0.3,
+        "carbohydrate": 82.4,
+        "mineral": 0.8,
+        "sweet": 28.0
+      }
+    }
+  ]
+}

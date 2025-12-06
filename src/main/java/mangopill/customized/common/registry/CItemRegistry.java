@@ -14,6 +14,7 @@ import java.util.LinkedHashSet;
 import java.util.function.Supplier;
 
 import static mangopill.customized.common.util.RegistryUtil.*;
+import static mangopill.customized.common.util.StringUtil.getCLoc;
 
 public class CItemRegistry {
     public static final DeferredRegister.Items ITEM = DeferredRegister.createItems(Customized.MODID);
@@ -46,6 +47,8 @@ public class CItemRegistry {
     //crop
     public static final Supplier<Item> RICE = registerWithCreativeTab(
             "rice", basicItem());
+    public static final Supplier<Item> RICE_PANICLE = registerWithCreativeTab(
+            "rice_panicle", basicItem());
     public static final Supplier<Item> RICE_SEED = registerWithCreativeTab(
             "rice_seed", itemNameBlockItem(CBlockRegistry.RICE_CROP, basicItemProperties()));
     public static final Supplier<Item> TOMATO = registerWithCreativeTab(
@@ -72,8 +75,10 @@ public class CItemRegistry {
             "ginger", foodSeedItem(CBlockRegistry.GINGER_CROP, FoodValue.GINGER));
     //kitchenware item
     public static final Supplier<Item> SPOON = registerWithCreativeTab(
-            "spoon", () -> new ShovelItem(Tiers.IRON, new Item.Properties().attributes(ShovelItem.createAttributes(Tiers.IRON, 2, -3.0F))));
-    public static final Supplier<Item> CASSEROLE_ILD = registerWithCreativeTab(
+            "spoon", () -> new ShovelItem(Tiers.IRON, new Item.Properties().attributes(ShovelItem.createAttributes(Tiers.IRON, 2.0F, -3.0F))));
+    public static final Supplier<Item> SPATULA = registerWithCreativeTab(
+            "spatula", () -> new ShovelItem(Tiers.IRON, new Item.Properties().attributes(ShovelItem.createAttributes(Tiers.IRON, 2.2F, -3.0F))));
+    public static final Supplier<Item> CASSEROLE_LID = registerWithCreativeTab(
             "casserole_lid", () -> new Item(basicItemProperties().stacksTo(1)));
     public static final Supplier<Item> FAMOUS_DISH_PLATE = registerWithCreativeTab(
             "famous_dish_plate", basicItem());
@@ -88,7 +93,7 @@ public class CItemRegistry {
     public static final Supplier<Item> DIAMOND_KNIFE = registerWithCreativeTab(
             "diamond_knife", modKnifeItem(Tiers.DIAMOND, 0.15F));
     public static final Supplier<Item> NETHERITE_KNIFE = registerWithCreativeTab(
-            "netherite_knife", modKnifeItem(Tiers.NETHERITE, 0.2F));
+            "netherite_knife", modFireResistantKnifeItem(Tiers.NETHERITE, 0.2F));
     //famous dish
     public static final Supplier<Item> TOMATO_AND_BEEF_BRISKET_SOUP = registerWithCreativeTab(
             "tomato_and_beef_brisket_soup", blockItem(CBlockRegistry.TOMATO_AND_BEEF_BRISKET_SOUP, basicItemProperties()));
@@ -106,9 +111,14 @@ public class CItemRegistry {
     //kitchenware block
     public static final Supplier<Item> CASSEROLE = registerWithCreativeTab(
             "casserole", blockItem(CBlockRegistry.CASSEROLE, basicItemProperties()));
+    public static final Supplier<Item> ROASTER = registerWithCreativeTab(
+            "roaster", blockItem(CBlockRegistry.ROASTER, basicItemProperties()));
     public static final Supplier<Item> SOUP_BOWL = registerWithCreativeTab(
             "soup_bowl", () -> new SoupBowlItem(CBlockRegistry.SOUP_BOWL, basicPlateItemProperties(
-                    PlateSlotRecord.SOUP_BOWL.ingredientInput() + PlateSlotRecord.SOUP_BOWL.seasoningInput() + 1)));
+                    PlateSlotRecord.SOUP_BOWL.ingredientInput() + PlateSlotRecord.SOUP_BOWL.seasoningInput() + PlateSlotRecord.SOUP_BOWL.spiceInput())));
+    public static final Supplier<Item> BAKING_PAN = registerWithCreativeTab(
+            "baking_pan", () -> new BakingPanItem(CBlockRegistry.BAKING_PAN, basicPlateItemProperties(
+                    PlateSlotRecord.BAKING_PAN.ingredientInput() + PlateSlotRecord.BAKING_PAN.seasoningInput() + PlateSlotRecord.BAKING_PAN.spiceInput())));
     public static final Supplier<Item> BREWING_BARREL = registerWithCreativeTab(
             "brewing_barrel", blockItem(CBlockRegistry.BREWING_BARREL, basicItemProperties()));
     public static final Supplier<Item> CRATE = registerWithCreativeTab(
@@ -118,7 +128,7 @@ public class CItemRegistry {
             "cutting_board", blockItem(CBlockRegistry.CUTTING_BOARD, basicItemProperties()));
     //hat
     public static final Supplier<Item> CHEF_HAT = registerWithCreativeTab(
-            "chef_hat", modHatItem(CArmorMaterialRegistry.CHEF, Rarity.RARE, 10, -1.15D, 0.75F));
+            "chef_hat", modHatItem(CArmorMaterialRegistry.CHEF, Rarity.RARE, getCLoc("item/armor/chef_hat"), 10, -1.15D, 0.75F));
     public static final Supplier<Item> NETHERITE_CHEF_HAT = registerWithCreativeTab(
-            "netherite_chef_hat", modHatItem(CArmorMaterialRegistry.NETHERITE_CHEF, Rarity.EPIC, 37, -1.0D, 1.0F));
+            "netherite_chef_hat", modFireResistantHatItem(CArmorMaterialRegistry.NETHERITE_CHEF, Rarity.EPIC, getCLoc("item/armor/netherite_chef_hat"), 37, -1.0D, 1.0F));
 }

@@ -9,7 +9,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import java.util.HashMap;
 import java.util.Map;
 
-import static mangopill.customized.common.util.ResourceUtil.*;
+import static mangopill.customized.common.util.StringUtil.*;
 
 public record PlayerAuraData(
         Map<String, AuraOfCulinaryArtsEnchantmentEffect.CulinaryAuraData> playerAuraData) implements CustomPacketPayload {

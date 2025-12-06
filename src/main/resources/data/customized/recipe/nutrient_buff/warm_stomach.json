@@ -1,0 +1,11 @@
+{
+  "type": "customized:nutrient_buff",
+  "effect": "customized:warm_stomach",
+  "nutrient_category": [
+    {
+      "warm": 20.0
+    }
+  ],
+  "duration": 1.0,
+  "probability": 0.003
+}

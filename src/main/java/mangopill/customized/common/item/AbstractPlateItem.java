@@ -4,7 +4,6 @@ import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.AbstractPlateBlock;
 import mangopill.customized.common.block.entity.AbstractPlateBlockEntity;
-import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.state.PlateState;
 import mangopill.customized.common.registry.CAdvancementRegistry;
 import mangopill.customized.common.util.CItemStackHandlerHelper;
@@ -38,6 +37,7 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.StringUtil.*;
 import static mangopill.customized.common.util.component.PlateComponentUtil.*;
 
 public abstract class AbstractPlateItem extends BlockItem {
@@ -46,7 +46,7 @@ public abstract class AbstractPlateItem extends BlockItem {
     private final int spiceInput;
     private final boolean canInputDrive;
 
-    public AbstractPlateItem(Supplier<Block> block, Properties properties, int ingredientInput, int seasoningInput, int spiceInput, boolean canInputDrive) {
+    protected AbstractPlateItem(Supplier<Block> block, Properties properties, int ingredientInput, int seasoningInput, int spiceInput, boolean canInputDrive) {
         super(block.get(), properties);
         this.ingredientInput = ingredientInput;
         this.seasoningInput = seasoningInput;
@@ -57,11 +57,11 @@ public abstract class AbstractPlateItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".consumption_count_total", getConsumptionCountTotal(stack)).withStyle(ChatFormatting.GRAY));
-        tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".consumption_count", getConsumptionCount(stack)).withStyle(ChatFormatting.GRAY));
+        tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".consumption_count_total", getConsumptionCountTotal(stack)).withStyle(ChatFormatting.GRAY));
+        tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".consumption_count", getConsumptionCount(stack)).withStyle(ChatFormatting.GRAY));
         addItemStackTooltip(stack, tooltipComponents);
         if (getFoodProperty(stack).equals(FoodValue.INEDIBLE)) {
-            tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".inedible").withStyle(ChatFormatting.DARK_RED));
+            tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".inedible").withStyle(ChatFormatting.DARK_RED));
         }
         addUuidTooltip(stack, tooltipComponents, context);
         addEffectTooltip(stack, context, tooltipComponents);
@@ -100,7 +100,7 @@ public abstract class AbstractPlateItem extends BlockItem {
             } else {
                 clearAllSlot(getItemStackHandler(stack));
                 clearAllSlot(getInitialItemStackHandler(stack));
-                setFoodProperty(stack, FoodValue.NULL);
+                setFoodProperty(stack, FoodValue.EMPTY);
                 setConsumptionCountTotal(stack, 0);
             }
             setConsumptionCount(stack, --consumptionCount);
@@ -173,15 +173,15 @@ public abstract class AbstractPlateItem extends BlockItem {
         if (topTwoItems.size() == 1) {
             ItemStack aStack = getTopTwoItemsByCount(stackList).getFirst();
             return Component.empty().append(aStack.getDisplayName())
-                    .append(":").append(Component.translatable(this.getDescriptionId(stack) + "_food"));
+                    .append(":").append(getComponent(this.getDescriptionId(stack) + "_food"));
         }
         if (topTwoItems.size() == 2) {
             ItemStack aStack = getTopTwoItemsByCount(stackList).getFirst();
             ItemStack bStack = getTopTwoItemsByCount(stackList).get(1);
             return Component.empty().append(aStack.getDisplayName()).append("&").append(bStack.getDisplayName())
-                    .append(":").append(Component.translatable(this.getDescriptionId(stack) + "_food"));
+                    .append(":").append(getComponent(this.getDescriptionId(stack) + "_food"));
         }
-        return Component.translatable(this.getDescriptionId(stack));
+        return getComponent(this.getDescriptionId(stack));
     }
 
     public void insertItem(ItemStack stack, ItemStackHandler newItemStackHandler) {
@@ -207,9 +207,8 @@ public abstract class AbstractPlateItem extends BlockItem {
         List<ItemStack> stackList = getItemStackListInPlate(stack, true);
         if (!stackList.isEmpty()) {
             stackList.forEach(itemStack ->
-                    tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".item_stack",
-                        itemStack.getCount(),
-                        Component.translatable(itemStack.getItem().getDescriptionId())).withStyle(ChatFormatting.GRAY)));
+                    tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".item_stack",
+                        itemStack.getCount(), itemStack.getItem().getDescription()).withStyle(ChatFormatting.GRAY)));
         }
     }
 
@@ -222,9 +221,9 @@ public abstract class AbstractPlateItem extends BlockItem {
         if (player == null) {
             return;
         }
-        MutableComponent Uuid = Component.translatable("item_text." + Customized.MODID + ".last_interact_player_id", player.getDisplayName()).withStyle(ChatFormatting.YELLOW);
+        MutableComponent Uuid = getComponent("item_text." + Customized.MODID + ".last_interact_player_id", player.getDisplayName()).withStyle(ChatFormatting.YELLOW);
         if (getAdvancementHasProgress(stack)) {
-            Uuid.append(Component.translatable("item_text." + Customized.MODID + ".master_of_culinary_arts")).withStyle(ChatFormatting.GOLD);
+            Uuid.append(getComponent("item_text." + Customized.MODID + ".master_of_culinary_arts")).withStyle(ChatFormatting.GOLD);
         }
         tooltipComponents.add(Uuid);
     }
@@ -235,9 +234,9 @@ public abstract class AbstractPlateItem extends BlockItem {
                 int i = Mth.floor((float) buff.effectSupplier().get().getDuration());
                 Component component = Component.literal(StringUtil.formatTickDuration(i, context.tickRate()));
                 MobEffect mobEffect = buff.effectSupplier().get().getEffect().value();
-                tooltipComponents.add(Component.translatable("item_text." + Customized.MODID + ".buff",
-                                Component.translatable(mobEffect.getDescriptionId())
-                                        .append(Component.translatable("enchantment.level." + (buff.effect().getAmplifier() + 1)))
+                tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".buff",
+                                getComponent(mobEffect.getDescriptionId())
+                                        .append(getComponent("enchantment.level." + (buff.effect().getAmplifier() + 1)))
                                 , component)
                         .withStyle(mobEffect.getCategory().getTooltipFormatting()));
             });

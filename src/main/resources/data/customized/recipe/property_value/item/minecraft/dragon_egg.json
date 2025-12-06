@@ -1,9 +1,13 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:dragon_egg"
-  ],
-  "value": {
-    "nothingness" : 100.0
-  }
+  "group": [
+    {
+      "item": [
+        "minecraft:dragon_egg"
+      ],
+      "value": {
+        "nothingness": 100.0
+      }
+    }
+  ]
 }

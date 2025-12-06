@@ -1,18 +1,12 @@
 package mangopill.customized.common.effect.combination;
 
 import mangopill.customized.common.effect.*;
-import mangopill.customized.common.util.category.NutrientCategory;
 import net.minecraft.world.entity.LivingEntity;
-
-import java.util.List;
-import java.util.Set;
-
-import static mangopill.customized.common.util.category.NutrientCategory.*;
 
 /**
  * This MobEffect can enhance the entity's health regeneration.
  */
-public class SmoothBloodFlowEffect extends CMobEffect implements ShrinkSaturationMobEffect, ShrinkNutritionMobEffect, CombinationMobEffect {
+public class SmoothBloodFlowEffect extends CMobEffect {
 
     public SmoothBloodFlowEffect(int color) {
         super(color);
@@ -29,10 +23,5 @@ public class SmoothBloodFlowEffect extends CMobEffect implements ShrinkSaturatio
     @Override
     public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return duration % (80 / Math.min(80 , amplifier + 1)) == 0;
-    }
-
-    @Override
-    public List<Set<NutrientCategory>> getCategorySet() {
-        return List.of(Set.of(SALTY, NUMBING));
     }
 }

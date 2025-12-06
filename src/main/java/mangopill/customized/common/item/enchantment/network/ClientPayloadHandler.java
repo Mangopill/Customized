@@ -1,6 +1,6 @@
 package mangopill.customized.common.item.enchantment.network;
 
-import mangopill.customized.client.event.renderer.player.AuraOfCulinaryArtsEnchantmentEffectRenderer;
+import mangopill.customized.client.event.player.AuraOfCulinaryArtsEnchantmentEffectRenderer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ClientPayloadHandler {

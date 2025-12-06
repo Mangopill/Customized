@@ -1,9 +1,13 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:heart_of_the_sea"
-  ],
-  "value": {
-    "ecology" : 100.0
-  }
+  "group": [
+    {
+      "item": [
+        "minecraft:heart_of_the_sea"
+      ],
+      "value": {
+        "ecology": 100.0
+      }
+    }
+  ]
 }

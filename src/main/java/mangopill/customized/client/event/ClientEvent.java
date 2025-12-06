@@ -1,24 +1,21 @@
 package mangopill.customized.client.event;
 
 import mangopill.customized.Customized;
-import mangopill.customized.client.event.renderer.block.*;
-import mangopill.customized.client.event.renderer.gui.PotOverlay;
-import mangopill.customized.client.event.renderer.item.CrateItemRenderer;
-import mangopill.customized.client.event.renderer.item.SoupBowlItemRenderer;
-import mangopill.customized.client.event.renderer.player.AuraOfCulinaryArtsEnchantmentEffectRenderer;
-import mangopill.customized.client.event.renderer.player.CHatLayerRenderer;
+import mangopill.customized.client.event.block.*;
+import mangopill.customized.client.event.entity.AbstractArrowItemRenderer;
+import mangopill.customized.client.event.gui.PotOverlay;
+import mangopill.customized.client.event.item.*;
+import mangopill.customized.client.event.player.AuraOfCulinaryArtsEnchantmentEffectRenderer;
+import mangopill.customized.client.event.player.CHatLayerRenderer;
 import mangopill.customized.client.particle.*;
 import mangopill.customized.common.item.*;
 import mangopill.customized.common.registry.*;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.EntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -26,36 +23,47 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import static mangopill.customized.client.util.TintingUtil.*;
-import static mangopill.customized.common.util.ResourceUtil.getCLoc;
+import static mangopill.customized.client.util.TooltipUtil.*;
+import static mangopill.customized.common.util.StringUtil.*;
 
 @EventBusSubscriber(modid = Customized.MODID, value = Dist.CLIENT)
 public class ClientEvent {
     @SubscribeEvent
     public static void registerOverride(final FMLClientSetupEvent event) {
         event.enqueueWork(() -> ItemProperties.register(CItemRegistry.SOUP_BOWL.get(), getCLoc("drive"),
-                (stack, level, player, seed) -> stack.getItem() instanceof SoupBowlItem ?
-                        ((SoupBowlItem) stack.getItem()).hasInput(stack) ? 1.0F : 0.0F : 0.0F));
+                (stack, level, player, seed) -> stack.getItem() instanceof AbstractPlateItem ?
+                        ((AbstractPlateItem) stack.getItem()).hasInput(stack) ? 1.0F : 0.0F : 0.0F));
+        event.enqueueWork(() -> ItemProperties.register(CItemRegistry.BAKING_PAN.get(), getCLoc("drive"),
+                (stack, level, player, seed) -> stack.getItem() instanceof AbstractPlateItem ?
+                        ((AbstractPlateItem) stack.getItem()).hasInput(stack) ? 1.0F : 0.0F : 0.0F));
     }
     @SubscribeEvent
     public static void registerAdditional(ModelEvent.RegisterAdditional event) {
         event.register(ModelResourceLocation.standalone(getCLoc("item/soup_bowl_with_drive_renderer")));
+        event.register(ModelResourceLocation.standalone(getCLoc("item/baking_pan_with_drive_renderer")));
         event.register(ModelResourceLocation.standalone(getCLoc("item/crate_renderer")));
         event.register(ModelResourceLocation.standalone(getCLoc("item/armor/chef_hat")));
         event.register(ModelResourceLocation.standalone(getCLoc("item/armor/netherite_chef_hat")));
         event.register(ModelResourceLocation.standalone(getCLoc("item/curio/culinary_masters_hat")));
+        event.register(ModelResourceLocation.standalone(getCLoc("block/casserole_drive")));
     }
     @SubscribeEvent
     public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerItem(new SoupBowlItemRenderer.SoupBowlItemExtensions(), CItemRegistry.SOUP_BOWL.get());
+        event.registerItem(new BakingPanItemRenderer.BakingPanItemExtensions(), CItemRegistry.BAKING_PAN.get());
         event.registerItem(new CrateItemRenderer.CrateItemExtensions(), CItemRegistry.CRATE.get());
     }
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(CEntityTypeRegistry.KNIFE.get(), AbstractArrowItemRenderer::new);
         event.registerBlockEntityRenderer(CBlockEntityTypeRegistry.SUSPICIOUS_DIRT.get(), CBrushableBlockRenderer::new);
         event.registerBlockEntityRenderer(CBlockEntityTypeRegistry.CASSEROLE.get(), CasseroleBlockRenderer::new);
+        event.registerBlockEntityRenderer(CBlockEntityTypeRegistry.ROASTER.get(), RoasterBlockRenderer::new);
         event.registerBlockEntityRenderer(CBlockEntityTypeRegistry.SOUP_BOWL.get(), SoupBowlBlockRenderer::new);
+        event.registerBlockEntityRenderer(CBlockEntityTypeRegistry.BAKING_PAN.get(), BakingPanBlockRenderer::new);
         event.registerBlockEntityRenderer(CBlockEntityTypeRegistry.BREWING_BARREL.get(), BrewingBarrelBlockRenderer::new);
         event.registerBlockEntityRenderer(CBlockEntityTypeRegistry.CRATE.get(), CrateBlockRenderer::new);
         event.registerBlockEntityRenderer(CBlockEntityTypeRegistry.CUTTING_BOARD.get(), CuttingBoardBlockRenderer::new);
@@ -80,6 +88,13 @@ public class ClientEvent {
         event.registerAbove(VanillaGuiLayers.CROSSHAIR, getCLoc("pot"), new PotOverlay());
     }
     @SubscribeEvent
+    public static void onItemTooltip(ItemTooltipEvent event) {
+        if (event.getEntity() == null || event.getEntity().level() == null) {
+            return;
+        }
+        propertyValueTooltip(event.getToolTip(), event.getItemStack(), event.getEntity().level());
+    }
+    @SubscribeEvent
     public static void onEntityRenderers(EntityRenderersEvent.AddLayers event) {
         for (PlayerSkin.Model skinName : event.getSkins()) {
             PlayerRenderer playerRenderer = event.getSkin(skinName);
@@ -89,13 +104,8 @@ public class ClientEvent {
             playerRenderer.addLayer(new CHatLayerRenderer<>(playerRenderer));
             playerRenderer.addLayer(new AuraOfCulinaryArtsEnchantmentEffectRenderer<>(playerRenderer));
         }
-        for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {
-            EntityRenderer<?> renderer = event.getRenderer(entityType);
-            if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-                if (livingRenderer.getModel() instanceof HumanoidModel<?>) {
-                    livingRenderer.addLayer(new CHatLayerRenderer(livingRenderer));
-                }
-            }
-        }
+        event.getEntityTypes().stream().map(event::getRenderer)
+                .filter(renderer -> renderer instanceof LivingEntityRenderer<?, ?> livingRenderer && livingRenderer.getModel() instanceof HumanoidModel<?>)
+                .forEach(renderer -> ((LivingEntityRenderer<?, ?>) renderer).addLayer(new CHatLayerRenderer(((LivingEntityRenderer<?, ?>) renderer))));
     }
 }

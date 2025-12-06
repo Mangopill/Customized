@@ -1,116 +1,56 @@
 package mangopill.customized.common.util.value;
 
-import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
-import mangopill.customized.common.util.category.NutrientCategory;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.StringRepresentable;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class PropertyValue {
-    private static final NutrientCategory[] CATEGORY = NutrientCategory.values();
-    private final float[] value = new float[CATEGORY.length];
-    private int size;
+    private final Map<String, Float> valueMap = new HashMap<>();
 
-    public static final Codec<NutrientCategory> CATEGORY_CODEC = StringRepresentable.fromEnum(NutrientCategory::values);
-    public static final Codec<PropertyValue> CODEC = Codec.unboundedMap(CATEGORY_CODEC, Codec.FLOAT).xmap(
-            PropertyValue::putToMap, propertyValues ->
-                    propertyValues.toSet().stream().collect(Collectors.toUnmodifiableMap(Pair::getKey, Pair::getValue))
-    );
-    public static final StreamCodec<FriendlyByteBuf, PropertyValue> STREAM_CODEC = StreamCodec.of(
-            PropertyValue::toNetwork, PropertyValue::fromNetwork
-    );
+    public static final Codec<PropertyValue> CODEC = Codec.unboundedMap(Codec.STRING, Codec.FLOAT).xmap(PropertyValue::new, propertyValue -> propertyValue.valueMap);
+    public static final StreamCodec<FriendlyByteBuf, PropertyValue> STREAM_CODEC = StreamCodec.of(PropertyValue::toNetwork, PropertyValue::fromNetwork);
 
-    public static PropertyValue putToMap(Map<NutrientCategory, Float> map) {
-        PropertyValue propertyValue = new PropertyValue();
-        map.forEach(propertyValue::put);
-        return propertyValue;
+    public PropertyValue() {
     }
 
-    public boolean has(NutrientCategory category) {
-        return value[category.ordinal()] > 0.0F;
+    public PropertyValue(Map<String, Float> valueMap) {
+        for (Map.Entry<String, Float> entry : valueMap.entrySet()) {
+            this.put(entry.getKey(), entry.getValue());
+        }
     }
 
-    public boolean notHas(NutrientCategory category) {
-        return !this.has(category);
-    }
-
-    public void put(NutrientCategory category, float value) {
+    public void put(String category, float value) {
         if (Float.isNaN(value) || value <= 0.0F) {
-            this.remove(category);
+            valueMap.remove(category);
             return;
         }
-        if (notHas(category)) {
-            size++;
-        }
-        this.value[category.ordinal()] = value;
-    }
-
-    public void remove(NutrientCategory category) {
-        if (notHas(category)) {
-            return;
-        }
-        value[category.ordinal()] = 0.0F;
-        size--;
-    }
-
-    public Set<Pair<NutrientCategory, Float>> toSet() {
-        ImmutableSet.Builder<Pair<NutrientCategory, Float>> builder = ImmutableSet.builder();
-        for (NutrientCategory category : CATEGORY){
-            if (value[category.ordinal()] > 0.0F) {
-            builder.add(Pair.of(category, value[category.ordinal()]));
-            }
-        }
-        return builder.build();
-    }
-
-    private static PropertyValue fromNetwork(FriendlyByteBuf buffer) {
-        PropertyValue propertyValue = new PropertyValue();
-        int length = buffer.readByte();
-        IntStream.range(0, length).forEach(i -> {
-            NutrientCategory category = buffer.readEnum(NutrientCategory.class);
-            float value = buffer.readFloat();
-            propertyValue.put(category, value);
-        });
-        return propertyValue;
-    }
-
-    private static void toNetwork(FriendlyByteBuf buffer, PropertyValue value) {
-        Set<Pair<NutrientCategory, Float>> entrySet = value.toSet();
-        buffer.writeByte(entrySet.size());
-        entrySet.forEach(entry -> {
-            buffer.writeEnum(entry.getKey());
-            buffer.writeFloat(entry.getValue());
-        });
+        valueMap.put(category, value);
     }
 
     public boolean isEmpty() {
-        return size <= 0;
+        return valueMap.isEmpty();
     }
 
-    public void replace() {
-        Arrays.fill(value, 0.0F);
-        size = 0;
+    private static PropertyValue fromNetwork(FriendlyByteBuf buffer) {
+        int size = buffer.readVarInt();
+        Map<String, Float> map = new HashMap<>();
+        for (int i = 0; i < size; i++) {
+            map.put(buffer.readUtf(), buffer.readFloat());
+        }
+        return new PropertyValue(map);
     }
 
-    public float getBigger(NutrientCategory category) {
-        return Math.max(value[category.ordinal()], 0.0F);
+    private static void toNetwork(FriendlyByteBuf buffer, PropertyValue value) {
+        buffer.writeVarInt(value.valueMap.size());
+        for (Map.Entry<String, Float> entry : value.valueMap.entrySet()) {
+            buffer.writeUtf(entry.getKey());
+            buffer.writeFloat(entry.getValue());
+        }
     }
 
-    public static NutrientCategory[] getCategory() {
-        return CATEGORY;
-    }
-
-    public float[] getValue() {
-        return value;
-    }
-
-    public int getSize() {
-        return size;
+    public Map<String, Float> getValue() {
+        return valueMap;
     }
 }

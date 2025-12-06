@@ -1,15 +1,19 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:crops/soybean"
-  ],
-  "value": {
-    "water": 5.33,
-    "protein": 13.0,
-    "lipid": 19.8,
-    "carbohydrate": 10.4,
-    "vitamin": 10.0,
-    "mineral": 16.0,
-    "dietary_fiber": 16.5
-  }
+  "group": [
+    {
+      "tag": [
+        "c:crops/soybean"
+      ],
+      "value": {
+        "water": 5.33,
+        "protein": 13.0,
+        "lipid": 19.8,
+        "carbohydrate": 10.4,
+        "vitamin": 10.0,
+        "mineral": 16.0,
+        "dietary_fiber": 16.5
+      }
+    }
+  ]
 }

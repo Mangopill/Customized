@@ -3,7 +3,9 @@ package mangopill.customized.common.util;
 import mangopill.customized.common.item.AbstractPlateItem;
 import mangopill.customized.common.tag.ModTag;
 import net.minecraft.core.*;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -11,11 +13,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class CItemStackHandlerHelper {
@@ -166,7 +168,7 @@ public final class CItemStackHandlerHelper {
      * This method iterates through the list and returns the ItemStack with the lowest count value.
      * If the list is empty, returns an empty ItemStack.
      * @param stackList The list of ItemStacks to search through
-     * @return The ItemStack with the smallest count, or ItemStack.EMPTY if the list is empty
+     * @return The ItemStack with the smallest count, or ItemStack. EMPTY if the list is empty
      */
     public static ItemStack findMinStack(List<ItemStack> stackList) {
         if (stackList.isEmpty()) {
@@ -232,7 +234,7 @@ public final class CItemStackHandlerHelper {
             return true;
         }
         for (ItemStack stack : itemStackList) {
-            if (ItemStack.isSameItemSameComponents(stack, targetStack)) {
+            if (ItemStack.isSameItem(stack, targetStack)) {
                 return true;
             }
         }
@@ -256,11 +258,8 @@ public final class CItemStackHandlerHelper {
             int count = itemStack.getCount();
             itemCountMap.put(item, itemCountMap.getOrDefault(item, 0) + count);
         }
-        return itemCountMap.entrySet().stream()
-                .sorted((entry1, entry2) -> entry2.getValue() - entry1.getValue())
-                .limit(2)
-                .map(entry -> new ItemStack(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList());
+        return itemCountMap.entrySet().stream().sorted((entry1, entry2) -> entry2.getValue() - entry1.getValue())
+                .limit(2).map(entry -> new ItemStack(entry.getKey(), entry.getValue())).toList();
     }
 
     /**
@@ -310,8 +309,9 @@ public final class CItemStackHandlerHelper {
      * @param stack The ItemStack to spawn
      * @param state The block state for direction calculation (can be null)
      * @param pos The base position to spawn at
+     * @param uuid Collectible entity
      */
-    public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3i pos) {
+    public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3 pos, @Nullable UUID uuid) {
         if (stack.isEmpty()) {
             return;
         }
@@ -323,13 +323,26 @@ public final class CItemStackHandlerHelper {
                     ? state.getValue(BlockStateProperties.HORIZONTAL_FACING)
                     : Direction.UP;
         }
-        double x = pos.getX() + 0.5D + (direction.getStepX() * 0.25D);
-        double y = pos.getY() + 1.0D;
-        double z = pos.getZ() + 0.5D + (direction.getStepZ() * 0.25D);
+        double x = pos.x + 0.5D + (direction.getStepX() * 0.25D);
+        double y = pos.y + 1.0D;
+        double z = pos.z + 0.5D + (direction.getStepZ() * 0.25D);
         ItemEntity itemEntity = new ItemEntity(level, x, y, z, stack.copy());
+        itemEntity.setTarget(uuid);
         itemEntity.setDeltaMovement(direction.getStepX() * -0.1D, 0.45D, direction.getStepZ() * -0.1D);
         level.addFreshEntity(itemEntity);
         stack.copyAndClear();
+    }
+
+    public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3i pos, @Nullable UUID uuid) {
+        spawnItemEntity(level, stack, state, Vec3.atLowerCornerOf(pos), uuid);
+    }
+
+    public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3 pos) {
+        spawnItemEntity(level, stack, state, pos, null);
+    }
+
+    public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3i pos) {
+        spawnItemEntity(level, stack, state, Vec3.atLowerCornerOf(pos), null);
     }
 
     /**
@@ -357,5 +370,119 @@ public final class CItemStackHandlerHelper {
             itemStackHandler.setStackInSlot(i, itemStackHandler.getStackInSlot(j).copy());
             itemStackHandler.setStackInSlot(j, temp);
         }
+    }
+
+    /**
+     * Adds an item stack to the player's inventory, dropping it on the ground if inventory is full
+     * <p>
+     * @param player The target player to receive the item
+     * @param add The item stack to be added to the player's inventory
+     */
+    public static void addItemToPlayer(Player player, ItemStack add) {
+        if (!player.getInventory().add(add)) {
+            player.drop(add, false);
+        }
+    }
+
+    /**
+     * Adds an item stack to the player's inventory only if the player is not in creative mode
+     * If the player is in creative mode, the item is not added
+     * <p>
+     * @param player The target player to receive the item
+     * @param add The item stack to be added to the player's inventory
+     */
+    public static void addItemToPlayerNotCreative(Player player, ItemStack add) {
+        if (!player.isCreative()) {
+            addItemToPlayer(player, add);
+        }
+    }
+
+    /**
+     * Consumes the held item and gives a new item to the player in non-creative mode
+     * If the player is in creative mode, no items are consumed
+     * <p>
+     * @param shrink The item stack currently held by the player (will be consumed)
+     * @param player The target player to receive the new item
+     * @param add The new item stack to be given to the player
+     */
+    public static void consumeItemAndGiveToPlayer(ItemStack shrink, Player player, ItemStack add) {
+        if (!player.isCreative()) {
+            shrinkItemStack(shrink, player, 1);
+            addItemToPlayer(player, add);
+        }
+    }
+
+    /**
+     * Reduces the stack size of an item by the specified amount, unless the entity is a player in creative mode
+     * <p>
+     * @param itemStack The item stack to be shrunk
+     * @param entity The entity that owns the item stack
+     * @param decrement The amount to reduce the stack size by
+     */
+    public static void shrinkItemStack(ItemStack itemStack, LivingEntity entity, int decrement) {
+        if (entity instanceof Player player && player.isCreative()) {
+            return;
+        }
+        itemStack.shrink(decrement);
+    }
+
+    /**
+     * Applies damage to an item and breaks it if durability reaches zero, unless the entity is a player in creative mode
+     * <p>
+     * @param itemStack The item stack to damage and potentially break
+     * @param entity The entity that owns and is using the item
+     * @param decrement The amount of damage to apply to the item
+     */
+    public static void hurtAndBreakItemStack(ItemStack itemStack, LivingEntity entity, int decrement) {
+        if (entity instanceof Player player && player.isCreative()) {
+            return;
+        }
+        itemStack.hurtAndBreak(decrement, entity, entity.getEquipmentSlotForItem(itemStack));
+    }
+
+    /**
+     * Reduces the quantity of items matching the target ItemStack in the ItemStackHandler.
+     * <p>
+     * This method searches through all slots in the ItemStackHandler for items that match
+     * the target ItemStack, then reduces the total quantity
+     * by the specified shrinkCount.
+     * <p>
+     * The reduction is applied across all matching stacks in the order they are found until
+     * the total reduction reaches shrinkCount or all matching items are exhausted.
+     * @param itemStackHandler The ItemStackHandler to remove items from
+     * @param targetStack The target ItemStack to match against (can be null)
+     * @param shrinkCount The total number of matching items to remove
+     * @return The actual number of items that were removed
+     */
+    public static int shrinkMatchingItems(ItemStackHandler itemStackHandler, @Nullable ItemStack targetStack, int shrinkCount) {
+        return shrinkMatchingItemsInRange(itemStackHandler, targetStack, shrinkCount, 0, itemStackHandler.getSlots());
+    }
+
+    /**
+     * Reduces the quantity of items matching the target ItemStack in a specific slot range.
+     * <p>
+     * This method searches through the specified slot range in the ItemStackHandler for items
+     * that match the target ItemStack, then reduces the total
+     * quantity by the specified shrinkCount.
+     * @param itemStackHandler The ItemStackHandler to remove items from
+     * @param targetStack The target ItemStack to match against (can be null)
+     * @param shrinkCount The total number of matching items to remove
+     * @param startIndex The starting slot index (inclusive)
+     * @param endIndex The ending slot index (exclusive)
+     * @return The actual number of items that were removed
+     */
+    public static int shrinkMatchingItemsInRange(ItemStackHandler itemStackHandler, @Nullable ItemStack targetStack,
+                                                 int shrinkCount, int startIndex, int endIndex) {
+        int remaining = shrinkCount;
+        for (int i = startIndex; i < endIndex && remaining > 0; i++) {
+            ItemStack stack = itemStackHandler.getStackInSlot(i);
+            boolean matches = targetStack == null ? !stack.isEmpty() : (!stack.isEmpty() && ItemStack.isSameItem(stack, targetStack));
+            if (matches) {
+                int remove = Math.min(stack.getCount(), remaining);
+                stack.shrink(remove);
+                remaining -= remove;
+            }
+        }
+        return shrinkCount - remaining;
     }
 }

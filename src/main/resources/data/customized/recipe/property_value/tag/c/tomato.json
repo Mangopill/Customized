@@ -1,17 +1,21 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:crops/tomato"
-  ],
-  "value": {
-    "water": 63.33,
-    "protein": 2.0,
-    "lipid": 0.4,
-    "carbohydrate": 8.0,
-    "vitamin": 100.0,
-    "mineral": 2.0,
-    "dietary_fiber": 5.0,
-    "sour" : 10.0,
-    "sweet" : 6.0
-  }
+  "group": [
+    {
+      "tag": [
+        "c:crops/tomato"
+      ],
+      "value": {
+        "water": 63.33,
+        "protein": 2.0,
+        "lipid": 0.4,
+        "carbohydrate": 8.0,
+        "vitamin": 100.0,
+        "mineral": 2.0,
+        "dietary_fiber": 5.0,
+        "sour": 10.0,
+        "sweet": 6.0
+      }
+    }
+  ]
 }

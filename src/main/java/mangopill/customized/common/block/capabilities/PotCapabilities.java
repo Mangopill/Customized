@@ -1,9 +1,7 @@
 package mangopill.customized.common.block.capabilities;
 
 import mangopill.customized.Customized;
-import mangopill.customized.common.block.handler.PotFluidHandler;
 import mangopill.customized.common.block.record.PotRecord;
-import mangopill.customized.common.registry.CBlockRegistry;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -18,12 +16,18 @@ public class PotCapabilities {
                 PotRecord.CASSEROLE.entityType(),
                 (entity, context) -> entity.getInputAndOutputHandler()
         );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                PotRecord.ROASTER.entityType(),
+                (entity, context) -> entity.getInputAndOutputHandler()
+        );
     }
     @SubscribeEvent
     public static void registerFluidCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlock(
+        event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
-                (level, pos, state, be, context) -> new PotFluidHandler(level, pos),
-                CBlockRegistry.CASSEROLE.get());
+                PotRecord.CASSEROLE.entityType(),
+                (entity, context) -> entity.getFluidHandler()
+        );
     }
 }

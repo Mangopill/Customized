@@ -1,15 +1,19 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:crops/cabbage"
-  ],
-  "value": {
-    "water": 61.33,
-    "protein": 2.6,
-    "lipid": 0.2,
-    "carbohydrate": 11.6,
-    "vitamin": 180.0,
-    "mineral": 8.0,
-    "dietary_fiber": 12.5
-  }
+  "group": [
+    {
+      "tag": [
+        "c:crops/cabbage"
+      ],
+      "value": {
+        "water": 61.33,
+        "protein": 2.6,
+        "lipid": 0.2,
+        "carbohydrate": 11.6,
+        "vitamin": 180.0,
+        "mineral": 8.0,
+        "dietary_fiber": 12.5
+      }
+    }
+  ]
 }

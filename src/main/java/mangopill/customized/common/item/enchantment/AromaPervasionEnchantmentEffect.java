@@ -35,9 +35,7 @@ public class AromaPervasionEnchantmentEffect {
                 return;
             }
             double range = 4.0D + l * 1.0D;
-            List<Mob> hostileMobs = level.getEntitiesOfClass(Mob.class,
-                    player.getBoundingBox().inflate(range),
-                    entity -> entity instanceof Enemy);
+            List<Mob> hostileMobs = level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(range), entity -> entity instanceof Enemy);
             for (Mob mob : hostileMobs) {
                 if (level.random.nextFloat() > 0.2F) {
                     continue;
@@ -47,8 +45,7 @@ public class AromaPervasionEnchantmentEffect {
                     serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, mob.getX(), mob.getY() + 0.5D, mob.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.05D);
                 }
             }
-            List<Animal> animals = level.getEntitiesOfClass(Animal.class,
-                    player.getBoundingBox().inflate(range));
+            List<Animal> animals = level.getEntitiesOfClass(Animal.class, player.getBoundingBox().inflate(range));
             for (Animal animal : animals) {
                 if (animal.distanceTo(player) < 3.0F) {
                     continue;

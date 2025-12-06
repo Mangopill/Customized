@@ -1,16 +1,20 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "farmersdelight:melon_juice"
-  ],
-  "value": {
-    "water": 60.67,
-    "protein": 1.2,
-    "lipid": 0.4,
-    "carbohydrate": 15.2,
-    "vitamin": 40.5,
-    "mineral": 2.0,
-    "dietary_fiber": 2.0,
-    "sweet": 18.0
-  }
+  "group": [
+    {
+      "item": [
+        "farmersdelight:melon_juice"
+      ],
+      "value": {
+        "water": 60.67,
+        "protein": 1.2,
+        "lipid": 0.4,
+        "carbohydrate": 15.2,
+        "vitamin": 40.5,
+        "mineral": 2.0,
+        "dietary_fiber": 2.0,
+        "sweet": 18.0
+      }
+    }
+  ]
 }

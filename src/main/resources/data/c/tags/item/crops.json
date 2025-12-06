@@ -1,6 +1,7 @@
 {
   "values": [
     "#c:crops/rice",
+    "#c:crops/rice_panicle",
     "#c:crops/tomato",
     "#c:crops/bitter_gourd",
     "#c:crops/broad_bean",

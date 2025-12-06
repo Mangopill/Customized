@@ -3,6 +3,7 @@
     "minecraft:magma_block",
     "minecraft:lava_cauldron",
     "minecraft:lava",
+    "customized:roaster",
     "#minecraft:campfires",
     "#minecraft:fire",
     {

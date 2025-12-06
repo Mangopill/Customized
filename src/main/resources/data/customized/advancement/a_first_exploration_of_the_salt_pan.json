@@ -18,7 +18,7 @@
             "id": "customized:salt"
         },
         "title": {
-            "translate": "customized.advancement.a_first_exploration_of_the_salt_pan.desc"
+            "translate": "customized.advancement.a_first_exploration_of_the_salt_pan.title"
         }
     },
     "requirements": [

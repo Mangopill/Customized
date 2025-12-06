@@ -1,14 +1,18 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:egg"
-  ],
-  "value": {
-    "water": 50.0,
-    "protein": 24.0,
-    "lipid": 20.0,
-    "carbohydrate": 2.0,
-    "vitamin": 1.5,
-    "mineral": 10.0
-  }
+  "group": [
+    {
+      "item": [
+        "minecraft:egg"
+      ],
+      "value": {
+        "water": 50.0,
+        "protein": 24.0,
+        "lipid": 20.0,
+        "carbohydrate": 2.0,
+        "vitamin": 1.5,
+        "mineral": 10.0
+      }
+    }
+  ]
 }

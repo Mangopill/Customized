@@ -1,0 +1,25 @@
+{
+  "type": "customized:cutting_board",
+  "times": 1,
+  "additional_result_probability": 0.3,
+  "ingredient": {
+    "tag": "c:crops/rice_panicle"
+  },
+  "tool": [
+    {
+      "tag": "customized:tools/knife"
+    }
+  ],
+  "result": [
+    {
+      "count": 1,
+      "id": "customized:rice"
+    }
+  ],
+  "additional_result": [
+    {
+      "count": 1,
+      "id": "customized:rice"
+    }
+  ]
+}

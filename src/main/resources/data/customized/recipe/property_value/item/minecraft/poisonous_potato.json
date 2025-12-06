@@ -1,0 +1,18 @@
+{
+  "type": "customized:property_value",
+  "group": [
+    {
+      "item": [
+        "minecraft:poisonous_potato"
+      ],
+      "value": {
+        "water": 12.83,
+        "carbohydrate": 7.16,
+        "vitamin": 18.5,
+        "mineral": 15.8,
+        "dietary_fiber": 2.0,
+        "bitter": 2.0
+      }
+    }
+  ]
+}

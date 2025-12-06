@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public class BrewingBarrelSerializer implements RecipeSerializer<BrewingBarrelRecipe> {
-    private static final MapCodec<BrewingBarrelRecipe> CODEC = RecordCodecBuilder.mapCodec(
+    public static final MapCodec<BrewingBarrelRecipe> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                     Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredient").xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(BrewingBarrelRecipe::getIngredientItem),
                     Ingredient.CODEC_NONEMPTY.optionalFieldOf("container", Ingredient.EMPTY).forGetter(BrewingBarrelRecipe::getContainerItem),

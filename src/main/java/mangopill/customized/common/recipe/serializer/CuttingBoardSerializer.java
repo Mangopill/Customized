@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public class CuttingBoardSerializer implements RecipeSerializer<CuttingBoardRecipe> {
-    private static final MapCodec<CuttingBoardRecipe> CODEC = RecordCodecBuilder.mapCodec(
+    public static final MapCodec<CuttingBoardRecipe> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(CuttingBoardRecipe::cuttingItem),
                     Ingredient.LIST_CODEC_NONEMPTY.fieldOf("tool").xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(CuttingBoardRecipe::toolItem),

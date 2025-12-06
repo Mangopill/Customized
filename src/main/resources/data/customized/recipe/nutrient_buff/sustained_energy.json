@@ -1,0 +1,14 @@
+{
+  "type": "customized:nutrient_buff",
+  "effect": "customized:sustained_energy",
+  "nutrient_category": [
+    {
+      "sweet": 20.0,
+      "spicy": 20.0
+    }
+  ],
+  "duration": 1.0,
+  "probability": 0.001,
+  "shrink_nutrition": -0.15,
+  "shrink_saturation": -0.15
+}

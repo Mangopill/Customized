@@ -34,8 +34,7 @@ public class SharedFeastEnchantmentEffect {
                 return;
             }
             double range = 5.0D + l * 2.0D;
-            List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class,
-                    player.getBoundingBox().inflate(range));
+            List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class, player.getBoundingBox().inflate(range));
             for (Player nearbyPlayer : nearbyPlayers) {
                 if (nearbyPlayer.equals(player)) {
                     continue;

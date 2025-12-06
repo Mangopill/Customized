@@ -8,49 +8,55 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import java.util.List;
 
-import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.block.entity.AbstractPotBlockEntity.*;
 
 public abstract class AbstractPotRecipe implements CRecipeInterface<RecipeWrapper> {
     private final NonNullList<Ingredient> ingredientItem;
     private final NonNullList<Ingredient> seasoningItem;
-    private final Ingredient spiceItem;
+    private final NonNullList<Ingredient> spiceItem;
     private final Ingredient containerItem;
+    private final FluidIngredient fluidIngredient;
     private final ItemStack output;
     private final int cookingTime;
+    private final boolean heated;
     private final RecipeSerializer<?> recipeSerializer;
     private final RecipeType<?> recipeType;
     private final int ingredientInput;
     private final int seasoningInput;
 
     public AbstractPotRecipe(NonNullList<Ingredient> ingredientItem, NonNullList<Ingredient> seasoningItem,
-                             Ingredient spiceItem, Ingredient containerItem, ItemStack output,
-                             int cookingTime, RecipeSerializer<?> recipeSerializer, RecipeType<?> recipeType,
+                             NonNullList<Ingredient> spiceItem, Ingredient containerItem, FluidIngredient fluidIngredient, ItemStack output,
+                             int cookingTime, boolean heated, RecipeSerializer<?> recipeSerializer, RecipeType<?> recipeType,
                              int ingredientSlot, int seasoningSlot) {
         this.ingredientItem = ingredientItem;
         this.seasoningItem = seasoningItem;
         this.spiceItem = spiceItem;
         this.containerItem = containerItem;
+        this.fluidIngredient = fluidIngredient;
         this.output = output;
         this.cookingTime = cookingTime;
+        this.heated = heated;
         this.recipeSerializer = recipeSerializer;
         this.recipeType = recipeType;
-        ingredientInput = ingredientSlot;
-        seasoningInput = seasoningSlot;
+        this.ingredientInput = ingredientSlot;
+        this.seasoningInput = seasoningSlot;
     }
 
     @Override
     public boolean matches(RecipeWrapper recipeWrapper, Level level) {
         List<ItemStack> ingredient = getListByWrapper(recipeWrapper, 0, ingredientInput);
         List<ItemStack> seasoning = getListByWrapper(recipeWrapper, ingredientInput, ingredientInput + seasoningInput);
-        ItemStack spice = recipeWrapper.getItem(ingredientInput + seasoningInput);
+        List<ItemStack> spice = getListByWrapper(recipeWrapper, ingredientInput + seasoningInput, ingredientInput + seasoningInput + OUTPUT);
         return ingredient.size() == ingredientItem.size()
                 && seasoning.size() == seasoningItem.size()
+                && spice.size() == spiceItem.size()
                 && RecipeMatcher.findMatches(ingredient, ingredientItem) != null
                 && RecipeMatcher.findMatches(seasoning, seasoningItem) != null
-                && containsSameItem(List.of(spiceItem.getItems()), spice);
+                && RecipeMatcher.findMatches(spice, spiceItem) != null;
     }
 
     @Override
@@ -68,7 +74,7 @@ public abstract class AbstractPotRecipe implements CRecipeInterface<RecipeWrappe
         NonNullList<Ingredient> combinedIngredient = NonNullList.create();
         combinedIngredient.addAll(ingredientItem);
         combinedIngredient.addAll(seasoningItem);
-        combinedIngredient.add(spiceItem);
+        combinedIngredient.addAll(spiceItem);
         combinedIngredient.add(containerItem);
         return combinedIngredient;
     }
@@ -91,7 +97,7 @@ public abstract class AbstractPotRecipe implements CRecipeInterface<RecipeWrappe
         return seasoningItem;
     }
 
-    public Ingredient getSpiceItem() {
+    public NonNullList<Ingredient> getSpiceItem() {
         return spiceItem;
     }
 
@@ -105,5 +111,13 @@ public abstract class AbstractPotRecipe implements CRecipeInterface<RecipeWrappe
 
     public int getCookingTime() {
         return cookingTime;
+    }
+
+    public FluidIngredient getFluidIngredient() {
+        return fluidIngredient;
+    }
+
+    public boolean isHeated() {
+        return heated;
     }
 }

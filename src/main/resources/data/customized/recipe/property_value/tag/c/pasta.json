@@ -1,15 +1,19 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:foods/pasta"
-  ],
-  "value": {
-    "water": 41.33,
-    "protein": 10.0,
-    "lipid": 2.0,
-    "carbohydrate": 60.0,
-    "vitamin": 0.5,
-    "mineral": 3.0,
-    "dietary_fiber": 10.0
-  }
+  "group": [
+    {
+      "tag": [
+        "c:foods/pasta"
+      ],
+      "value": {
+        "water": 41.33,
+        "protein": 10.0,
+        "lipid": 2.0,
+        "carbohydrate": 60.0,
+        "vitamin": 0.5,
+        "mineral": 3.0,
+        "dietary_fiber": 10.0
+      }
+    }
+  ]
 }

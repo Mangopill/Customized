@@ -56,10 +56,12 @@ public class CBlockRegistry {
     //kitchenware block
     public static final Supplier<Block> CASSEROLE = BLOCK.register(
             "casserole", () -> new CasseroleBlock(Block.Properties.of().mapColor(MapColor.STONE).strength(0.6F, 5.0F).sound(SoundType.DECORATED_POT)));
-/*    public static final Supplier<Block> ROASTER = BLOCK.register(
-            "roaster", () -> new RoasterBlock(Block.Properties.ofFullCopy(SMOKER)));*/
+    public static final Supplier<Block> ROASTER = BLOCK.register(
+            "roaster", () -> new RoasterBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.5F).lightLevel(lidBlockEmission(13))));
     public static final Supplier<Block> SOUP_BOWL = BLOCK.register(
             "soup_bowl", () -> new SoupBowlBlock(Block.Properties.of().mapColor(MapColor.STONE).strength(0.3F, 2.0F).sound(SoundType.STONE)));
+    public static final Supplier<Block> BAKING_PAN = BLOCK.register(
+            "baking_pan", () -> new BakingPanBlock(Block.Properties.of().mapColor(MapColor.STONE).strength(0.3F, 2.0F).sound(SoundType.STONE)));
     public static final Supplier<Block> BREWING_BARREL = BLOCK.register(
             "brewing_barrel", () -> new BrewingBarrelBlock(Block.Properties.ofFullCopy(BARREL)));
     public static final Supplier<Block> CRATE = BLOCK.register(

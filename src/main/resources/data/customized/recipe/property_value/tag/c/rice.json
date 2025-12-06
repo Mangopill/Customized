@@ -1,11 +1,15 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:crops/rice"
-  ],
-  "value": {
-    "water" : 3.0,
-    "protein" : 2.0,
-    "carbohydrate" : 22.65
-  }
+  "group": [
+    {
+      "tag": [
+        "c:crops/rice"
+      ],
+      "value": {
+        "water": 3.0,
+        "protein": 2.0,
+        "carbohydrate": 22.65
+      }
+    }
+  ]
 }

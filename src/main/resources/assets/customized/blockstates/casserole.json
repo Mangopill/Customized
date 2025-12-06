@@ -31,18 +31,18 @@
       "y": 180
     },
     "facing=north,lid=with_drive": {
-      "model": "customized:block/casserole_with_drive",
+      "model": "customized:block/casserole_without_lid",
       "y": 90
     },
     "facing=south,lid=with_drive": {
-      "model": "customized:block/casserole_with_drive",
+      "model": "customized:block/casserole_without_lid",
       "y": 270
     },
     "facing=west,lid=with_drive": {
-      "model": "customized:block/casserole_with_drive"
+      "model": "customized:block/casserole_without_lid"
     },
     "facing=east,lid=with_drive": {
-      "model": "customized:block/casserole_with_drive",
+      "model": "customized:block/casserole_without_lid",
       "y": 180
     }
   }

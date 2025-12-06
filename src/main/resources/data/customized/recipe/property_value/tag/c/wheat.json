@@ -1,0 +1,19 @@
+{
+  "type": "customized:property_value",
+  "group": [
+    {
+      "tag": [
+        "c:crops/wheat"
+      ],
+      "value": {
+        "water": 8.0,
+        "protein": 6.0,
+        "lipid": 4.0,
+        "carbohydrate": 30.0,
+        "vitamin": 4.0,
+        "mineral": 6.0,
+        "dietary_fiber": 3.0
+      }
+    }
+  ]
+}

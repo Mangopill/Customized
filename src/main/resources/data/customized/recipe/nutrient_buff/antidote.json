@@ -1,0 +1,11 @@
+{
+  "type": "customized:nutrient_buff",
+  "effect": "customized:antidote",
+  "nutrient_category": [
+    {
+      "dread": 2.0
+    }
+  ],
+  "duration": 1.0,
+  "probability": 0.002
+}

@@ -35,6 +35,7 @@ import java.util.*;
 
 import static mangopill.customized.common.util.CompoundTagHelper.*;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+
 public abstract class AbstractPlateBlockEntity extends BlockEntity implements CreateItemStackHandler {
     private final int ingredientInput;
     private final int seasoningInput;
@@ -110,7 +111,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
     }
 
     public void clearFoodPropertyAndCountTotal() {
-       foodProperty = FoodValue.NULL;
+       foodProperty = FoodValue.EMPTY;
        consumptionCountTotal = 0;
     }
 
@@ -189,7 +190,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         super.applyImplicitComponents(componentInput);
         consumptionCount = componentInput.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT, ConsumptionCountRecord.NULL).consumptionCount();
         consumptionCountTotal = componentInput.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, ConsumptionCountTotalRecord.NULL).consumptionCountTotal();
-        foodProperty = componentInput.getOrDefault(DataComponents.FOOD, FoodValue.NULL);
+        foodProperty = componentInput.getOrDefault(DataComponents.FOOD, FoodValue.EMPTY);
         processComponentStack(componentInput, CDataComponentRegistry.ITEM_STACK_HANDLER, itemStackHandler);
         processComponentStack(componentInput, CDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, initialItemStackHandler);
         lastInteractPlayerId = componentInput.getOrDefault(CDataComponentRegistry.UUID, UUIDRecord.NULL).uuid();

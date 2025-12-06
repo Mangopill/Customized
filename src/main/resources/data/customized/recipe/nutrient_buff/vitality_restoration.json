@@ -1,0 +1,13 @@
+{
+  "type": "customized:nutrient_buff",
+  "effect": "customized:vitality_restoration",
+  "nutrient_category": [
+    {
+      "sour": 20.0,
+      "sweet": 20.0
+    }
+  ],
+  "duration": 1.0,
+  "probability": 0.001,
+  "shrink_saturation": 0.1
+}

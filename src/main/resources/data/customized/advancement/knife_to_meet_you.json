@@ -1,0 +1,25 @@
+{
+    "parent": "customized:root",
+    "criteria": {
+        "flying_knife": {
+            "trigger": "customized:use_flying_knife"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "customized.advancement.knife_to_meet_you"
+        },
+        "icon": {
+            "id": "customized:iron_knife"
+        },
+        "title": {
+            "translate": "customized.advancement.knife_to_meet_you.title"
+        }
+    },
+    "requirements": [
+        [
+            "flying_knife"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

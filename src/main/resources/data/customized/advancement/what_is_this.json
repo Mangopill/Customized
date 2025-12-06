@@ -21,7 +21,7 @@
             "id": "minecraft:glass"
         },
         "title": {
-            "translate": "customized.advancement.what_is_this.desc"
+            "translate": "customized.advancement.what_is_this.title"
         }
     },
     "requirements": [

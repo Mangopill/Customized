@@ -13,7 +13,7 @@
             "id": "customized:famous_dish_plate"
         },
         "title": {
-            "translate": "customized.advancement.the_legend_on_the_dining_table.desc"
+            "translate": "customized.advancement.the_legend_on_the_dining_table.title"
         }
     },
     "requirements": [

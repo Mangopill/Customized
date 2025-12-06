@@ -1,11 +1,16 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:spider_eye"
-  ],
-  "value": {
-    "water" : 30.0,
-    "protein" : 15.0,
-    "lipid" : 3.5
-  }
+  "group": [
+    {
+      "item": [
+        "minecraft:spider_eye"
+      ],
+      "value": {
+        "water": 30.0,
+        "protein": 15.0,
+        "lipid": 3.5,
+        "numbing": 1.0
+      }
+    }
+  ]
 }

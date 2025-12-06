@@ -1,12 +1,16 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:porkchop"
-  ],
-  "value": {
-    "water": 14.0,
-    "protein": 22.0,
-    "lipid": 16.0,
-    "mineral": 16.0
-  }
+  "group": [
+    {
+      "item": [
+        "minecraft:porkchop"
+      ],
+      "value": {
+        "water": 14.0,
+        "protein": 22.0,
+        "lipid": 16.0,
+        "mineral": 16.0
+      }
+    }
+  ]
 }

@@ -1,14 +1,18 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:foods/milk"
-  ],
-  "value": {
-    "water": 73.0,
-    "protein": 3.2,
-    "lipid": 3.6,
-    "carbohydrate": 4.8,
-    "vitamin": 0.1,
-    "mineral": 12.0
-  }
+  "group": [
+    {
+      "tag": [
+        "c:foods/milk"
+      ],
+      "value": {
+        "water": 73.0,
+        "protein": 3.2,
+        "lipid": 3.6,
+        "carbohydrate": 4.8,
+        "vitamin": 0.1,
+        "mineral": 12.0
+      }
+    }
+  ]
 }

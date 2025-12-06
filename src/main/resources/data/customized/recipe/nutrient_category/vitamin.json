@@ -1,0 +1,7 @@
+{
+  "type": "customized:nutrient_category",
+  "icon": "customized:textures/gui/nutrient_category/vitamin.png",
+  "name": "vitamin",
+  "color": "0xFFA73F",
+  "saturation": 0.01
+}

@@ -1,15 +1,19 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "farmersdelight:apple_cider"
-  ],
-  "value": {
-    "water": 63.33,
-    "protein": 0.2,
-    "carbohydrate": 8.0,
-    "vitamin": 1.0,
-    "mineral": 2.0,
-    "sour": 8.0,
-    "sweet": 6.0
-  }
+  "group": [
+    {
+      "item": [
+        "farmersdelight:apple_cider"
+      ],
+      "value": {
+        "water": 63.33,
+        "protein": 0.2,
+        "carbohydrate": 8.0,
+        "vitamin": 1.0,
+        "mineral": 2.0,
+        "sour": 8.0,
+        "sweet": 6.0
+      }
+    }
+  ]
 }

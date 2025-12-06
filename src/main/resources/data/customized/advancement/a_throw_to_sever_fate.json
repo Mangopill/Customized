@@ -1,0 +1,39 @@
+{
+    "parent": "customized:blade_light_reflects_crops",
+    "criteria": {
+        "killed_ender_dragon": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:ender_dragon"
+                },
+                "killing_blow": {
+                    "tags": [
+                        {
+                            "id": "customized:knife_entity",
+                            "expected": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "display": {
+        "frame": "challenge",
+        "description": {
+            "translate": "customized.advancement.a_throw_to_sever_fate"
+        },
+        "icon": {
+            "id": "customized:netherite_knife"
+        },
+        "title": {
+            "translate": "customized.advancement.a_throw_to_sever_fate.title"
+        }
+    },
+    "requirements": [
+        [
+            "killed_ender_dragon"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

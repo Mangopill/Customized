@@ -1,0 +1,7 @@
+{
+  "type": "customized:nutrient_category",
+  "icon": "customized:textures/gui/nutrient_category/water.png",
+  "name": "water",
+  "color": "0x5A8FE9",
+  "saturation": 0.03
+}

@@ -1,122 +1,176 @@
 package mangopill.customized.client.util;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
+import mangopill.customized.client.event.model.VariableFluidBakedModel;
 import mangopill.customized.common.block.AbstractPotBlock;
 import mangopill.customized.common.block.entity.*;
+import mangopill.customized.common.block.handler.PotFluidHandler;
 import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.item.AbstractPlateItem;
-import mangopill.customized.common.util.PropertyValueUtil;
-import mangopill.customized.common.util.category.NutrientCategory;
-import mangopill.customized.common.util.value.PropertyValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.*;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.material.Fluid;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.ClientHooks;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.textures.FluidSpriteCache;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-import static mangopill.customized.common.util.ResourceUtil.*;
-import static net.minecraft.client.renderer.entity.ItemRenderer.*;
-
+@OnlyIn(Dist.CLIENT)
 public final class ClientUtil {
     private ClientUtil() {
     }
 
-    public static int getMaxValueColor(Level level, List<ItemStack> stackList) {
-        Map<NutrientCategory, Float> nutrientSums = new HashMap<>();
-        for (ItemStack stack : stackList) {
-            PropertyValue propertyValue = PropertyValueUtil.getPropertyValue(stack, level);
-            if (propertyValue.isEmpty()) {
-                continue;
-            }
-            for (Pair<NutrientCategory, Float> entry : propertyValue.toSet()) {
-                NutrientCategory category = entry.getKey();
-                float value = entry.getValue() * stack.getCount();
-                nutrientSums.put(category, nutrientSums.getOrDefault(category, 0f) + value);
-            }
-        }
-        NutrientCategory maxCategory = null;
-        double maxSum = 0D;
-        for (Map.Entry<NutrientCategory, Float> entry : nutrientSums.entrySet()) {
-            if (entry.getValue() > maxSum) {
-                maxSum = entry.getValue();
-                maxCategory = entry.getKey();
-            }
-        }
-        return maxCategory != null ? maxCategory.getColorWithAlpha() : 0xCC3F76E4;
-    }
-
     public static void renderDrivePot(AbstractPotBlockEntity potBlockEntity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
-                                      float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
+                                      float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight,
+                                      ResourceLocation fluidModel, float fluidHeight) {
         List<ItemStack> stackList = potBlockEntity.getItemStackListInPot(false, false);
         boolean dynamic = potBlockEntity.getBlockState().getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE);
-        renderDrive(Objects.requireNonNull(potBlockEntity.getLevel()), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, dynamic);
+        Level level = potBlockEntity.getLevel();
+        if (level == null) {
+            return;
+        }
+        renderFluid(level, potBlockEntity.getBlockState(), potBlockEntity.getBlockPos(), potBlockEntity.getFluidHandler(), poseStack, buffer, light, overlay, fluidModel, fluidHeight);
+        renderItemListDrive(level, stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, RenderType.cutout(), dynamic);
+    }
+
+    public static void renderLayeredPot(AbstractPotBlockEntity potBlockEntity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
+                                      float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
+        List<ItemStack> stackList = potBlockEntity.getItemStackListInPot(false, false);
+        renderItemStackLayered(stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight);
     }
 
     public static void renderDrivePlate(AbstractPlateBlockEntity plateBlockEntity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
                                         float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
         List<ItemStack> stackList = plateBlockEntity.getItemStackListInPlate(false);
-        renderDrive(Objects.requireNonNull(plateBlockEntity.getLevel()), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, true);
+        Level level = plateBlockEntity.getLevel();
+        if (level == null) {
+            return;
+        }
+        renderItemListDrive(level, stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, RenderType.cutout(), true);
+    }
+
+    public static void renderLayeredPlate(AbstractPlateBlockEntity plateBlockEntity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
+                                        float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
+        List<ItemStack> stackList = plateBlockEntity.getItemStackListInPlate(false);
+        Level level = plateBlockEntity.getLevel();
+        if (level == null) {
+            return;
+        }
+        renderItemStackLayered(stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight);
     }
 
     public static void renderDrivePlateItem(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
-                                        float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
+                                            float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight, ResourceLocation model) {
         if (stack.getItem() instanceof AbstractPlateItem plateItem){
             List<ItemStack> stackList = plateItem.getItemStackListInPlate(stack, false);
-            if (Minecraft.getInstance().player != null) {
-                renderDrive(Minecraft.getInstance().player.level(), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, true);
+            if (Minecraft.getInstance().player == null) {
+                return;
+            }
+            renderModel(stack, ItemDisplayContext.NONE, false, poseStack, buffer, light, overlay, model);
+            renderItemListDrive(Minecraft.getInstance().player.level(), stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight, RenderType.cutout(), true);
+        }
+    }
+
+    public static void renderLayeredPlateItem(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
+                                            float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight, ResourceLocation model) {
+        if (stack.getItem() instanceof AbstractPlateItem plateItem){
+            List<ItemStack> stackList = plateItem.getItemStackListInPlate(stack, false);
+            if (Minecraft.getInstance().player == null) {
+                return;
+            }
+            renderModel(stack, ItemDisplayContext.NONE, false, poseStack, buffer, light, overlay, model);
+            renderItemStackLayered(stackList, poseStack, buffer, light, overlay, startLength, startWidth, startHeight, endLength, endWidth, endHeight);
+        }
+    }
+
+    public static void renderItemListDrive(Level level, List<ItemStack> stackList, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
+                                           float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight,
+                                           RenderType renderType, boolean dynamic) {
+        float globalTime = level.getGameTime() % 24000 * 0.05F;
+        for (ItemStack stack : stackList) {
+            ItemStack newStack = stack.copy();
+            if (newStack.isEmpty()) {
+                continue;
+            }
+            int count = newStack.getCount();
+            int renderCount = count / 4 + (count % 4 > 0 ? 1 : 0);
+            for (int i = 0; i < renderCount; i++) {
+                RandomXYZ randomXYZ = getRandomXYZ(stackList, startLength, startWidth, startHeight, endLength, endWidth, endHeight, stack, i, newStack);
+                float phase = (randomXYZ.seed % 1000) * 0.1F;
+                float deltaY = (float) Math.sin(globalTime * 0.8F + phase) * 0.03F;
+                float animatedY = dynamic ? randomXYZ.randY + deltaY : randomXYZ.randY;
+                poseStack.pushPose();
+                poseStack.translate(randomXYZ.randX, animatedY, randomXYZ.randZ);
+                poseStack.mulPose(Axis.ZP.rotationDegrees(randomXYZ.random.nextFloat(360.0F)));
+                poseStack.mulPose(Axis.XP.rotationDegrees(randomXYZ.random.nextFloat(360.0F)));
+                poseStack.mulPose(Axis.YP.rotationDegrees(randomXYZ.random.nextFloat(360.0F)));
+                poseStack.scale(0.3F, 0.3F, 0.3F);
+                ItemStack renderItemStack = newStack.copy();
+                renderItemStack.setCount(1);
+                BakedModel model = Minecraft.getInstance().getItemRenderer().getModel(renderItemStack, null, null, 0);
+                model = ClientHooks.handleCameraTransforms(poseStack, model, ItemDisplayContext.FIXED, false);
+                poseStack.translate(-0.5F, -0.5F, -0.5F);
+                Minecraft.getInstance().getItemRenderer().renderModelLists(model, renderItemStack, light, overlay, poseStack, buffer.getBuffer(renderType));
+                poseStack.popPose();
             }
         }
     }
 
-    public static void renderDrive(Level level, List<ItemStack> stackList, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
-                                   float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight, boolean dynamic) {
-        float globalTime = level.getGameTime() % 24000 * 0.05F;
+    public static void renderItemStackLayered(List<ItemStack> stackList, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
+                                              float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight) {
         for (ItemStack stack : stackList) {
             ItemStack newStack = stack.copy();
-            if (!newStack.isEmpty()) {
-                int count = newStack.getCount();
-                int renderCount = count / 4 + (count % 4 > 0 ? 1 : 0);
-                for (int i = 0; i < renderCount; i++) {
-                    Random rand = new Random(stackList.lastIndexOf(stack) + i);
-                    int seed = Item.getId(newStack.getItem()) + rand.nextInt() + i;
-                    Random random = new Random(seed);
-                    float randX = startLength + (random.nextFloat(endLength - startLength));
-                    float baseY = startHeight + (random.nextFloat(endHeight - startHeight));
-                    float randZ = startWidth + (random.nextFloat(endWidth - startWidth));
-                    float phase = (seed % 1000) * 0.1F;
-                    float deltaY = (float) Math.sin(globalTime * 0.8F + phase) * 0.03F;
-                    float animatedY = dynamic ? baseY + deltaY : baseY;
-                    poseStack.pushPose();
-                    poseStack.translate(randX, animatedY, randZ);
-                    poseStack.mulPose(Axis.ZP.rotationDegrees(random.nextFloat(360.0F)));
-                    poseStack.mulPose(Axis.XP.rotationDegrees(random.nextFloat(360.0F)));
-                    poseStack.mulPose(Axis.YP.rotationDegrees(random.nextFloat(360.0F)));
-                    poseStack.scale(0.3F, 0.3F, 0.3F);
-                    ItemStack renderItemStack = newStack.copy();
-                    renderItemStack.setCount(1);
-                    Minecraft.getInstance().getItemRenderer().renderStatic(renderItemStack, ItemDisplayContext.FIXED, light, overlay, poseStack, buffer, null, seed);
-                    poseStack.popPose();
-                }
+            if (newStack.isEmpty()) {
+                continue;
+            }
+            int count = newStack.getCount();
+            int renderCount = count / 4 + (count % 4 > 0 ? 1 : 0);
+            for (int i = 0; i < renderCount; i++) {
+                RandomXYZ randomXYZ = getRandomXYZ(stackList, startLength, startWidth, startHeight, endLength, endWidth, endHeight, stack, i, newStack);
+                poseStack.pushPose();
+                poseStack.translate(randomXYZ.randX, randomXYZ.randY, randomXYZ.randZ);
+                poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(randomXYZ.random.nextFloat(360.0F)));
+                poseStack.scale(0.2F, 0.2F, 0.2F);
+                ItemStack renderItemStack = newStack.copy();
+                renderItemStack.setCount(1);
+                Minecraft.getInstance().getItemRenderer().renderStatic(renderItemStack, ItemDisplayContext.FIXED, light, overlay, poseStack, buffer, null, 0);
+                poseStack.popPose();
             }
         }
     }
+
+    private static RandomXYZ getRandomXYZ(List<ItemStack> stackList, float startLength, float startWidth, float startHeight, float endLength, float endWidth, float endHeight, ItemStack stack, int i, ItemStack newStack) {
+        Random rand = new Random(stackList.lastIndexOf(stack) + i);
+        int seed = Item.getId(newStack.getItem()) + rand.nextInt() + i;
+        Random random = new Random(seed);
+        float randX = startLength + (random.nextFloat(endLength - startLength));
+        float randY = startHeight + (random.nextFloat(endHeight - startHeight));
+        float randZ = startWidth + (random.nextFloat(endWidth - startWidth));
+        return new RandomXYZ(seed, random, randX, randY, randZ);
+    }
+
+    private record RandomXYZ(int seed, Random random, float randX, float randY, float randZ) { }
 
     public static <T extends CBasicCookingBlockEntity<?>> void renderBrewingBarrel(T blockEntity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay,
                                                                                    float startX, float startY, float startZ, float scaleX, float scaleY, float scaleZ, float degreesX, float degreesY, float degreesZ) {
@@ -151,7 +205,7 @@ public final class ClientUtil {
         }
     }
 
-    public static void renderItemStack(ItemStack renderItemStack, PoseStack poseStack, MultiBufferSource buffer, @Nullable BlockState state, int light,
+    public static void renderItemStack(ItemStack itemStack, PoseStack poseStack, MultiBufferSource buffer, @Nullable BlockState state, int light,
                                        int overlay, float startX, float startY, float startZ, float scaleX, float scaleY,
                                        float scaleZ, float degreesX, float degreesY, float degreesZ) {
         poseStack.pushPose();
@@ -160,8 +214,9 @@ public final class ClientUtil {
         poseStack.mulPose(Axis.XP.rotationDegrees(degreesX));
         poseStack.mulPose(Axis.YP.rotationDegrees(degreesY));
         poseStack.mulPose(Axis.ZP.rotationDegrees(degreesZ));
-        if (!renderItemStack.isEmpty()) {
-            renderItemStack.copy().setCount(1);
+        if (!itemStack.isEmpty()) {
+            ItemStack renderItemStack = itemStack.copy();
+            renderItemStack.setCount(1);
             Minecraft.getInstance().getItemRenderer().renderStatic(renderItemStack, ItemDisplayContext.FIXED, light, overlay, poseStack, buffer, null, 0);
         }
         poseStack.popPose();
@@ -201,7 +256,7 @@ public final class ClientUtil {
         }
     }
 
-    public static <T extends LivingEntity, M extends EntityModel<T>> void renderHatModel(PoseStack poseStack, MultiBufferSource buffer, int packedLight, M model, ItemStack stack, float scale, double translateY, String path) {
+    public static <T extends LivingEntity, M extends EntityModel<T>> void renderHatModel(PoseStack poseStack, MultiBufferSource buffer, int packedLight, M model, ItemStack stack, float scale, double translateY, ResourceLocation texture) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         poseStack.pushPose();
         if (model instanceof HumanoidModel<?> humanoidModel) {
@@ -211,39 +266,32 @@ public final class ClientUtil {
         poseStack.translate(0.0D, translateY, 0.0D);
         poseStack.mulPose(Axis.XP.rotationDegrees(180.0F));
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-        ModelResourceLocation resourceLocation = ModelResourceLocation.standalone(getCLoc(path + BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath()));
-        itemRenderer.render(stack, ItemDisplayContext.NONE, false, poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY, itemRenderer.getItemModelShaper().getModelManager().getModel(resourceLocation));
+        itemRenderer.render(stack, ItemDisplayContext.FIXED, false, poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY, itemRenderer.getItemModelShaper().getModelManager().getModel(ModelResourceLocation.standalone(texture)));
         poseStack.popPose();
     }
 
-    public static void renderModel(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, int overlay, String path) {
-        BakedModel model = Minecraft.getInstance().getItemRenderer()
-                .getItemModelShaper().getModelManager().getModel(ModelResourceLocation.standalone(
-                        getCLoc(path)
-                ));
-        boolean flag1;
-        label78:
-        {
-            if (displayContext != ItemDisplayContext.GUI && !displayContext.firstPerson()) {
-                Item item = stack.getItem();
-                if (item instanceof BlockItem blockItem) {
-                    Block block = blockItem.getBlock();
-                    flag1 = !(block instanceof HalfTransparentBlock) && !(block instanceof StainedGlassPaneBlock);
-                    break label78;
-                }
-            }
-            flag1 = true;
+    public static void renderModel(ItemStack stack, ItemDisplayContext displayContext, boolean leftHand, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay, ResourceLocation resourceLocation) {
+        poseStack.pushPose();
+        poseStack.translate(0.5F, 0.5F, 0.5F);
+        BakedModel model = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(resourceLocation));
+        Minecraft.getInstance().getItemRenderer().render(stack, displayContext, leftHand, poseStack, buffer, light, overlay, model);
+        poseStack.popPose();
+    }
+
+    public static void renderFluid(Level level, BlockState state, BlockPos pos, PotFluidHandler fluidHandler, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, int overlay, ResourceLocation model, float height) {
+        if (fluidHandler.isEmpty()) {
+            return;
         }
-        for (BakedModel passModel : model.getRenderPasses(stack, flag1)) {
-            for (RenderType renderType : passModel.getRenderTypes(stack, flag1)) {
-                VertexConsumer vertexConsumer;
-                if (flag1) {
-                    vertexConsumer = getFoilBufferDirect(multiBufferSource, renderType, true, stack.hasFoil());
-                } else {
-                    vertexConsumer = getFoilBuffer(multiBufferSource, renderType, true, stack.hasFoil());
-                }
-                Minecraft.getInstance().getItemRenderer().renderModelLists(passModel, stack, light, overlay, poseStack, vertexConsumer);
-            }
-        }
+        poseStack.pushPose();
+        Fluid fluid = fluidHandler.getStoredFluid().getFluid();
+        float yLevel = (float) fluidHandler.getStoredFluid().getAmount() / (float) fluidHandler.getCapacity();
+        poseStack.translate(0.0F, (yLevel - 1.0F) * height, 0.0F);
+        TextureAtlasSprite[] sprites = FluidSpriteCache.getFluidSprites(level, pos, fluid.defaultFluidState());
+        BakedModel originalModel = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(model));
+        Minecraft.getInstance().getBlockRenderer().getModelRenderer().tesselateBlock(
+                level, new VariableFluidBakedModel(originalModel, sprites[0]),
+                state, pos, poseStack, multiBufferSource.getBuffer(RenderType.translucent()), true,
+                RandomSource.create(), light, overlay, ModelData.EMPTY, RenderType.translucent());
+        poseStack.popPose();
     }
 }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "c": {
+      "item": "minecraft:clay_ball"
+    },
+    "w": {
+      "tag": "c:dyes/white"
+    }
+  },
+  "pattern": [
+    "   ",
+    "cwc",
+    "ccc"
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:baking_pan"
+  }
+}

@@ -30,8 +30,8 @@ public abstract class CIFluidHandler<T extends Comparable<T>, V extends T> imple
             return;
         }
         if (canInput()) {
-            BlockState blockState = getLevel().getBlockState(getPos());
-            getLevel().setBlockAndUpdate(getPos(), blockState.setValue(contents.getProperty(), contents.getValue()));
+            BlockState blockState = level.getBlockState(pos);
+            level.setBlockAndUpdate(pos, blockState.setValue(contents.getProperty(), contents.getValue()));
         }
     }
 
@@ -40,8 +40,8 @@ public abstract class CIFluidHandler<T extends Comparable<T>, V extends T> imple
             return;
         }
         if (canOutput()) {
-            BlockState blockState = getLevel().getBlockState(getPos());
-            getLevel().setBlockAndUpdate(getPos(), blockState.setValue(contents.getProperty(), contents.getValue()));
+            BlockState blockState = level.getBlockState(pos);
+            level.setBlockAndUpdate(pos, blockState.setValue(contents.getProperty(), contents.getValue()));
         }
     }
 

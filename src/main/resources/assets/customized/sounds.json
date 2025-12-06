@@ -8,5 +8,15 @@
         "sounds": [
             "customized:common/boiling_water_with_lid"
         ]
+    },
+    "knife_hit_entity": {
+        "sounds": [
+            "customized:common/knife_hit_entity"
+        ]
+    },
+    "knife_shoot": {
+        "sounds": [
+            "customized:common/knife_shoot"
+        ]
     }
 }

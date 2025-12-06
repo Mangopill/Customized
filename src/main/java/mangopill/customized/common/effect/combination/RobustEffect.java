@@ -1,8 +1,6 @@
 package mangopill.customized.common.effect.combination;
 
-import mangopill.customized.common.effect.CombinationMobEffect;
 import mangopill.customized.common.effect.CMobEffect;
-import mangopill.customized.common.util.category.NutrientCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -11,15 +9,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-import java.util.List;
-import java.util.Set;
-
-import static mangopill.customized.common.util.category.NutrientCategory.*;
-
 /**
  *This MobEffect can increase MAX_HEALTH, ATTACK_DAMAGE, and grant DAMAGE_RESISTANCE.
  */
-public class RobustEffect extends CMobEffect implements CombinationMobEffect {
+public class RobustEffect extends CMobEffect {
 
     public RobustEffect(int color) {
         super(color);
@@ -32,10 +25,5 @@ public class RobustEffect extends CMobEffect implements CombinationMobEffect {
         if (livingEntity instanceof ServerPlayer player) {
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, (amplifier + 1) * 500, amplifier));
         }
-    }
-
-    @Override
-    public List<Set<NutrientCategory>> getCategorySet() {
-        return List.of(Set.of(PROTEIN, LIPID, CARBOHYDRATE));
     }
 }

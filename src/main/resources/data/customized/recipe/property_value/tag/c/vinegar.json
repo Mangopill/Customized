@@ -1,9 +1,13 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:foods/vinegar"
-  ],
-  "value": {
-    "sour" : 89.0
-  }
+  "group": [
+    {
+      "tag": [
+        "c:foods/vinegar"
+      ],
+      "value": {
+        "sour": 89.0
+      }
+    }
+  ]
 }

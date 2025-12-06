@@ -1,13 +1,17 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:foods/cooked_mutton"
-  ],
-  "value": {
-    "water": 25.7,
-    "protein": 40.0,
-    "lipid": 39.0,
-    "mineral": 18.0,
-    "fresh" : 20.0
-  }
+  "group": [
+    {
+      "tag": [
+        "c:foods/cooked_mutton"
+      ],
+      "value": {
+        "water": 25.7,
+        "protein": 40.0,
+        "lipid": 39.0,
+        "mineral": 18.0,
+        "fresh": 20.0
+      }
+    }
+  ]
 }

@@ -1,0 +1,16 @@
+{
+  "type": "customized:property_value",
+  "group": [
+    {
+      "tag": [
+        "c:foods/raw_rabbit"
+      ],
+      "value": {
+        "water": 15.0,
+        "protein": 21.0,
+        "lipid": 4.5,
+        "mineral": 15.0
+      }
+    }
+  ]
+}

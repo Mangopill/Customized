@@ -15,7 +15,16 @@ public interface CreateItemStackHandler {
             protected void onLoad() {
                 itemStackHandlerChanged();
             }
+
+            @Override
+            public int getSlotLimit(int slot) {
+                return setSlotLimit();
+            }
         };
+    }
+
+    default int setSlotLimit(){
+        return 99;
     }
 
     void itemStackHandlerChanged();

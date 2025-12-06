@@ -1,9 +1,13 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:crops/ginger"
-  ],
-  "value": {
-    "spicy": 8.0
-  }
+  "group": [
+    {
+      "tag": [
+        "c:crops/ginger"
+      ],
+      "value": {
+        "spicy": 8.0
+      }
+    }
+  ]
 }

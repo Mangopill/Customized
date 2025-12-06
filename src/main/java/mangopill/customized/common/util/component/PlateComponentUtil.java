@@ -14,7 +14,7 @@ public final class PlateComponentUtil {
     private PlateComponentUtil() {
     }
     public static FoodProperties getFoodProperty(ItemStack stack) {
-        return stack.getOrDefault(DataComponents.FOOD, FoodValue.NULL);
+        return stack.getOrDefault(DataComponents.FOOD, FoodValue.EMPTY);
     }
 
     public static ItemStackHandler getItemStackHandler(ItemStack stack) {

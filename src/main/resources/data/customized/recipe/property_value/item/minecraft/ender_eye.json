@@ -1,10 +1,14 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:ender_eye"
-  ],
-  "value": {
-    "dread" : 5.0,
-    "nothingness" : 2.5
-  }
+  "group": [
+    {
+      "item": [
+        "minecraft:ender_eye"
+      ],
+      "value": {
+        "dread": 5.0,
+        "nothingness": 2.5
+      }
+    }
+  ]
 }

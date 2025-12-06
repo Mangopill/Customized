@@ -1,13 +1,17 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:pufferfish"
-  ],
-  "value": {
-    "water": 33.6,
-    "protein": 36.0,
-    "lipid": 4.5,
-    "mineral": 16.0,
-    "fresh" : 30.0
-  }
+  "group": [
+    {
+      "item": [
+        "minecraft:pufferfish"
+      ],
+      "value": {
+        "water": 33.6,
+        "protein": 36.0,
+        "lipid": 4.5,
+        "mineral": 16.0,
+        "fresh": 30.0
+      }
+    }
+  ]
 }

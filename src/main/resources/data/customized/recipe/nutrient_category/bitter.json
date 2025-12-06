@@ -1,0 +1,6 @@
+{
+  "type": "customized:nutrient_category",
+  "icon": "customized:textures/gui/nutrient_category/bitter.png",
+  "name": "bitter",
+  "color": "0x6B4F3B"
+}

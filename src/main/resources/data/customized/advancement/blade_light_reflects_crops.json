@@ -1,0 +1,35 @@
+{
+    "parent": "customized:knife_to_meet_you",
+    "criteria": {
+        "killed_any_entity": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "killing_blow": {
+                    "tags": [
+                        {
+                            "id": "customized:knife_entity",
+                            "expected": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "customized.advancement.blade_light_reflects_crops"
+        },
+        "icon": {
+            "id": "customized:diamond_knife"
+        },
+        "title": {
+            "translate": "customized.advancement.blade_light_reflects_crops.title"
+        }
+    },
+    "requirements": [
+        [
+            "killed_any_entity"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

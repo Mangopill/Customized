@@ -1,16 +1,20 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:dried_kelp"
-  ],
-  "value": {
-    "water": 0.81,
-    "protein": 6.0,
-    "lipid": 1.0,
-    "carbohydrate": 19.2,
-    "vitamin": 6.0,
-    "mineral": 240.0,
-    "dietary_fiber": 16.0,
-    "salty" : 5.0
-  }
+  "group": [
+    {
+      "item": [
+        "minecraft:dried_kelp"
+      ],
+      "value": {
+        "water": 0.81,
+        "protein": 6.0,
+        "lipid": 1.0,
+        "carbohydrate": 19.2,
+        "vitamin": 6.0,
+        "mineral": 240.0,
+        "dietary_fiber": 16.0,
+        "salty": 5.0
+      }
+    }
+  ]
 }

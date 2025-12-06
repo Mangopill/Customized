@@ -1,9 +1,13 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:rods/blaze"
-  ],
-  "value": {
-    "warm" : 30.0
-  }
+  "group": [
+    {
+      "tag": [
+        "c:rods/blaze"
+      ],
+      "value": {
+        "warm": 30.0
+      }
+    }
+  ]
 }

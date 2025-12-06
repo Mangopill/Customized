@@ -1,6 +1,6 @@
 package mangopill.customized.common.recipe.serializer;
 
-import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import mangopill.customized.common.recipe.PropertyValueRecipe;
@@ -9,44 +9,79 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.IntStream;
+import java.util.*;
 
 public class PropertyValueSerializer implements RecipeSerializer<PropertyValueRecipe> {
     public static final MapCodec<PropertyValueRecipe> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    NeoForgeExtraCodecs.xor(
-                            NeoForgeExtraCodecs.setOf(ResourceLocation.CODEC).fieldOf("item"),
-                            NeoForgeExtraCodecs.setOf(ResourceLocation.CODEC).fieldOf("tag")
-                    ).forGetter(recipe -> recipe.item() ? Either.left(recipe.name()) : Either.right(recipe.name())),
-                    PropertyValue.CODEC.fieldOf("value").forGetter(PropertyValueRecipe::propertyValue)
-            ).apply(instance, (itemOrTag, propertyValue) -> {
-                boolean isItem = itemOrTag.left().isPresent();
-                Set<ResourceLocation> name = isItem ? itemOrTag.left().get() : itemOrTag.right().get();
-                return new PropertyValueRecipe(name, propertyValue, isItem);
-            })
+                    PropertyValueGroup.CODEC.listOf().fieldOf("group").forGetter(PropertyValueRecipe::groups)
+            ).apply(instance, PropertyValueRecipe::new)
     );
+
     public static final StreamCodec<RegistryFriendlyByteBuf, PropertyValueRecipe> STREAM_CODEC = StreamCodec.of(
             PropertyValueSerializer::toNetwork, PropertyValueSerializer::fromNetwork
     );
 
+    public record PropertyValueGroup(HashSet<ResourceLocation> items, HashSet<ResourceLocation> tags, PropertyValue propertyValue) {
+        public static final Codec<PropertyValueGroup> CODEC = RecordCodecBuilder.create(
+                instance -> instance.group(
+                        ResourceLocation.CODEC.listOf().optionalFieldOf("item", List.of())
+                                .xmap(HashSet::new, ArrayList::new)
+                                .forGetter(PropertyValueGroup::items),
+                        ResourceLocation.CODEC.listOf().optionalFieldOf("tag", List.of())
+                                .xmap(HashSet::new, ArrayList::new)
+                                .forGetter(PropertyValueGroup::tags),
+                        PropertyValue.CODEC.fieldOf("value").forGetter(PropertyValueGroup::propertyValue)
+                ).apply(instance, PropertyValueGroup::new)
+        );
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, PropertyValueGroup> STREAM_CODEC = StreamCodec.of(
+                PropertyValueGroup::toNetwork, PropertyValueGroup::fromNetwork
+        );
+
+        private static PropertyValueGroup fromNetwork(RegistryFriendlyByteBuf buffer) {
+            int itemCount = buffer.readVarInt();
+            HashSet<ResourceLocation> items = new HashSet<>();
+            for (int i = 0; i < itemCount; i++) {
+                items.add(buffer.readResourceLocation());
+            }
+            int tagCount = buffer.readVarInt();
+            HashSet<ResourceLocation> tags = new HashSet<>();
+            for (int i = 0; i < tagCount; i++) {
+                tags.add(buffer.readResourceLocation());
+            }
+            PropertyValue propertyValue = PropertyValue.STREAM_CODEC.decode(buffer);
+            return new PropertyValueGroup(items, tags, propertyValue);
+        }
+
+        private static void toNetwork(RegistryFriendlyByteBuf buffer, PropertyValueGroup group) {
+            buffer.writeVarInt(group.items().size());
+            for (ResourceLocation item : group.items()) {
+                buffer.writeResourceLocation(item);
+            }
+            buffer.writeVarInt(group.tags().size());
+            for (ResourceLocation tag : group.tags()) {
+                buffer.writeResourceLocation(tag);
+            }
+            PropertyValue.STREAM_CODEC.encode(buffer, group.propertyValue());
+        }
+    }
+
     private static PropertyValueRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-        boolean isItem = buffer.readBoolean();
-        HashSet<ResourceLocation> name = new HashSet<>();
-        int length = buffer.readVarInt();
-        IntStream.range(0, length).forEach(i -> name.add(buffer.readResourceLocation()));
-        PropertyValue propertyValue = PropertyValue.STREAM_CODEC.decode(buffer);
-        return new PropertyValueRecipe(name, propertyValue, isItem);
+        int groupCount = buffer.readVarInt();
+        List<PropertyValueGroup> groups = new ArrayList<>();
+        for (int i = 0; i < groupCount; i++) {
+            groups.add(PropertyValueGroup.STREAM_CODEC.decode(buffer));
+        }
+        return new PropertyValueRecipe(groups);
     }
 
     private static void toNetwork(RegistryFriendlyByteBuf buffer, PropertyValueRecipe recipe) {
-        buffer.writeBoolean(recipe.item());
-        buffer.writeVarInt(recipe.name().size());
-        recipe.name().forEach(buffer::writeResourceLocation);
-        PropertyValue.STREAM_CODEC.encode(buffer, recipe.propertyValue());
+        buffer.writeVarInt(recipe.groups().size());
+        for (PropertyValueGroup group : recipe.groups()) {
+            PropertyValueGroup.STREAM_CODEC.encode(buffer, group);
+        }
     }
 
     @Override

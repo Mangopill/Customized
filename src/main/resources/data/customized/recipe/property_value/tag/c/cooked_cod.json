@@ -1,13 +1,17 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:foods/cooked_cod"
-  ],
-  "value": {
-    "water": 39.3,
-    "protein": 36.0,
-    "lipid": 3.0,
-    "mineral": 15.0,
-    "fresh" : 10.0
-  }
+  "group": [
+    {
+      "tag": [
+        "c:foods/cooked_cod"
+      ],
+      "value": {
+        "water": 39.3,
+        "protein": 36.0,
+        "lipid": 3.0,
+        "mineral": 15.0,
+        "fresh": 10.0
+      }
+    }
+  ]
 }

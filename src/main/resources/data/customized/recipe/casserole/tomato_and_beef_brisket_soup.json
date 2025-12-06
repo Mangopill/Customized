@@ -23,9 +23,11 @@
       "item": "customized:rock_sugar"
     }
   ],
-  "spice": {
-    "item": "customized:sweet_and_sour_refreshing_spice"
-  },
+  "spice": [
+    {
+      "item": "customized:sweet_and_sour_refreshing_spice"
+    }
+  ],
   "container": {
     "item": "customized:famous_dish_plate"
   },

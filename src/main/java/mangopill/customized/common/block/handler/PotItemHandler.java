@@ -8,7 +8,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.List;
 
-import static mangopill.customized.common.util.CItemStackHandlerHelper.containsSameItem;
+import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 
 public class PotItemHandler extends CIItemHandler<AbstractPotBlockEntity> {
     private final int ingredientInput;
@@ -28,7 +28,7 @@ public class PotItemHandler extends CIItemHandler<AbstractPotBlockEntity> {
             return slot < seasoningInput + ingredientInput && slot >= ingredientInput ? getItemHandler().insertItem(slot, stack, simulate) : stack;
         }
         if (stack.is(ModTag.FAMOUS_SPICE)) {
-            return slot == seasoningInput + ingredientInput ? getItemHandler().insertItem(slot, stack, simulate) : stack;
+            return slot >= seasoningInput + ingredientInput && slot < seasoningInput + ingredientInput + spiceInput ? getItemHandler().insertItem(slot, stack, simulate) : stack;
         }
         if (stack.getItem() instanceof AbstractPlateItem || containsSameItem(List.of(getEntity().getContainerItem().getItems()), stack)) {
             return slot == seasoningInput + ingredientInput + spiceInput ? getItemHandler().insertItem(slot, stack, simulate) : stack;

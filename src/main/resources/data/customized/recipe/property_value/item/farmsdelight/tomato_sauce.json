@@ -1,12 +1,16 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "farmersdelight:tomato_sauce"
-  ],
-  "value": {
-    "water": 33.33,
-    "vitamin": 50.0,
-    "sour" : 30.0,
-    "sweet" : 15.0
-  }
+  "group": [
+    {
+      "item": [
+        "farmersdelight:tomato_sauce"
+      ],
+      "value": {
+        "water": 33.33,
+        "vitamin": 50.0,
+        "sour": 30.0,
+        "sweet": 15.0
+      }
+    }
+  ]
 }

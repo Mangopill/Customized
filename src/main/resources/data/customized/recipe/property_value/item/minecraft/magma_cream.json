@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "group": [
+    {
+      "item": [
+        "minecraft:magma_cream"
+      ],
+      "value": {
+        "warm": 15.0
+      }
+    }
+  ]
+}

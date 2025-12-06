@@ -1,21 +1,15 @@
 package mangopill.customized.common.effect.combination;
 
 import mangopill.customized.common.effect.*;
-import mangopill.customized.common.util.category.NutrientCategory;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 
-import java.util.List;
-import java.util.Set;
-
-import static mangopill.customized.common.util.category.NutrientCategory.*;
-
 /**
  *This MobEffect can give the player the DAMAGE_RESISTANCE effect.
  */
-public class SustainedEnergyEffect extends CMobEffect implements ShrinkNutritionMobEffect, ShrinkSaturationMobEffect, CombinationMobEffect {
+public class SustainedEnergyEffect extends CMobEffect {
 
     public SustainedEnergyEffect(int color) {
         super(color);
@@ -26,20 +20,5 @@ public class SustainedEnergyEffect extends CMobEffect implements ShrinkNutrition
         if (livingEntity instanceof ServerPlayer player) {
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, (amplifier + 1) * 600, amplifier));
         }
-    }
-
-    @Override
-    public float getShrinkNutritionModifier() {
-        return -0.15F;
-    }
-
-    @Override
-    public float getShrinkSaturationModifier() {
-        return -0.15F;
-    }
-
-    @Override
-    public List<Set<NutrientCategory>> getCategorySet() {
-        return List.of(Set.of(SWEET, SPICY));
     }
 }

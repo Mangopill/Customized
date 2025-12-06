@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class StirFryStrategy implements PotInteractionStrategy {
+public record StirFryStrategy(ItemStack spatula) implements PotInteractionStrategy {
     @Override
     public boolean interact(ItemStack itemStackInHand, BlockState state,
                          Level level, BlockPos pos,
@@ -27,7 +27,7 @@ public class StirFryStrategy implements PotInteractionStrategy {
             if (!canStirFry(itemStackInHand, state)){
                 return false;
             }
-            stirFry(itemStackInHand, level, pos, player, hand, potBlockEntity);
+            stirFry(itemStackInHand, level, pos, player, hand, potBlockEntity, spatula);
             return true;
         }
         return false;
@@ -37,8 +37,8 @@ public class StirFryStrategy implements PotInteractionStrategy {
         return !itemStackInHand.isEmpty() && !state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID) && itemStackInHand.is(ModTag.SPATULA);
     }
 
-    private void stirFry(ItemStack itemStackInHand, Level level, BlockPos pos, Player player, InteractionHand hand, AbstractPotBlockEntity potBlockEntity) {
-        potBlockEntity.stirFryAccelerate(itemStackInHand, player, hand);
+    private void stirFry(ItemStack itemStackInHand, Level level, BlockPos pos, Player player, InteractionHand hand, AbstractPotBlockEntity potBlockEntity, ItemStack spatula) {
+        potBlockEntity.stirFryAccelerate(itemStackInHand, player, hand, spatula);
         level.playSound(null, pos, SoundEvents.METAL_HIT, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 }

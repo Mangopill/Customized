@@ -1,12 +1,16 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:foods/ketchup"
-  ],
-  "value": {
-    "water": 33.33,
-    "vitamin": 50.0,
-    "sour" : 30.0,
-    "sweet" : 15.0
-  }
+  "group": [
+    {
+      "tag": [
+        "c:foods/ketchup"
+      ],
+      "value": {
+        "water": 33.33,
+        "vitamin": 50.0,
+        "sour": 30.0,
+        "sweet": 15.0
+      }
+    }
+  ]
 }

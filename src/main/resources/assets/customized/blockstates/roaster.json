@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "facing=north,lid=with_lid": {
+      "model": "customized:block/roaster_with_lid",
+      "y": 180
+    },
+    "facing=south,lid=with_lid": {
+      "model": "customized:block/roaster_with_lid"
+    },
+    "facing=west,lid=with_lid": {
+      "model": "customized:block/roaster_with_lid",
+      "y": 90
+    },
+    "facing=east,lid=with_lid": {
+      "model": "customized:block/roaster_with_lid",
+      "y": 270
+    },
+    "facing=north,lid=without_lid": {
+      "model": "customized:block/roaster_without_lid",
+      "y": 180
+    },
+    "facing=south,lid=without_lid": {
+      "model": "customized:block/roaster_without_lid"
+    },
+    "facing=west,lid=without_lid": {
+      "model": "customized:block/roaster_without_lid",
+      "y": 90
+    },
+    "facing=east,lid=without_lid": {
+      "model": "customized:block/roaster_without_lid",
+      "y": 270
+    },
+    "facing=north,lid=with_drive": {
+      "model": "customized:block/roaster_with_drive",
+      "y": 180
+    },
+    "facing=south,lid=with_drive": {
+      "model": "customized:block/roaster_with_drive"
+    },
+    "facing=west,lid=with_drive": {
+      "model": "customized:block/roaster_with_drive",
+      "y": 90
+    },
+    "facing=east,lid=with_drive": {
+      "model": "customized:block/roaster_with_drive",
+      "y": 270
+    }
+  }
+}

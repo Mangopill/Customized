@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "l": {
+      "tag": "c:dyes/light_blue"
+    },
+    "w": {
+      "tag": "c:rods/wooden"
+    },
+    "i": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    "  i",
+    " l ",
+    "w  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:spatula"
+  }
+}

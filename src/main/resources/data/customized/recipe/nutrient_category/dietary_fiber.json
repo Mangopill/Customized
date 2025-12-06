@@ -1,0 +1,7 @@
+{
+  "type": "customized:nutrient_category",
+  "icon": "customized:textures/gui/nutrient_category/dietary_fiber.png",
+  "name": "dietary_fiber",
+  "color": "0x1F9A1C",
+  "nutrition": 0.03
+}

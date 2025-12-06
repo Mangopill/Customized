@@ -29,6 +29,7 @@ public class Customized {
         CSoundRegistry.SOUND_EVENT.register(modBus);
         CBlockEntityTypeRegistry.BLOCK_ENTITY_TYPE.register(modBus);
         CCreativeModeTabRegistry.CREATIVE_MODE_TAB.register(modBus);
+        CEntityTypeRegistry.ENTITY.register(modBus);
         CFeatureRegistry.FEATURE.register(modBus);
         CParticleTypeRegistry.PARTICLE_TYPE.register(modBus);
         CRecipeRegistry.RECIPE_TYPE.register(modBus);

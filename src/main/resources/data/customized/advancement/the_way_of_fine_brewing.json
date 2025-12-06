@@ -13,7 +13,7 @@
             "id": "customized:brewing_barrel"
         },
         "title": {
-            "translate": "customized.advancement.the_way_of_fine_brewing.desc"
+            "translate": "customized.advancement.the_way_of_fine_brewing.title"
         }
     },
     "requirements": [

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "c": {
+      "item": "minecraft:campfire"
+    },
+    "m": {
+      "item": "minecraft:mud_bricks"
+    },
+    "i": {
+      "tag": "c:ingots/iron"
+    },
+    "b": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "pattern": [
+    "iii",
+    "mbm",
+    "mcm"
+  ],
+  "result": {
+    "count": 1,
+    "id": "customized:roaster"
+  }
+}

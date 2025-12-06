@@ -21,4 +21,6 @@ public class CAdvancementRegistry {
             TRIGGER.register("eat_inedible_stew", BasicTrigger::new);
     public static final Supplier<BasicTrigger> GET_FAMOUS_DISH =
             TRIGGER.register("get_famous_dish", BasicTrigger::new);
+    public static final Supplier<BasicTrigger> USE_FLYING_KNIFE =
+            TRIGGER.register("use_flying_knife", BasicTrigger::new);
 }

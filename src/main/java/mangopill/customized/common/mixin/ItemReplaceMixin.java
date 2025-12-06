@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.ResourceUtil.*;
+import static mangopill.customized.common.util.StringUtil.*;
 import static mangopill.customized.common.util.LootTableUtil.*;
 
 @Mixin(ItemEntity.class)
@@ -41,7 +41,7 @@ public abstract class ItemReplaceMixin{
             int i = 0;
             while (i < itemStack.getCount()){
                 spawnItemEntity(level, getRandomLootTableItemStack((ServerLevel) level, ResourceKey.create(Registries.LOOT_TABLE,
-                        getCLoc("gameplay/" + BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath()))), null, itemEntity.getOnPos());
+                        getCLoc("gameplay/" + BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath()))), null, itemEntity.getOnPos().below());
                 i++;
             }
             itemEntity.discard();

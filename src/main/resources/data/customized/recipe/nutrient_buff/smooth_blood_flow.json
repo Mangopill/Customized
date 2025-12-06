@@ -1,0 +1,14 @@
+{
+  "type": "customized:nutrient_buff",
+  "effect": "customized:smooth_blood_flow",
+  "nutrient_category": [
+    {
+      "salty": 20.0,
+      "numbing": 20.0
+    }
+  ],
+  "duration": 1.0,
+  "probability": 0.001,
+  "shrink_nutrition": 0.1,
+  "shrink_saturation": 0.1
+}

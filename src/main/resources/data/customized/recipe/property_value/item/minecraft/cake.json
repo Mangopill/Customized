@@ -1,16 +1,20 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:cake"
-  ],
-  "value": {
-    "water": 10.0,
-    "protein": 10.0,
-    "lipid": 30.0,
-    "carbohydrate": 120.0,
-    "vitamin": 2.5,
-    "mineral": 6.0,
-    "dietary_fiber": 10.0,
-    "sweet" : 7.0
-  }
+  "group": [
+    {
+      "item": [
+        "minecraft:cake"
+      ],
+      "value": {
+        "water": 10.0,
+        "protein": 10.0,
+        "lipid": 30.0,
+        "carbohydrate": 120.0,
+        "vitamin": 2.5,
+        "mineral": 6.0,
+        "dietary_fiber": 10.0,
+        "sweet": 7.0
+      }
+    }
+  ]
 }

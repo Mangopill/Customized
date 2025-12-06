@@ -1,9 +1,13 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:foods/oyster_sauce"
-  ],
-  "value": {
-    "fresh" : 50.0
-  }
+  "group": [
+    {
+      "tag": [
+        "c:foods/oyster_sauce"
+      ],
+      "value": {
+        "fresh": 50.0
+      }
+    }
+  ]
 }

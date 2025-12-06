@@ -1,5 +1,6 @@
 package mangopill.customized.common.block.entity;
 
+import mangopill.customized.common.block.handler.PotFluidHandler;
 import mangopill.customized.common.block.handler.PotItemHandler;
 import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.item.AbstractPlateItem;
@@ -12,11 +13,12 @@ import mangopill.customized.common.util.record.UUIDRecord;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -26,7 +28,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
@@ -37,7 +39,7 @@ import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.block.AbstractPotBlock.*;
 import static mangopill.customized.common.util.CompoundTagHelper.*;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.ResourceUtil.getCLoc;
+import static mangopill.customized.common.util.StringUtil.*;
 import static mangopill.customized.common.util.component.PlateComponentUtil.*;
 import static mangopill.customized.common.util.PropertyValueUtil.*;
 
@@ -45,10 +47,11 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     private final int ingredientInput;
     private final int seasoningInput;
     private final int spiceInput;
-    private static final int OUTPUT = 1;
+    public static final int OUTPUT = 1;
     private final int allSlot;
     private final ItemStackHandler itemStackHandler;
-    private final IItemHandler inputAndOutputHandler;
+    private final PotItemHandler inputAndOutputHandler;
+    private final PotFluidHandler fluidHandler;
     private Ingredient containerItem;
     private final RecipeManager.CachedCheck<RecipeWrapper,? extends AbstractPotRecipe> potCheck;
     private final RecipeManager.CachedCheck<SingleRecipeInput, CampfireCookingRecipe> campfireCheck;
@@ -58,17 +61,18 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     private int customizedTime;
     private int customizedCompletionTime;
 
-    public AbstractPotBlockEntity(BlockEntityType<? extends AbstractPotBlockEntity> type, BlockPos pos, BlockState blockState,
+    protected AbstractPotBlockEntity(BlockEntityType<? extends AbstractPotBlockEntity> type, BlockPos pos, BlockState blockState,
                                   int ingredientCount, int seasoningCount, int spiceCount,
                                   RecipeManager.CachedCheck<RecipeWrapper, ? extends AbstractPotRecipe> potCheck) {
         super(type, pos, blockState);
-        ingredientInput = ingredientCount;
-        seasoningInput = seasoningCount;
-        spiceInput = spiceCount;
+        this.ingredientInput = ingredientCount;
+        this.seasoningInput = seasoningCount;
+        this.spiceInput = spiceCount;
         this.allSlot = ingredientInput + seasoningInput + spiceInput + OUTPUT;
         this.campfireCheck = RecipeManager.createCheck(RecipeType.CAMPFIRE_COOKING);
         this.itemStackHandler = createItemStackHandler(allSlot);
         this.inputAndOutputHandler = new PotItemHandler(this, itemStackHandler);
+        this.fluidHandler = new PotFluidHandler(this, FluidType.BUCKET_VOLUME);
         this.containerItem = Ingredient.EMPTY;
         this.potCheck = potCheck;
         this.lastInteractPlayerId = UUIDRecord.NULL.uuid();
@@ -87,20 +91,18 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     public static void cookingTick(Level level, BlockPos pos, BlockState state, AbstractPotBlockEntity potBlockEntity) {
         RecipeWrapper wrapper = new RecipeWrapper(potBlockEntity.itemStackHandler);
         Optional<RecipeHolder<? extends AbstractPotRecipe>> potMatchRecipe = potBlockEntity.getPotMatchRecipe(wrapper);
-        if (!potBlockEntity.isHeated() || !potBlockEntity.hasInput() || potBlockEntity.level == null){
+        if (!potBlockEntity.hasInput() || potBlockEntity.level == null){
             potBlockEntity.clearCookingTime();
             potBlockEntity.clearCustomizedTime();
             return;
         }
         if (potMatchRecipe.isPresent() && potBlockEntity.canCookRecipe(potMatchRecipe.get().value(),wrapper)){
-            //recipe
             if (!RECIPE_COOKING.get()){
                 return;
             }
             potBlockEntity.cookRecipe(potMatchRecipe.get(), pos, state);
-        } else {
+        } else if (potBlockEntity.isHeated()){
             potBlockEntity.cookCampfire(level, state);
-            //customized
             if (!CUSTOM_COOKING.get()){
                 return;
             }
@@ -116,6 +118,17 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     }
 
     abstract public void particleTick(Level level, BlockPos pos, AbstractPotBlockEntity potBlockEntity);
+
+    public static void addSimpleParticle(Level level, BlockPos pos, ParticleOptions type, float probability,
+                                         float xMin, float xMax, float yOffset, float zMin, float zMax) {
+        RandomSource random = RandomSource.create();
+        if (random.nextFloat() < probability) {
+            double x = pos.getX() + Math.clamp(random.nextDouble(), xMin, xMax);
+            double y = pos.getY() + yOffset;
+            double z = pos.getZ() + Math.clamp(random.nextDouble(), zMin, zMax);
+            level.addParticle(type, x, y, z, 0.0D, 0.0D, 0.0D);
+        }
+    }
 
     protected Optional<RecipeHolder<? extends AbstractPotRecipe>> getPotMatchRecipe(RecipeWrapper recipeWrapper) {
         return hasInput() && level != null
@@ -140,9 +153,14 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         if(!recipe.matches(recipeWrapper, this.level)){
             return false;
         }
+        if (recipe.isHeated() && !isHeated()) {
+            return false;
+        }
+        if(!fluidHandler.isEmpty() && !recipe.getFluidIngredient().test(fluidHandler.getStoredFluid())){
+            return false;
+        }
         ItemStack stackInSlot = itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + spiceInput);
-        return stackInSlot.getCount() + resultStack.getCount() <= itemStackHandler
-                .getSlotLimit(ingredientInput + seasoningInput + spiceInput);
+        return stackInSlot.getCount() + resultStack.getCount() <= itemStackHandler.getSlotLimit(ingredientInput + seasoningInput + spiceInput);
     }
 
     protected void cookRecipe(RecipeHolder<? extends AbstractPotRecipe> holder, BlockPos pos, BlockState state) {
@@ -213,7 +231,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
             ItemStackHandler initialItemStackHandler = new ItemStackHandler(newItemStackHandler.getSlots());
             newStackList.forEach(itemStack -> plateItem.insertItem(itemStack.copy(), initialItemStackHandler));
             updateAll(outputItem, newItemStackHandler, initialItemStackHandler,
-                    getFoodPropertyByPropertyValue(level, newStackList, true),
+                    getFoodPropertyByPropertyValue(level, newStackList, this.getBlockState().getBlock(), true),
                     getConsumptionCount(newStackList), getConsumptionCount(newStackList),
                     lastInteractPlayerId, getProgress(level));
             spawnItemEntity(level, outputItem, this.getBlockState(), this.getBlockPos());
@@ -258,6 +276,9 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         if (stateBelow.hasProperty(BlockStateProperties.LIT)){
             return stateBelow.getValue(BlockStateProperties.LIT);
         }
+        if (stateBelow.hasProperty(LID)){
+            return !stateBelow.getValue(LID).equals(PotState.WITHOUT_LID);
+        }
         return true;
     }
 
@@ -272,8 +293,8 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     }
 
     //speed up
-    public void stirFryAccelerate(ItemStack itemStackInHand, LivingEntity entity, InteractionHand hand){
-        if (!itemStackInHand.is(ModTag.SPATULA)) {
+    public void stirFryAccelerate(ItemStack itemStackInHand, Player player, InteractionHand hand, ItemStack spatula){
+        if (!ItemStack.isSameItem(itemStackInHand, spatula)) {
             return;
         }
         if (cookingTime > 0) {
@@ -282,7 +303,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         if (customizedTime > 0) {
             customizedTime += 10;
         }
-        itemStackInHand.hurtAndBreak(1, entity, LivingEntity.getSlotForHand(hand));
+        hurtAndBreakItemStack(itemStackInHand, player, 1);
         shuffleItemStackHandlerInRange(itemStackHandler, 0, ingredientInput);
     }
 
@@ -337,6 +358,9 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         customizedTime = compound.getInt("CustomizedTime");
         customizedCompletionTime = compound.getInt("CustomizedCompletionTime");
         lastInteractPlayerId = compound.getUUID("LastInteractPlayerId");
+        if (compound.contains("FluidHandler")) {
+            deserializeFluidHandlerTag(compound, registries, fluidHandler);
+        }
     }
 
     @Override
@@ -347,10 +371,10 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         compound.putInt("CustomizedTime", customizedTime);
         compound.putInt("CustomizedCompletionTime", customizedCompletionTime);
         compound.put("ItemStackHandler", itemStackHandler.serializeNBT(registries));
+        putFluidHandlerTag(compound, registries, fluidHandler);
         putIngredientTag(compound, containerItem);
         compound.putUUID("LastInteractPlayerId", lastInteractPlayerId);
     }
-
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
@@ -359,7 +383,6 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         return tag;
     }
 
-    //getter
     public int getIngredientInput() {
         return ingredientInput;
     }
@@ -380,8 +403,12 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         return itemStackHandler;
     }
 
-    public IItemHandler getInputAndOutputHandler() {
+    public PotItemHandler getInputAndOutputHandler() {
         return inputAndOutputHandler;
+    }
+
+    public PotFluidHandler getFluidHandler() {
+        return fluidHandler;
     }
 
     public RecipeManager.CachedCheck<RecipeWrapper, ? extends AbstractPotRecipe> getPotCheck() {

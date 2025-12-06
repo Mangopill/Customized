@@ -1,0 +1,12 @@
+{
+  "type": "customized:nutrient_buff",
+  "effect": "customized:hydration_and_plumpness",
+  "nutrient_category": [
+    {
+      "fresh": 20.0,
+      "salty": 20.0
+    }
+  ],
+  "duration": 1.0,
+  "probability": 0.001
+}

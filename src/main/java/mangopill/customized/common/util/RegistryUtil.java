@@ -2,11 +2,14 @@ package mangopill.customized.common.util;
 
 import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
+import mangopill.customized.common.block.AbstractPotBlock;
+import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.item.KnifeItem;
-import mangopill.customized.common.item.ModHatItem;
+import mangopill.customized.common.item.CHatItem;
 import mangopill.customized.common.registry.CDataComponentRegistry;
 import mangopill.customized.common.util.record.ItemStackHandlerRecord;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Recipe;
@@ -15,24 +18,27 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
 
 import static mangopill.customized.common.registry.CItemRegistry.*;
 
 public final class RegistryUtil {
     private RegistryUtil() {
     }
+
     public static Item.Properties basicItemProperties() {
         return new Item.Properties();
     }
 
     public static Item.Properties basicPlateItemProperties(int slot) {
-        return basicItemProperties().stacksTo(1).food(FoodValue.NULL)
+        return basicItemProperties().stacksTo(1).food(FoodValue.EMPTY)
                 .component(CDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(new ItemStackHandler(slot)));
     }
 
@@ -61,11 +67,19 @@ public final class RegistryUtil {
     }
 
     public static Supplier<Item> modKnifeItem(Tier tier, float chanceLevel) {
-        return () -> new KnifeItem(tier, new Item.Properties().attributes(SwordItem.createAttributes(tier, 1.5F, -2.1F)), chanceLevel);
+        return () -> new KnifeItem(tier, basicItemProperties().attributes(SwordItem.createAttributes(tier, 1.5F, -2.1F)), chanceLevel);
     }
 
-    public static Supplier<Item> modHatItem(Holder<ArmorMaterial> material, Rarity rarity, int durabilityFactor, double translateY, float scale) {
-        return () -> new ModHatItem(material, ArmorItem.Type.HELMET, basicItemProperties().durability(net.minecraft.world.item.ArmorItem.Type.HELMET.getDurability(durabilityFactor)).rarity(rarity), translateY, scale);
+    public static Supplier<Item> modFireResistantKnifeItem(Tier tier, float chanceLevel) {
+        return () -> new KnifeItem(tier, basicItemProperties().fireResistant().attributes(SwordItem.createAttributes(tier, 1.5F, -2.1F)), chanceLevel);
+    }
+
+    public static Supplier<Item> modHatItem(Holder<ArmorMaterial> material, Rarity rarity, ResourceLocation texture, int durabilityFactor, double translateY, float scale) {
+        return () -> new CHatItem(material, ArmorItem.Type.HELMET, basicItemProperties().durability(ArmorItem.Type.HELMET.getDurability(durabilityFactor)).rarity(rarity), texture, translateY, scale);
+    }
+
+    public static Supplier<Item> modFireResistantHatItem(Holder<ArmorMaterial> material, Rarity rarity, ResourceLocation texture, int durabilityFactor, double translateY, float scale) {
+        return () -> new CHatItem(material, ArmorItem.Type.HELMET, basicItemProperties().fireResistant().durability(ArmorItem.Type.HELMET.getDurability(durabilityFactor)).rarity(rarity), texture, translateY, scale);
     }
 
     public static Block.Properties cropBlockProperties() {
@@ -78,6 +92,10 @@ public final class RegistryUtil {
 
     public static<T extends BlockEntity> Supplier<BlockEntityType<T>> basicBlockEntityType(BlockEntityType.BlockEntitySupplier<T> blockEntityType, Supplier<Block> supplier) {
         return () -> BlockEntityType.Builder.of(blockEntityType , supplier.get()).build(null);
+    }
+
+    public static ToIntFunction<BlockState> lidBlockEmission(int lightValue) {
+        return state -> !state.getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID) ? lightValue : 0;
     }
 
     public static Supplier<Item> registerWithCreativeTab(final String string, final Supplier<Item> supplier) {

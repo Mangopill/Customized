@@ -7,7 +7,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Items;
 
 public class FoodValue {
-    public static final FoodProperties NULL = new FoodProperties.Builder()
+    public static final FoodProperties EMPTY = new FoodProperties.Builder()
             .alwaysEdible().build();
     public static final FoodProperties INEDIBLE = new FoodProperties.Builder()
             .nutrition(4).saturationModifier(0.5F)

@@ -26,9 +26,11 @@
       "item": "customized:salt"
     }
   ],
-  "spice": {
-    "item": "customized:light_and_fresh_aromatic_spice"
-  },
+  "spice": [
+    {
+      "item": "customized:light_and_fresh_aromatic_spice"
+    }
+  ],
   "container": {
     "item": "customized:famous_dish_plate"
   },

@@ -1,0 +1,19 @@
+{
+  "type": "customized:property_value",
+  "group": [
+    {
+      "tag": [
+        "c:foods/bread"
+      ],
+      "value": {
+        "water": 23.33,
+        "protein": 16.0,
+        "lipid": 6.0,
+        "carbohydrate": 98.0,
+        "vitamin": 2.0,
+        "mineral": 20.0,
+        "dietary_fiber": 12.5
+      }
+    }
+  ]
+}

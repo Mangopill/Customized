@@ -1,9 +1,13 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "minecraft:skulls"
-  ],
-  "value": {
-    "dread" : 100.0
-  }
+  "group": [
+    {
+      "tag": [
+        "minecraft:skulls"
+      ],
+      "value": {
+        "dread": 100.0
+      }
+    }
+  ]
 }

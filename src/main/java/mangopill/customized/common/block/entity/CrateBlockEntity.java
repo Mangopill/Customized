@@ -32,12 +32,12 @@ public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
     }
 
     @Override
-    public void cookingTick(Level level, BlockPos pos, BlockState state, RecipeWrapper wrapper) {
-        if (!isSunny(pos)){
+    protected boolean canCookRecipe(CrateRecipe recipe, RecipeWrapper wrapper) {
+        if (recipe.isSunny() && !isSunny()){
             reduceCookingTime();
-            return;
+            return false;
         }
-        super.cookingTick(level, pos, state, wrapper);
+        return super.canCookRecipe(recipe, wrapper);
     }
 
     protected void cookRecipe(Level level, RecipeHolder<CrateRecipe> holder, BlockPos pos, BlockState state) {
@@ -50,13 +50,10 @@ public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
         if (block instanceof CrateBlock) {
             ItemStack resultStack = holder.value().getResultItem(this.level.registryAccess()).copy();
             spawnItemEntity(level, resultStack.copy(), state, pos);
-            for (int i = 0; i < allSlot; ++i) {
-                ItemStack slotStack = itemStackHandler.getStackInSlot(i);
-                spawnUsingConvertsTo(level, List.of(slotStack), state, pos);
-                if (!slotStack.isEmpty()){
-                    slotStack.shrink(1);
-                }
+            for (int i = 0; i < holder.value().getIngredientCount(); ++i) {
+                spawnUsingConvertsTo(level, List.of(findMinStack(getItemStackListInBlockEntity(false))), state, pos);
             }
+            shrinkMatchingItems(itemStackHandler, null, holder.value().getIngredientCount());
             cookingTime = 0;
         }
     }
@@ -79,11 +76,11 @@ public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
         cookingCompletionTime = holder.value().getCookingTime();
     }
 
-    public boolean isSunny(BlockPos pos) {
+    public boolean isSunny() {
         return level != null
                 && !level.isNight()
-                && level.canSeeSky(pos.above())
-                && !level.isRainingAt(pos.above());
+                && level.canSeeSky(this.getBlockPos().above())
+                && !level.isRainingAt(this.getBlockPos().above());
     }
 
     public ItemStack getCloneItemStack(ItemStack stack) {

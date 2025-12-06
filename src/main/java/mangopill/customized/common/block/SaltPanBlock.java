@@ -8,7 +8,6 @@ import net.minecraft.sounds.*;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -22,6 +21,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
+
+import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 
 public class SaltPanBlock extends Block {
     public static final BooleanProperty WITH_WATER = BooleanProperty.create("with_water");
@@ -57,12 +58,7 @@ public class SaltPanBlock extends Block {
     protected void shrinkAndGive(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player,
                                  Item shrinkItem, Item giveItem, SoundEvent sound, boolean with_water) {
         if (itemStackInHand.is(shrinkItem)){
-            if (!player.isCreative()) {
-                itemStackInHand.shrink(1);
-                if (!player.getInventory().add(giveItem.getDefaultInstance())) {
-                    player.drop(giveItem.getDefaultInstance(), false);
-                }
-            }
+            consumeItemAndGiveToPlayer(itemStackInHand, player, giveItem.getDefaultInstance());
             level.setBlockAndUpdate(pos, state.setValue(WITH_WATER, with_water));
             level.playSound(null, pos, sound, SoundSource.BLOCKS, 0.8F, 1.0F);
         }
@@ -75,10 +71,7 @@ public class SaltPanBlock extends Block {
             return;
         }
         level.setBlockAndUpdate(pos, state.setValue(WITH_WATER, false));
-        ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY() + 0.5D, pos.getZ(),
-                CItemRegistry.SALT.get().getDefaultInstance());
-        itemEntity.setDeltaMovement(0.0D, 0.01D, 0.0D);
-        level.addFreshEntity(itemEntity);
+        spawnItemEntity(level, CItemRegistry.SALT.get().getDefaultInstance(), null, pos);
     }
 
     @Override

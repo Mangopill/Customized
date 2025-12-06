@@ -1,15 +1,19 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "farmersdelight:smoked_ham"
-  ],
-  "value": {
-    "water": 40.0,
-    "protein": 44.0,
-    "lipid": 16.0,
-    "carbohydrate": 2.0,
-    "vitamin": 1.5,
-    "mineral": 200.0,
-    "salty": 5.0
-  }
+  "group": [
+    {
+      "item": [
+        "farmersdelight:smoked_ham"
+      ],
+      "value": {
+        "water": 40.0,
+        "protein": 44.0,
+        "lipid": 16.0,
+        "carbohydrate": 2.0,
+        "vitamin": 1.5,
+        "mineral": 200.0,
+        "salty": 5.0
+      }
+    }
+  ]
 }

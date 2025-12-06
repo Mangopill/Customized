@@ -35,11 +35,8 @@ public class DiarrheaDeliveryEnchantmentEffect {
                 return;
             }
             double range = 5.0D + l * 2.0D;
-            List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class,
-                    player.getBoundingBox().inflate(range));
-            List<Mob> hostileMobs = level.getEntitiesOfClass(Mob.class,
-                    player.getBoundingBox().inflate(range),
-                    entity -> entity instanceof Enemy);
+            List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class, player.getBoundingBox().inflate(range));
+            List<Mob> hostileMobs = level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(range), entity -> entity instanceof Enemy);
             Stream.concat(nearbyPlayers.stream(), hostileMobs.stream())
                     .forEach(entity -> player.getActiveEffects().stream()
                             .filter(instance -> !instance.getEffect().value().isBeneficial() && !entity.equals(player))

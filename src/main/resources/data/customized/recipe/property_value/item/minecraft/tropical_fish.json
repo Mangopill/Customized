@@ -1,13 +1,17 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:tropical_fish"
-  ],
-  "value": {
-    "water": 37.6,
-    "protein": 36.0,
-    "lipid": 9.0,
-    "mineral": 19.0,
-    "fresh" : 5.0
-  }
+  "group": [
+    {
+      "item": [
+        "minecraft:tropical_fish"
+      ],
+      "value": {
+        "water": 37.6,
+        "protein": 36.0,
+        "lipid": 9.0,
+        "mineral": 19.0,
+        "fresh": 5.0
+      }
+    }
+  ]
 }

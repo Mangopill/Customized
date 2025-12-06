@@ -1,7 +1,7 @@
 package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
-import mangopill.customized.common.item.ModHatItem;
+import mangopill.customized.common.item.CHatItem;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -19,12 +19,12 @@ public class CArmorMaterialRegistry {
 
     public static final Holder<ArmorMaterial> CHEF =
             ARMOR_MATERIAL.register("chef", () -> new ArmorMaterial(
-                    Util.make(new EnumMap<>(ModHatItem.Type.class), map -> {
-                        map.put(ModHatItem.Type.BOOTS, 1);
-                        map.put(ModHatItem.Type.LEGGINGS, 2);
-                        map.put(ModHatItem.Type.CHESTPLATE, 3);
-                        map.put(ModHatItem.Type.HELMET, 2);
-                        map.put(ModHatItem.Type.BODY, 3);
+                    Util.make(new EnumMap<>(CHatItem.Type.class), map -> {
+                        map.put(CHatItem.Type.BOOTS, 1);
+                        map.put(CHatItem.Type.LEGGINGS, 2);
+                        map.put(CHatItem.Type.CHESTPLATE, 3);
+                        map.put(CHatItem.Type.HELMET, 2);
+                        map.put(CHatItem.Type.BODY, 3);
                     }),
                     20,
                     Holder.direct(SoundEvents.WOOL_BREAK),
@@ -35,12 +35,12 @@ public class CArmorMaterialRegistry {
             ));
     public static final Holder<ArmorMaterial> NETHERITE_CHEF =
             ARMOR_MATERIAL.register("netherite_chef", () -> new ArmorMaterial(
-                    Util.make(new EnumMap<>(ModHatItem.Type.class), map -> {
-                        map.put(ModHatItem.Type.BOOTS, 3);
-                        map.put(ModHatItem.Type.LEGGINGS, 6);
-                        map.put(ModHatItem.Type.CHESTPLATE, 8);
-                        map.put(ModHatItem.Type.HELMET, 3);
-                        map.put(ModHatItem.Type.BODY, 11);
+                    Util.make(new EnumMap<>(CHatItem.Type.class), map -> {
+                        map.put(CHatItem.Type.BOOTS, 3);
+                        map.put(CHatItem.Type.LEGGINGS, 6);
+                        map.put(CHatItem.Type.CHESTPLATE, 8);
+                        map.put(CHatItem.Type.HELMET, 3);
+                        map.put(CHatItem.Type.BODY, 11);
                     }),
                     20,
                     Holder.direct(SoundEvents.WOOL_BREAK),

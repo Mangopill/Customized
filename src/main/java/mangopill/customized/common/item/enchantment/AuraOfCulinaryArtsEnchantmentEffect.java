@@ -8,7 +8,6 @@ import mangopill.customized.common.registry.CEnchantmentComponentRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
@@ -34,7 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.util.LootTableUtil.*;
-import static mangopill.customized.common.util.ResourceUtil.*;
+import static mangopill.customized.common.util.StringUtil.*;
 
 @EventBusSubscriber(modid = Customized.MODID)
 public class AuraOfCulinaryArtsEnchantmentEffect {
@@ -88,7 +87,7 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
                     }
                     addParticles(player, 0.5D, 10, 0.1);
                     playSound(player, SoundEvents.ENCHANTMENT_TABLE_USE);
-                    player.displayClientMessage(Component.translatable("message.customized.aura_of_culinary_arts", data.activeFoods), true);
+                    player.displayClientMessage(getComponent("message." + Customized.MODID + ".aura_of_culinary_arts", data.activeFoods), true);
                 }
             });
         }
@@ -107,7 +106,7 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
             }
             addParticles(player, 1.0, 5, 0.05);
             playSound(player, SoundEvents.EXPERIENCE_ORB_PICKUP);
-            player.displayClientMessage(Component.translatable("message.customized.aura_of_culinary_arts", data.activeFoods), true);
+            player.displayClientMessage(getComponent("message." + Customized.MODID + ".aura_of_culinary_arts", data.activeFoods), true);
         }
     }
 

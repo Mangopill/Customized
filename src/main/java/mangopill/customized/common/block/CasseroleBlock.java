@@ -1,10 +1,10 @@
 package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
+import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.entity.CasseroleBlockEntity;
 import mangopill.customized.common.block.record.PotRecord;
 import mangopill.customized.common.block.state.PotState;
-import mangopill.customized.common.registry.CItemRegistry;
 import mangopill.customized.common.registry.CSoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -14,19 +14,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
 import static mangopill.customized.common.CustomizedConfig.*;
-import static mangopill.customized.common.block.state.PotState.WITH_LID;
 
 public class CasseroleBlock extends AbstractPotBlock{
     public static final MapCodec<CasseroleBlock> CODEC = simpleCodec(CasseroleBlock::new);
@@ -86,37 +79,19 @@ public class CasseroleBlock extends AbstractPotBlock{
                 SoundEvent sound = state.getValue(LID).equals(PotState.WITH_LID)
                         ? CSoundRegistry.BOILING_WATER_WITH_LID.get()
                         : CSoundRegistry.BOILING_WATER_WITHOUT_LID.get();
-                level.playLocalSound(x, y, z, sound, SoundSource.BLOCKS, random.nextFloat() * 0.6F, 0.8F, false);
+                level.playLocalSound(x, y, z, sound, SoundSource.BLOCKS, Math.clamp(random.nextFloat() + 0.01F, 0.01F, 0.3F), 1.0F, false);
             }
         }
     }
 
-    @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        if (!state.getValue(LID).equals(PotState.WITHOUT_LID)){
-            if (level.isClientSide) {
-                return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::animationTick);
-            }
-            return createTickerHelper(blockEntityType, PotRecord.CASSEROLE.entityType(), CasseroleBlockEntity::cookingTick);
-        }
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return PotRecord.CASSEROLE.entityType().create(pos, state);
+    public BlockEntityType<? extends AbstractPotBlockEntity> setBlockEntity() {
+        return PotRecord.CASSEROLE.entityType();
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        if (state.getValue(LID).equals(WITH_LID)){
-            List<ItemStack> getDrops = super.getDrops(state,builder);
-            getDrops.add(new ItemStack(CItemRegistry.CASSEROLE_ILD.get()));
-            return getDrops;
-        }
-        return super.getDrops(state,builder);
+    public ItemStack setLidItem() {
+        return PotRecord.CASSEROLE.plateItem().getDefaultInstance();
     }
 
     @Override

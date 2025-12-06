@@ -1,0 +1,11 @@
+{
+    "parent": "customized:block/baking_pan_without_drive",
+    "overrides": [
+        {
+            "predicate": {
+                "customized:drive": 1
+            },
+            "model": "customized:item/baking_pan_with_drive"
+        }
+    ]
+}

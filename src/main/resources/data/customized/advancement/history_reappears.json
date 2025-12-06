@@ -13,7 +13,7 @@
             "id": "customized:soiled_seed"
         },
         "title": {
-            "translate": "customized.advancement.history_reappears.desc"
+            "translate": "customized.advancement.history_reappears.title"
         }
     },
     "requirements": [

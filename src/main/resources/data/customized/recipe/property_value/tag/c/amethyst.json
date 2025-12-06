@@ -1,9 +1,13 @@
 {
   "type": "customized:property_value",
-  "tag": [
-    "c:gems/amethyst"
-  ],
-  "value": {
-    "ecology" : 0.8
-  }
+  "group": [
+    {
+      "tag": [
+        "c:gems/amethyst"
+      ],
+      "value": {
+        "ecology": 0.8
+      }
+    }
+  ]
 }

@@ -15,7 +15,7 @@
         },
         "show_toast": false,
         "title": {
-            "translate": "customized.advancement.root.desc"
+            "translate": "customized.advancement.root.title"
         }
     },
     "requirements": [

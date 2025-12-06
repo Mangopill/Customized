@@ -17,9 +17,11 @@
       "item": "customized:salt"
     }
   ],
-  "spice": {
-    "item": "customized:rich_and_nourishing_spice"
-  },
+  "spice": [
+    {
+      "item": "customized:rich_and_nourishing_spice"
+    }
+  ],
   "container": {
     "item": "customized:famous_dish_plate"
   },

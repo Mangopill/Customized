@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.storage.loot.LootTable;
 
-import static mangopill.customized.common.util.ResourceUtil.*;
+import static mangopill.customized.common.util.StringUtil.*;
 
 public class FlowerAndDirtFeature extends Feature<NoneFeatureConfiguration> {
     private static final ResourceKey<LootTable> LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, getCLoc("archaeology/flower_and_dirt"));

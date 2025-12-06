@@ -1,16 +1,20 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "minecraft:sea_pickle"
-  ],
-  "value": {
-    "water": 64.0,
-    "protein": 1.5,
-    "lipid": 0.2,
-    "carbohydrate": 7.0,
-    "vitamin": 0.3,
-    "mineral": 16.8,
-    "dietary_fiber": 3.5,
-    "salty" : 1.0
-  }
+  "group": [
+    {
+      "item": [
+        "minecraft:sea_pickle"
+      ],
+      "value": {
+        "water": 64.0,
+        "protein": 1.5,
+        "lipid": 0.2,
+        "carbohydrate": 7.0,
+        "vitamin": 0.3,
+        "mineral": 16.8,
+        "dietary_fiber": 3.5,
+        "salty": 1.0
+      }
+    }
+  ]
 }

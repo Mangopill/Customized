@@ -35,7 +35,7 @@
       "id": "customized:chef_hat"
     },
     "title": {
-      "translate": "customized.advancement.master_of_culinary_arts.desc"
+      "translate": "customized.advancement.master_of_culinary_arts.title"
     }
   },
   "requirements": [

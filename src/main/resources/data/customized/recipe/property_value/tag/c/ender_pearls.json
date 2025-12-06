@@ -1,0 +1,13 @@
+{
+  "type": "customized:property_value",
+  "group": [
+    {
+      "tag": [
+        "c:ender_pearls"
+      ],
+      "value": {
+        "nothingness": 1.8
+      }
+    }
+  ]
+}

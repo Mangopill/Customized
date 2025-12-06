@@ -1,0 +1,16 @@
+{
+  "type": "customized:nutrient_buff",
+  "effect": "customized:noctenergy_surge",
+  "nutrient_category": [
+    {
+      "water": 20.0,
+      "protein": 20.0
+    },
+    {
+      "water": 20.0,
+      "dietary_fiber": 20.0
+    }
+  ],
+  "duration": 1.0,
+  "probability": 0.001
+}

@@ -18,8 +18,12 @@ public class CBlockEntityTypeRegistry {
     //kitchenware block
     public static final Supplier<BlockEntityType<CasseroleBlockEntity>> CASSEROLE = BLOCK_ENTITY_TYPE.register(
             "casserole", basicBlockEntityType(CasseroleBlockEntity::new, CBlockRegistry.CASSEROLE));
+    public static final Supplier<BlockEntityType<RoasterBlockEntity>> ROASTER = BLOCK_ENTITY_TYPE.register(
+            "roaster", basicBlockEntityType(RoasterBlockEntity::new, CBlockRegistry.ROASTER));
     public static final Supplier<BlockEntityType<SoupBowlBlockEntity>> SOUP_BOWL = BLOCK_ENTITY_TYPE.register(
             "soup_bowl", basicBlockEntityType(SoupBowlBlockEntity::new, CBlockRegistry.SOUP_BOWL));
+    public static final Supplier<BlockEntityType<BakingPanBlockEntity>> BAKING_PAN = BLOCK_ENTITY_TYPE.register(
+            "baking_pan", basicBlockEntityType(BakingPanBlockEntity::new, CBlockRegistry.BAKING_PAN));
     public static final Supplier<BlockEntityType<BrewingBarrelBlockEntity>> BREWING_BARREL = BLOCK_ENTITY_TYPE.register(
             "brewing_barrel", basicBlockEntityType(BrewingBarrelBlockEntity::new, CBlockRegistry.BREWING_BARREL));
     public static final Supplier<BlockEntityType<CrateBlockEntity>> CRATE = BLOCK_ENTITY_TYPE.register(

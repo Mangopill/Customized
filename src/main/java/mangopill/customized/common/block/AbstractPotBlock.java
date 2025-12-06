@@ -10,15 +10,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import javax.annotation.Nullable;
+
+import java.util.List;
 
 import static mangopill.customized.common.block.state.PotState.*;
 
@@ -40,6 +46,28 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
             Player player, InteractionHand hand, BlockHitResult result) {
         return PotStrategyHandler.getInstance().useByRegistry(this.getDescriptionId(), itemStackInHand, state, level, pos, player, hand, result);
     }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        if (!state.getValue(LID).equals(PotState.WITHOUT_LID)) {
+            if (level.isClientSide) {
+                return createTickerHelper(blockEntityType, setBlockEntity(), AbstractPotBlockEntity::animationTick);
+            }
+            return createTickerHelper(blockEntityType, setBlockEntity(), AbstractPotBlockEntity::cookingTick);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return setBlockEntity().create(pos, state);
+    }
+
+    abstract public BlockEntityType<? extends AbstractPotBlockEntity> setBlockEntity();
+
+    abstract public ItemStack setLidItem();
 
     abstract public VoxelShape setShapeWithoutLid();
 
@@ -113,5 +141,17 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
             level.updateNeighbourForOutputSignal(pos, this);
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        if (state.getValue(LID).equals(PotState.WITH_LID)){
+            List<ItemStack> getDrops = super.getDrops(state,builder);
+            if (!setLidItem().isEmpty()) {
+                getDrops.add(setLidItem());
+            }
+            return getDrops;
+        }
+        return super.getDrops(state,builder);
     }
 }

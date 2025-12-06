@@ -1,9 +1,13 @@
 {
   "type": "customized:property_value",
-  "item": [
-    "customized:salt"
-  ],
-  "value": {
-    "salty" : 20.0
-  }
+  "group": [
+    {
+      "item": [
+        "customized:salt"
+      ],
+      "value": {
+        "salty": 20.0
+      }
+    }
+  ]
 }
