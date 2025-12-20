@@ -78,7 +78,7 @@ public class PropertyValueRecipeCategory extends CRecipeCategory<PropertyValueRe
 
     public static List<List<NutrientCategoryRecipe>> getNutrientCategorySubList(PropertyValueRecipeAdapter recipe) {
         List<NutrientCategoryRecipe> allNutrients = recipe.propertyValue.getValue().entrySet().stream().filter(group -> Minecraft.getInstance().level != null)
-                .map(entry -> getNutrientCategoryByName(Minecraft.getInstance().level, entry.getKey()).getFirst().value()).toList();
+                .map(entry -> getNutrientCategoryByName(Minecraft.getInstance().level, entry.getKey()).getFirst()).toList();
         return partitionList(allNutrients, PAGE_ROWS).toList();
     }
 

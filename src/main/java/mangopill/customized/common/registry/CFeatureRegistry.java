@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class CFeatureRegistry {
+public final class CFeatureRegistry {
     public static final DeferredRegister<Feature<?>> FEATURE = DeferredRegister.create(Registries.FEATURE, Customized.MODID);
 
     public static final Supplier<Feature<NoneFeatureConfiguration>> FLOWER_AND_DIRT = FEATURE.register("flower_and_dirt", () -> new FlowerAndDirtFeature(NoneFeatureConfiguration.CODEC));

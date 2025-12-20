@@ -25,20 +25,14 @@ public class SharedFeastEnchantmentEffect {
         Player player = event.getEntity();
         Level level = player.level();
         ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-        if (level.isClientSide) {
-            return;
-        }
+        if (level.isClientSide) return;
         EnchantmentHelper.runIterationOnItem(helmet, (e, l) -> {
             EnchantmentValueEffect effect = e.value().effects().get(CEnchantmentComponentRegistry.SHARED_FEAST.get());
-            if (effect == null) {
-                return;
-            }
+            if (effect == null) return;
             double range = 5.0D + l * 2.0D;
             List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class, player.getBoundingBox().inflate(range));
             for (Player nearbyPlayer : nearbyPlayers) {
-                if (nearbyPlayer.equals(player)) {
-                    continue;
-                }
+                if (nearbyPlayer.equals(player)) continue;
                 player.getActiveEffects().stream()
                         .filter(i -> i.getEffect().value().isBeneficial())
                         .forEach(effectInstance -> shareEffect(l, nearbyPlayer, effectInstance, level));

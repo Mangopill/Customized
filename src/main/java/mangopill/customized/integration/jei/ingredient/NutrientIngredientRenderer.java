@@ -11,7 +11,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
 
-import java.util.List;
+import java.util.*;
 
 import static mangopill.customized.common.util.StringUtil.*;
 
@@ -29,10 +29,9 @@ public class NutrientIngredientRenderer implements IIngredientRenderer<NutrientC
         poseStack.popPose();
     }
 
-    @SuppressWarnings("removal")
     @Override
     public List<Component> getTooltip(NutrientCategoryRecipe ingredient, TooltipFlag tooltipFlag) {
-        return List.of();
+        return new ArrayList<>();
     }
 
     @Override

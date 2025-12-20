@@ -31,14 +31,13 @@ public class FlowerAndDirtFeature extends Feature<NoneFeatureConfiguration> {
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         WorldGenLevel worldgenlevel = context.level();
         BlockPos blockpos = context.origin().below();
-        if (IS_GRASS_BLOCK.test(worldgenlevel.getBlockState(blockpos))) {
-            worldgenlevel.setBlock(blockpos.above(), this.BLUE_ORCHID, 2);
-            placeSusDirt(worldgenlevel, blockpos.below());
-            return true;
-        } else return false;
+        if (!IS_GRASS_BLOCK.test(worldgenlevel.getBlockState(blockpos))) return false;
+        worldgenlevel.setBlock(blockpos.above(), BLUE_ORCHID, 2);
+        placeSusDirt(worldgenlevel, blockpos.below());
+        return true;
     }
 
-    private static void placeSusDirt(WorldGenLevel level, BlockPos pos) {
+    protected static void placeSusDirt(WorldGenLevel level, BlockPos pos) {
         level.setBlock(pos, CBlockRegistry.SUSPICIOUS_DIRT.get().defaultBlockState(), 3);
         level.getBlockEntity(pos, CBlockEntityTypeRegistry.SUSPICIOUS_DIRT.get())
                 .ifPresent(Consumer -> Consumer.setLootTable(LOOT_TABLE, pos.asLong()));

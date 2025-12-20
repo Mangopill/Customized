@@ -7,6 +7,6 @@ import java.util.function.Supplier;
 
 public class SoupBowlItem extends AbstractPlateItem {
     public SoupBowlItem(Supplier<Block> block, Properties properties) {
-        super(block, properties, PlateSlotRecord.SOUP_BOWL.ingredientInput(), PlateSlotRecord.SOUP_BOWL.ingredientInput(), PlateSlotRecord.SOUP_BOWL.spiceInput(), true);
+        super(block, properties, PlateRecord.SOUP_BOWL);
     }
 }

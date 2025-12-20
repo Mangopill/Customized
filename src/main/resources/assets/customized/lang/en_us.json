@@ -55,12 +55,21 @@
   "item.customized.ginger": "Ginger",
   "block.customized.ginger_crop": "Ginger Crop",
 
+  "item.customized.soup_bucket": "Soup Bucket",
+  "block.customized.soup": "Soup",
+
   "block.customized.casserole": "Casserole",
   "block.customized.roaster": "Roaster",
+  "block.customized.wok": "Wok",
+  "block.customized.steamer": "Steamer",
   "block.customized.soup_bowl": "Soup Bowl",
   "block.customized.soup_bowl_food": "Stewed Soup",
   "block.customized.baking_pan": "Baking Pan",
   "block.customized.baking_pan_food": "Baked Food",
+  "block.customized.dish": "Dish",
+  "block.customized.dish_food": "Sautéed Food",
+  "block.customized.platter": "Platter",
+  "block.customized.platter_food": "Steamed Food",
   "block.customized.brewing_barrel": "Brewing Barrel",
   "block.customized.crate": "Crate",
   "block.customized.cutting_board": "Cutting Board",
@@ -69,6 +78,9 @@
   "item.customized.netherite_chef_hat": "Netherite Chef Hat",
 
   "item.customized.culinary_masters_hat": "Culinary Masters Hat",
+
+  "fluid_type.customized.soup": "Soup",
+  "fluid_type.customized.flowing_soup": "Soup",
 
   "effect.customized.iced": "Iced",
   "effect.customized.warm_stomach": "Warm Stomach",

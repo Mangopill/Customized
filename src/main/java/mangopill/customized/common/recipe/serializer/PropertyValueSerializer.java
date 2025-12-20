@@ -26,10 +26,10 @@ public class PropertyValueSerializer implements RecipeSerializer<PropertyValueRe
     public record PropertyValueGroup(HashSet<ResourceLocation> items, HashSet<ResourceLocation> tags, PropertyValue propertyValue) {
         public static final Codec<PropertyValueGroup> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                        ResourceLocation.CODEC.listOf().optionalFieldOf("item", List.of())
+                        ResourceLocation.CODEC.listOf().optionalFieldOf("item", new ArrayList<>())
                                 .xmap(HashSet::new, ArrayList::new)
                                 .forGetter(PropertyValueGroup::items),
-                        ResourceLocation.CODEC.listOf().optionalFieldOf("tag", List.of())
+                        ResourceLocation.CODEC.listOf().optionalFieldOf("tag", new ArrayList<>())
                                 .xmap(HashSet::new, ArrayList::new)
                                 .forGetter(PropertyValueGroup::tags),
                         PropertyValue.CODEC.fieldOf("value").forGetter(PropertyValueGroup::propertyValue)

@@ -2,7 +2,6 @@ package mangopill.customized.common.block.entity;
 
 import mangopill.customized.common.block.record.PotRecord;
 import mangopill.customized.common.block.state.PotState;
-import mangopill.customized.common.item.AbstractPlateItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.*;
 import net.minecraft.world.level.Level;
@@ -11,13 +10,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import static mangopill.customized.common.block.AbstractPotBlock.*;
 
 public class RoasterBlockEntity extends AbstractPotBlockEntity{
-    public RoasterBlockEntity(BlockPos pos, BlockState blockState) {
-        super(PotRecord.ROASTER.entityType(), pos, blockState, PotRecord.ROASTER.ingredientCount(), PotRecord.ROASTER.seasoningCount(), PotRecord.ROASTER.spiceCount(), PotRecord.ROASTER.potCheck());
-    }
 
-    @Override
-    public AbstractPlateItem getPlateItem() {
-        return PotRecord.ROASTER.plateItem();
+    public RoasterBlockEntity(BlockPos pos, BlockState blockState) {
+        super(pos, blockState, PotRecord.ROASTER);
     }
 
     @Override

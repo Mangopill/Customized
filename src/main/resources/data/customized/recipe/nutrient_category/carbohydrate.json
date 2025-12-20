@@ -2,7 +2,7 @@
   "type": "customized:nutrient_category",
   "icon": "customized:textures/gui/nutrient_category/carbohydrate.png",
   "name": "carbohydrate",
-  "color": "0xEAEAEA",
+  "color": "0xCCEAEAEA",
   "nutrition": 0.01,
   "saturation": 0.04
 }

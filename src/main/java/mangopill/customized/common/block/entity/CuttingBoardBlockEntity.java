@@ -41,20 +41,20 @@ public class CuttingBoardBlockEntity extends CBasicCookingBlockEntity<CuttingBoa
     }
 
     @Override
-    protected void cookRecipe(Level level, RecipeHolder<CuttingBoardRecipe> holder, BlockPos pos, BlockState state) {}
+    protected void cookRecipe(Level level, CuttingBoardRecipe recipe, BlockPos pos, BlockState state) {}
 
     @Override
     public void interact(ItemStack itemStackInHand, Player player, Level level, InteractionHand hand, BlockState state, BlockPos pos, SoundEvent output, SoundEvent insert) {
         RecipeWrapper wrapper = new RecipeWrapper(itemStackHandler);
-        Optional<RecipeHolder<CuttingBoardRecipe>> matchRecipe = getMatchRecipe(wrapper);
+        Optional<CuttingBoardRecipe> matchRecipe = getMatchRecipe(wrapper);
         if (!itemStackHandler.getStackInSlot(0).isEmpty() && !itemStackInHand.isEmpty()) {
-            if (matchRecipe.isEmpty() || matchRecipe.get().value().toolItem().stream().noneMatch(ingredient -> ingredient.test(itemStackInHand))) {
+            if (matchRecipe.isEmpty() || matchRecipe.get().toolItem().stream().noneMatch(ingredient -> ingredient.test(itemStackInHand))) {
                 player.displayClientMessage(getComponent("message." + Customized.MODID + ".cutting_board"), true);
                 return;
             }
             if (times <= 0) {
                 Holder<Enchantment> sharpnessHolder = player.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.SHARPNESS);
-                int baseCuttingTimes = matchRecipe.get().value().cuttingTimes();
+                int baseCuttingTimes = matchRecipe.get().cuttingTimes();
                 times = Math.max(0, baseCuttingTimes + itemStackInHand.getEnchantmentLevel(sharpnessHolder) / 2);
                 totalTimes = times;
             }
@@ -62,8 +62,8 @@ public class CuttingBoardBlockEntity extends CBasicCookingBlockEntity<CuttingBoa
                 itemStackHandler.getStackInSlot(0).shrink(1);
                 totalTimes = 0;
             }
-            matchRecipe.get().value().output().forEach(itemStack -> spawnItemEntity(level, itemStack.copy(), state, pos));
-            matchRecipe.get().value().probabilityOutput().stream().filter(itemStack -> level.random.nextFloat() < matchRecipe.get().value().probability()).forEach(itemStack -> spawnItemEntity(level, itemStack.copy(), state, pos));
+            matchRecipe.get().output().forEach(itemStack -> spawnItemEntity(level, itemStack.copy(), state, pos));
+            matchRecipe.get().probabilityOutput().stream().filter(itemStack -> level.random.nextFloat() < matchRecipe.get().probability()).forEach(itemStack -> spawnItemEntity(level, itemStack.copy(), state, pos));
             hurtAndBreakItemStack(itemStackInHand, player, 1);
             times--;
             itemStackHandlerChanged();
@@ -91,13 +91,6 @@ public class CuttingBoardBlockEntity extends CBasicCookingBlockEntity<CuttingBoa
         super.saveAdditional(compound, registries);
         compound.putInt("Times", times);
         compound.putInt("TotalTimes", totalTimes);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, registries);
-        return tag;
     }
 
     public IItemHandler getInputAndOutputHandler() {

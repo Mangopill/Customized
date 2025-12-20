@@ -16,7 +16,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.common.extensions.IItemStackExtension;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
@@ -24,6 +23,7 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import java.util.*;
 
 import static mangopill.customized.common.CustomizedConfig.*;
+import static mangopill.customized.common.util.RecipeUtil.*;
 import static mangopill.customized.common.util.StringUtil.*;
 
 public class CulinaryMastersHatCurio implements ICurioItem {
@@ -46,28 +46,20 @@ public class CulinaryMastersHatCurio implements ICurioItem {
     }
 
     private void hungerProtection(Player player) {
-        if (player.getFoodData().getFoodLevel() > 6){
-            return;
-        }
+        if (player.getFoodData().getFoodLevel() > 6) return;
         player.getFoodData().eat(FOOD_LEVEL, SATURATION_LEVEL);
     }
 
     private void mealsBlessing(Player player) {
         RandomSource random = player.getRandom();
         waitTick++;
-        if (waitTick < TICK_INTERVAL) {
-            return;
-        }
-        List<Holder<MobEffect>> buffList = player.level().getRecipeManager().getAllRecipesFor(CRecipeRegistry.NUTRIENT_BUFF.get()).stream().map(RecipeHolder::value).map(NutrientBuffRecipe::effect).toList();
-        if (buffList.isEmpty()) {
-            return;
-        }
+        if (waitTick < TICK_INTERVAL) return;
+        List<Holder<MobEffect>> buffList = getAllRecipeList(CRecipeRegistry.NUTRIENT_BUFF.get(), player.level()).stream().map(NutrientBuffRecipe::effect).toList();
+        if (buffList.isEmpty()) return;
         Holder<MobEffect> selectedBuff = buffList.get(random.nextInt(buffList.size()));
         player.addEffect(new MobEffectInstance(selectedBuff, random.nextInt(RANDOM_DURATION), random.nextInt(RANDOM_AMPLIFIER)));
         waitTick = 0;
-        if (!CULINARY_MASTERS_HAT_MESSAGE.get()) {
-            return;
-        }
+        if (!CULINARY_MASTERS_HAT_MESSAGE.get()) return;
         player.displayClientMessage(getComponent("curios.message.customized.culinary_masters_hat.meals_blessing",
                 getComponent(selectedBuff.value().getDescriptionId())), true);
         if (player.level() instanceof ServerLevel serverLevel) {
@@ -76,30 +68,19 @@ public class CulinaryMastersHatCurio implements ICurioItem {
     }
 
     private void satietyRenewal(Player player) {
-        if (player.getFoodData().needsFood()) {
-            return;
-        }
+        if (player.getFoodData().needsFood()) return;
         RandomSource random = player.getRandom();
-        if (random.nextInt(SATIETY_RENEWAL_RANDOM) > 1) {
-            return;
-        }
+        if (random.nextInt(SATIETY_RENEWAL_RANDOM) > 1) return;
         List<ItemStack> repairableItems = new ArrayList<>();
         player.getAllSlots().forEach(repairableItems::add);
         repairableItems.addAll(player.getInventory().items);
-        List<ItemStack> damagedItems = repairableItems.stream()
-                .filter(item -> !item.isEmpty())
-                .filter(ItemStack::isDamaged)
-                .filter(IItemStackExtension::isRepairable)
-                .toList();
-        if (damagedItems.isEmpty()) {
-            return;
-        }
+        List<ItemStack> damagedItems = repairableItems.stream().filter(item -> !item.isEmpty()).filter(ItemStack::isDamaged)
+                .filter(IItemStackExtension::isRepairable).toList();
+        if (damagedItems.isEmpty()) return;
         ItemStack itemToRepair = damagedItems.get(random.nextInt(damagedItems.size()));
         int newDamage = Math.max(0, itemToRepair.getDamageValue() - random.nextInt(SATIETY_RENEWAL_FIX));
         itemToRepair.setDamageValue(newDamage);
-        if (!CULINARY_MASTERS_HAT_MESSAGE.get()) {
-            return;
-        }
+        if (!CULINARY_MASTERS_HAT_MESSAGE.get()) return;
         player.displayClientMessage(getComponent("curios.message.customized.culinary_masters_hat.satiety_renewal",
                 Component.empty().append(itemToRepair.getDisplayName())), true);
         player.level().playSound(null, player, SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.6F, 0.6F);

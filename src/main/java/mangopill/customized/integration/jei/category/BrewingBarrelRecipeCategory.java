@@ -33,16 +33,16 @@ public class BrewingBarrelRecipeCategory extends CRecipeCategory<BrewingBarrelRe
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, BrewingBarrelRecipe recipe, IFocusGroup focuses) {
-        addIngredientSlots(builder, recipe.getIngredientItem(), RecipeIngredientRole.INPUT,
+        addIngredientSlots(builder, recipe.ingredientItem(), RecipeIngredientRole.INPUT,
                 2, 24, SLOT_SIZE, 2, 2, 0, null);
-        builder.addSlot(RecipeIngredientRole.INPUT, 67, 65).addIngredients(recipe.getContainerItem());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 42, 65).addItemStack(recipe.getOutput());
+        builder.addSlot(RecipeIngredientRole.INPUT, 67, 65).addIngredients(recipe.containerItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 42, 65).addItemStack(recipe.output());
     }
 
     @Override
     public void getTooltip(ITooltipBuilder tooltip, BrewingBarrelRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         List<Component> tooltipString = new ArrayList<>();
-        addTooltipIfInArea(mouseX, mouseY, tooltipString, 21, 63, 17, 17, getComponent("jei.gui." + Customized.MODID + ".cook_time", recipe.getCookingTime() * 13 / 20));
+        addTooltipIfInArea(mouseX, mouseY, tooltipString, 21, 63, 17, 17, getComponent("jei.gui." + Customized.MODID + ".cook_time", recipe.cookingTime() * 13 / 20));
         addTooltipIfInArea(mouseX, mouseY, tooltipString, 60, 69, 4, 8, getComponent("jei.gui." + Customized.MODID + ".container"));
         tooltip.addAll(tooltipString);
     }

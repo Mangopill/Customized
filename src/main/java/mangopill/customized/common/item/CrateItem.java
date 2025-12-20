@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.component.PlateComponentUtil.getItemStackHandler;
+import static mangopill.customized.common.util.component.ItemComponentUtil.getItemStackHandler;
 
 public class CrateItem extends BlockItem {
     public CrateItem(Supplier<Block> block, Properties properties) {

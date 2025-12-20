@@ -2,5 +2,5 @@
   "type": "customized:nutrient_category",
   "icon": "customized:textures/gui/nutrient_category/ecology.png",
   "name": "ecology",
-  "color": "0x76B64C"
+  "color": "0xCC76B64C"
 }

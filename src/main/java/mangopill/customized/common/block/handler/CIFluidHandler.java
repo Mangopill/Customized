@@ -26,9 +26,7 @@ public abstract class CIFluidHandler<T extends Comparable<T>, V extends T> imple
     abstract protected boolean canOutput();
 
     protected void updateDriveState(FluidAction action, CFluidContent<T, V> contents) {
-        if (!action.execute()) {
-            return;
-        }
+        if (!action.execute()) return;
         if (canInput()) {
             BlockState blockState = level.getBlockState(pos);
             level.setBlockAndUpdate(pos, blockState.setValue(contents.getProperty(), contents.getValue()));
@@ -36,9 +34,7 @@ public abstract class CIFluidHandler<T extends Comparable<T>, V extends T> imple
     }
 
     protected void updateWithoutDriveState(FluidAction action, CFluidContent<T, V> contents) {
-        if (!action.execute()) {
-            return;
-        }
+        if (!action.execute()) return;
         if (canOutput()) {
             BlockState blockState = level.getBlockState(pos);
             level.setBlockAndUpdate(pos, blockState.setValue(contents.getProperty(), contents.getValue()));
@@ -69,13 +65,9 @@ public abstract class CIFluidHandler<T extends Comparable<T>, V extends T> imple
 
     @Override
     public int fill(FluidStack fluidStack, FluidAction fluidAction) {
-        if (fluidStack.isEmpty()) {
-            return 0;
-        }
+        if (fluidStack.isEmpty()) return 0;
         CFluidContent<T, V> contents = getContentForFill();
-        if (contents.getFluid() != Fluids.EMPTY && !fluidStack.is(contents.getFluid())) {
-            return 0;
-        }
+        if (contents.getFluid() != Fluids.EMPTY && !fluidStack.is(contents.getFluid())) return 0;
         int amount = fluidStack.getAmount();
         if (canInput()) {
             if (amount >= contents.getTotalAmount()){

@@ -44,9 +44,7 @@ public class SaltPanBlock extends Block {
     @Override
     public ItemInteractionResult useItemOn(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player,
                                            InteractionHand hand, BlockHitResult result) {
-        if (level.isClientSide){
-            return ItemInteractionResult.SUCCESS;
-        }
+        if (level.isClientSide) return ItemInteractionResult.SUCCESS;
         if (state.getValue(WITH_WATER).equals(false)){
             shrinkAndGive(itemStackInHand, state, level, pos, player, Items.POTION, Items.GLASS_BOTTLE, SoundEvents.BOTTLE_EMPTY,true);
         } else {

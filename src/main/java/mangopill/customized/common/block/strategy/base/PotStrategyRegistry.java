@@ -18,7 +18,7 @@ public class PotStrategyRegistry {
     public static void onPotRegistry(ServerStartingEvent event) {
         HANDLER.registry(CBlockRegistry.CASSEROLE.get().getDescriptionId(),
                 new LidStrategy(PotRecord.CASSEROLE.lidItem().getDefaultInstance(), true),
-                new FluidContainerInteractionStrategy(),
+                new FluidContainerStrategy(),
                 new StirFryStrategy(CItemRegistry.SPOON.get().getDefaultInstance()),
                 new InsertAndTakeOutItemStrategy());
         HANDLER.registry(CBlockRegistry.ROASTER.get().getDescriptionId(),
@@ -26,6 +26,15 @@ public class PotStrategyRegistry {
                 new IgniteStrategy(),
                 new StirFryStrategy(CItemRegistry.SPATULA.get().getDefaultInstance()),
                 new CancellableStrategy(ModTag.POT),
+                new InsertAndTakeOutItemStrategy());
+        HANDLER.registry(CBlockRegistry.WOK.get().getDescriptionId(),
+                new LidStrategy(PotRecord.WOK.lidItem().getDefaultInstance(), true),
+                new StirFryStrategy(CItemRegistry.SPATULA.get().getDefaultInstance()),
+                new InsertAndTakeOutItemStrategy());
+        HANDLER.registry(CBlockRegistry.STEAMER.get().getDescriptionId(),
+                new LidStrategy(PotRecord.STEAMER.lidItem().getDefaultInstance(), true),
+                new FluidContainerStrategy(),
+                new StirFryStrategy(CItemRegistry.SPATULA.get().getDefaultInstance()),
                 new InsertAndTakeOutItemStrategy());
     }
 }

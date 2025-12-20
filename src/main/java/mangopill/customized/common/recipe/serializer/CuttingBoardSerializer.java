@@ -19,7 +19,7 @@ public class CuttingBoardSerializer implements RecipeSerializer<CuttingBoardReci
                     ItemStack.STRICT_CODEC.listOf().optionalFieldOf("result", NonNullList.of(ItemStack.EMPTY)).xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(CuttingBoardRecipe::output),
                     ItemStack.STRICT_CODEC.listOf().optionalFieldOf("additional_result", NonNullList.of(ItemStack.EMPTY)).xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(CuttingBoardRecipe::probabilityOutput),
                     Codec.FLOAT.optionalFieldOf("additional_result_probability", 0.0F).forGetter(CuttingBoardRecipe::probability),
-                    Codec.INT.optionalFieldOf("times", 200).forGetter(CuttingBoardRecipe::cuttingTimes)
+                    Codec.INT.optionalFieldOf("times", 1).forGetter(CuttingBoardRecipe::cuttingTimes)
             ).apply(instance, CuttingBoardRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CuttingBoardRecipe> STREAM_CODEC = StreamCodec.of(CuttingBoardSerializer::toNetwork, CuttingBoardSerializer::fromNetwork);

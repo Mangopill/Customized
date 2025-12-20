@@ -8,7 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class CParticleTypeRegistry {
+public final class CParticleTypeRegistry {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPE = DeferredRegister.create(Registries.PARTICLE_TYPE, Customized.MODID);
 
     public static final Supplier<SimpleParticleType> DIRT = PARTICLE_TYPE.register("dirt",

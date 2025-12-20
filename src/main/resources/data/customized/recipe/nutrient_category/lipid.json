@@ -2,7 +2,7 @@
   "type": "customized:nutrient_category",
   "icon": "customized:textures/gui/nutrient_category/lipid.png",
   "name": "lipid",
-  "color": "0xF9B2BA",
+  "color": "0xCCF9B2BA",
   "nutrition": 0.02,
   "saturation": 0.02
 }

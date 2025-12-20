@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 
 import static mangopill.customized.common.util.StringUtil.getCLoc;
 
-public class CDamageTypeRegistry {
+public final class CDamageTypeRegistry {
     public static final ResourceKey<DamageType> KNIFE_ENTITY = ResourceKey.create(Registries.DAMAGE_TYPE, getCLoc("knife_entity"));
 
     public static DamageSource getDamageSource(Level level, ResourceKey<DamageType> type, Entity causingEntity, @Nullable Entity directEntity) {

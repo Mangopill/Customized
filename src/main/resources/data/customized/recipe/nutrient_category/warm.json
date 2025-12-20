@@ -2,5 +2,5 @@
   "type": "customized:nutrient_category",
   "icon": "customized:textures/gui/nutrient_category/warm.png",
   "name": "warm",
-  "color": "0xFF6B36"
+  "color": "0xCCFF6B36"
 }

@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 import static mangopill.customized.common.util.StringUtil.*;
 
-public class CSoundRegistry {
+public final class CSoundRegistry {
     public static final DeferredRegister<SoundEvent> SOUND_EVENT = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, Customized.MODID);
 
     public static final Supplier<SoundEvent> BOILING_WATER_WITHOUT_LID = SOUND_EVENT.register("boiling_water_without_lid", () -> SoundEvent.createVariableRangeEvent(getCLoc("boiling_water_without_lid")));

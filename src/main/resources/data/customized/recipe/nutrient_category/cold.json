@@ -2,5 +2,5 @@
   "type": "customized:nutrient_category",
   "icon": "customized:textures/gui/nutrient_category/cold.png",
   "name": "cold",
-  "color": "0x06DBD6"
+  "color": "0xCC06DBD6"
 }

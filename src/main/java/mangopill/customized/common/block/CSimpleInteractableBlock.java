@@ -16,9 +16,7 @@ import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 public interface CSimpleInteractableBlock {
     default ItemInteractionResult simpleInteract(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos,
                                                  Player player, InteractionHand hand, SoundEvent output, SoundEvent insert) {
-        if (level.isClientSide) {
-            return ItemInteractionResult.SUCCESS;
-        }
+        if (level.isClientSide) return ItemInteractionResult.SUCCESS;
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof CBasicCookingBlockEntity<? extends CRecipeInterface<RecipeWrapper>> entity) {
             entity.interact(itemStackInHand, player, level, hand, state, pos, output, insert);

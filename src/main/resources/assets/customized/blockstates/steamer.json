@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "facing=north,lid=with_lid": {
+      "model": "customized:block/steamer_with_lid",
+      "y": 90
+    },
+    "facing=south,lid=with_lid": {
+      "model": "customized:block/steamer_with_lid",
+      "y": 270
+    },
+    "facing=west,lid=with_lid": {
+      "model": "customized:block/steamer_with_lid"
+    },
+    "facing=east,lid=with_lid": {
+      "model": "customized:block/steamer_with_lid",
+      "y": 180
+    },
+    "facing=north,lid=without_lid": {
+      "model": "customized:block/steamer_without_lid",
+      "y": 90
+    },
+    "facing=south,lid=without_lid": {
+      "model": "customized:block/steamer_without_lid",
+      "y": 270
+    },
+    "facing=west,lid=without_lid": {
+      "model": "customized:block/steamer_without_lid"
+    },
+    "facing=east,lid=without_lid": {
+      "model": "customized:block/steamer_without_lid",
+      "y": 180
+    },
+    "facing=north,lid=with_drive": {
+      "model": "customized:block/steamer_without_lid",
+      "y": 90
+    },
+    "facing=south,lid=with_drive": {
+      "model": "customized:block/steamer_without_lid",
+      "y": 270
+    },
+    "facing=west,lid=with_drive": {
+      "model": "customized:block/steamer_without_lid"
+    },
+    "facing=east,lid=with_drive": {
+      "model": "customized:block/steamer_without_lid",
+      "y": 180
+    }
+  }
+}

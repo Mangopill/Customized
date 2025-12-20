@@ -3,6 +3,7 @@ package mangopill.customized.common.block.handler;
 import mangopill.customized.common.block.AbstractPotBlock;
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.state.PotState;
+import mangopill.customized.common.tag.CTag;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -88,6 +89,18 @@ public class PotFluidHandler implements IFluidHandler {
 
     public boolean isFull() {
         return getSpace() == 0;
+    }
+
+    public boolean isWaterOrSoup() {
+        return isWater() || isSoup();
+    }
+
+    public boolean isWater() {
+        return storedFluid.is(CTag.WATER);
+    }
+
+    public boolean isSoup() {
+        return storedFluid.is(CTag.SOUP);
     }
 
     public int getSpace() {

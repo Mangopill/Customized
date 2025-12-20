@@ -38,9 +38,7 @@ public class CrateBlock extends BaseEntityBlock implements CSimpleInteractableBl
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        if (level.isClientSide) {
-            return null;
-        }
+        if (level.isClientSide) return null;
         return createTickerHelper(blockEntityType, CBlockEntityTypeRegistry.CRATE.get(), CrateBlockEntity::cookingTick);
     }
 

@@ -93,13 +93,11 @@ public class KnifeItem extends TieredItem implements ProjectileItem, ThrowableII
     public void releaseUsing(ItemStack stack, Level level, LivingEntity shooter, int timeLeft) {
         int useTime = getUseDuration(stack, shooter) - timeLeft;
         float power = getPowerForTime(useTime);
-        if (power < 0.1F || !(level instanceof ServerLevel serverLevel)) {
-            return;
-        }
-        int knifeCount = EnchantmentHelper.processProjectileCount(serverLevel, stack, shooter, 1);
+        if (power < 0.1F) return;
+        int knifeCount = (level instanceof ServerLevel serverLevel) ? EnchantmentHelper.processProjectileCount(serverLevel, stack, shooter, 1) : 1;
         hurtAndBreakItemStack(stack, shooter, knifeCount);
         ItemStack projectile = stack.copy();
-        int i = EnchantmentHelper.processAmmoUse(serverLevel, stack, stack, 1);
+        int i = (level instanceof ServerLevel serverLevel) ? EnchantmentHelper.processAmmoUse(serverLevel, stack, stack, 1) : 1;
         if (i == 0) {
             projectile.set(DataComponents.INTANGIBLE_PROJECTILE, Unit.INSTANCE);
         } else {
@@ -111,7 +109,7 @@ public class KnifeItem extends TieredItem implements ProjectileItem, ThrowableII
             float pitchOffset = 0.0F;
             if (j > 0) {
                 float totalSpread = (spreadPerLevel * j);
-                float spreadFactor = (float)(j - 1) / (float) (knifeCount - 1);
+                float spreadFactor = (float) (j - 1) / (float) (knifeCount - 1);
                 yawOffset = -totalSpread / 2.0F + (totalSpread * spreadFactor);
                 float randomSpread = shooter.getRandom().nextFloat() * 5.0F - 2.5F;
                 yawOffset += randomSpread;
@@ -127,7 +125,6 @@ public class KnifeItem extends TieredItem implements ProjectileItem, ThrowableII
 
     protected void addKnifeEntity(Level level, LivingEntity shooter, ItemStack projectile, int i, float power, float yawOffset, float pitchOffset) {
         KnifeEntity knife = new KnifeEntity(level, shooter, projectile);
-        knife.setOwner(shooter);
         knife.pickup = (i == 0 ? AbstractArrow.Pickup.DISALLOWED : AbstractArrow.Pickup.ALLOWED);
         float yaw = shooter.getYRot() + yawOffset;
         float pitch = shooter.getXRot() + pitchOffset;

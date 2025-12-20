@@ -9,7 +9,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class CDataComponentRegistry {
+public final class CDataComponentRegistry {
     public static final DeferredRegister.DataComponents DATA_COMPONENT = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, Customized.MODID);
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ItemStackHandlerRecord>> ITEM_STACK_HANDLER = DATA_COMPONENT.registerComponentType(
@@ -24,4 +24,7 @@ public class CDataComponentRegistry {
             "uuid", builder -> builder.persistent(UUIDRecord.CODEC).networkSynchronized(UUIDRecord.STREAM_CODEC));
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> ADVANCEMENT_HAS_PROGRESS = DATA_COMPONENT.registerComponentType(
             "advancement_has_progress", builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> ARGB_COLOR = DATA_COMPONENT.registerComponentType(
+            "argb_color", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 }

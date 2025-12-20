@@ -14,17 +14,17 @@ public record CuttingBoardRecipe(Ingredient cuttingItem, NonNullList<Ingredient>
                                  float probability, int cuttingTimes) implements CRecipeInterface<RecipeWrapper> {
     @Override
     public boolean matches(RecipeWrapper recipeWrapper, Level level) {
-        return this.cuttingItem.test(recipeWrapper.getItem(0));
+        return cuttingItem.test(recipeWrapper.getItem(0));
     }
 
     @Override
     public ItemStack assemble(RecipeWrapper recipeWrapper, HolderLookup.Provider provider) {
-        return this.output.getFirst().copy();
+        return output.getFirst().copy();
     }
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return this.output.getFirst();
+        return output.getFirst();
     }
 
     @Override

@@ -37,25 +37,17 @@ public abstract class TallWaterloggedCropBlock extends BushBlock implements Bone
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.tick(state, level, pos, random);
-        if (level.getRawBrightness(pos.above(), 0) < 6 || !level.isAreaLoaded(pos, 1)) {
-            return;
-        }
-        if (!CommonHooks.canCropGrow(level, pos, state, random.nextInt(setGrowChance(state, level, pos)) == 0)) {
-            return;
-        }
+        if (level.getRawBrightness(pos.above(), 0) < 6 || !level.isAreaLoaded(pos, 1)) return;
+        if (!CommonHooks.canCropGrow(level, pos, state, random.nextInt(setGrowChance(state, level, pos)) == 0)) return;
         if (isTop(state)) {
             int topAge = state.getValue(AGE);
-            if (topAge >= topMaxAge){
-                return;
-            }
+            if (topAge >= topMaxAge) return;
             level.setBlockAndUpdate(pos, state.setValue(AGE, topAge + 1));
             CommonHooks.fireCropGrowPost(level, pos, state);
         } else {
             int age = state.getValue(AGE);
             if (age >= bottomMaxAge){
-                if (!level.isEmptyBlock(pos.above())) {
-                    return;
-                }
+                if (!level.isEmptyBlock(pos.above())) return;
                 level.setBlockAndUpdate(pos.above(), this.defaultBlockState().setValue(AGE, bottomMaxAge + 1).setValue(BlockStateProperties.WATERLOGGED, false).setValue(GROW_PLACED, true));
                 return;
             }

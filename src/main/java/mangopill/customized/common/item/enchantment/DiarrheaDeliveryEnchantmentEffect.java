@@ -26,14 +26,10 @@ public class DiarrheaDeliveryEnchantmentEffect {
         Player player = event.getEntity();
         Level level = player.level();
         ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-        if (level.isClientSide) {
-            return;
-        }
+        if (level.isClientSide) return;
         EnchantmentHelper.runIterationOnItem(helmet, (e, l) -> {
             EnchantmentValueEffect effect = e.value().effects().get(CEnchantmentComponentRegistry.DIARRHEA_DELIVERY.get());
-            if (effect == null) {
-                return;
-            }
+            if (effect == null) return;
             double range = 5.0D + l * 2.0D;
             List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class, player.getBoundingBox().inflate(range));
             List<Mob> hostileMobs = level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(range), entity -> entity instanceof Enemy);

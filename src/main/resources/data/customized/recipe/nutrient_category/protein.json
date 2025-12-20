@@ -2,6 +2,6 @@
   "type": "customized:nutrient_category",
   "icon": "customized:textures/gui/nutrient_category/protein.png",
   "name": "protein",
-  "color": "0xE39191",
+  "color": "0xCCE39191",
   "nutrition": 0.05
 }

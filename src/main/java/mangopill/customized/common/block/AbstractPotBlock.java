@@ -2,7 +2,8 @@ package mangopill.customized.common.block;
 
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.state.PotState;
-import mangopill.customized.common.block.strategy.base.PotStrategyHandler;
+import mangopill.customized.common.block.strategy.base.*;
+import mangopill.customized.common.block.strategy.pot.LidStrategy;
 import net.minecraft.core.*;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
@@ -44,16 +45,14 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
     public ItemInteractionResult useItemOn(
             ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult result) {
-        return PotStrategyHandler.getInstance().useByRegistry(this.getDescriptionId(), itemStackInHand, state, level, pos, player, hand, result);
+        return PotStrategyHandler.getInstance().useByRegistry(getDescriptionId(), itemStackInHand, state, level, pos, player, hand, result);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         if (!state.getValue(LID).equals(PotState.WITHOUT_LID)) {
-            if (level.isClientSide) {
-                return createTickerHelper(blockEntityType, setBlockEntity(), AbstractPotBlockEntity::animationTick);
-            }
+            if (level.isClientSide) return createTickerHelper(blockEntityType, setBlockEntity(), AbstractPotBlockEntity::animationTick);
             return createTickerHelper(blockEntityType, setBlockEntity(), AbstractPotBlockEntity::cookingTick);
         }
         return null;
@@ -66,8 +65,6 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
     }
 
     abstract public BlockEntityType<? extends AbstractPotBlockEntity> setBlockEntity();
-
-    abstract public ItemStack setLidItem();
 
     abstract public VoxelShape setShapeWithoutLid();
 
@@ -131,9 +128,7 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() == newState.getBlock()) {
-            return;
-        }
+        if (state.getBlock() == newState.getBlock()) return;
         if (level.getBlockEntity(pos) instanceof AbstractPotBlockEntity potBlockEntity) {
             NonNullList<ItemStack> stackNonNullList = NonNullList.create();
             stackNonNullList.addAll(potBlockEntity.getItemStackListInPot(true, true));
@@ -145,13 +140,13 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        List<ItemStack> getDrops = super.getDrops(state,builder);
         if (state.getValue(LID).equals(PotState.WITH_LID)){
-            List<ItemStack> getDrops = super.getDrops(state,builder);
-            if (!setLidItem().isEmpty()) {
-                getDrops.add(setLidItem());
+            for (PotInteractionStrategy strategy : PotStrategyHandler.getInstance().getMap().get(getDescriptionId())){
+                if (!(strategy instanceof LidStrategy lidStrategy)) continue;
+                getDrops.add(lidStrategy.lid());
             }
-            return getDrops;
         }
-        return super.getDrops(state,builder);
+        return getDrops;
     }
 }

@@ -3,10 +3,11 @@ package mangopill.customized.common.block;
 import com.mojang.serialization.MapCodec;
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.record.PotRecord;
+import mangopill.customized.common.block.state.PotState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.*;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -30,6 +31,13 @@ public class RoasterBlock extends AbstractPotBlock {
     }
 
     @Override
+    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+        super.stepOn(level, pos, state, entity);
+        if (state.getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID) || !(entity instanceof LivingEntity)) return;
+        entity.hurt(level.damageSources().hotFloor(), 1.0F);
+    }
+
+    @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
@@ -44,11 +52,6 @@ public class RoasterBlock extends AbstractPotBlock {
     @Override
     public BlockEntityType<? extends AbstractPotBlockEntity> setBlockEntity() {
         return PotRecord.ROASTER.entityType();
-    }
-
-    @Override
-    public ItemStack setLidItem() {
-        return PotRecord.ROASTER.plateItem().getDefaultInstance();
     }
 
     @Override

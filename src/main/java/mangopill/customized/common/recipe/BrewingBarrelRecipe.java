@@ -12,36 +12,22 @@ import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 import java.util.List;
 
-public class BrewingBarrelRecipe implements CRecipeInterface<RecipeWrapper> {
-    private final NonNullList<Ingredient> ingredientItem;
-    private final Ingredient containerItem;
-    private final ItemStack output;
-    private final int cookingTime;
-    private final int ingredientInput;
-
-    public BrewingBarrelRecipe(NonNullList<Ingredient> ingredientItem, Ingredient containerItem, ItemStack output, int cookingTime) {
-        this.ingredientItem = ingredientItem;
-        this.containerItem = containerItem;
-        this.output = output;
-        this.cookingTime = cookingTime;
-        ingredientInput = 4;
-    }
-
+public record BrewingBarrelRecipe(NonNullList<Ingredient> ingredientItem, Ingredient containerItem, ItemStack output, int cookingTime) implements CRecipeInterface<RecipeWrapper> {
     @Override
     public boolean matches(RecipeWrapper recipeWrapper, Level level) {
-        List<ItemStack> ingredient = getListByWrapper(recipeWrapper, 0, ingredientInput);
+        List<ItemStack> ingredient = getListByWrapper(recipeWrapper, 0, 4);
         return ingredient.size() == ingredientItem.size()
                 && RecipeMatcher.findMatches(ingredient, ingredientItem) != null;
     }
 
     @Override
     public ItemStack assemble(RecipeWrapper recipeWrapper, HolderLookup.Provider provider) {
-        return this.output.copy();
+        return output.copy();
     }
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return this.output;
+        return output;
     }
 
     @Override
@@ -60,21 +46,5 @@ public class BrewingBarrelRecipe implements CRecipeInterface<RecipeWrapper> {
     @Override
     public RecipeType<?> getType() {
         return CRecipeRegistry.BREWING_BARREL.get();
-    }
-
-    public NonNullList<Ingredient> getIngredientItem() {
-        return ingredientItem;
-    }
-
-    public Ingredient getContainerItem() {
-        return containerItem;
-    }
-
-    public ItemStack getOutput() {
-        return output;
-    }
-
-    public int getCookingTime() {
-        return cookingTime;
     }
 }

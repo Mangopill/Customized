@@ -2,5 +2,5 @@
   "type": "customized:nutrient_category",
   "icon": "customized:textures/gui/nutrient_category/fresh.png",
   "name": "fresh",
-  "color": "0xFF6F61"
+  "color": "0xCCFF6F61"
 }

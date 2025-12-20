@@ -1,7 +1,7 @@
 package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
-import mangopill.customized.common.block.record.PlateRegistryRecord;
+import mangopill.customized.common.block.record.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -39,7 +39,7 @@ public class SoupBowlBlock extends AbstractPlateBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return PlateRegistryRecord.SOUP_BOWL.type().create(pos, state);
+        return PlateRecord.SOUP_BOWL.type().get().create(pos, state);
     }
 
     @Override

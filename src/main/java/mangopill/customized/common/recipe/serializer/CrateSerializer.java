@@ -13,11 +13,11 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 public class CrateSerializer implements RecipeSerializer<CrateRecipe> {
     public static final MapCodec<CrateRecipe> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(CrateRecipe::getIngredientItem),
-                    Codec.INT.fieldOf("count").forGetter(CrateRecipe::getIngredientCount),
-                    ItemStack.STRICT_CODEC.fieldOf("result").forGetter(CrateRecipe::getOutput),
-                    Codec.INT.optionalFieldOf("time", 200).forGetter(CrateRecipe::getCookingTime),
-                    Codec.BOOL.optionalFieldOf("sunny", true).forGetter(CrateRecipe::isSunny)
+                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(CrateRecipe::ingredientItem),
+                    Codec.INT.fieldOf("count").forGetter(CrateRecipe::ingredientCount),
+                    ItemStack.STRICT_CODEC.fieldOf("result").forGetter(CrateRecipe::output),
+                    Codec.INT.optionalFieldOf("time", 200).forGetter(CrateRecipe::cookingTime),
+                    Codec.BOOL.optionalFieldOf("sunny", true).forGetter(CrateRecipe::sunny)
             ).apply(instance, CrateRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CrateRecipe> STREAM_CODEC = StreamCodec.of(CrateSerializer::toNetwork, CrateSerializer::fromNetwork);
@@ -42,10 +42,10 @@ public class CrateSerializer implements RecipeSerializer<CrateRecipe> {
     }
 
     private static void toNetwork(RegistryFriendlyByteBuf buffer, CrateRecipe recipe) {
-        Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.getIngredientItem());
-        buffer.writeVarInt(recipe.getIngredientCount());
-        ItemStack.STREAM_CODEC.encode(buffer, recipe.getOutput());
-        buffer.writeVarInt(recipe.getCookingTime());
-        buffer.writeBoolean(recipe.isSunny());
+        Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingredientItem());
+        buffer.writeVarInt(recipe.ingredientCount());
+        ItemStack.STREAM_CODEC.encode(buffer, recipe.output());
+        buffer.writeVarInt(recipe.cookingTime());
+        buffer.writeBoolean(recipe.sunny());
     }
 }

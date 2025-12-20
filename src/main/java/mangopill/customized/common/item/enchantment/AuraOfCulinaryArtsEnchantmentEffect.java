@@ -46,17 +46,13 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
         Player player = event.getEntity();
         Level level = player.level();
         ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-        if (level.isClientSide) {
-            return;
-        }
+        if (level.isClientSide) return;
         CulinaryAuraData data = PLAYER_AURA_DATA.computeIfAbsent(player.getUUID().toString(),
                 k -> new CulinaryAuraData(0, player.level().getGameTime(), new ArrayList<>()));
         AtomicBoolean foundAura = new AtomicBoolean(false);
         EnchantmentHelper.runIterationOnItem(helmet, (e, l) -> {
             EnchantmentValueEffect effect = e.value().effects().get(CEnchantmentComponentRegistry.AURA_OF_CULINARY_ARTS.get());
-            if (effect == null) {
-                return;
-            }
+            if (effect == null) return;
             foundAura.set(true);
             refreshFoodsOverTime(player, data, l);
         });
@@ -72,9 +68,7 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
             ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
             EnchantmentHelper.runIterationOnItem(helmet, (e, l) -> {
                 EnchantmentValueEffect effect = e.value().effects().get(CEnchantmentComponentRegistry.AURA_OF_CULINARY_ARTS.get());
-                if (effect == null) {
-                    return;
-                }
+                if (effect == null) return;
                 CulinaryAuraData data = PLAYER_AURA_DATA.get(player.getUUID().toString());
                 if (data != null && data.activeFoods > 0 && event.getOriginalDamage() > 0) {
                     event.setNewDamage(0.0F);
@@ -82,9 +76,7 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
                     data.lastRefreshTime = player.level().getGameTime();
                     data.getStackList().removeLast();
                     PacketDistributor.sendToAllPlayers(new PlayerAuraData(new HashMap<>(PLAYER_AURA_DATA)));
-                    if (!AURA_OF_CULINARY_ARTS_MESSAGE.get()) {
-                        return;
-                    }
+                    if (!AURA_OF_CULINARY_ARTS_MESSAGE.get()) return;
                     addParticles(player, 0.5D, 10, 0.1);
                     playSound(player, SoundEvents.ENCHANTMENT_TABLE_USE);
                     player.displayClientMessage(getComponent("message." + Customized.MODID + ".aura_of_culinary_arts", data.activeFoods), true);
@@ -101,9 +93,7 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
             data.lastRefreshTime = currentTime;
             data.getStackList().addLast(getRandomLootTableItemStack((ServerLevel) player.level(), LOOT_TABLE));
             PacketDistributor.sendToAllPlayers(new PlayerAuraData(new HashMap<>(PLAYER_AURA_DATA)));
-            if (!AURA_OF_CULINARY_ARTS_MESSAGE.get()) {
-                return;
-            }
+            if (!AURA_OF_CULINARY_ARTS_MESSAGE.get()) return;
             addParticles(player, 1.0, 5, 0.05);
             playSound(player, SoundEvents.EXPERIENCE_ORB_PICKUP);
             player.displayClientMessage(getComponent("message." + Customized.MODID + ".aura_of_culinary_arts", data.activeFoods), true);

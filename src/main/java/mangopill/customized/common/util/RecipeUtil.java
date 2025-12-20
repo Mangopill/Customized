@@ -4,11 +4,57 @@ import mangopill.customized.common.recipe.AbstractPotRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
+
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public final class RecipeUtil {
     private RecipeUtil() {
+    }
+
+    public static Ingredient mergeIngredients(Collection<Ingredient> ingredients) {
+        if (ingredients.isEmpty()) return Ingredient.EMPTY;
+        return mergeIngredients(ingredients.stream());
+    }
+
+    public static Ingredient mergeIngredients(Stream<Ingredient> ingredients) {
+        return Ingredient.of(ingredients.flatMap(ingredient -> Arrays.stream(ingredient.getItems())));
+    }
+
+    public static Ingredient toIngredient(Collection<ItemStack> itemStacks) {
+        if (itemStacks.isEmpty()) return Ingredient.EMPTY;
+        return Ingredient.of(itemStacks.stream());
+    }
+
+    public static Ingredient toIngredient(Collection<ItemStack> itemStacks, Consumer<ItemStack> consumer) {
+        if (itemStacks.isEmpty()) return Ingredient.EMPTY;
+        return Ingredient.of(itemStacks.stream().peek(consumer));
+    }
+
+    public static List<ItemStack> toStackList(Collection<Ingredient> ingredients) {
+        if (ingredients.isEmpty()) return new ArrayList<>();
+        return ingredients.stream().flatMap(ingredient -> Arrays.stream(ingredient.getItems())).toList();
+    }
+
+    public static List<ItemStack> toStackList(Collection<Ingredient> ingredients, Consumer<ItemStack> consumer) {
+        return toStackList(ingredients).stream().map(ItemStack::copy).peek(consumer).toList();
+    }
+
+    public static <I extends RecipeInput, T extends Recipe<I>> Optional<T> getCheckRecipeOptionalFor(RecipeManager.CachedCheck<I, T> check, I recipeWrapper, @Nullable Level level) {
+        return level != null ? check.getRecipeFor(recipeWrapper, level).map(RecipeHolder::value) : Optional.empty();
+    }
+
+    public static <I extends RecipeInput, T extends Recipe<I>> List<T> getRecipeListFor(RecipeType<T> recipeType, I input, @Nullable Level level) {
+        return level != null ? level.getRecipeManager().getRecipesFor(recipeType, input, level).stream().map(RecipeHolder::value).toList() : new ArrayList<>();
+    }
+
+    public static<I extends RecipeInput, T extends Recipe<I>> List<T> getAllRecipeList(RecipeType<T> recipeType, @Nullable Level level) {
+        return level != null ? level.getRecipeManager().getAllRecipesFor(recipeType).stream().map(RecipeHolder::value).toList() : new ArrayList<>();
     }
 
     public static void toPotNetwork(RegistryFriendlyByteBuf buffer, AbstractPotRecipe recipe) {

@@ -45,9 +45,7 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
                                               InteractionHand hand, BlockHitResult hitResult) {
-        if (level.isClientSide) {
-            return ItemInteractionResult.SUCCESS;
-        }
+        if (level.isClientSide) return ItemInteractionResult.SUCCESS;
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AbstractPlateBlockEntity plateBlockEntity){
             plateBlockEntity.eatFood(level, player, state, pos);

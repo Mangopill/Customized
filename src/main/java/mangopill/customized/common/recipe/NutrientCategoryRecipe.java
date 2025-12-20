@@ -9,16 +9,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
+import static mangopill.customized.common.util.StringUtil.*;
+
 public record NutrientCategoryRecipe(ResourceLocation icon, String name, String color, float nutrition, float saturation) implements CRecipeInterface<RecipeInput> {
 
     public TextColor getColor() {
-        return TextColor.fromRgb(Integer.decode(color));
+        return getColorFromString(color);
     }
 
     public int getColorWithAlpha() {
-        int rgb = Integer.decode(color);
-        int alpha = 0xCC;
-        return (alpha << 24) | (rgb & 0x00FFFFFF);
+        return getColorWithAlphaFromString(color);
     }
 
     @Override

@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "tag": "c:crops/rice_panicle"
+    }
+  ],
+  "processing_time": 100,
+  "results": [
+    {
+      "count": 1,
+      "id": "customized:rice"
+    },
+    {
+      "chance": 0.3,
+      "id": "customized:rice"
+    }
+  ]
+}

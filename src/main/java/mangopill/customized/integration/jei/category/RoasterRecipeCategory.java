@@ -31,7 +31,7 @@ public class RoasterRecipeCategory extends CRecipeCategory<RoasterRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RoasterRecipe recipe, IFocusGroup focuses) {
-        setPotRecipe(builder, recipe, SLOT_SIZE, PotRecord.ROASTER.ingredientCount(), PotRecord.ROASTER.seasoningCount(), 4,
+        setPotRecipe(builder, recipe, SLOT_SIZE, PotRecord.ROASTER.ingredientCount(), PotRecord.ROASTER.seasoningCount(), PotRecord.ROASTER.spiceCount(), 4,
                 10, 1, 1, 80, 91, 92, 91, 67);
     }
 

@@ -44,9 +44,7 @@ public class CuttingBoardBlock extends BaseEntityBlock implements CSimpleInterac
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() == newState.getBlock()) {
-            return;
-        }
+        if (state.getBlock() == newState.getBlock()) return;
         if (level.getBlockEntity(pos) instanceof CuttingBoardBlockEntity cuttingBoardBlockEntity) {
             NonNullList<ItemStack> stackNonNullList = NonNullList.create();
             stackNonNullList.addAll(cuttingBoardBlockEntity.getItemStackListInBlockEntity(true));

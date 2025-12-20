@@ -2,5 +2,5 @@
   "type": "customized:nutrient_category",
   "icon": "customized:textures/gui/nutrient_category/spicy.png",
   "name": "spicy",
-  "color": "0xFF4500"
+  "color": "0xCCFF4500"
 }

@@ -21,12 +21,27 @@ public class PotCapabilities {
                 PotRecord.ROASTER.entityType(),
                 (entity, context) -> entity.getInputAndOutputHandler()
         );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                PotRecord.WOK.entityType(),
+                (entity, context) -> entity.getInputAndOutputHandler()
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                PotRecord.STEAMER.entityType(),
+                (entity, context) -> entity.getInputAndOutputHandler()
+        );
     }
     @SubscribeEvent
     public static void registerFluidCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
                 PotRecord.CASSEROLE.entityType(),
+                (entity, context) -> entity.getFluidHandler()
+        );
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                PotRecord.STEAMER.entityType(),
                 (entity, context) -> entity.getFluidHandler()
         );
     }

@@ -2,10 +2,11 @@ package mangopill.customized.common.block.entity;
 
 import mangopill.customized.common.block.handler.PotFluidHandler;
 import mangopill.customized.common.block.handler.PotItemHandler;
+import mangopill.customized.common.block.record.PotRecord;
 import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.item.AbstractPlateItem;
 import mangopill.customized.common.recipe.AbstractPotRecipe;
-import mangopill.customized.common.registry.CAdvancementRegistry;
+import mangopill.customized.common.registry.*;
 import mangopill.customized.common.tag.ModTag;
 import mangopill.customized.common.util.CreateItemStackHandler;
 import mangopill.customized.common.util.CItemStackHandlerHelper;
@@ -28,7 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.*;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
@@ -39,35 +40,41 @@ import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.block.AbstractPotBlock.*;
 import static mangopill.customized.common.util.CompoundTagHelper.*;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.RecipeUtil.*;
 import static mangopill.customized.common.util.StringUtil.*;
-import static mangopill.customized.common.util.component.PlateComponentUtil.*;
+import static mangopill.customized.common.util.component.ItemComponentUtil.*;
 import static mangopill.customized.common.util.PropertyValueUtil.*;
 
 public abstract class AbstractPotBlockEntity extends BlockEntity implements CreateItemStackHandler {
-    private final int ingredientInput;
-    private final int seasoningInput;
-    private final int spiceInput;
+    protected final int ingredientInput;
+    protected final int seasoningInput;
+    protected final int spiceInput;
     public static final int OUTPUT = 1;
-    private final int allSlot;
-    private final ItemStackHandler itemStackHandler;
+    private final boolean canInputDrive;
+    protected final int allSlot;
+    protected final ItemStackHandler itemStackHandler;
     private final PotItemHandler inputAndOutputHandler;
-    private final PotFluidHandler fluidHandler;
-    private Ingredient containerItem;
-    private final RecipeManager.CachedCheck<RecipeWrapper,? extends AbstractPotRecipe> potCheck;
-    private final RecipeManager.CachedCheck<SingleRecipeInput, CampfireCookingRecipe> campfireCheck;
-    private UUID lastInteractPlayerId;
-    private int cookingTime;
-    private int cookingCompletionTime;
-    private int customizedTime;
-    private int customizedCompletionTime;
+    protected final PotFluidHandler fluidHandler;
+    protected final AbstractPlateItem plateItem;
+    protected Ingredient containerItem;
+    protected final RecipeManager.CachedCheck<RecipeWrapper, ? extends AbstractPotRecipe> potCheck;
+    protected final RecipeManager.CachedCheck<SingleRecipeInput, CampfireCookingRecipe> campfireCheck;
+    protected UUID lastInteractPlayerId;
+    protected int cookingTime;
+    protected int cookingCompletionTime;
+    protected int customizedTime;
+    protected int customizedCompletionTime;
 
     protected AbstractPotBlockEntity(BlockEntityType<? extends AbstractPotBlockEntity> type, BlockPos pos, BlockState blockState,
-                                  int ingredientCount, int seasoningCount, int spiceCount,
-                                  RecipeManager.CachedCheck<RecipeWrapper, ? extends AbstractPotRecipe> potCheck) {
+                                     int ingredientCount, int seasoningCount, int spiceCount,
+                                     RecipeManager.CachedCheck<RecipeWrapper, ? extends AbstractPotRecipe> potCheck,
+                                     AbstractPlateItem plateItem, boolean canInputDrive) {
         super(type, pos, blockState);
         this.ingredientInput = ingredientCount;
         this.seasoningInput = seasoningCount;
         this.spiceInput = spiceCount;
+        this.canInputDrive = canInputDrive;
+        this.plateItem = plateItem;
         this.allSlot = ingredientInput + seasoningInput + spiceInput + OUTPUT;
         this.campfireCheck = RecipeManager.createCheck(RecipeType.CAMPFIRE_COOKING);
         this.itemStackHandler = createItemStackHandler(allSlot);
@@ -75,7 +82,11 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         this.fluidHandler = new PotFluidHandler(this, FluidType.BUCKET_VOLUME);
         this.containerItem = Ingredient.EMPTY;
         this.potCheck = potCheck;
-        this.lastInteractPlayerId = UUIDRecord.NULL.uuid();
+        this.lastInteractPlayerId = UUIDRecord.EMPTY.uuid();
+    }
+
+    protected AbstractPotBlockEntity(BlockPos pos, BlockState blockState, PotRecord record) {
+        this(record.entityType(), pos, blockState, record.ingredientCount(), record.seasoningCount(), record.spiceCount(), record.potCheck(), record.plateItem().get(), record.canInputDrive());
     }
 
     @Override
@@ -86,26 +97,20 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         }
     }
 
-    abstract public AbstractPlateItem getPlateItem();
-
     public static void cookingTick(Level level, BlockPos pos, BlockState state, AbstractPotBlockEntity potBlockEntity) {
         RecipeWrapper wrapper = new RecipeWrapper(potBlockEntity.itemStackHandler);
-        Optional<RecipeHolder<? extends AbstractPotRecipe>> potMatchRecipe = potBlockEntity.getPotMatchRecipe(wrapper);
-        if (!potBlockEntity.hasInput() || potBlockEntity.level == null){
+        Optional<? extends AbstractPotRecipe> potMatchRecipe = potBlockEntity.getPotMatchRecipe(wrapper);
+        if (!potBlockEntity.hasInput() || potBlockEntity.level == null || (potBlockEntity.isCanInputDrive() && potBlockEntity.getFluidHandler().isEmpty())){
             potBlockEntity.clearCookingTime();
             potBlockEntity.clearCustomizedTime();
             return;
         }
-        if (potMatchRecipe.isPresent() && potBlockEntity.canCookRecipe(potMatchRecipe.get().value(),wrapper)){
-            if (!RECIPE_COOKING.get()){
-                return;
-            }
+        if (potMatchRecipe.isPresent() && potBlockEntity.canCookRecipe(potMatchRecipe.get(),wrapper)){
+            if (!RECIPE_COOKING.get()) return;
             potBlockEntity.cookRecipe(potMatchRecipe.get(), pos, state);
         } else if (potBlockEntity.isHeated()){
             potBlockEntity.cookCampfire(level, state);
-            if (!CUSTOM_COOKING.get()){
-                return;
-            }
+            if (!CUSTOM_COOKING.get()) return;
             potBlockEntity.cookCustomized(level, state);
         }
         potBlockEntity.itemStackHandlerChanged();
@@ -130,14 +135,12 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         }
     }
 
-    protected Optional<RecipeHolder<? extends AbstractPotRecipe>> getPotMatchRecipe(RecipeWrapper recipeWrapper) {
-        return hasInput() && level != null
-                ? potCheck.getRecipeFor(recipeWrapper, this.level).map(holder -> (RecipeHolder<? extends AbstractPotRecipe>) holder)
-                : Optional.empty();
+    protected Optional<? extends AbstractPotRecipe> getPotMatchRecipe(RecipeWrapper recipeWrapper) {
+        return hasInput() ? getCheckRecipeOptionalFor(potCheck, recipeWrapper, level) : Optional.empty();
     }
 
-    protected Optional<RecipeHolder<CampfireCookingRecipe>> getCampfireMatchRecipe(ItemStack stack) {
-        return hasInput() && level != null ? campfireCheck.getRecipeFor(new SingleRecipeInput(stack), this.level) : Optional.empty();
+    protected Optional<CampfireCookingRecipe> getCampfireMatchRecipe(ItemStack stack) {
+        return hasInput() ? getCheckRecipeOptionalFor(campfireCheck, new SingleRecipeInput(stack), level) : Optional.empty();
     }
 
     public boolean hasInput() {
@@ -145,42 +148,28 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     }
 
     protected boolean canCookRecipe(AbstractPotRecipe recipe, RecipeWrapper recipeWrapper) {
-        ItemStack resultStack = recipe.getResultItem(this.level.registryAccess());
+        ItemStack resultStack = recipe.getResultItem(level.registryAccess());
         containerItem = recipe.getContainerItem();
-        if (resultStack.isEmpty()) {
-            return false;
-        }
-        if(!recipe.matches(recipeWrapper, this.level)){
-            return false;
-        }
-        if (recipe.isHeated() && !isHeated()) {
-            return false;
-        }
-        if(!fluidHandler.isEmpty() && !recipe.getFluidIngredient().test(fluidHandler.getStoredFluid())){
-            return false;
-        }
+        if (resultStack.isEmpty()) return false;
+        if (!recipe.matches(recipeWrapper, level)) return false;
+        if (recipe.isHeated() && !isHeated()) return false;
+        if (!fluidHandler.isEmpty() && !recipe.getFluidIngredient().test(fluidHandler.getStoredFluid())) return false;
         ItemStack stackInSlot = itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + spiceInput);
         return stackInSlot.getCount() + resultStack.getCount() <= itemStackHandler.getSlotLimit(ingredientInput + seasoningInput + spiceInput);
     }
 
-    protected void cookRecipe(RecipeHolder<? extends AbstractPotRecipe> holder, BlockPos pos, BlockState state) {
+    protected void cookRecipe(AbstractPotRecipe recipe, BlockPos pos, BlockState state) {
         ++cookingTime;
-        getRecipeCookingCompletionTime(holder);
+        getRecipeCookingCompletionTime(recipe);
         lidAccelerate(state);
-        if (cookingTime < cookingCompletionTime) {
-            return;
-        }
-        if (!containsSameItem(List.of(containerItem.getItems()), itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + spiceInput))) {
-            return;
-        }
-        ItemStack resultStack = holder.value().getResultItem(this.level.registryAccess()).copy();
+        if (cookingTime < cookingCompletionTime) return;
+        if (!containsSameItem(List.of(containerItem.getItems()), itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + spiceInput))) return;
+        ItemStack resultStack = recipe.getResultItem(level.registryAccess()).copy();
         spawnItemEntity(level, resultStack.copy(), state, pos);
         for (int i = 0; i < ingredientInput + seasoningInput + spiceInput + OUTPUT; ++i) {
             ItemStack slotStack = itemStackHandler.getStackInSlot(i);
             spawnUsingConvertsTo(level, List.of(slotStack), state, pos);
-            if (!slotStack.isEmpty()){
-                slotStack.shrink(1);
-            }
+            shrinkItemStack(slotStack, 1);
         }
         if (level.getPlayerByUUID(lastInteractPlayerId) instanceof ServerPlayer serverPlayer) {
             CAdvancementRegistry.GET_FAMOUS_DISH.get().trigger(serverPlayer);
@@ -192,18 +181,13 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     protected void cookCampfire(Level level, BlockState state) {
         for (int i = 0; i < ingredientInput; ++i) {
             ItemStack stackInSlot = itemStackHandler.getStackInSlot(i);
-            Optional<RecipeHolder<CampfireCookingRecipe>> recipe = getCampfireMatchRecipe(stackInSlot);
-            if (recipe.isEmpty()) {
-                continue;
-            }
+            Optional<CampfireCookingRecipe> recipe = getCampfireMatchRecipe(stackInSlot);
+            if (recipe.isEmpty()) continue;
             ++cookingTime;
             getCampfireCookingCompletionTime();
             lidAccelerate(state);
-            if (cookingTime < cookingCompletionTime) {
-                return;
-            }
-            ItemStack resultStack = recipe.get().value().assemble(new SingleRecipeInput(stackInSlot), level.registryAccess()).copy();
-            resultStack.setCount(stackInSlot.getCount());
+            if (cookingTime < cookingCompletionTime) return;
+            ItemStack resultStack = recipe.get().assemble(new SingleRecipeInput(stackInSlot), level.registryAccess()).copyWithCount(stackInSlot.getCount());
             itemStackHandler.setStackInSlot(i, resultStack);
         }
         clearCookingTime();
@@ -213,29 +197,26 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         ++customizedTime;
         lidAccelerate(state);
         getCustomizedCookingCompletionTime();
-        if (customizedTime < customizedCompletionTime || itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + spiceInput).isEmpty()) {
-            return;
-        }
-        transferAndSpawn(level);
+        if (customizedTime < customizedCompletionTime || itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + spiceInput).isEmpty()) return;
+        transferAndSpawn(level, getItemStackListInPot(false, true));
         clearCustomizedTime();
     }
 
-    protected void transferAndSpawn(Level level) {
-        List<ItemStack> stackList = this.getItemStackListInPot(false, true);
+    protected void transferAndSpawn(Level level, List<ItemStack> stackList) {
         ItemStack outputItem = itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + spiceInput);
-        if (outputItem.is(getPlateItem()) && outputItem.getItem() instanceof AbstractPlateItem plateItem) {
-            ItemStackHandler newItemStackHandler = plateItem.copyItemStackHandlerByComponent(outputItem);
-            spawnUsingConvertsTo(level, stackList, this.getBlockState(), this.getBlockPos());
-            stackList.forEach(itemStack -> plateItem.insertItem(itemStack, newItemStackHandler));
+        if (outputItem.is(plateItem) && outputItem.getItem() instanceof AbstractPlateItem plate) {
+            ItemStackHandler newItemStackHandler = plate.copyItemStackHandlerByComponent(outputItem);
+            spawnUsingConvertsTo(level, stackList, getBlockState(), getBlockPos());
+            stackList.forEach(itemStack -> plate.insertItem(itemStack, newItemStackHandler));
             List<ItemStack> newStackList = getItemStackListInSlot(newItemStackHandler, 0, newItemStackHandler.getSlots());
             ItemStackHandler initialItemStackHandler = new ItemStackHandler(newItemStackHandler.getSlots());
-            newStackList.forEach(itemStack -> plateItem.insertItem(itemStack.copy(), initialItemStackHandler));
-            updateAll(outputItem, newItemStackHandler, initialItemStackHandler,
-                    getFoodPropertyByPropertyValue(level, newStackList, this.getBlockState().getBlock(), true),
+            newStackList.forEach(itemStack -> plate.insertItem(itemStack.copy(), initialItemStackHandler));
+            updatePlateAll(outputItem, newItemStackHandler, initialItemStackHandler,
+                    getFoodPropertyByPropertyValue(level, newStackList, getBlockState().getBlock(), true),
                     getConsumptionCount(newStackList), getConsumptionCount(newStackList),
                     lastInteractPlayerId, getProgress(level));
-            spawnItemEntity(level, outputItem, this.getBlockState(), this.getBlockPos());
-            lastInteractPlayerId = UUIDRecord.NULL.uuid();
+            spawnItemEntity(level, outputItem, getBlockState(), getBlockPos());
+            lastInteractPlayerId = UUIDRecord.EMPTY.uuid();
         }
     }
 
@@ -257,8 +238,8 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         cookingCompletionTime = getTotalItemCount(getItemStackListInPot(false, false)) * 20;
     }
 
-    public void getRecipeCookingCompletionTime(RecipeHolder<? extends AbstractPotRecipe> holder){
-        cookingCompletionTime = holder.value().getCookingTime();
+    public void getRecipeCookingCompletionTime(AbstractPotRecipe recipe){
+        cookingCompletionTime = recipe.getCookingTime();
     }
 
     public void getCustomizedCookingCompletionTime(){
@@ -266,19 +247,11 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     }
 
     public boolean isHeated() {
-        if (level == null){
-            return false;
-        }
+        if (level == null) return false;
         BlockState stateBelow = level.getBlockState(worldPosition.below());
-        if (!stateBelow.is(ModTag.HEAT_SOURCE)) {
-            return false;
-        }
-        if (stateBelow.hasProperty(BlockStateProperties.LIT)){
-            return stateBelow.getValue(BlockStateProperties.LIT);
-        }
-        if (stateBelow.hasProperty(LID)){
-            return !stateBelow.getValue(LID).equals(PotState.WITHOUT_LID);
-        }
+        if (!stateBelow.is(ModTag.HEAT_SOURCE)) return false;
+        if (stateBelow.hasProperty(BlockStateProperties.LIT)) return stateBelow.getValue(BlockStateProperties.LIT);
+        if (stateBelow.hasProperty(LID)) return !stateBelow.getValue(LID).equals(PotState.WITHOUT_LID);
         return true;
     }
 
@@ -292,11 +265,9 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         customizedCompletionTime = 0;
     }
 
-    //speed up
+    // speed up
     public void stirFryAccelerate(ItemStack itemStackInHand, Player player, InteractionHand hand, ItemStack spatula){
-        if (!ItemStack.isSameItem(itemStackInHand, spatula)) {
-            return;
-        }
+        if (!ItemStack.isSameItem(itemStackInHand, spatula)) return;
         if (cookingTime > 0) {
             cookingTime += 10;
         }
@@ -437,5 +408,9 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
 
     public int getCustomizedCompletionTime() {
         return customizedCompletionTime;
+    }
+
+    public boolean isCanInputDrive() {
+        return canInputDrive;
     }
 }

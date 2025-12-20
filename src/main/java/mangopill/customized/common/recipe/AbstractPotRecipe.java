@@ -61,12 +61,12 @@ public abstract class AbstractPotRecipe implements CRecipeInterface<RecipeWrappe
 
     @Override
     public ItemStack assemble(RecipeWrapper recipeWrapper, HolderLookup.Provider provider) {
-        return this.output.copy();
+        return output.copy();
     }
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return this.output;
+        return output;
     }
 
     @Override

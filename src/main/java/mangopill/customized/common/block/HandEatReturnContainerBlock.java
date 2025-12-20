@@ -56,9 +56,7 @@ public class HandEatReturnContainerBlock extends Block {
     @Override
     public ItemInteractionResult useItemOn(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player,
                                            InteractionHand hand, BlockHitResult result) {
-        if (level.isClientSide) {
-            return ItemInteractionResult.SUCCESS;
-        }
+        if (level.isClientSide) return ItemInteractionResult.SUCCESS;
         if (foodProperties != null) {
             int eat = state.getValue(EAT);
             if (eat < maxEat) {

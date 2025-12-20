@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.*;
 
+import static mangopill.customized.common.util.RecipeUtil.*;
 import static mangopill.customized.common.util.StringUtil.*;
 import static mangopill.customized.integration.jei.util.JeiUtil.*;
 
@@ -33,16 +34,15 @@ public class CrateRecipeCategory extends CRecipeCategory<CrateRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, CrateRecipe recipe, IFocusGroup focuses) {
-        List<ItemStack> itemStacks = Arrays.stream(recipe.getIngredientItem().getItems()).map(ItemStack::copy).peek(itemStack -> itemStack.setCount(recipe.getIngredientCount())).toList();
-        builder.addSlot(RecipeIngredientRole.INPUT, 5, 30).addItemStacks(itemStacks);
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 59, 47).addItemStack(recipe.getOutput());
+        builder.addSlot(RecipeIngredientRole.INPUT, 5, 30).addItemStacks(toStackList(List.of(recipe.ingredientItem()), stack -> stack.setCount(recipe.ingredientCount())));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 59, 47).addItemStack(recipe.output());
     }
 
     @Override
     public void getTooltip(ITooltipBuilder tooltip, CrateRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         List<Component> tooltipString = new ArrayList<>();
-        addTooltipIfInArea(mouseX, mouseY, tooltipString, 59, 22, 15, 22, getComponent("jei.gui." + Customized.MODID + ".cook_time", recipe.getCookingTime() / 20));
-        if (recipe.isSunny()) {
+        addTooltipIfInArea(mouseX, mouseY, tooltipString, 59, 22, 15, 22, getComponent("jei.gui." + Customized.MODID + ".cook_time", recipe.cookingTime() / 20));
+        if (recipe.sunny()) {
             addTooltipIfInArea(mouseX, mouseY, tooltipString, 59, 0, 16, 16, getComponent("jei.gui." + Customized.MODID + ".sunny"));
         }
         tooltip.addAll(tooltipString);
@@ -50,7 +50,7 @@ public class CrateRecipeCategory extends CRecipeCategory<CrateRecipe> {
 
     @Override
     public void draw(CrateRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        if (recipe.isSunny()) {
+        if (recipe.sunny()) {
             drive.draw(guiGraphics, 59, 0);
         }
         arrow.draw(guiGraphics, 59, 22);

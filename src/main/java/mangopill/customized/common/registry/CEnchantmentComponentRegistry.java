@@ -2,13 +2,13 @@ package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.*;
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class CEnchantmentComponentRegistry {
-    public static final DeferredRegister<DataComponentType<?>> ENCHANTMENT_EFFECT_COMPONENT_TYPE = DeferredRegister.create(BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Customized.MODID);
+public final class CEnchantmentComponentRegistry {
+    public static final DeferredRegister<DataComponentType<?>> ENCHANTMENT_EFFECT_COMPONENT_TYPE = DeferredRegister.create(Registries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Customized.MODID);
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<EnchantmentValueEffect>> SHARED_FEAST =
             ENCHANTMENT_EFFECT_COMPONENT_TYPE.register("shared_feast",

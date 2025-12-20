@@ -11,7 +11,6 @@ import net.minecraft.sounds.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -26,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.RecipeUtil.*;
 
 public abstract class CBasicCookingBlockEntity<T extends CRecipeInterface<RecipeWrapper>> extends BlockEntity implements CreateItemStackHandler {
     protected final int inputSlot;
@@ -61,26 +61,21 @@ public abstract class CBasicCookingBlockEntity<T extends CRecipeInterface<Recipe
     }
 
     public void cookingTick(Level level, BlockPos pos, BlockState state, RecipeWrapper wrapper) {
-        Optional<RecipeHolder<T>> matchRecipe = getMatchRecipe(wrapper);
-        if (matchRecipe.isEmpty() || !canCookRecipe(matchRecipe.get().value(),wrapper)){
-            return;
-        }
-        if (!hasInput()) {
-            return;
-        }
+        Optional<T> matchRecipe = getMatchRecipe(wrapper);
+        if (matchRecipe.isEmpty() || !canCookRecipe(matchRecipe.get(),wrapper) || !hasInput()) return;
         cookRecipe(level, matchRecipe.get(), pos, state);
     }
 
-    abstract protected void cookRecipe(Level level, RecipeHolder<T> holder, BlockPos pos, BlockState state);
+    abstract protected void cookRecipe(Level level, T recipe, BlockPos pos, BlockState state);
 
     protected boolean canCookRecipe(T recipe, RecipeWrapper recipeWrapper) {
-        ItemStack resultStack = recipe.getResultItem(this.level.registryAccess());
-        return !resultStack.isEmpty() && recipe.matches(recipeWrapper, this.level);
+        ItemStack resultStack = recipe.getResultItem(level.registryAccess());
+        return !resultStack.isEmpty() && recipe.matches(recipeWrapper, level);
     }
 
-    protected Optional<RecipeHolder<T>> getMatchRecipe(RecipeWrapper recipeWrapper) {
+    protected Optional<T> getMatchRecipe(RecipeWrapper recipeWrapper) {
         return hasInput() && level != null
-                ? check.getRecipeFor(recipeWrapper, this.level)
+                ? getCheckRecipeOptionalFor(check, recipeWrapper, level)
                 : Optional.empty();
     }
 

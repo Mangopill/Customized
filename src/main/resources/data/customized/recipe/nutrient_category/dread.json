@@ -2,5 +2,5 @@
   "type": "customized:nutrient_category",
   "icon": "customized:textures/gui/nutrient_category/dread.png",
   "name": "dread",
-  "color": "0x01A7AC"
+  "color": "0xCC01A7AC"
 }

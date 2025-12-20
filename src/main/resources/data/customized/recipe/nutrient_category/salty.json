@@ -2,5 +2,5 @@
   "type": "customized:nutrient_category",
   "icon": "customized:textures/gui/nutrient_category/salty.png",
   "name": "salty",
-  "color": "0x1E90FF"
+  "color": "0xCC1E90FF"
 }

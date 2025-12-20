@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -33,29 +32,26 @@ public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
 
     @Override
     protected boolean canCookRecipe(CrateRecipe recipe, RecipeWrapper wrapper) {
-        if (recipe.isSunny() && !isSunny()){
+        if (recipe.sunny() && !isSunny()){
             reduceCookingTime();
             return false;
         }
         return super.canCookRecipe(recipe, wrapper);
     }
 
-    protected void cookRecipe(Level level, RecipeHolder<CrateRecipe> holder, BlockPos pos, BlockState state) {
+    protected void cookRecipe(Level level, CrateRecipe recipe, BlockPos pos, BlockState state) {
         ++cookingTime;
-        getRecipeCookingCompletionTime(holder);
-        if (cookingTime < cookingCompletionTime) {
-            return;
-        }
+        getRecipeCookingCompletionTime(recipe);
+        if (cookingTime < cookingCompletionTime) return;
         Block block = level.getBlockState(pos).getBlock();
-        if (block instanceof CrateBlock) {
-            ItemStack resultStack = holder.value().getResultItem(this.level.registryAccess()).copy();
-            spawnItemEntity(level, resultStack.copy(), state, pos);
-            for (int i = 0; i < holder.value().getIngredientCount(); ++i) {
-                spawnUsingConvertsTo(level, List.of(findMinStack(getItemStackListInBlockEntity(false))), state, pos);
-            }
-            shrinkMatchingItems(itemStackHandler, null, holder.value().getIngredientCount());
-            cookingTime = 0;
+        if (!(block instanceof CrateBlock)) return;
+        ItemStack resultStack = recipe.getResultItem(level.registryAccess()).copy();
+        spawnItemEntity(level, resultStack.copy(), state, pos);
+        for (int i = 0; i < recipe.ingredientCount(); ++i) {
+            spawnUsingConvertsTo(level, List.of(findMinStack(getItemStackListInBlockEntity(false))), state, pos);
         }
+        shrinkMatchingItems(itemStackHandler, null, recipe.ingredientCount());
+        cookingTime = 0;
     }
 
     @Override
@@ -72,8 +68,8 @@ public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
         itemStackHandlerChanged();
     }
 
-    public void getRecipeCookingCompletionTime(RecipeHolder<CrateRecipe> holder){
-        cookingCompletionTime = holder.value().getCookingTime();
+    public void getRecipeCookingCompletionTime(CrateRecipe recipe){
+        cookingCompletionTime = recipe.cookingTime();
     }
 
     public boolean isSunny() {
@@ -92,6 +88,8 @@ public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
     @Override
     public void removeComponentsFromTag(CompoundTag tag) {
         tag.remove("ItemStackHandler");
+        tag.remove("CookingTime");
+        tag.remove("CookingCompletionTime");
     }
 
     @Override

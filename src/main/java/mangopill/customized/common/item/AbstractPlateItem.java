@@ -4,6 +4,7 @@ import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.AbstractPlateBlock;
 import mangopill.customized.common.block.entity.AbstractPlateBlockEntity;
+import mangopill.customized.common.block.record.PlateRecord;
 import mangopill.customized.common.block.state.PlateState;
 import mangopill.customized.common.registry.CAdvancementRegistry;
 import mangopill.customized.common.util.CItemStackHandlerHelper;
@@ -38,20 +39,24 @@ import java.util.function.Supplier;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.StringUtil.*;
-import static mangopill.customized.common.util.component.PlateComponentUtil.*;
+import static mangopill.customized.common.util.component.ItemComponentUtil.*;
 
 public abstract class AbstractPlateItem extends BlockItem {
     private final int ingredientInput;
     private final int seasoningInput;
     private final int spiceInput;
-    private final boolean canInputDrive;
+    private final boolean canChangeState;
 
-    protected AbstractPlateItem(Supplier<Block> block, Properties properties, int ingredientInput, int seasoningInput, int spiceInput, boolean canInputDrive) {
+    protected AbstractPlateItem(Supplier<Block> block, Properties properties, int ingredientInput, int seasoningInput, int spiceInput, boolean canChangeState) {
         super(block.get(), properties);
         this.ingredientInput = ingredientInput;
         this.seasoningInput = seasoningInput;
         this.spiceInput = spiceInput;
-        this.canInputDrive = canInputDrive;
+        this.canChangeState = canChangeState;
+    }
+
+    protected <T extends AbstractPlateBlockEntity> AbstractPlateItem(Supplier<Block> block, Properties properties, PlateRecord<T> record) {
+        this(block, properties, record.ingredientInput(), record.seasoningInput(), record.spiceInput(), record.canChangeState());
     }
 
     @Override
@@ -70,25 +75,19 @@ public abstract class AbstractPlateItem extends BlockItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack itemstack = player.getItemInHand(usedHand);
-        if (level.isClientSide) {
-            return InteractionResultHolder.success(itemstack);
-        }
-        if (getConsumptionCount(itemstack) <= 0){
-            return InteractionResultHolder.pass(itemstack);
-        }
+        if (level.isClientSide) return InteractionResultHolder.success(itemstack);
+        if (getConsumptionCount(itemstack) <= 0) return InteractionResultHolder.pass(itemstack);
         return super.use(level, player, usedHand);
     }
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
-        if (level.isClientSide) {
-            return stack;
-        }
+        if (level.isClientSide) return stack;
         int consumptionCount = getConsumptionCount(stack);
         int consumptionCountTotal = getConsumptionCountTotal(stack);
         FoodProperties properties = getFoodProperty(stack);
         plateAdvancement(livingEntity, properties);
-        if(consumptionCount >= 1) {
+        if (consumptionCount >= 1) {
             level.playSound(null, livingEntity, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
             if (livingEntity instanceof ServerPlayer player) {
                 player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
@@ -128,9 +127,7 @@ public abstract class AbstractPlateItem extends BlockItem {
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         Player player = context.getPlayer();
-        if (level.isClientSide || player == null) {
-            return InteractionResult.SUCCESS;
-        }
+        if (level.isClientSide || player == null) return InteractionResult.SUCCESS;
         return player.isShiftKeyDown() ? super.useOn(context) : use(level, player, context.getHand()).getResult();
     }
 
@@ -141,7 +138,7 @@ public abstract class AbstractPlateItem extends BlockItem {
         BlockState state = context.getLevel().getBlockState(pos);
         Level level = context.getLevel();
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (canInputDrive) {
+        if (canChangeState) {
             if (blockEntity instanceof AbstractPlateBlockEntity plateBlockEntity && plateBlockEntity.hasInput()){
                 level.setBlockAndUpdate(pos, state.setValue(AbstractPlateBlock.DRIVE, PlateState.WITH_DRIVE));
             }
@@ -214,13 +211,9 @@ public abstract class AbstractPlateItem extends BlockItem {
 
     public void addUuidTooltip(ItemStack stack, List<Component> tooltipComponents, TooltipContext context) {
         Level level = context.level();
-        if (level == null) {
-            return;
-        }
+        if (level == null) return;
         Player player = level.getPlayerByUUID(getLastInteractPlayerId(stack));
-        if (player == null) {
-            return;
-        }
+        if (player == null) return;
         MutableComponent Uuid = getComponent("item_text." + Customized.MODID + ".last_interact_player_id", player.getDisplayName()).withStyle(ChatFormatting.YELLOW);
         if (getAdvancementHasProgress(stack)) {
             Uuid.append(getComponent("item_text." + Customized.MODID + ".master_of_culinary_arts")).withStyle(ChatFormatting.GOLD);
@@ -255,7 +248,7 @@ public abstract class AbstractPlateItem extends BlockItem {
         return spiceInput;
     }
 
-    public boolean isCanInputDrive() {
-        return canInputDrive;
+    public boolean isCanChangeState() {
+        return canChangeState;
     }
 }

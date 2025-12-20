@@ -39,9 +39,7 @@ public class BrewingBarrelBlock extends BaseEntityBlock implements CSimpleIntera
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() == newState.getBlock()) {
-            return;
-        }
+        if (state.getBlock() == newState.getBlock()) return;
         if (level.getBlockEntity(pos) instanceof BrewingBarrelBlockEntity brewingBarrelBlockEntity) {
             NonNullList<ItemStack> stackNonNullList = NonNullList.create();
             stackNonNullList.addAll(brewingBarrelBlockEntity.getItemStackListInBlockEntity(true));
@@ -54,9 +52,7 @@ public class BrewingBarrelBlock extends BaseEntityBlock implements CSimpleIntera
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        if (level.isClientSide) {
-            return null;
-        }
+        if (level.isClientSide) return null;
         return createTickerHelper(blockEntityType, CBlockEntityTypeRegistry.BREWING_BARREL.get(), BrewingBarrelBlockEntity::cookingTick);
     }
 

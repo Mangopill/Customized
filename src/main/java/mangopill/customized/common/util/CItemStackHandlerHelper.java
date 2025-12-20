@@ -53,9 +53,7 @@ public final class CItemStackHandlerHelper {
                     itemStackHandler.setStackInSlot(i, newItemStackInHand.split(slotLimit));
                 }
             }else {
-                if (!ItemStack.isSameItemSameComponents(stackInSlot, itemStack)){
-                    continue;
-                }
+                if (!ItemStack.isSameItemSameComponents(stackInSlot, itemStack)) continue;
                 if (slotLimit >= stackInSlotCount + itemStackInHandCount){
                     stackInSlot.grow(itemStackInHandCount);
                     itemStack.copyAndClear();
@@ -113,9 +111,7 @@ public final class CItemStackHandlerHelper {
     public static List<ItemStack> getItemStackListInSlot(ItemStackHandler itemStackHandler, int startIndex, int endIndex){
         List<ItemStack> stackList = new ArrayList<>();
         for (int i = startIndex; i < endIndex; ++i) {
-            if (itemStackHandler.getStackInSlot(i).isEmpty()) {
-                continue;
-            }
+            if (itemStackHandler.getStackInSlot(i).isEmpty()) continue;
             stackList.add(itemStackHandler.getStackInSlot(i));
         }
         return stackList;
@@ -171,9 +167,7 @@ public final class CItemStackHandlerHelper {
      * @return The ItemStack with the smallest count, or ItemStack. EMPTY if the list is empty
      */
     public static ItemStack findMinStack(List<ItemStack> stackList) {
-        if (stackList.isEmpty()) {
-            return ItemStack.EMPTY;
-        }
+        if (stackList.isEmpty()) return ItemStack.EMPTY;
         ItemStack minStack = stackList.getFirst();
         for (ItemStack stack : stackList) {
             if (stack.getCount() < minStack.getCount()) {
@@ -200,9 +194,7 @@ public final class CItemStackHandlerHelper {
      */
     public static boolean hasInput(ItemStackHandler itemStackHandler, int endIndex){
         for (int i = 0; i < endIndex; ++i) {
-            if (!itemStackHandler.getStackInSlot(i).isEmpty()) {
-                return true;
-            }
+            if (!itemStackHandler.getStackInSlot(i).isEmpty()) return true;
         }
         return false;
     }
@@ -229,14 +221,10 @@ public final class CItemStackHandlerHelper {
      * @param targetStack The ItemStack to match against
      * @return true if any ItemStack in the list matches the target by item type and components, false otherwise
      */
-    public static boolean containsSameItem(List<ItemStack> itemStackList, ItemStack targetStack) {
-        if (itemStackList.isEmpty() && targetStack.isEmpty()) {
-            return true;
-        }
+    public static boolean containsSameItem(Collection<ItemStack> itemStackList, ItemStack targetStack) {
+        if (itemStackList.isEmpty() && targetStack.isEmpty()) return true;
         for (ItemStack stack : itemStackList) {
-            if (ItemStack.isSameItem(stack, targetStack)) {
-                return true;
-            }
+            if (ItemStack.isSameItem(stack, targetStack)) return true;
         }
         return false;
     }
@@ -248,12 +236,10 @@ public final class CItemStackHandlerHelper {
      * @param itemStackList The list of ItemStacks to analyze
      * @return A list containing the top two items by count, represented as new ItemStacks with aggregated counts
      */
-    public static List<ItemStack> getTopTwoItemsByCount(List<ItemStack> itemStackList) {
+    public static List<ItemStack> getTopTwoItemsByCount(Collection<ItemStack> itemStackList) {
         Map<Item, Integer> itemCountMap = new HashMap<>();
         for (ItemStack itemStack : itemStackList) {
-            if (itemStack == null) {
-                continue;
-            }
+            if (itemStack == null) continue;
             Item item = itemStack.getItem();
             int count = itemStack.getCount();
             itemCountMap.put(item, itemCountMap.getOrDefault(item, 0) + count);
@@ -267,14 +253,9 @@ public final class CItemStackHandlerHelper {
      * @param stackList The list of ItemStacks to sum
      * @return The sum of counts from all non-empty ItemStacks in the list, or 0 if the list is empty
      */
-    public static int getTotalItemCount(List<ItemStack> stackList) {
-        if (stackList.isEmpty()) {
-            return 0;
-        }
-        return stackList.stream()
-                .filter(stack -> !stack.isEmpty())
-                .mapToInt(ItemStack::getCount)
-                .sum();
+    public static int getTotalItemCount(Collection<ItemStack> stackList) {
+        if (stackList.isEmpty()) return 0;
+        return stackList.stream().filter(stack -> !stack.isEmpty()).mapToInt(ItemStack::getCount).sum();
     }
 
     /**
@@ -289,7 +270,7 @@ public final class CItemStackHandlerHelper {
      * @param state The block state at the spawn position (can be used for direction calculation)
      * @param pos The position to spawn entities at
      */
-    public static void spawnUsingConvertsTo(Level level, List<ItemStack> stackList, BlockState state, BlockPos pos) {
+    public static void spawnUsingConvertsTo(Level level, Collection<ItemStack> stackList, BlockState state, BlockPos pos) {
         List<ItemStack> spawnList = stackList.stream().flatMap(itemStack -> {
             Optional<ItemStack> optionalItem = Optional.ofNullable(itemStack.getFoodProperties(null))
                     .flatMap(FoodProperties::usingConvertsTo);
@@ -312,9 +293,7 @@ public final class CItemStackHandlerHelper {
      * @param uuid Collectible entity
      */
     public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3 pos, @Nullable UUID uuid) {
-        if (stack.isEmpty()) {
-            return;
-        }
+        if (stack.isEmpty()) return;
         Direction direction = Direction.UP;
         if (state != null) {
             direction = state.hasProperty(BlockStateProperties.FACING)
@@ -333,14 +312,35 @@ public final class CItemStackHandlerHelper {
         stack.copyAndClear();
     }
 
+    /**
+     * Spawns an item entity in the world at the specified integer position.
+     * <p>
+     * This method converts the integer position to a vector position and delegates to
+     * the main spawn method. See the main method for detailed implementation details.
+     * @see #spawnItemEntity(Level, ItemStack, BlockState, Vec3, UUID)
+     */
     public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3i pos, @Nullable UUID uuid) {
         spawnItemEntity(level, stack, state, Vec3.atLowerCornerOf(pos), uuid);
     }
 
+    /**
+     * Spawns an item entity in the world without entity targeting.
+     * <p>
+     * This method delegates to the main spawn method with a null UUID. See the main method
+     * for detailed implementation details.
+     * @see #spawnItemEntity(Level, ItemStack, BlockState, Vec3, UUID)
+     */
     public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3 pos) {
         spawnItemEntity(level, stack, state, pos, null);
     }
 
+    /**
+     * Spawns an item entity in the world at an integer position without entity targeting.
+     * <p>
+     * This method converts the integer position to a vector position and delegates to
+     * the main spawn method with a null UUID. See the main method for detailed implementation details.
+     * @see #spawnItemEntity(Level, ItemStack, BlockState, Vec3, UUID)
+     */
     public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3i pos) {
         spawnItemEntity(level, stack, state, Vec3.atLowerCornerOf(pos), null);
     }
@@ -356,13 +356,9 @@ public final class CItemStackHandlerHelper {
      */
     public static void shuffleItemStackHandlerInRange(ItemStackHandler itemStackHandler, int startIndex, int endIndex) {
         int slotCount = itemStackHandler.getSlots();
-        if (startIndex < 0 || endIndex > slotCount || startIndex >= endIndex) {
-            return;
-        }
+        if (startIndex < 0 || endIndex > slotCount || startIndex >= endIndex) return;
         int rangeSize = endIndex - startIndex;
-        if (rangeSize == 1) {
-            return;
-        }
+        if (rangeSize == 1) return;
         Random random = new Random();
         for (int i = endIndex - 1; i > startIndex; i--) {
             int j = startIndex + random.nextInt(i - startIndex + 1);
@@ -420,9 +416,18 @@ public final class CItemStackHandlerHelper {
      * @param decrement The amount to reduce the stack size by
      */
     public static void shrinkItemStack(ItemStack itemStack, LivingEntity entity, int decrement) {
-        if (entity instanceof Player player && player.isCreative()) {
-            return;
-        }
+        if (entity instanceof Player player && player.isCreative()) return;
+        shrinkItemStack(itemStack, decrement);
+    }
+
+    /**
+     * Reduces the stack size of an item by the specified amount
+     * <p>
+     * @param itemStack The item stack to be shrunk
+     * @param decrement The amount to reduce the stack size by
+     */
+    public static void shrinkItemStack(ItemStack itemStack, int decrement) {
+        if (itemStack.isEmpty()) return;
         itemStack.shrink(decrement);
     }
 
@@ -434,9 +439,7 @@ public final class CItemStackHandlerHelper {
      * @param decrement The amount of damage to apply to the item
      */
     public static void hurtAndBreakItemStack(ItemStack itemStack, LivingEntity entity, int decrement) {
-        if (entity instanceof Player player && player.isCreative()) {
-            return;
-        }
+        if ((entity instanceof Player player && player.isCreative()) || itemStack.isEmpty()) return;
         itemStack.hurtAndBreak(decrement, entity, entity.getEquipmentSlotForItem(itemStack));
     }
 
@@ -479,7 +482,7 @@ public final class CItemStackHandlerHelper {
             boolean matches = targetStack == null ? !stack.isEmpty() : (!stack.isEmpty() && ItemStack.isSameItem(stack, targetStack));
             if (matches) {
                 int remove = Math.min(stack.getCount(), remaining);
-                stack.shrink(remove);
+                shrinkItemStack(stack, remove);
                 remaining -= remove;
             }
         }

@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.*;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -30,9 +29,7 @@ public final class TooltipUtil {
     public static void propertyValueTooltip(List<Component> components, ItemStack stack, Level level) {
         PropertyValue propertyValue = getPropertyValue(stack, level);
         FoodProperties foodProperty = getFoodPropertyByPropertyValue(level, List.of(stack), false);
-        if (propertyValue.isEmpty()) {
-            return;
-        }
+        if (propertyValue.isEmpty()) return;
         if (!isCtrlKeyPressed() && canShow()) {
             components.add(getComponent("tooltip." + Customized.MODID + ".is_ctrl_key_pressed")
                     .withStyle(ChatFormatting.DARK_GRAY));
@@ -41,19 +38,17 @@ public final class TooltipUtil {
         if (SHOW_NUTRIENT_VALUE_TOOLTIP.get()) {
             addFoodCategory(components, stack);
             propertyValue.getValue().forEach((key, value) -> {
-                List<RecipeHolder<NutrientCategoryRecipe>> recipes = getNutrientCategoryByName(level, key);
+                List<NutrientCategoryRecipe> recipes = getNutrientCategoryByName(level, key);
                 if (!recipes.isEmpty() && recipes.getFirst() != null) {
                     Component propertyComponent =
                             getComponent("tooltip." + Customized.MODID + ".property_value",
                                     getComponent("property." + Customized.MODID + ".nutrient_category." + key), value)
-                                    .withColor(recipes.getFirst().value().getColorWithAlpha()).append("%");
+                                    .withColor(recipes.getFirst().getColorWithAlpha()).append("%");
                     components.add(propertyComponent);
                 }
             });
         }
-        if (foodProperty.equals(FoodValue.EMPTY)) {
-            return;
-        }
+        if (foodProperty.equals(FoodValue.EMPTY)) return;
         if (SHOW_ESTIMATED_VALUE_TOOLTIP.get()) {
             MutableComponent estimatedComponent = getComponent("tooltip." + Customized.MODID + ".estimated_value",
                     getComponent("estimated." + Customized.MODID + ".nutritional_value"),

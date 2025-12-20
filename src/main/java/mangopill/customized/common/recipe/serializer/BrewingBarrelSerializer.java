@@ -14,10 +14,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 public class BrewingBarrelSerializer implements RecipeSerializer<BrewingBarrelRecipe> {
     public static final MapCodec<BrewingBarrelRecipe> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredient").xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(BrewingBarrelRecipe::getIngredientItem),
-                    Ingredient.CODEC_NONEMPTY.optionalFieldOf("container", Ingredient.EMPTY).forGetter(BrewingBarrelRecipe::getContainerItem),
-                    ItemStack.STRICT_CODEC.fieldOf("result").forGetter(BrewingBarrelRecipe::getOutput),
-                    Codec.INT.optionalFieldOf("time", 200).forGetter(BrewingBarrelRecipe::getCookingTime)
+                    Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredient").xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(BrewingBarrelRecipe::ingredientItem),
+                    Ingredient.CODEC_NONEMPTY.optionalFieldOf("container", Ingredient.EMPTY).forGetter(BrewingBarrelRecipe::containerItem),
+                    ItemStack.STRICT_CODEC.fieldOf("result").forGetter(BrewingBarrelRecipe::output),
+                    Codec.INT.optionalFieldOf("time", 200).forGetter(BrewingBarrelRecipe::cookingTime)
             ).apply(instance, BrewingBarrelRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, BrewingBarrelRecipe> STREAM_CODEC = StreamCodec.of(BrewingBarrelSerializer::toNetwork, BrewingBarrelSerializer::fromNetwork);
@@ -43,12 +43,12 @@ public class BrewingBarrelSerializer implements RecipeSerializer<BrewingBarrelRe
     }
 
     private static void toNetwork(RegistryFriendlyByteBuf buffer, BrewingBarrelRecipe recipe) {
-        buffer.writeVarInt(recipe.getIngredientItem().size());
-        for (Ingredient ingredient : recipe.getIngredientItem()) {
+        buffer.writeVarInt(recipe.ingredientItem().size());
+        for (Ingredient ingredient : recipe.ingredientItem()) {
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
         }
-        Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.getContainerItem());
-        ItemStack.STREAM_CODEC.encode(buffer, recipe.getOutput());
-        buffer.writeVarInt(recipe.getCookingTime());
+        Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.containerItem());
+        ItemStack.STREAM_CODEC.encode(buffer, recipe.output());
+        buffer.writeVarInt(recipe.cookingTime());
     }
 }

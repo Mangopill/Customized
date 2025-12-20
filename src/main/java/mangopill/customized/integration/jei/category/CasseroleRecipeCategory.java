@@ -35,7 +35,7 @@ public class CasseroleRecipeCategory extends CRecipeCategory<CasseroleRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, CasseroleRecipe recipe, IFocusGroup focuses) {
-        setPotRecipe(builder, recipe, SLOT_SIZE, PotRecord.CASSEROLE.ingredientCount(), PotRecord.CASSEROLE.seasoningCount(), 4,
+        setPotRecipe(builder, recipe, SLOT_SIZE, PotRecord.CASSEROLE.ingredientCount(), PotRecord.CASSEROLE.seasoningCount(), PotRecord.CASSEROLE.spiceCount(), 4,
                 1, 1, 1, 58, 91, 70, 91, 45);
         setFluidRecipe(builder, recipe, 49, 51, 10, 10, fluidOverlay, -1, -1);
     }

@@ -1,7 +1,7 @@
 package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
-import mangopill.customized.common.block.record.PlateRegistryRecord;
+import mangopill.customized.common.block.record.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -31,7 +31,7 @@ public class BakingPanBlock extends AbstractPlateBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return PlateRegistryRecord.BAKING_PAN.type().create(pos, state);
+        return PlateRecord.BAKING_PAN.type().get().create(pos, state);
     }
 
     @Override

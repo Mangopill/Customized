@@ -3,7 +3,9 @@ package mangopill.customized.common.entity.projectile;
 import mangopill.customized.common.item.KnifeItem;
 import mangopill.customized.common.registry.*;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -22,22 +24,32 @@ import static mangopill.customized.common.registry.CDamageTypeRegistry.*;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.addItemToPlayerNotCreative;
 
 public class KnifeEntity extends AbstractArrow {
+    private static final EntityDataAccessor<ItemStack> CLIENT_ITEM = SynchedEntityData.defineId(KnifeEntity.class, EntityDataSerializers.ITEM_STACK);
 
     public KnifeEntity(EntityType<? extends AbstractArrow> entityType, Level level) {
         super(entityType, level);
+        this.entityData.set(CLIENT_ITEM, getPickupItemStackOrigin());
     }
 
-    public KnifeEntity(Level level, double x, double y, double z, ItemStack pickupItemStack) {
-        super(CEntityTypeRegistry.KNIFE.get(), x, y, z, level, pickupItemStack, null);
+    public KnifeEntity(Level level, double x, double y, double z, ItemStack stack) {
+        super(CEntityTypeRegistry.KNIFE.get(), x, y, z, level, stack, null);
+        this.entityData.set(CLIENT_ITEM, stack);
     }
 
     public KnifeEntity(Level level, LivingEntity owner, ItemStack stack) {
         super(CEntityTypeRegistry.KNIFE.get(), owner, level, stack, null);
+        this.entityData.set(CLIENT_ITEM, stack);
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(CLIENT_ITEM, getDefaultPickupItem());
     }
 
     @Override
     public ItemStack getWeaponItem() {
-        return getPickupItem();
+        return getPickupItemStackOrigin();
     }
 
     @Override
@@ -49,18 +61,14 @@ public class KnifeEntity extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         Level level = level();
+        if (!(level instanceof ServerLevel serverlevel)) return;
         Entity owner = getOwner();
-        ItemStack itemStack = getPickupItem();
+        ItemStack itemStack = getPickupItemStackOrigin();
         float damage;
-        if (!(owner instanceof LivingEntity shooter)) {
-            return;
-        }
+        if (!(owner instanceof LivingEntity shooter)) return;
         damage = (float) shooter.getAttributeValue(Attributes.ATTACK_DAMAGE);
-        if (!(level instanceof ServerLevel serverlevel)) {
-            return;
-        }
         damage = EnchantmentHelper.modifyDamage(serverlevel, itemStack, entity, getDamageSource(level, KNIFE_ENTITY, this, owner), damage);
-        EnchantmentHelper.doPostAttackEffectsWithItemSource(serverlevel, entity, getDamageSource(level, KNIFE_ENTITY, this, owner), getWeaponItem());
+        EnchantmentHelper.doPostAttackEffectsWithItemSource(serverlevel, entity, getDamageSource(level, KNIFE_ENTITY, this, owner), itemStack);
         int i = entity.getRemainingFireTicks();
         if (isOnFire() && entity.getType() != EntityType.ENDERMAN) {
             entity.igniteForSeconds(5.0F);
@@ -104,6 +112,16 @@ public class KnifeEntity extends AbstractArrow {
     }
 
     @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+    }
+
+    @Override
     public void tickDespawn() {
         if (pickup != AbstractArrow.Pickup.ALLOWED) {
             super.tickDespawn();
@@ -117,11 +135,15 @@ public class KnifeEntity extends AbstractArrow {
 
     @Override
     public Component getName() {
-        return getPickupItem().getDisplayName();
+        return getItemClient().getDisplayName();
     }
 
     @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return SoundEvents.EMPTY;
+    }
+
+    public ItemStack getItemClient() {
+        return entityData.get(CLIENT_ITEM);
     }
 }

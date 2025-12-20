@@ -7,17 +7,16 @@ import net.minecraft.network.codec.StreamCodec;
 import java.util.*;
 
 public class PropertyValue {
-    private final Map<String, Float> valueMap = new HashMap<>();
-
-    public static final Codec<PropertyValue> CODEC = Codec.unboundedMap(Codec.STRING, Codec.FLOAT).xmap(PropertyValue::new, propertyValue -> propertyValue.valueMap);
+    public static final Codec<PropertyValue> CODEC = Codec.unboundedMap(Codec.STRING, Codec.FLOAT).xmap(PropertyValue::new, PropertyValue::getValue);
     public static final StreamCodec<FriendlyByteBuf, PropertyValue> STREAM_CODEC = StreamCodec.of(PropertyValue::toNetwork, PropertyValue::fromNetwork);
+    private final Map<String, Float> valueMap = new HashMap<>();
 
     public PropertyValue() {
     }
 
     public PropertyValue(Map<String, Float> valueMap) {
         for (Map.Entry<String, Float> entry : valueMap.entrySet()) {
-            this.put(entry.getKey(), entry.getValue());
+            put(entry.getKey(), entry.getValue());
         }
     }
 

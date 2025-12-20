@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.*;
 
+import static mangopill.customized.common.util.RecipeUtil.*;
 import static mangopill.customized.common.util.StringUtil.*;
 import static mangopill.customized.integration.jei.util.JeiUtil.*;
 
@@ -34,8 +35,7 @@ public class CuttingBoardRecipeCategory extends CRecipeCategory<CuttingBoardReci
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, CuttingBoardRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 31, 16).addIngredients(recipe.cuttingItem());
-        List<ItemStack> toolStacks = recipe.toolItem().stream().flatMap(ingredient -> Arrays.stream(ingredient.getItems())).toList();
-        builder.addSlot(RecipeIngredientRole.CATALYST, 49, 4).addItemStacks(toolStacks);
+        builder.addSlot(RecipeIngredientRole.CATALYST, 49, 4).addIngredients(mergeIngredients(recipe.toolItem()));
         builder.addSlot(RecipeIngredientRole.OUTPUT, 81, 36).addItemStacks(recipe.output());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 100, 17).addItemStacks(recipe.probabilityOutput())
                 .addRichTooltipCallback((s, t) -> t.add(getComponent("jei.gui." + Customized.MODID + ".probability",

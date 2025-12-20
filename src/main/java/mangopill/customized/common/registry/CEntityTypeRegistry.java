@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class CEntityTypeRegistry {
+public final class CEntityTypeRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY = DeferredRegister.create(Registries.ENTITY_TYPE, Customized.MODID);
 
     public static final Supplier<EntityType<KnifeEntity>> KNIFE = ENTITY.register("knife", () -> (

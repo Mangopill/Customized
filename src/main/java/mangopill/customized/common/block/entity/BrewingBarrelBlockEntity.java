@@ -34,45 +34,38 @@ public class BrewingBarrelBlockEntity extends CBasicCookingBlockEntity<BrewingBa
         super(CBlockEntityTypeRegistry.BREWING_BARREL.get(), pos, blockState, 4, 1, RecipeManager.createCheck(CRecipeRegistry.BREWING_BARREL.get()));
         this.inputAndOutputHandler = new BrewingBarrelItemHandler(this, itemStackHandler);
         this.containerItem = Ingredient.EMPTY;
-        this.lastInteractPlayerId = UUIDRecord.NULL.uuid();
+        this.lastInteractPlayerId = UUIDRecord.EMPTY.uuid();
     }
 
     @Override
-    protected void cookRecipe(Level level, RecipeHolder<BrewingBarrelRecipe> holder, BlockPos pos, BlockState state) {
+    protected void cookRecipe(Level level, BrewingBarrelRecipe recipe, BlockPos pos, BlockState state) {
         ++cookingTime;
-        getRecipeCookingCompletionTime(holder);
-        if (cookingTime < cookingCompletionTime) {
+        getRecipeCookingCompletionTime(recipe);
+        if (cookingTime < cookingCompletionTime) return;
+        Block block = level.getBlockState(pos).getBlock();
+        if (!(block instanceof BrewingBarrelBlock)) return;
+        if (state.getValue(BrewingBarrelBlock.PROGRESS) < 12){
+            clearCookingTimeAndUpdate(pos, state, state.getValue(BrewingBarrelBlock.PROGRESS) + 1);
             return;
         }
-        Block block = level.getBlockState(pos).getBlock();
-        if (block instanceof BrewingBarrelBlock) {
-            if (state.getValue(BrewingBarrelBlock.PROGRESS) < 12){
-                this.clearCookingTimeAndUpdate(pos, state, state.getValue(BrewingBarrelBlock.PROGRESS) + 1);
-                return;
-            }
-            if (!containsSameItem(List.of(containerItem.getItems()), itemStackHandler.getStackInSlot(inputSlot))) {
-                return;
-            }
-            ItemStack resultStack = holder.value().getResultItem(this.level.registryAccess()).copy();
-            spawnItemEntity(level, resultStack.copy(), state, pos);
-            for (int i = 0; i < inputSlot + outputSlot; ++i) {
-                ItemStack slotStack = itemStackHandler.getStackInSlot(i);
-                spawnUsingConvertsTo(level, List.of(slotStack), state, pos);
-                if (!slotStack.isEmpty()){
-                    slotStack.shrink(1);
-                }
-            }
-            if (level.getPlayerByUUID(lastInteractPlayerId) instanceof ServerPlayer serverPlayer) {
-                CAdvancementRegistry.USE_BREWING_BARREL.get().trigger(serverPlayer);
-            }
-            clearCookingTimeAndUpdate(pos, state, 0);
-            containerItem = Ingredient.EMPTY;
+        if (!containsSameItem(List.of(containerItem.getItems()), itemStackHandler.getStackInSlot(inputSlot))) return;
+        ItemStack resultStack = recipe.getResultItem(level.registryAccess()).copy();
+        spawnItemEntity(level, resultStack.copy(), state, pos);
+        for (int i = 0; i < inputSlot + outputSlot; ++i) {
+            ItemStack slotStack = itemStackHandler.getStackInSlot(i);
+            spawnUsingConvertsTo(level, List.of(slotStack), state, pos);
+            shrinkItemStack(slotStack, 1);
         }
+        if (level.getPlayerByUUID(lastInteractPlayerId) instanceof ServerPlayer serverPlayer) {
+            CAdvancementRegistry.USE_BREWING_BARREL.get().trigger(serverPlayer);
+        }
+        clearCookingTimeAndUpdate(pos, state, 0);
+        containerItem = Ingredient.EMPTY;
     }
 
     @Override
     protected boolean canCookRecipe(BrewingBarrelRecipe recipe, RecipeWrapper recipeWrapper) {
-        containerItem = recipe.getContainerItem();
+        containerItem = recipe.containerItem();
         return super.canCookRecipe(recipe, recipeWrapper);
     }
 
@@ -103,8 +96,8 @@ public class BrewingBarrelBlockEntity extends CBasicCookingBlockEntity<BrewingBa
         itemStackHandlerChanged();
     }
 
-    public void getRecipeCookingCompletionTime(RecipeHolder<BrewingBarrelRecipe> holder){
-        cookingCompletionTime = holder.value().getCookingTime();
+    public void getRecipeCookingCompletionTime(BrewingBarrelRecipe recipe){
+        cookingCompletionTime = recipe.cookingTime();
     }
 
     @Override
@@ -121,13 +114,6 @@ public class BrewingBarrelBlockEntity extends CBasicCookingBlockEntity<BrewingBa
         super.saveAdditional(compound, registries);
         putIngredientTag(compound, containerItem);
         compound.putUUID("LastInteractPlayerId", lastInteractPlayerId);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, registries);
-        return tag;
     }
 
     public IItemHandler getInputAndOutputHandler() {

@@ -2,17 +2,18 @@
 	"credit": "Made with Blockbench",
 	"parent": "builtin/entity",
 	"textures": {
-		"0": "customized:block/soup_bowl",
-		"1": "minecraft:block/water_still",
-		"particle": "customized:block/soup_bowl"
+		"0": "customized:block/soup_bowl_bottom",
+		"1": "customized:block/soup_bowl_side",
+		"2": "minecraft:block/water_still",
+		"particle": "customized:block/soup_bowl_bottom"
 	},
 	"display": {
 		"thirdperson_righthand": {
-			"translation": [0, 3, 1],
+			"translation": [0, 4.25, 1],
 			"scale": [0.55, 0.55, 0.55]
 		},
 		"thirdperson_lefthand": {
-			"translation": [0, 3, 1],
+			"translation": [0, 4.25, 1],
 			"scale": [0.55, 0.55, 0.55]
 		},
 		"firstperson_righthand": {
@@ -22,8 +23,8 @@
 			"translation": [0, 7.5, 0]
 		},
 		"ground": {
-			"translation": [0, 5, 0],
-			"scale": [0.5, 0.5, 0.5]
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
 			"rotation": [38.02, 1.35, 11.9],
@@ -33,8 +34,7 @@
 			"translation": [0, 14.25, 0]
 		},
 		"fixed": {
-			"rotation": [-90, 0, 0],
-			"translation": [0, 0, -7]
+			"scale": [0.5, 0.5, 0.5]
 		}
 	}
 }

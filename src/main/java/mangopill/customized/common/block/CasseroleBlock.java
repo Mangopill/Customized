@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -87,11 +86,6 @@ public class CasseroleBlock extends AbstractPotBlock{
     @Override
     public BlockEntityType<? extends AbstractPotBlockEntity> setBlockEntity() {
         return PotRecord.CASSEROLE.entityType();
-    }
-
-    @Override
-    public ItemStack setLidItem() {
-        return PotRecord.CASSEROLE.plateItem().getDefaultInstance();
     }
 
     @Override

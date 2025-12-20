@@ -26,11 +26,13 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.*;
 
+import static mangopill.customized.common.util.RecipeUtil.*;
 import static mangopill.customized.common.util.StringUtil.*;
 
 public final class JeiUtil {
     private JeiUtil() {
     }
+
     public static final int SLOT_SIZE = 16 + 2;
     public static final int TICKS_PER_CYCLE = 200;
     public static final IIngredientType<NutrientCategoryRecipe> NUTRIENT_INGREDIENT = () -> NutrientCategoryRecipe.class;
@@ -42,8 +44,8 @@ public final class JeiUtil {
     public static final RecipeType<CrateRecipe> CRATE = RecipeType.create(Customized.MODID, "crate", CrateRecipe.class);
     public static final RecipeType<CuttingBoardRecipe> CUTTING_BOARD = RecipeType.create(Customized.MODID, "cutting_board", CuttingBoardRecipe.class);
 
-    public static<I extends RecipeInput, T extends Recipe<I>>  List<T> getRecipeList(net.minecraft.world.item.crafting.RecipeType<T> recipeType) {
-        return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(recipeType).stream().map(RecipeHolder::value).toList();
+    public static <I extends RecipeInput, T extends Recipe<I>> List<T> getRecipeList(net.minecraft.world.item.crafting.RecipeType<T> recipeType) {
+        return getAllRecipeList(recipeType, Minecraft.getInstance().level);
     }
 
     public static boolean canAddTooltip(double mouseX, double mouseY, double xStart, double yStart, double width, double height) {
@@ -51,7 +53,7 @@ public final class JeiUtil {
     }
 
     public static void setPotRecipe(IRecipeLayoutBuilder builder, AbstractPotRecipe recipe,
-                                    int slotSize, int ingredientCount, int seasoningCount, int lineSpacing,
+                                    int slotSize, int ingredientCount, int seasoningCount, int spiceCount, int lineSpacing,
                                     int ingredientXStart, int ingredientYStart,
                                     int spiceXStart, int spiceYStart,
                                     int containerXStart, int containerYStart,
@@ -60,8 +62,8 @@ public final class JeiUtil {
                 ingredientXStart, ingredientYStart, slotSize, 1, ingredientCount, 0, null);
         addIngredientSlots(builder, recipe.getSeasoningItem(), RecipeIngredientRole.INPUT,
                 ingredientXStart, slotSize + lineSpacing + ingredientYStart, slotSize, 1, seasoningCount, 0, null);
-        List<ItemStack> spiceStacks = recipe.getSpiceItem().stream().flatMap(ingredient -> Arrays.stream(ingredient.getItems())).toList();
-        builder.addSlot(RecipeIngredientRole.INPUT, spiceXStart, spiceYStart).addItemStacks(spiceStacks);
+        addIngredientSlots(builder, recipe.getSpiceItem(), RecipeIngredientRole.INPUT,
+                spiceXStart, spiceYStart, slotSize, 1, spiceCount, 0, null);
         builder.addSlot(RecipeIngredientRole.INPUT, containerXStart, containerYStart).addIngredients(recipe.getContainerItem());
         builder.addSlot(RecipeIngredientRole.OUTPUT, outputXStart, outputYStart).addItemStack(recipe.getOutput());
     }
@@ -107,18 +109,6 @@ public final class JeiUtil {
                                           @Nullable BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
         addCustomIngredientSlots(builder, ingredients.size(), role, startX, startY, slotSize, rows, cols, spacing, (s, i) -> {
             s.addIngredients(ingredients.get(i));
-            if (slotConfigurator != null) {
-                slotConfigurator.accept(s, i);
-            }
-        });
-    }
-
-    public static void addItemStackSlots(IRecipeLayoutBuilder builder, List<ItemStack> itemStacks,
-                                         RecipeIngredientRole role, int startX, int startY,
-                                         int slotSize, int rows, int cols, int spacing,
-                                         @Nullable BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
-        addCustomIngredientSlots(builder, itemStacks.size(), role, startX, startY, slotSize, rows, cols, spacing, (s, i) -> {
-            s.addItemStack(itemStacks.get(i));
             if (slotConfigurator != null) {
                 slotConfigurator.accept(s, i);
             }
@@ -174,9 +164,7 @@ public final class JeiUtil {
     public static void registerJeiInfoForItemTag(IRecipeRegistration registration, TagKey<Item> itemTag) {
         List<ItemStack> stackList = BuiltInRegistries.ITEM.getTag(itemTag).stream().flatMap(HolderSet.ListBacked::stream)
                 .map(holder -> new ItemStack(holder.value())).toList();
-        if (stackList.isEmpty()) {
-            return;
-        }
+        if (stackList.isEmpty()) return;
         Component description = getComponent("jei.info." + Customized.MODID + "." + itemTag.location().getPath().replace('/', '.'));
         registration.addIngredientInfo(stackList, VanillaTypes.ITEM_STACK, description);
     }

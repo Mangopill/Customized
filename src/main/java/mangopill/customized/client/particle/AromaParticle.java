@@ -5,6 +5,7 @@ import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+
 public class AromaParticle extends TextureSheetParticle {
 
     public AromaParticle(ClientLevel level, double x, double y, double z, double ySpeed) {

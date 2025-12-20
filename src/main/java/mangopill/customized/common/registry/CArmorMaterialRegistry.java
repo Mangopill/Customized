@@ -11,10 +11,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.EnumMap;
-import java.util.List;
+import java.util.*;
 
-public class CArmorMaterialRegistry {
+public final class CArmorMaterialRegistry {
     public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIAL = DeferredRegister.create(Registries.ARMOR_MATERIAL, Customized.MODID);
 
     public static final Holder<ArmorMaterial> CHEF =
@@ -29,7 +28,7 @@ public class CArmorMaterialRegistry {
                     20,
                     Holder.direct(SoundEvents.WOOL_BREAK),
                     () -> Ingredient.of(Tags.Items.STRINGS),
-                    List.of(),
+                    new ArrayList<>(),
                     1.0F,
                     0.0F
             ));
@@ -45,7 +44,7 @@ public class CArmorMaterialRegistry {
                     20,
                     Holder.direct(SoundEvents.WOOL_BREAK),
                     () -> Ingredient.of(Tags.Items.STRINGS),
-                    List.of(),
+                    new ArrayList<>(),
                     4.0F,
                     0.1F
             ));

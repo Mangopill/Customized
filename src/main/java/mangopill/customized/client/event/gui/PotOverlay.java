@@ -33,9 +33,7 @@ public class PotOverlay implements LayeredDraw.Layer {
     @Override
     public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         AbstractPotBlockEntity pot = getTargetPot();
-        if (pot == null || !pot.hasInput() || !POT_OVERLAY.get()) {
-            return;
-        }
+        if (pot == null || !pot.hasInput() || !POT_OVERLAY.get()) return;
         int screenWidth = guiGraphics.guiWidth();
         int screenHeight = guiGraphics.guiHeight();
         int elementWidth = 128;

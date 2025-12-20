@@ -28,8 +28,7 @@ public class DirtParticle extends TextureSheetParticle {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class DirtParticleProvider implements ParticleProvider<SimpleParticleType>
-    {
+    public static class DirtParticleProvider implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteSet;
 
         public DirtParticleProvider(SpriteSet spriteSet) {

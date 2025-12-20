@@ -55,12 +55,21 @@
   "item.customized.ginger": "姜",
   "block.customized.ginger_crop": "姜作物",
 
+  "item.customized.soup_bucket": "汤桶",
+  "block.customized.soup": "汤",
+
   "block.customized.casserole": "砂锅",
   "block.customized.roaster": "烘烤炉",
+  "block.customized.wok": "炒锅",
+  "block.customized.steamer": "蒸锅",
   "block.customized.soup_bowl": "汤碗",
   "block.customized.soup_bowl_food": "炖汤",
   "block.customized.baking_pan": "烤盘",
   "block.customized.baking_pan_food": "烤菜",
+  "block.customized.dish": "碟子",
+  "block.customized.dish_food": "炒菜",
+  "block.customized.platter": "蒸盘",
+  "block.customized.platter_food": "蒸菜",
   "block.customized.brewing_barrel": "酿造桶",
   "block.customized.crate": "板条箱",
   "block.customized.cutting_board": "砧板",
@@ -69,6 +78,9 @@
   "item.customized.netherite_chef_hat": "下界合金厨师帽",
 
   "item.customized.culinary_masters_hat": "膳食大师帽",
+
+  "fluid_type.customized.soup": "汤",
+  "fluid_type.customized.flowing_soup": "汤",
 
   "effect.customized.iced": "冰镇",
   "effect.customized.warm_stomach": "暖胃",

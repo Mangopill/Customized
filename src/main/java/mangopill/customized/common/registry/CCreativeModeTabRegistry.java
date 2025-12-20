@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 import static mangopill.customized.common.util.StringUtil.*;
 
-public class CCreativeModeTabRegistry {
+public final class CCreativeModeTabRegistry {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Customized.MODID);
 
     public static final Supplier<CreativeModeTab> CREATIVE_TAB = CREATIVE_MODE_TAB.register(Customized.MODID,

@@ -2,8 +2,9 @@
 	"credit": "Made with Blockbench",
 	"parent": "builtin/entity",
 	"textures": {
-		"0": "customized:block/baking_pan",
-		"particle": "customized:block/baking_pan"
+		"0": "customized:block/baking_pan_base",
+		"1": "customized:block/baking_pan_extra",
+		"particle": "customized:block/baking_pan_base"
 	},
 	"display": {
 		"thirdperson_righthand": {

@@ -2,6 +2,7 @@ package mangopill.customized.common.block.entity;
 
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.AbstractPlateBlock;
+import mangopill.customized.common.block.record.PlateRecord;
 import mangopill.customized.common.block.state.PlateState;
 import mangopill.customized.common.item.AbstractPlateItem;
 import mangopill.customized.common.registry.CDataComponentRegistry;
@@ -57,7 +58,11 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         this.allSlot = ingredientInput + seasoningInput + spiceInput;
         this.itemStackHandler = createItemStackHandler(allSlot);
         this.initialItemStackHandler = createItemStackHandler(allSlot);
-        this.lastInteractPlayerId = UUIDRecord.NULL.uuid();
+        this.lastInteractPlayerId = UUIDRecord.EMPTY.uuid();
+    }
+
+    protected <T extends AbstractPlateBlockEntity> AbstractPlateBlockEntity(BlockPos pos, BlockState blockState, PlateRecord<T> record) {
+        this(record.type().get(), pos, blockState, record.ingredientInput(), record.seasoningInput(), record.spiceInput());
     }
 
     @Override
@@ -78,35 +83,33 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
     }
 
     public void eatFood(Level level, Player player, BlockState state, BlockPos pos) {
-        if(consumptionCount >= 1) {
-            level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
-            player.getFoodData().eat(foodProperty);
-            addEffect(player, foodProperty);
-            AbstractPlateItem.plateAdvancement(player, foodProperty);
-            if (consumptionCount > 1){
-                reduceItemStackCountByDivision(itemStackHandler, initialItemStackHandler, consumptionCountTotal);
-            } else {
-                clearAllSlot(itemStackHandler);
-                clearAllSlot(initialItemStackHandler);
-                clearFoodPropertyAndCountTotal();
-                level.setBlockAndUpdate(pos, state.setValue(AbstractPlateBlock.DRIVE, PlateState.WITHOUT_DRIVE));
-            }
-            --consumptionCount;
-            player.gameEvent(GameEvent.EAT);
-            itemStackHandlerChanged();
+        if (consumptionCount < 1) return;
+        level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
+        player.getFoodData().eat(foodProperty);
+        addEffect(player, foodProperty);
+        AbstractPlateItem.plateAdvancement(player, foodProperty);
+        if (consumptionCount > 1){
+            reduceItemStackCountByDivision(itemStackHandler, initialItemStackHandler, consumptionCountTotal);
+        } else {
+            clearAllSlot(itemStackHandler);
+            clearAllSlot(initialItemStackHandler);
+            clearFoodPropertyAndCountTotal();
+            level.setBlockAndUpdate(pos, state.setValue(AbstractPlateBlock.DRIVE, PlateState.WITHOUT_DRIVE));
         }
+        --consumptionCount;
+        player.gameEvent(GameEvent.EAT);
+        itemStackHandlerChanged();
     }
 
     public static void addEffect(LivingEntity livingEntity, FoodProperties foodProperties) {
-        if (!livingEntity.level().isClientSide()) {
-            for (FoodProperties.PossibleEffect foodproperties$possibleeffect : foodProperties.effects()) {
-                if (livingEntity.getRandom().nextFloat() < foodproperties$possibleeffect.probability()) {
-                    livingEntity.addEffect(foodproperties$possibleeffect.effect());
-                }
+        if (livingEntity.level().isClientSide()) return;
+        for (FoodProperties.PossibleEffect foodproperties$possibleeffect : foodProperties.effects()) {
+            if (livingEntity.getRandom().nextFloat() < foodproperties$possibleeffect.probability()) {
+                livingEntity.addEffect(foodproperties$possibleeffect.effect());
             }
-            if (foodProperties.equals(FoodValue.INEDIBLE)) {
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 500, 1));
-            }
+        }
+        if (foodProperties.equals(FoodValue.INEDIBLE)) {
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 500, 1));
         }
     }
 
@@ -174,15 +177,14 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder component) {
         super.collectImplicitComponents(component);
-        if (hasInput()) {
-            component.set(CDataComponentRegistry.CONSUMPTION_COUNT, new ConsumptionCountRecord(consumptionCount));
-            component.set(CDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, new ConsumptionCountTotalRecord(consumptionCountTotal));
-            component.set(DataComponents.FOOD, foodProperty);
-            component.set(CDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(itemStackHandler));
-            component.set(CDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, new ItemStackHandlerRecord(initialItemStackHandler));
-            component.set(CDataComponentRegistry.UUID, new UUIDRecord(lastInteractPlayerId));
-            component.set(CDataComponentRegistry.ADVANCEMENT_HAS_PROGRESS, advancementHasProgress);
-        }
+        if (!hasInput()) return;
+        component.set(CDataComponentRegistry.CONSUMPTION_COUNT, new ConsumptionCountRecord(consumptionCount));
+        component.set(CDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, new ConsumptionCountTotalRecord(consumptionCountTotal));
+        component.set(DataComponents.FOOD, foodProperty);
+        component.set(CDataComponentRegistry.ITEM_STACK_HANDLER, new ItemStackHandlerRecord(itemStackHandler));
+        component.set(CDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, new ItemStackHandlerRecord(initialItemStackHandler));
+        component.set(CDataComponentRegistry.UUID, new UUIDRecord(lastInteractPlayerId));
+        component.set(CDataComponentRegistry.ADVANCEMENT_HAS_PROGRESS, advancementHasProgress);
     }
 
     @Override
@@ -193,7 +195,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
         foodProperty = componentInput.getOrDefault(DataComponents.FOOD, FoodValue.EMPTY);
         processComponentStack(componentInput, CDataComponentRegistry.ITEM_STACK_HANDLER, itemStackHandler);
         processComponentStack(componentInput, CDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, initialItemStackHandler);
-        lastInteractPlayerId = componentInput.getOrDefault(CDataComponentRegistry.UUID, UUIDRecord.NULL).uuid();
+        lastInteractPlayerId = componentInput.getOrDefault(CDataComponentRegistry.UUID, UUIDRecord.EMPTY).uuid();
         advancementHasProgress = componentInput.getOrDefault(CDataComponentRegistry.ADVANCEMENT_HAS_PROGRESS, false);
     }
 

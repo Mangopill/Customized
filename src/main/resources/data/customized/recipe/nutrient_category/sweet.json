@@ -2,5 +2,5 @@
   "type": "customized:nutrient_category",
   "icon": "customized:textures/gui/nutrient_category/sweet.png",
   "name": "sweet",
-  "color": "0xFFB6C1"
+  "color": "0xCCFFB6C1"
 }
