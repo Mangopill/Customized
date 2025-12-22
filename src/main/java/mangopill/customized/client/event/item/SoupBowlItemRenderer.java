@@ -54,7 +54,7 @@ public class SoupBowlItemRenderer extends BlockEntityWithoutLevelRenderer {
     public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay) {
         if (!(stack.getItem() instanceof AbstractPlateItem plateItem)) return;
         List<ItemStack> stackList = plateItem.getItemStackListInPlate(stack, false);
-        if (stackList.isEmpty() || Minecraft.getInstance().player == null) return;
+        if (Minecraft.getInstance().player == null) return;
         renderItemStackByStrategy(poseStack, buffer, light, overlay,
                 new RenderItemListDriveStrategy(Minecraft.getInstance().player.level(), stackList,
                         0.295F, 0.295F, 0.25F, 0.695F, 0.695F, 0.3125F,

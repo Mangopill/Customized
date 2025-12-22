@@ -42,8 +42,8 @@ import static mangopill.customized.common.util.CompoundTagHelper.*;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
 import static mangopill.customized.common.util.StringUtil.*;
-import static mangopill.customized.common.util.component.ItemComponentUtil.*;
 import static mangopill.customized.common.util.PropertyValueUtil.*;
+import static mangopill.customized.common.util.component.ItemComponentUtil.*;
 
 public abstract class AbstractPotBlockEntity extends BlockEntity implements CreateItemStackHandler {
     protected final int ingredientInput;
@@ -209,9 +209,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
             spawnUsingConvertsTo(level, stackList, getBlockState(), getBlockPos());
             stackList.forEach(itemStack -> plate.insertItem(itemStack, newItemStackHandler));
             List<ItemStack> newStackList = getItemStackListInSlot(newItemStackHandler, 0, newItemStackHandler.getSlots());
-            ItemStackHandler initialItemStackHandler = new ItemStackHandler(newItemStackHandler.getSlots());
-            newStackList.forEach(itemStack -> plate.insertItem(itemStack.copy(), initialItemStackHandler));
-            updatePlateAll(outputItem, newItemStackHandler, initialItemStackHandler,
+            updatePlateAll(outputItem, newItemStackHandler, copyItemStackHandler(newItemStackHandler, true),
                     getFoodPropertyByPropertyValue(level, newStackList, getBlockState().getBlock(), true),
                     getConsumptionCount(newStackList), getConsumptionCount(newStackList),
                     lastInteractPlayerId, getProgress(level));
