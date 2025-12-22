@@ -9,6 +9,7 @@ import java.util.List;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 
 public class BrewingBarrelItemHandler extends CIItemHandler<BrewingBarrelBlockEntity> {
+
     public BrewingBarrelItemHandler(BrewingBarrelBlockEntity entity, IItemHandler itemHandler) {
         super(entity, itemHandler);
     }

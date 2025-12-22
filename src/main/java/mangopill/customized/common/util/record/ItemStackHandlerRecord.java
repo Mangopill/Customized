@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record ItemStackHandlerRecord(ItemStackHandler itemStackHandler) {
-    public static final ItemStackHandlerRecord NULL = new ItemStackHandlerRecord(new ItemStackHandler());
+    public static final ItemStackHandlerRecord EMPTY = new ItemStackHandlerRecord(new ItemStackHandler());
     public static final Codec<ItemStackHandler> ITEM_STACK_HANDLER_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(Codec.INT.fieldOf("Slots").forGetter(ItemStackHandler::getSlots),
                     ItemStack.OPTIONAL_CODEC.listOf().fieldOf("Items").forGetter(handler -> {

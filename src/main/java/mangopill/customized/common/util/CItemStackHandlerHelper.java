@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -107,14 +107,56 @@ public final class CItemStackHandlerHelper {
      * @param startIndex The starting slot index (inclusive)
      * @param endIndex The ending slot index (exclusive)
      * @return A list containing all non-empty ItemStacks within the specified slot range
+     * @see #getItemStackListInSlot(IItemHandler, int, int, boolean)
      */
-    public static List<ItemStack> getItemStackListInSlot(ItemStackHandler itemStackHandler, int startIndex, int endIndex){
+    public static List<ItemStack> getItemStackListInSlot(IItemHandler itemStackHandler, int startIndex, int endIndex) {
+        return getItemStackListInSlot(itemStackHandler, startIndex, endIndex, false);
+    }
+
+    /**
+     * Retrieves a list of ItemStacks from the specified slot range in an ItemStackHandler.
+     * <p>
+     * This method iterates through all slots in the given range and collects ItemStacks.
+     * @param itemStackHandler The ItemStackHandler to retrieve items from
+     * @param startIndex The starting slot index (inclusive)
+     * @param endIndex The ending slot index (exclusive)
+     * @param includeEmpty Whether to include empty ItemStacks in the returned list
+     * @return A list containing ItemStacks within the specified slot range
+     */
+    public static List<ItemStack> getItemStackListInSlot(IItemHandler itemStackHandler, int startIndex, int endIndex, boolean includeEmpty){
         List<ItemStack> stackList = new ArrayList<>();
         for (int i = startIndex; i < endIndex; ++i) {
-            if (itemStackHandler.getStackInSlot(i).isEmpty()) continue;
+            if (!includeEmpty && itemStackHandler.getStackInSlot(i).isEmpty()) continue;
             stackList.add(itemStackHandler.getStackInSlot(i));
         }
         return stackList;
+    }
+
+    /**
+     * Creates a copy of the specified ItemStackHandler with optionally copied ItemStacks.
+     * <p>
+     * This method creates a new ItemStackHandler instance that replicates the contents
+     * of the source handler. The behavior depends on the {@code copyItemStack} parameter:
+     * <ul>
+     *   <li>If {@code copyItemStack} is true, each ItemStack in the source handler
+     *       is deeply copied using {@link ItemStack#copy()}, resulting in completely
+     *       independent ItemStack instances.</li>
+     *   <li>If {@code copyItemStack} is false, the original ItemStack references
+     *       are reused, meaning changes to items in the new handler may affect
+     *       the original handler's items and vice versa.</li>
+     * </ul>
+     * @param itemStackHandler The source IItemHandler to copy items from
+     * @param copyItemStack    If true, creates deep copies of each ItemStack;
+     *                         if false, reuses the original ItemStack references
+     * @return A new ItemStackHandler containing the items from the source handler,
+     *         with ItemStacks either copied or referenced based on the parameter
+     */
+    public static ItemStackHandler copyItemStackHandler(IItemHandler itemStackHandler, boolean copyItemStack) {
+        List<ItemStack> stackList = getItemStackListInSlot(itemStackHandler, 0, itemStackHandler.getSlots(), true);
+        List<ItemStack> sourceList = copyItemStack ? stackList.stream().map(ItemStack::copy).toList() : stackList;
+        NonNullList<ItemStack> mutableList = NonNullList.create();
+        mutableList.addAll(sourceList);
+        return new ItemStackHandler(mutableList);
     }
 
     /**
@@ -131,7 +173,7 @@ public final class CItemStackHandlerHelper {
      * @param initialItemStackHandler The ItemStackHandler containing initial stack counts for calculation
      * @param consumptionCountTotal The divisor used to calculate the reduction amount for each stack
      */
-    public static void reduceItemStackCountByDivision(ItemStackHandler itemStackHandler, ItemStackHandler initialItemStackHandler, int consumptionCountTotal) {
+    public static void reduceItemStackCountByDivision(IItemHandler itemStackHandler, ItemStackHandler initialItemStackHandler, int consumptionCountTotal) {
         for (int i = 0; i < itemStackHandler.getSlots(); ++i) {
             ItemStack stack = itemStackHandler.getStackInSlot(i);
             ItemStack initialStack = initialItemStackHandler.getStackInSlot(i);
@@ -152,7 +194,7 @@ public final class CItemStackHandlerHelper {
      * This method iterates through every slot in the ItemStackHandler and clears
      * the ItemStack in each slot, effectively removing all items from the handler.
      */
-    public static void clearAllSlot(ItemStackHandler itemStackHandler) {
+    public static void clearAllSlot(IItemHandler itemStackHandler) {
         for (int i = 0; i < itemStackHandler.getSlots(); ++i) {
             itemStackHandler.getStackInSlot(i).copyAndClear();
         }
@@ -192,7 +234,7 @@ public final class CItemStackHandlerHelper {
      * @param endIndex The end index of the range to check (exclusive)
      * @return true if any slot in the range [0, endIndex) is not empty, false otherwise
      */
-    public static boolean hasInput(ItemStackHandler itemStackHandler, int endIndex){
+    public static boolean hasInput(IItemHandler itemStackHandler, int endIndex){
         for (int i = 0; i < endIndex; ++i) {
             if (!itemStackHandler.getStackInSlot(i).isEmpty()) return true;
         }
@@ -205,7 +247,7 @@ public final class CItemStackHandlerHelper {
      * @param endIndex The end index of the range to count (exclusive)
      * @return The number of non-empty slots in the range [0, endIndex)
      */
-    public static int getNonEmptySlotCount(ItemStackHandler itemStackHandler, int endIndex) {
+    public static int getNonEmptySlotCount(IItemHandler itemStackHandler, int endIndex) {
         int count = 0;
         for (int i = 0; i < endIndex; ++i) {
             if (!itemStackHandler.getStackInSlot(i).isEmpty()) {
@@ -474,7 +516,7 @@ public final class CItemStackHandlerHelper {
      * @param endIndex The ending slot index (exclusive)
      * @return The actual number of items that were removed
      */
-    public static int shrinkMatchingItemsInRange(ItemStackHandler itemStackHandler, @Nullable ItemStack targetStack,
+    public static int shrinkMatchingItemsInRange(IItemHandler itemStackHandler, @Nullable ItemStack targetStack,
                                                  int shrinkCount, int startIndex, int endIndex) {
         int remaining = shrinkCount;
         for (int i = startIndex; i < endIndex && remaining > 0; i++) {

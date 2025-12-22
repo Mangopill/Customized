@@ -32,8 +32,7 @@ public class CuttingBoardBlock extends BaseEntityBlock implements CSimpleInterac
 
     public CuttingBoardBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState()
-                .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
+        registerDefaultState(defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
     }
 
     @Override
@@ -83,8 +82,7 @@ public class CuttingBoardBlock extends BaseEntityBlock implements CSimpleInterac
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState()
-                .setValue(BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection());
+        return defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection());
     }
 
     @Override

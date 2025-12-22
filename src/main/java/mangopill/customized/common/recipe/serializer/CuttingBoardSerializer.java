@@ -15,9 +15,9 @@ public class CuttingBoardSerializer implements RecipeSerializer<CuttingBoardReci
     public static final MapCodec<CuttingBoardRecipe> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(CuttingBoardRecipe::cuttingItem),
-                    Ingredient.LIST_CODEC_NONEMPTY.fieldOf("tool").xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(CuttingBoardRecipe::toolItem),
-                    ItemStack.STRICT_CODEC.listOf().optionalFieldOf("result", NonNullList.of(ItemStack.EMPTY)).xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(CuttingBoardRecipe::output),
-                    ItemStack.STRICT_CODEC.listOf().optionalFieldOf("additional_result", NonNullList.of(ItemStack.EMPTY)).xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(CuttingBoardRecipe::probabilityOutput),
+                    NonNullList.codecOf(Ingredient.CODEC_NONEMPTY).fieldOf("tool").forGetter(CuttingBoardRecipe::toolItem),
+                    NonNullList.codecOf(ItemStack.STRICT_CODEC).optionalFieldOf("result", NonNullList.of(ItemStack.EMPTY)).forGetter(CuttingBoardRecipe::output),
+                    NonNullList.codecOf(ItemStack.STRICT_CODEC).optionalFieldOf("additional_result", NonNullList.of(ItemStack.EMPTY)).forGetter(CuttingBoardRecipe::probabilityOutput),
                     Codec.FLOAT.optionalFieldOf("additional_result_probability", 0.0F).forGetter(CuttingBoardRecipe::probability),
                     Codec.INT.optionalFieldOf("times", 1).forGetter(CuttingBoardRecipe::cuttingTimes)
             ).apply(instance, CuttingBoardRecipe::new));

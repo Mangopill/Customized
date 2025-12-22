@@ -19,9 +19,9 @@ import static mangopill.customized.common.util.RecipeUtil.*;
 public class CasseroleSerializer implements RecipeSerializer<CasseroleRecipe> {
     public static final MapCodec<CasseroleRecipe> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-            Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredient").xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(CasseroleRecipe::getIngredientItem),
-            Ingredient.LIST_CODEC_NONEMPTY.optionalFieldOf("seasoning", NonNullList.of(Ingredient.EMPTY)).xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(CasseroleRecipe::getSeasoningItem),
-            Ingredient.LIST_CODEC_NONEMPTY.optionalFieldOf("spice", NonNullList.of(Ingredient.EMPTY)).xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(CasseroleRecipe::getSpiceItem),
+            NonNullList.codecOf(Ingredient.CODEC_NONEMPTY).fieldOf("ingredient").forGetter(CasseroleRecipe::getIngredientItem),
+            NonNullList.codecOf(Ingredient.CODEC_NONEMPTY).optionalFieldOf("seasoning", NonNullList.of(Ingredient.EMPTY)).forGetter(CasseroleRecipe::getSeasoningItem),
+            NonNullList.codecOf(Ingredient.CODEC_NONEMPTY).optionalFieldOf("spice", NonNullList.of(Ingredient.EMPTY)).forGetter(CasseroleRecipe::getSpiceItem),
             Ingredient.CODEC_NONEMPTY.optionalFieldOf("container", Ingredient.EMPTY).forGetter(CasseroleRecipe::getContainerItem),
             FluidIngredient.CODEC_NON_EMPTY.optionalFieldOf("fluid", FluidIngredient.tag(FluidTags.WATER)).forGetter(CasseroleRecipe::getFluidIngredient),
             ItemStack.STRICT_CODEC.fieldOf("result").forGetter(CasseroleRecipe::getOutput),

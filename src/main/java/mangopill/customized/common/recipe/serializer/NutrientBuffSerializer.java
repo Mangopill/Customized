@@ -20,7 +20,7 @@ public class NutrientBuffSerializer implements RecipeSerializer<NutrientBuffReci
             instance -> instance.group(
                     MobEffect.CODEC.fieldOf("effect").forGetter(NutrientBuffRecipe::effect),
                     Codec.compoundList(Codec.STRING, Codec.FLOAT).xmap(HashSet::new, ArrayList::new).listOf().fieldOf("nutrient_category").forGetter(NutrientBuffRecipe::nutrientCategory),
-                    Ingredient.LIST_CODEC_NONEMPTY.optionalFieldOf("pot", NonNullList.of(Ingredient.EMPTY)).xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(NutrientBuffRecipe::pot),
+                    NonNullList.codecOf(Ingredient.CODEC_NONEMPTY).optionalFieldOf("pot", NonNullList.of(Ingredient.EMPTY)).forGetter(NutrientBuffRecipe::pot),
                     Codec.FLOAT.optionalFieldOf("duration", 1.0F).forGetter(NutrientBuffRecipe::duration),
                     Codec.FLOAT.optionalFieldOf("probability", 0.01F).forGetter(NutrientBuffRecipe::probability),
                     Codec.FLOAT.optionalFieldOf("shrink_nutrition", 0.0F).forGetter(NutrientBuffRecipe::shrinkNutrition),

@@ -5,6 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 
 public class CrateItemHandler extends CIItemHandler<CrateBlockEntity> {
+
     public CrateItemHandler(CrateBlockEntity entity, IItemHandler itemHandler) {
         super(entity, itemHandler);
     }

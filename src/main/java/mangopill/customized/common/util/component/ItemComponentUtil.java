@@ -19,11 +19,11 @@ public final class ItemComponentUtil {
     }
 
     public static ItemStackHandler getItemStackHandler(MutableDataComponentHolder holder) {
-        return holder.getOrDefault(CDataComponentRegistry.ITEM_STACK_HANDLER, ItemStackHandlerRecord.NULL).itemStackHandler();
+        return holder.getOrDefault(CDataComponentRegistry.ITEM_STACK_HANDLER, ItemStackHandlerRecord.EMPTY).itemStackHandler();
     }
 
     public static ItemStackHandler getInitialItemStackHandler(MutableDataComponentHolder holder) {
-        return holder.getOrDefault(CDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, ItemStackHandlerRecord.NULL).itemStackHandler();
+        return holder.getOrDefault(CDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, ItemStackHandlerRecord.EMPTY).itemStackHandler();
     }
 
     public static int getConsumptionCount(MutableDataComponentHolder holder) {

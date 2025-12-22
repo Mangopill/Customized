@@ -71,7 +71,7 @@ public class BrewingBarrelBlockEntity extends CBasicCookingBlockEntity<BrewingBa
 
     @Override
     public void interact(ItemStack itemStackInHand, Player player, Level level, InteractionHand hand, BlockState state,
-                         BlockPos pos, SoundEvent output, SoundEvent insert){
+                         BlockPos pos, SoundEvent output, SoundEvent insert) {
         super.interact(itemStackInHand, player, level, hand, state, pos, output, insert);
         lastInteractPlayerId = player.getUUID();
     }

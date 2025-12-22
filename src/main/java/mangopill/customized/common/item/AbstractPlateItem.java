@@ -109,12 +109,11 @@ public abstract class AbstractPlateItem extends BlockItem {
     }
 
     public static void plateAdvancement(LivingEntity livingEntity, FoodProperties properties) {
-        if (livingEntity instanceof ServerPlayer serverPlayer) {
-            if (properties.equals(FoodValue.INEDIBLE)){
-                CAdvancementRegistry.EAT_INEDIBLE_STEW.get().trigger(serverPlayer);
-            } else {
-                CAdvancementRegistry.EAT_NORMAL_STEW.get().trigger(serverPlayer);
-            }
+        if (!(livingEntity instanceof ServerPlayer serverPlayer)) return;
+        if (properties.equals(FoodValue.INEDIBLE)){
+            CAdvancementRegistry.EAT_INEDIBLE_STEW.get().trigger(serverPlayer);
+        } else {
+            CAdvancementRegistry.EAT_NORMAL_STEW.get().trigger(serverPlayer);
         }
     }
 
@@ -185,10 +184,8 @@ public abstract class AbstractPlateItem extends BlockItem {
         CItemStackHandlerHelper.insertItem(stack, newItemStackHandler, ingredientInput, seasoningInput, spiceInput, 0, null);
     }
 
-    public ItemStackHandler copyItemStackHandlerByComponent(ItemStack stack){
-        ItemStackHandler newItemStackHandler = new ItemStackHandler(getItemStackHandler(stack).getSlots());
-        getItemStackListInPlate(stack, true).forEach(itemStack -> insertItem(itemStack.copy(), newItemStackHandler));
-        return newItemStackHandler;
+    public ItemStackHandler copyItemStackHandlerByComponent(ItemStack stack) {
+        return copyItemStackHandler(getItemStackHandler(stack), true);
     }
 
     public boolean hasInput(ItemStack stack) {
@@ -202,11 +199,10 @@ public abstract class AbstractPlateItem extends BlockItem {
 
     public void addItemStackTooltip(ItemStack stack, List<Component> tooltipComponents) {
         List<ItemStack> stackList = getItemStackListInPlate(stack, true);
-        if (!stackList.isEmpty()) {
-            stackList.forEach(itemStack ->
-                    tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".item_stack",
+        if (stackList.isEmpty()) return;
+        stackList.forEach(itemStack ->
+                tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".item_stack",
                         itemStack.getCount(), itemStack.getItem().getDescription()).withStyle(ChatFormatting.GRAY)));
-        }
     }
 
     public void addUuidTooltip(ItemStack stack, List<Component> tooltipComponents, TooltipContext context) {
@@ -222,18 +218,16 @@ public abstract class AbstractPlateItem extends BlockItem {
     }
 
     public void addEffectTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents) {
-        if (!getFoodProperty(stack).effects().isEmpty()) {
-            getFoodProperty(stack).effects().forEach(buff -> {
-                int i = Mth.floor((float) buff.effectSupplier().get().getDuration());
-                Component component = Component.literal(StringUtil.formatTickDuration(i, context.tickRate()));
-                MobEffect mobEffect = buff.effectSupplier().get().getEffect().value();
-                tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".buff",
-                                getComponent(mobEffect.getDescriptionId())
-                                        .append(getComponent("enchantment.level." + (buff.effect().getAmplifier() + 1)))
-                                , component)
-                        .withStyle(mobEffect.getCategory().getTooltipFormatting()));
-            });
-        }
+        if (getFoodProperty(stack).effects().isEmpty()) return;
+        getFoodProperty(stack).effects().forEach(buff -> {
+            int i = Mth.floor((float) buff.effectSupplier().get().getDuration());
+            Component component = Component.literal(StringUtil.formatTickDuration(i, context.tickRate()));
+            MobEffect mobEffect = buff.effectSupplier().get().getEffect().value();
+            tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".buff",
+                    getComponent(mobEffect.getDescriptionId())
+                            .append(getComponent("enchantment.level." + (buff.effect().getAmplifier() + 1))), component)
+                    .withStyle(mobEffect.getCategory().getTooltipFormatting()));
+        });
     }
 
     public int getIngredientInput() {

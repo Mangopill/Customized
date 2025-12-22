@@ -4,8 +4,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 public interface CreateItemStackHandler {
     default ItemStackHandler createItemStackHandler(int allSlot) {
-        return new ItemStackHandler(allSlot)
-        {
+        return new ItemStackHandler(allSlot) {
             @Override
             protected void onContentsChanged(int slot) {
                 itemStackHandlerChanged();

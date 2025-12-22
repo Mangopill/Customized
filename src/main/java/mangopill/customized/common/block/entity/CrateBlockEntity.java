@@ -102,7 +102,7 @@ public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
     protected void applyImplicitComponents(BlockEntity.DataComponentInput componentInput) {
         super.applyImplicitComponents(componentInput);
         ItemStackHandler componentHandler = componentInput
-                .getOrDefault(CDataComponentRegistry.ITEM_STACK_HANDLER, ItemStackHandlerRecord.NULL)
+                .getOrDefault(CDataComponentRegistry.ITEM_STACK_HANDLER, ItemStackHandlerRecord.EMPTY)
                 .itemStackHandler();
         List<ItemStack> stacks = getItemStackListInSlot(componentHandler, 0, componentHandler.getSlots());
         stacks.forEach(stack ->

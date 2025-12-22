@@ -203,7 +203,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
                                        DeferredHolder<DataComponentType<?>, DataComponentType<ItemStackHandlerRecord>> componentType,
                                        ItemStackHandler itemStackHandler) {
         ItemStackHandler componentHandler = componentInput
-                .getOrDefault(componentType, ItemStackHandlerRecord.NULL)
+                .getOrDefault(componentType, ItemStackHandlerRecord.EMPTY)
                 .itemStackHandler();
         List<ItemStack> stacks = getItemStackListInSlot(componentHandler, 0, componentHandler.getSlots());
         stacks.forEach(stack ->

@@ -17,9 +17,9 @@ import static mangopill.customized.common.util.RecipeUtil.*;
 public class SteamerSerializer implements RecipeSerializer<SteamerRecipe> {
     public static final MapCodec<SteamerRecipe> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredient").xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(SteamerRecipe::getIngredientItem),
-                    Ingredient.LIST_CODEC_NONEMPTY.optionalFieldOf("seasoning", NonNullList.of(Ingredient.EMPTY)).xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(SteamerRecipe::getSeasoningItem),
-                    Ingredient.LIST_CODEC_NONEMPTY.optionalFieldOf("spice", NonNullList.of(Ingredient.EMPTY)).xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(SteamerRecipe::getSpiceItem),
+                    NonNullList.codecOf(Ingredient.CODEC_NONEMPTY).fieldOf("ingredient").forGetter(SteamerRecipe::getIngredientItem),
+                    NonNullList.codecOf(Ingredient.CODEC_NONEMPTY).optionalFieldOf("seasoning", NonNullList.of(Ingredient.EMPTY)).forGetter(SteamerRecipe::getSeasoningItem),
+                    NonNullList.codecOf(Ingredient.CODEC_NONEMPTY).optionalFieldOf("spice", NonNullList.of(Ingredient.EMPTY)).forGetter(SteamerRecipe::getSpiceItem),
                     Ingredient.CODEC_NONEMPTY.optionalFieldOf("container", Ingredient.EMPTY).forGetter(SteamerRecipe::getContainerItem),
                     FluidIngredient.CODEC_NON_EMPTY.optionalFieldOf("fluid", FluidIngredient.tag(FluidTags.WATER)).forGetter(SteamerRecipe::getFluidIngredient),
                     ItemStack.STRICT_CODEC.fieldOf("result").forGetter(SteamerRecipe::getOutput),

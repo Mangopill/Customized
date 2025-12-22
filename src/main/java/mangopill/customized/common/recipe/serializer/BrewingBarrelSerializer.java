@@ -14,7 +14,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 public class BrewingBarrelSerializer implements RecipeSerializer<BrewingBarrelRecipe> {
     public static final MapCodec<BrewingBarrelRecipe> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredient").xmap(NonNullList::copyOf, nonNullList -> nonNullList).forGetter(BrewingBarrelRecipe::ingredientItem),
+                    NonNullList.codecOf(Ingredient.CODEC_NONEMPTY).fieldOf("ingredient").forGetter(BrewingBarrelRecipe::ingredientItem),
                     Ingredient.CODEC_NONEMPTY.optionalFieldOf("container", Ingredient.EMPTY).forGetter(BrewingBarrelRecipe::containerItem),
                     ItemStack.STRICT_CODEC.fieldOf("result").forGetter(BrewingBarrelRecipe::output),
                     Codec.INT.optionalFieldOf("time", 200).forGetter(BrewingBarrelRecipe::cookingTime)

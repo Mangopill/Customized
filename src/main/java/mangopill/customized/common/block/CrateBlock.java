@@ -25,8 +25,7 @@ public class CrateBlock extends BaseEntityBlock implements CSimpleInteractableBl
 
     public CrateBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState()
-                .setValue(BlockStateProperties.FACING, Direction.NORTH));
+        registerDefaultState(defaultBlockState().setValue(BlockStateProperties.FACING, Direction.NORTH));
     }
 
     @Override

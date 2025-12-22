@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class InsertAndTakeOutItemStrategy implements PotInteractionStrategy {
+public record InsertAndTakeOutItemStrategy() implements PotInteractionStrategy {
     // Ensure this strategy is at the end of the registration
     @Override
     public boolean interact(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos,
