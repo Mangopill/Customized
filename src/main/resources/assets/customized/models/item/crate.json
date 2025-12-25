@@ -2,12 +2,6 @@
 	"credit": "Made with Blockbench",
 	"parent": "builtin/entity",
 	"textures": {
-		"2": "customized:block/crate_top",
-		"3": "customized:block/crate_side_external0",
-		"4": "customized:block/crate_side_external1",
-		"5": "customized:block/crate_side",
-		"6": "customized:block/crate_side_external2",
-		"7": "customized:block/crate_side_external3",
 		"particle": "customized:block/crate_side"
 	},
 	"display": {

@@ -1,14 +1,12 @@
 package mangopill.customized.common.recipe.serializer;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import mangopill.customized.common.recipe.CrateRecipe;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.*;
 
 public class CrateSerializer implements RecipeSerializer<CrateRecipe> {
     public static final MapCodec<CrateRecipe> CODEC = RecordCodecBuilder.mapCodec(

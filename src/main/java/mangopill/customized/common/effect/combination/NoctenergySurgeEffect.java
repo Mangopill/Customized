@@ -1,10 +1,9 @@
 package mangopill.customized.common.effect.combination;
 
-import mangopill.customized.common.effect.*;
+import mangopill.customized.common.effect.CMobEffect;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 

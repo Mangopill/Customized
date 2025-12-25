@@ -2,10 +2,9 @@ package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.registries.*;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.*;
 
 public final class CEnchantmentComponentRegistry {
     public static final DeferredRegister<DataComponentType<?>> ENCHANTMENT_EFFECT_COMPONENT_TYPE = DeferredRegister.create(Registries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Customized.MODID);

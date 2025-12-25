@@ -14,7 +14,7 @@ import net.neoforged.neoforge.registries.*;
 
 import java.util.function.Supplier;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 public final class CFluidTypeRegistry {
     public static final DeferredRegister<FluidType> FLUID_TYPE = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, Customized.MODID);

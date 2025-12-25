@@ -5,14 +5,13 @@ import mangopill.customized.client.event.block.*;
 import mangopill.customized.client.event.entity.KnifeEntityRenderer;
 import mangopill.customized.client.event.gui.PotOverlay;
 import mangopill.customized.client.event.item.*;
-import mangopill.customized.client.event.player.AuraOfCulinaryArtsEnchantmentEffectRenderer;
-import mangopill.customized.client.event.player.CHatLayerRenderer;
+import mangopill.customized.client.event.player.*;
 import mangopill.customized.client.particle.*;
 import mangopill.customized.common.fluid.type.*;
 import mangopill.customized.common.registry.*;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -34,7 +33,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import static mangopill.customized.client.util.ClientUtil.*;
 import static mangopill.customized.client.util.TintingUtil.*;
 import static mangopill.customized.client.util.TooltipUtil.*;
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 @EventBusSubscriber(modid = Customized.MODID, value = Dist.CLIENT)
 public class ClientEvent {

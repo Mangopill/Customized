@@ -1,11 +1,10 @@
 package mangopill.customized.common.item;
 
-import mangopill.customized.Customized;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.MutableComponent;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 public interface ThrowableIItem {
-    MutableComponent component = getComponent("item_text." + Customized.MODID + ".throwable").withStyle(ChatFormatting.WHITE);
+    MutableComponent component = C_ITEM_TEXT.create("throwable").withStyle(ChatFormatting.WHITE);
 }

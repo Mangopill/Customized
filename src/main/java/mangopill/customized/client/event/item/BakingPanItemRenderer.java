@@ -11,7 +11,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import java.util.List;
 
 import static mangopill.customized.client.util.ClientUtil.*;
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 public class BakingPanItemRenderer extends BlockEntityWithoutLevelRenderer {
 

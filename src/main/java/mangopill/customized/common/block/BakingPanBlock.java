@@ -1,14 +1,12 @@
 package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
-import mangopill.customized.common.block.record.*;
+import mangopill.customized.common.block.record.PlateRecord;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.*;
 
 import javax.annotation.Nullable;
 
@@ -16,7 +14,7 @@ public class BakingPanBlock extends AbstractPlateBlock {
     public static final MapCodec<BakingPanBlock> CODEC = simpleCodec(BakingPanBlock::new);
 
     protected static final VoxelShape BLOCK_SHAPE = Shapes.or(
-            Block.box(4, 0, 4, 12, 1, 12)
+            Block.box(4.0D, 0.0D, 4.0D, 12.0D, 1.0D, 12.0D)
     );
 
     public BakingPanBlock(Properties properties) {

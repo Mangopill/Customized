@@ -2,8 +2,7 @@ package mangopill.customized.common.item.enchantment;
 
 import mangopill.customized.Customized;
 import mangopill.customized.common.registry.CEnchantmentComponentRegistry;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +16,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static mangopill.customized.common.item.enchantment.SharedFeastEnchantmentEffect.shareEffect;
+import static mangopill.customized.common.item.enchantment.SharedFeastEnchantmentEffect.*;
 
 @EventBusSubscriber(modid = Customized.MODID)
 public class DiarrheaDeliveryEnchantmentEffect {

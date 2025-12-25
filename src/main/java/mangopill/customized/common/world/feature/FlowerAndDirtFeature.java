@@ -1,9 +1,7 @@
 package mangopill.customized.common.world.feature;
 
 import com.mojang.serialization.Codec;
-import mangopill.customized.common.registry.CBlockRegistry;
-import mangopill.customized.common.registry.CBlockEntityTypeRegistry;
-
+import mangopill.customized.common.registry.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -11,12 +9,11 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.storage.loot.LootTable;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 public class FlowerAndDirtFeature extends Feature<NoneFeatureConfiguration> {
     private static final ResourceKey<LootTable> LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, getCLoc("archaeology/flower_and_dirt"));

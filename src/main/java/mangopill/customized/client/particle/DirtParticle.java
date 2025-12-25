@@ -3,8 +3,7 @@ package mangopill.customized.client.particle;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.*;
 
 public class DirtParticle extends TextureSheetParticle {
     private final SpriteSet spriteSet;

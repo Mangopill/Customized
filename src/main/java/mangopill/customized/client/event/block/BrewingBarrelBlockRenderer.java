@@ -3,8 +3,7 @@ package mangopill.customized.client.event.block;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mangopill.customized.common.block.entity.BrewingBarrelBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.*;
 
 import static mangopill.customized.client.util.ClientUtil.*;
 

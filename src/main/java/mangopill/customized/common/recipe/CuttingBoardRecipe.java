@@ -1,17 +1,15 @@
 package mangopill.customized.common.recipe;
 
-import mangopill.customized.common.registry.CRecipeRegistry;
-import mangopill.customized.common.registry.CRecipeSerializerRegistry;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
+import mangopill.customized.common.item.crafting.ProbabilityItemStack;
+import mangopill.customized.common.registry.*;
+import net.minecraft.core.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
-public record CuttingBoardRecipe(Ingredient cuttingItem, NonNullList<Ingredient> toolItem,
-                                 NonNullList<ItemStack> output, NonNullList<ItemStack> probabilityOutput,
-                                 float probability, int cuttingTimes) implements CRecipeInterface<RecipeWrapper> {
+public record CuttingBoardRecipe(Ingredient cuttingItem, NonNullList<Ingredient> toolItem, NonNullList<ItemStack> output,
+                                 NonNullList<ProbabilityItemStack> probabilityOutput, int cuttingTimes) implements CRecipeInterface<RecipeWrapper> {
     @Override
     public boolean matches(RecipeWrapper recipeWrapper, Level level) {
         return cuttingItem.test(recipeWrapper.getItem(0));

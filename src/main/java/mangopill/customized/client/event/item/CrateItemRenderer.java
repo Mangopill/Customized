@@ -2,18 +2,16 @@ package mangopill.customized.client.event.item;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import mangopill.customized.client.util.strategy.*;
-import mangopill.customized.common.item.*;
+import mangopill.customized.common.item.CrateItem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.client.renderer.*;
+import net.minecraft.world.item.*;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 import java.util.List;
 
 import static mangopill.customized.client.util.ClientUtil.*;
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 public class CrateItemRenderer extends BlockEntityWithoutLevelRenderer {
 

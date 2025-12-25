@@ -6,18 +6,15 @@ import mangopill.customized.Customized;
 import mangopill.customized.common.item.enchantment.network.PlayerAuraData;
 import mangopill.customized.common.registry.CEnchantmentComponentRegistry;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.core.registries.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.*;
 import net.minecraft.sounds.*;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
 import net.minecraft.world.level.Level;
@@ -32,8 +29,8 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static mangopill.customized.common.CustomizedConfig.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.common.util.LootTableUtil.*;
-import static mangopill.customized.common.util.StringUtil.*;
 
 @EventBusSubscriber(modid = Customized.MODID)
 public class AuraOfCulinaryArtsEnchantmentEffect {
@@ -48,7 +45,7 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
         ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
         if (level.isClientSide) return;
         CulinaryAuraData data = PLAYER_AURA_DATA.computeIfAbsent(player.getUUID().toString(),
-                k -> new CulinaryAuraData(0, player.level().getGameTime(), new ArrayList<>()));
+                s -> new CulinaryAuraData(0, player.level().getGameTime(), new ArrayList<>()));
         AtomicBoolean foundAura = new AtomicBoolean(false);
         EnchantmentHelper.runIterationOnItem(helmet, (e, l) -> {
             EnchantmentValueEffect effect = e.value().effects().get(CEnchantmentComponentRegistry.AURA_OF_CULINARY_ARTS.get());
@@ -79,7 +76,7 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
                     if (!AURA_OF_CULINARY_ARTS_MESSAGE.get()) return;
                     addParticles(player, 0.5D, 10, 0.1);
                     playSound(player, SoundEvents.ENCHANTMENT_TABLE_USE);
-                    player.displayClientMessage(getComponent("message." + Customized.MODID + ".aura_of_culinary_arts", data.activeFoods), true);
+                    player.displayClientMessage(C_MESSAGE.create("aura_of_culinary_arts", data.activeFoods), true);
                 }
             });
         }
@@ -96,7 +93,7 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
             if (!AURA_OF_CULINARY_ARTS_MESSAGE.get()) return;
             addParticles(player, 1.0, 5, 0.05);
             playSound(player, SoundEvents.EXPERIENCE_ORB_PICKUP);
-            player.displayClientMessage(getComponent("message." + Customized.MODID + ".aura_of_culinary_arts", data.activeFoods), true);
+            player.displayClientMessage(C_MESSAGE.create("aura_of_culinary_arts", data.activeFoods), true);
         }
     }
 
@@ -124,8 +121,7 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
         private long lastRefreshTime;
         private final List<ItemStack> stackList;
 
-        public static final StreamCodec<ByteBuf, CulinaryAuraData> STREAM_CODEC = StreamCodec.composite(
-                ByteBufCodecs.VAR_INT,
+        public static final StreamCodec<ByteBuf, CulinaryAuraData> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.VAR_INT,
                 CulinaryAuraData::getActiveFoods,
                 ByteBufCodecs.VAR_LONG,
                 CulinaryAuraData::getLastRefreshTime,

@@ -1,8 +1,7 @@
 package mangopill.customized.common.recipe;
 
 import mangopill.customized.common.block.record.PotRecord;
-import mangopill.customized.common.registry.CRecipeRegistry;
-import mangopill.customized.common.registry.CRecipeSerializerRegistry;
+import mangopill.customized.common.registry.*;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;

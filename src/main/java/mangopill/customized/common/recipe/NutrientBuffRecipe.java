@@ -1,8 +1,7 @@
 package mangopill.customized.common.recipe;
 
 import com.mojang.datafixers.util.Pair;
-import mangopill.customized.common.registry.CRecipeRegistry;
-import mangopill.customized.common.registry.CRecipeSerializerRegistry;
+import mangopill.customized.common.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;

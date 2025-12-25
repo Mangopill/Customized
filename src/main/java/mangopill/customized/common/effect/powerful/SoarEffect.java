@@ -3,8 +3,7 @@ package mangopill.customized.common.effect.powerful;
 import mangopill.customized.common.effect.CMobEffect;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 /**
  *This MobEffect allows the player to stay flying, but prevents them from landing.

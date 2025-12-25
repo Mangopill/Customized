@@ -9,12 +9,10 @@ import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.*;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
@@ -24,10 +22,10 @@ public class CuttingBoardBlock extends BaseEntityBlock implements CSimpleInterac
     public static final MapCodec<CuttingBoardBlock> CODEC = simpleCodec(CuttingBoardBlock::new);
 
     protected static final VoxelShape X_SHAPE = Shapes.or(
-            Block.box(1, 0, 4, 15, 1, 12)
+            Block.box(1.0D, 0.0D, 4.0D, 15.0D, 1.0D, 12.0D)
     );
     protected static final VoxelShape Z_SHAPE = Shapes.or(
-            Block.box(4, 0, 1, 12, 1, 15)
+            Block.box(4.0D, 0.0D, 1.0D, 12.0D, 1.0D, 15.0D)
     );
 
     public CuttingBoardBlock(Properties properties) {
@@ -66,14 +64,6 @@ public class CuttingBoardBlock extends BaseEntityBlock implements CSimpleInterac
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
-        return  switch (state.getValue(BlockStateProperties.HORIZONTAL_FACING)) {
-            case WEST, EAST -> Z_SHAPE;
-            default -> X_SHAPE;
-        };
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return  switch (state.getValue(BlockStateProperties.HORIZONTAL_FACING)) {
             case WEST, EAST -> Z_SHAPE;
             default -> X_SHAPE;

@@ -1,6 +1,5 @@
 package mangopill.customized.common.item;
 
-import mangopill.customized.Customized;
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.AbstractPlateBlock;
 import mangopill.customized.common.block.entity.AbstractPlateBlockEntity;
@@ -10,22 +9,16 @@ import mangopill.customized.common.registry.CAdvancementRegistry;
 import mangopill.customized.common.util.CItemStackHandlerHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.*;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.*;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.Mth;
-import net.minecraft.util.StringUtil;
 import net.minecraft.world.*;
-import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.context.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,12 +27,14 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.common.util.component.ItemComponentUtil.*;
+import static mangopill.customized.common.util.component.ItemComponentUtil.getConsumptionCount;
 
 public abstract class AbstractPlateItem extends BlockItem {
     private final int ingredientInput;
@@ -62,11 +57,11 @@ public abstract class AbstractPlateItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".consumption_count_total", getConsumptionCountTotal(stack)).withStyle(ChatFormatting.GRAY));
-        tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".consumption_count", getConsumptionCount(stack)).withStyle(ChatFormatting.GRAY));
+        tooltipComponents.add(C_ITEM_TEXT.create("consumption_count_total", getConsumptionCountTotal(stack)).withStyle(ChatFormatting.GRAY));
+        tooltipComponents.add(C_ITEM_TEXT.create("consumption_count", getConsumptionCount(stack)).withStyle(ChatFormatting.GRAY));
         addItemStackTooltip(stack, tooltipComponents);
         if (getFoodProperty(stack).equals(FoodValue.INEDIBLE)) {
-            tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".inedible").withStyle(ChatFormatting.DARK_RED));
+            tooltipComponents.add(C_ITEM_TEXT.create("inedible").withStyle(ChatFormatting.DARK_RED));
         }
         addUuidTooltip(stack, tooltipComponents, context);
         addEffectTooltip(stack, context, tooltipComponents);
@@ -154,7 +149,7 @@ public abstract class AbstractPlateItem extends BlockItem {
     public int getBarWidth(ItemStack stack) {
         int consumptionCount = getConsumptionCount(stack);
         int consumptionCountTotal = getConsumptionCountTotal(stack);
-        return (int) Math.ceil((double) consumptionCount / consumptionCountTotal * 13);
+        return (int) Math.ceil((double) consumptionCount / (double) consumptionCountTotal * 13);
     }
 
     @Override
@@ -166,18 +161,9 @@ public abstract class AbstractPlateItem extends BlockItem {
     public Component getName(ItemStack stack) {
         List<ItemStack> stackList = getItemStackListInPlate(stack, false);
         List<ItemStack> topTwoItems = getTopTwoItemsByCount(stackList);
-        if (topTwoItems.size() == 1) {
-            ItemStack aStack = getTopTwoItemsByCount(stackList).getFirst();
-            return Component.empty().append(aStack.getDisplayName())
-                    .append(":").append(getComponent(this.getDescriptionId(stack) + "_food"));
-        }
-        if (topTwoItems.size() == 2) {
-            ItemStack aStack = getTopTwoItemsByCount(stackList).getFirst();
-            ItemStack bStack = getTopTwoItemsByCount(stackList).get(1);
-            return Component.empty().append(aStack.getDisplayName()).append("&").append(bStack.getDisplayName())
-                    .append(":").append(getComponent(this.getDescriptionId(stack) + "_food"));
-        }
-        return getComponent(this.getDescriptionId(stack));
+        if (topTwoItems.isEmpty()) return super.getName(stack);
+        String itemName = topTwoItems.stream().map(item -> item.getDisplayName().getString()).collect(Collectors.joining("&"));
+        return literal(itemName).append(":").append(translate(getDescriptionId(stack) + "_food"));
     }
 
     public void insertItem(ItemStack stack, ItemStackHandler newItemStackHandler) {
@@ -200,9 +186,7 @@ public abstract class AbstractPlateItem extends BlockItem {
     public void addItemStackTooltip(ItemStack stack, List<Component> tooltipComponents) {
         List<ItemStack> stackList = getItemStackListInPlate(stack, true);
         if (stackList.isEmpty()) return;
-        stackList.forEach(itemStack ->
-                tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".item_stack",
-                        itemStack.getCount(), itemStack.getItem().getDescription()).withStyle(ChatFormatting.GRAY)));
+        stackList.forEach(itemStack -> tooltipComponents.add(C_ITEM_TEXT.create("item_stack", itemStack.getCount(), itemStack.getItem().getDescription()).withStyle(ChatFormatting.GRAY)));
     }
 
     public void addUuidTooltip(ItemStack stack, List<Component> tooltipComponents, TooltipContext context) {
@@ -210,24 +194,17 @@ public abstract class AbstractPlateItem extends BlockItem {
         if (level == null) return;
         Player player = level.getPlayerByUUID(getLastInteractPlayerId(stack));
         if (player == null) return;
-        MutableComponent Uuid = getComponent("item_text." + Customized.MODID + ".last_interact_player_id", player.getDisplayName()).withStyle(ChatFormatting.YELLOW);
+        MutableComponent uuid = C_ITEM_TEXT.create("last_interact_player_id", player.getDisplayName()).withStyle(ChatFormatting.YELLOW);
         if (getAdvancementHasProgress(stack)) {
-            Uuid.append(getComponent("item_text." + Customized.MODID + ".master_of_culinary_arts")).withStyle(ChatFormatting.GOLD);
+            uuid.append(C_ITEM_TEXT.create("master_of_culinary_arts")).withStyle(ChatFormatting.GOLD);
         }
-        tooltipComponents.add(Uuid);
+        tooltipComponents.add(uuid);
     }
 
     public void addEffectTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents) {
         if (getFoodProperty(stack).effects().isEmpty()) return;
-        getFoodProperty(stack).effects().forEach(buff -> {
-            int i = Mth.floor((float) buff.effectSupplier().get().getDuration());
-            Component component = Component.literal(StringUtil.formatTickDuration(i, context.tickRate()));
-            MobEffect mobEffect = buff.effectSupplier().get().getEffect().value();
-            tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".buff",
-                    getComponent(mobEffect.getDescriptionId())
-                            .append(getComponent("enchantment.level." + (buff.effect().getAmplifier() + 1))), component)
-                    .withStyle(mobEffect.getCategory().getTooltipFormatting()));
-        });
+        getFoodProperty(stack).effects().forEach(buff ->
+                tooltipComponents.add(getItemTextBuffComponent(buff, context.tickRate())));
     }
 
     public int getIngredientInput() {

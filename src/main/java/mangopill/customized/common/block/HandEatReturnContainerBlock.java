@@ -1,24 +1,16 @@
 package mangopill.customized.common.block;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.core.*;
+import net.minecraft.sounds.*;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 
@@ -29,15 +21,15 @@ import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 public class HandEatReturnContainerBlock extends Block {
     public static final IntegerProperty EAT = IntegerProperty.create("eat", 0, 10);
     protected static final VoxelShape SHAPE = Shapes.or(
-            Block.box(4, 0, 4, 12, 1, 12),
-            Block.box(3, 1, 4, 4, 3, 12),
-            Block.box(3, 1, 12, 13, 3, 13),
-            Block.box(3, 3, 2, 13, 6, 3),
-            Block.box(2, 3, 3, 3, 6, 13),
-            Block.box(13, 3, 3, 14, 6, 13),
-            Block.box(3, 3, 13, 13, 6, 14),
-            Block.box(3, 1, 3, 13, 3, 4),
-            Block.box(12, 1, 4, 13, 3, 12)
+            Block.box(4.0D, 0.0D, 4.0D, 12.0D, 1.0D, 12.0D),
+            Block.box(3.0D, 1.0D, 4.0D, 4.0D, 3.0D, 12.0D),
+            Block.box(3.0D, 1.0D, 12.0D, 13.0D, 3.0D, 13.0D),
+            Block.box(3.0D, 3.0D, 2.0D, 13.0D, 6.0D, 3.0D),
+            Block.box(2.0D, 3.0D, 3.0D, 3.0D, 6.0D, 13.0D),
+            Block.box(13.0D, 3.0D, 3.0D, 14.0D, 6.0D, 13.0D),
+            Block.box(3.0D, 3.0D, 13.0D, 13.0D, 6.0D, 14.0D),
+            Block.box(3.0D, 1.0D, 3.0D, 13.0D, 3.0D, 4.0D),
+            Block.box(12.0D, 1.0D, 4.0D, 13.0D, 3.0D, 12.0D)
     );
     private final FoodProperties foodProperties;
     private final Supplier<Item> container;

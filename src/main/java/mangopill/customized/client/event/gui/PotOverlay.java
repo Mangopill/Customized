@@ -2,18 +2,16 @@ package mangopill.customized.client.event.gui;
 
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.registry.CItemRegistry;
-import net.minecraft.client.DeltaTracker;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.*;
 
 import javax.annotation.Nullable;
 
 import static mangopill.customized.common.CustomizedConfig.*;
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 public class PotOverlay implements LayeredDraw.Layer {
     @Nullable

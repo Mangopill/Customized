@@ -3,26 +3,24 @@ package mangopill.customized.client.util;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import mangopill.customized.client.util.strategy.*;
-import mangopill.customized.common.block.entity.*;
+import mangopill.customized.common.block.entity.CBasicCookingBlockEntity;
 import mangopill.customized.common.item.AbstractPlateItem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.client.renderer.texture.*;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.*;
+import net.neoforged.api.distmarker.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.Random;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 @OnlyIn(Dist.CLIENT)
 public final class ClientUtil {

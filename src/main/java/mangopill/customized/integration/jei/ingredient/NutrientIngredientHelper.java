@@ -1,16 +1,14 @@
 package mangopill.customized.integration.jei.ingredient;
 
-import mangopill.customized.Customized;
 import mangopill.customized.common.recipe.NutrientCategoryRecipe;
-import mezz.jei.api.ingredients.IIngredientHelper;
-import mezz.jei.api.ingredients.IIngredientType;
+import mezz.jei.api.ingredients.*;
 import mezz.jei.api.ingredients.subtypes.UidContext;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.integration.jei.util.JeiUtil.*;
 
 public class NutrientIngredientHelper implements IIngredientHelper<NutrientCategoryRecipe> {
@@ -21,7 +19,7 @@ public class NutrientIngredientHelper implements IIngredientHelper<NutrientCateg
 
     @Override
     public String getDisplayName(NutrientCategoryRecipe recipe) {
-        return getComponent("property." + Customized.MODID + ".nutrient_category." + recipe.name()).getString();
+        return getPropertyNutrientCategoryComponent(recipe.name()).getString();
     }
 
     @Override

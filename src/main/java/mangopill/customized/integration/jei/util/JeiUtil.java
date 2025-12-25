@@ -1,37 +1,41 @@
 package mangopill.customized.integration.jei.util;
 
 import mangopill.customized.Customized;
+import mangopill.customized.common.item.crafting.ProbabilityItemStack;
 import mangopill.customized.common.recipe.*;
-import mangopill.customized.integration.jei.category.*;
+import mangopill.customized.common.util.CStringUtil;
+import mangopill.customized.integration.jei.category.PropertyValueRecipeCategory;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
+import mezz.jei.api.gui.builder.*;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.ingredients.IIngredientType;
-import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.*;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.*;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.*;
 
+import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
-import static mangopill.customized.common.util.StringUtil.*;
 
 public final class JeiUtil {
     private JeiUtil() {
     }
+
+    public static final CStringUtil.ComponentFactory C_JEI_GUI = (s, a) -> translate("jei" + "." + "gui" + "." + Customized.MODID + "." + s, a);
+    public static final CStringUtil.ComponentFactory C_JEI_CATEGORY = (s, a) -> translate("jei" + "." + "category" + "." + Customized.MODID + "." + s, a);
+    public static final CStringUtil.ComponentFactory C_JEI_INFO = (s, a) -> translate("jei" + "." + "info" + "." + Customized.MODID + "." + s, a);
 
     public static final int SLOT_SIZE = 16 + 2;
     public static final int TICKS_PER_CYCLE = 200;
@@ -69,25 +73,11 @@ public final class JeiUtil {
     }
 
     public static void addCustomIngredientSlots(IRecipeLayoutBuilder builder, int ingredientSize,
-                                                RecipeIngredientRole role, int startX, int startY,
-                                                int slotSize, int rows, int cols, int spacing,
-                                                @Nullable BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
-        QuadConsumer<IRecipeLayoutBuilder, Integer, Integer, Integer> adaptedConfigurator = null;
-        if (slotConfigurator != null) {
-            adaptedConfigurator = (b, i, x, y) -> {
-                IRecipeSlotBuilder slot = b.addSlot(role, x, y);
-                slotConfigurator.accept(slot, i);
-            };
-        }
-        addCustomIngredientSlots(builder, ingredientSize, startX, startY, slotSize, rows, cols, spacing, adaptedConfigurator);
-    }
-
-    public static void addCustomIngredientSlots(IRecipeLayoutBuilder builder, int ingredientSize,
                                                 int startX, int startY,
                                                 int slotSize, int rows, int cols, int spacing,
                                                 @Nullable QuadConsumer<IRecipeLayoutBuilder, Integer, Integer, Integer> slotConfigurator) {
-        int totalSlots = rows * cols;
-        for (int i = 0; i < Math.min(ingredientSize, totalSlots); i++) {
+        cols = rows <= 0 ? Math.max(1, cols) : (cols <= 0 ? (int) Math.ceil((double) ingredientSize / (double) rows) : cols);
+        for (int i = 0; i < ((rows <= 0 || cols <= 0) ? ingredientSize : Math.min(ingredientSize, rows * cols)); i++) {
             int row = i / cols;
             int col = i % cols;
             int x = startX + col * (slotSize + spacing);
@@ -103,26 +93,47 @@ public final class JeiUtil {
         void accept(T t, U u, V v, W w);
     }
 
+    public static void addCustomIngredientSlots(IRecipeLayoutBuilder builder, int ingredientSize,
+                                                RecipeIngredientRole role, int startX, int startY,
+                                                int slotSize, int rows, int cols, int spacing,
+                                                BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
+        addCustomIngredientSlots(builder, ingredientSize, startX, startY, slotSize, rows, cols, spacing,
+                (b, i, x, y) -> slotConfigurator.accept(b.addSlot(role, x, y), i));
+    }
+
     public static void addIngredientSlots(IRecipeLayoutBuilder builder, List<Ingredient> ingredients,
                                           RecipeIngredientRole role, int startX, int startY,
                                           int slotSize, int rows, int cols, int spacing,
                                           @Nullable BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
-        addCustomIngredientSlots(builder, ingredients.size(), role, startX, startY, slotSize, rows, cols, spacing, (s, i) -> {
-            s.addIngredients(ingredients.get(i));
+        addCustomIngredientSlots(builder, ingredients.size(), role, startX, startY, slotSize, rows, cols, spacing, (b, i) -> {
+            b.addIngredients(ingredients.get(i));
             if (slotConfigurator != null) {
-                slotConfigurator.accept(s, i);
+                slotConfigurator.accept(b, i);
+            }
+        });
+    }
+
+    public static void addProbabilityItemStackSlots(IRecipeLayoutBuilder builder, List<ProbabilityItemStack> itemStacks,
+                                          RecipeIngredientRole role, int startX, int startY,
+                                          int slotSize, int rows, int cols, int spacing,
+                                          @Nullable BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
+        addCustomIngredientSlots(builder, itemStacks.size(), role, startX, startY, slotSize, rows, cols, spacing,  (b, i) -> {
+            b.addItemStacks(itemStacks.get(i).probabilityStackList())
+                    .addRichTooltipCallback((s, tB) -> tB.add(getProbabilityComponent(itemStacks.get(i).probability())));
+            if (slotConfigurator != null) {
+                slotConfigurator.accept(b, i);
             }
         });
     }
 
     public static void addNutrientSlots(IRecipeLayoutBuilder builder, List<NutrientCategoryRecipe> nutrient,
-                                         RecipeIngredientRole role, int startX, int startY,
-                                         int slotSize, int rows, int cols, int spacing,
-                                         @Nullable BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
-        addCustomIngredientSlots(builder, nutrient.size(), role, startX, startY, slotSize, rows, cols, spacing, (s, i) -> {
-            s.addIngredient(NUTRIENT_INGREDIENT, nutrient.get(i));
+                                        RecipeIngredientRole role, int startX, int startY,
+                                        int slotSize, int rows, int cols, int spacing,
+                                        @Nullable BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
+        addCustomIngredientSlots(builder, nutrient.size(), role, startX, startY, slotSize, rows, cols, spacing, (b, i) -> {
+            b.addIngredient(NUTRIENT_INGREDIENT, nutrient.get(i));
             if (slotConfigurator != null) {
-                slotConfigurator.accept(s, i);
+                slotConfigurator.accept(b, i);
             }
         });
     }
@@ -142,11 +153,11 @@ public final class JeiUtil {
                                      int timeXStart, int timeYStart, int timeWidth, int timeHeight,
                                      int fireXStart, int fireYStart, int fireWidth, int fireHeight,
                                      int containerXStart, int containerYStart, int containerWidth, int containerHeight) {
-        addTooltipIfInArea(mouseX, mouseY, tooltipString, timeXStart, timeYStart, timeWidth, timeHeight, getComponent("jei.gui." + Customized.MODID + ".cook_time", recipe.getCookingTime() / 20));
+        addTooltipIfInArea(mouseX, mouseY, tooltipString, timeXStart, timeYStart, timeWidth, timeHeight, C_JEI_GUI.create("cook_time", recipe.getCookingTime() / 20));
         if (recipe.isHeated()) {
-            addTooltipIfInArea(mouseX, mouseY, tooltipString, fireXStart, fireYStart, fireWidth, fireHeight, getComponent("jei.gui." + Customized.MODID + ".fire"));
+            addTooltipIfInArea(mouseX, mouseY, tooltipString, fireXStart, fireYStart, fireWidth, fireHeight, C_JEI_GUI.create("fire"));
         }
-        addTooltipIfInArea(mouseX, mouseY, tooltipString, containerXStart, containerYStart, containerWidth, containerHeight, getComponent("jei.gui." + Customized.MODID + ".container"));
+        addTooltipIfInArea(mouseX, mouseY, tooltipString, containerXStart, containerYStart, containerWidth, containerHeight, C_JEI_GUI.create("container"));
     }
 
     public static void addTooltipIfInArea(double mouseX, double mouseY, List<Component> tooltipString,
@@ -158,14 +169,18 @@ public final class JeiUtil {
 
     public static void addJeiInfo(IRecipeRegistration registration, Supplier<Item> item) {
         registration.addIngredientInfo(new ItemStack(item.get()), VanillaTypes.ITEM_STACK,
-                getComponent("jei.info." + Customized.MODID + "." + BuiltInRegistries.ITEM.getKey(item.get()).getPath()));
+                C_JEI_INFO.create(BuiltInRegistries.ITEM.getKey(item.get()).getPath()));
     }
 
     public static void registerJeiInfoForItemTag(IRecipeRegistration registration, TagKey<Item> itemTag) {
         List<ItemStack> stackList = BuiltInRegistries.ITEM.getTag(itemTag).stream().flatMap(HolderSet.ListBacked::stream)
                 .map(holder -> new ItemStack(holder.value())).toList();
         if (stackList.isEmpty()) return;
-        Component description = getComponent("jei.info." + Customized.MODID + "." + itemTag.location().getPath().replace('/', '.'));
+        Component description = C_JEI_INFO.create(itemTag.location().getPath().replace('/', '.'));
         registration.addIngredientInfo(stackList, VanillaTypes.ITEM_STACK, description);
+    }
+
+    public static MutableComponent getProbabilityComponent(float probability) {
+        return C_JEI_GUI.create("probability", formatPercent(probability, 2)).withStyle(ChatFormatting.AQUA);
     }
 }

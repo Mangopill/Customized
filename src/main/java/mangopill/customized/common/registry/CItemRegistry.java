@@ -12,8 +12,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.LinkedHashSet;
 import java.util.function.Supplier;
 
+import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.common.util.RegistryUtil.*;
-import static mangopill.customized.common.util.StringUtil.getCLoc;
 
 public final class CItemRegistry {
     public static final DeferredRegister.Items ITEM = DeferredRegister.createItems(Customized.MODID);

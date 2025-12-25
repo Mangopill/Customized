@@ -1,11 +1,10 @@
 package mangopill.customized.client.event.block;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import mangopill.customized.client.util.strategy.*;
+import mangopill.customized.client.util.strategy.RenderSimpleAdjustItemStack;
 import mangopill.customized.common.block.entity.CrateBlockEntity;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.*;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;

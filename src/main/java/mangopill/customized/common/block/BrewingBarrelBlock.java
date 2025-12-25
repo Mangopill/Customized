@@ -1,7 +1,7 @@
 package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
-import mangopill.customized.common.block.entity.*;
+import mangopill.customized.common.block.entity.BrewingBarrelBlockEntity;
 import mangopill.customized.common.registry.CBlockEntityTypeRegistry;
 import net.minecraft.core.*;
 import net.minecraft.sounds.SoundEvents;
@@ -12,10 +12,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -52,8 +50,7 @@ public class BrewingBarrelBlock extends BaseEntityBlock implements CSimpleIntera
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        if (level.isClientSide) return null;
-        return createTickerHelper(blockEntityType, CBlockEntityTypeRegistry.BREWING_BARREL.get(), BrewingBarrelBlockEntity::cookingTick);
+        return level.isClientSide ? null : createTickerHelper(blockEntityType, CBlockEntityTypeRegistry.BREWING_BARREL.get(), BrewingBarrelBlockEntity::cookingTick);
     }
 
     @Override

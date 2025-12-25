@@ -1,13 +1,10 @@
 package mangopill.customized.integration.jei.category;
 
-import mangopill.customized.Customized;
 import mangopill.customized.common.recipe.CrateRecipe;
-import mangopill.customized.common.registry.CBlockRegistry;
-import mangopill.customized.common.registry.CItemRegistry;
+import mangopill.customized.common.registry.*;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.builder.ITooltipBuilder;
-import mezz.jei.api.gui.drawable.*;
+import mezz.jei.api.gui.builder.*;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.*;
@@ -17,15 +14,15 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.*;
 
+import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
-import static mangopill.customized.common.util.StringUtil.*;
 import static mangopill.customized.integration.jei.util.JeiUtil.*;
 
 public class CrateRecipeCategory extends CRecipeCategory<CrateRecipe> {
 
     public CrateRecipeCategory(IGuiHelper helper) {
         super(CRATE, getCPngLoc("textures/gui/crate"));
-        title = getComponent(CBlockRegistry.CRATE.get().getDescriptionId());
+        title = CBlockRegistry.CRATE.get().getName();
         background = helper.createDrawable(image, 4, 4, 77, 65);
         icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(CItemRegistry.CRATE.get()));
         drive = helper.createDrawable(image, 85, 0, 16, 16);
@@ -41,9 +38,9 @@ public class CrateRecipeCategory extends CRecipeCategory<CrateRecipe> {
     @Override
     public void getTooltip(ITooltipBuilder tooltip, CrateRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         List<Component> tooltipString = new ArrayList<>();
-        addTooltipIfInArea(mouseX, mouseY, tooltipString, 59, 22, 15, 22, getComponent("jei.gui." + Customized.MODID + ".cook_time", recipe.cookingTime() / 20));
+        addTooltipIfInArea(mouseX, mouseY, tooltipString, 59, 22, 15, 22, C_JEI_GUI.create("cook_time", recipe.cookingTime() / 20));
         if (recipe.sunny()) {
-            addTooltipIfInArea(mouseX, mouseY, tooltipString, 59, 0, 16, 16, getComponent("jei.gui." + Customized.MODID + ".sunny"));
+            addTooltipIfInArea(mouseX, mouseY, tooltipString, 59, 0, 16, 16, C_JEI_GUI.create("sunny"));
         }
         tooltip.addAll(tooltipString);
     }

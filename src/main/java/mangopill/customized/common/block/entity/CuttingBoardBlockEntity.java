@@ -1,10 +1,8 @@
 package mangopill.customized.common.block.entity;
 
-import mangopill.customized.Customized;
 import mangopill.customized.common.block.handler.CuttingBoardItemHandler;
-import mangopill.customized.common.recipe.*;
-import mangopill.customized.common.registry.CBlockEntityTypeRegistry;
-import mangopill.customized.common.registry.CRecipeRegistry;
+import mangopill.customized.common.recipe.CuttingBoardRecipe;
+import mangopill.customized.common.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -12,9 +10,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -23,7 +20,7 @@ import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import java.util.Optional;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 public class CuttingBoardBlockEntity extends CBasicCookingBlockEntity<CuttingBoardRecipe> {
     private final IItemHandler inputAndOutputHandler;
@@ -49,7 +46,7 @@ public class CuttingBoardBlockEntity extends CBasicCookingBlockEntity<CuttingBoa
         Optional<CuttingBoardRecipe> matchRecipe = getMatchRecipe(wrapper);
         if (!itemStackHandler.getStackInSlot(0).isEmpty() && !itemStackInHand.isEmpty()) {
             if (matchRecipe.isEmpty() || matchRecipe.get().toolItem().stream().noneMatch(ingredient -> ingredient.test(itemStackInHand))) {
-                player.displayClientMessage(getComponent("message." + Customized.MODID + ".cutting_board"), true);
+                player.displayClientMessage(C_MESSAGE.create("cutting_board"), true);
                 return;
             }
             if (times <= 0) {
@@ -63,7 +60,10 @@ public class CuttingBoardBlockEntity extends CBasicCookingBlockEntity<CuttingBoa
                 totalTimes = 0;
             }
             matchRecipe.get().output().forEach(itemStack -> spawnItemEntity(level, itemStack.copy(), state, pos));
-            matchRecipe.get().probabilityOutput().stream().filter(itemStack -> level.random.nextFloat() < matchRecipe.get().probability()).forEach(itemStack -> spawnItemEntity(level, itemStack.copy(), state, pos));
+            matchRecipe.get().probabilityOutput().stream()
+                    .filter(itemStack -> level.random.nextFloat() < itemStack.probability())
+                    .flatMap(itemStack -> itemStack.probabilityStackList().stream())
+                    .forEach(stack -> spawnItemEntity(level, stack.copy(), state, pos));
             hurtAndBreakItemStack(itemStackInHand, player, 1);
             times--;
             itemStackHandlerChanged();

@@ -3,8 +3,7 @@ package mangopill.customized.common.util.record;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.codec.*;
 
 public record ConsumptionCountRecord(int consumptionCount) {
     public static final ConsumptionCountRecord NULL = new ConsumptionCountRecord(0);

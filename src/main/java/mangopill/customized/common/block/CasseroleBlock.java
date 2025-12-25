@@ -1,22 +1,18 @@
 package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
-import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
-import mangopill.customized.common.block.entity.CasseroleBlockEntity;
+import mangopill.customized.common.block.entity.*;
 import mangopill.customized.common.block.record.PotRecord;
 import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.registry.CSoundRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.*;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.*;
 
 import static mangopill.customized.common.CustomizedConfig.*;
 
@@ -24,38 +20,38 @@ public class CasseroleBlock extends AbstractPotBlock{
     public static final MapCodec<CasseroleBlock> CODEC = simpleCodec(CasseroleBlock::new);
 
     protected static final VoxelShape BLOCK_SHAPE_WITHOUT_LID = Shapes.or(
-            Block.box(13, 1, 3, 14, 3, 13),
-            Block.box(1, 3, 2, 2, 8, 14),
-            Block.box(0.5, 8, 2, 1.5, 9, 14),
-            Block.box(1, 8, 1, 2, 9, 2),
-            Block.box(1, 8, 14, 2, 9, 15),
-            Block.box(14, 8, 14, 15, 9, 15),
-            Block.box(14, 8, 1, 15, 9, 2),
-            Block.box(14.5, 8, 2, 15.5, 9, 14),
-            Block.box(14, 3, 2, 15, 8, 14),
-            Block.box(2, 8, 0.5, 14, 9, 1.5),
-            Block.box(2, 8, 14.5, 14, 9, 15.5),
-            Block.box(3, 1, 2, 13, 3, 3),
-            Block.box(2, 3, 1, 14, 8, 2),
-            Block.box(2, 3, 14, 14, 8, 15),
-            Block.box(3, 1, 13, 13, 3, 14),
-            Block.box(2, 1, 3, 3, 3, 13),
-            Block.box(3, 0, 3, 13, 1, 13),
-            Block.box(2, 2, 2, 3, 3, 3),
-            Block.box(2, 2, 13, 3, 3, 14),
-            Block.box(13, 2, 13, 14, 3, 14),
-            Block.box(13, 2, 2, 14, 3, 3)
+            Block.box(13.0D, 1.0D, 3.0D, 14.0D, 3.0D, 13.0D),
+            Block.box(1.0D, 3.0D, 2.0D, 2.0D, 8.0D, 14.0D),
+            Block.box(0.5D, 8.0D, 2.0D, 1.5D, 9.0D, 14.0D),
+            Block.box(1.0D, 8.0D, 1.0D, 2.0D, 9.0D, 2.0D),
+            Block.box(1.0D, 8.0D, 14.0D, 2.0D, 9.0D, 15.0D),
+            Block.box(14.0D, 8.0D, 14.0D, 15.0D, 9.0D, 15.0D),
+            Block.box(14.0D, 8.0D, 1.0D, 15.0D, 9.0D, 2.0D),
+            Block.box(14.5D, 8.0D, 2.0D, 15.5D, 9.0D, 14.0D),
+            Block.box(14.0D, 3.0D, 2.0D, 15.0D, 8.0D, 14.0D),
+            Block.box(2.0D, 8.0D, 0.5D, 14.0D, 9.0D, 1.5D),
+            Block.box(2.0D, 8.0D, 14.5D, 14.0D, 9.0D, 15.5D),
+            Block.box(3.0D, 1.0D, 2.0D, 13.0D, 3.0D, 3.0D),
+            Block.box(2.0D, 3.0D, 1.0D, 14.0D, 8.0D, 2.0D),
+            Block.box(2.0D, 3.0D, 14.0D, 14.0D, 8.0D, 15.0D),
+            Block.box(3.0D, 1.0D, 13.0D, 13.0D, 3.0D, 14.0D),
+            Block.box(2.0D, 1.0D, 3.0D, 3.0D, 3.0D, 13.0D),
+            Block.box(3.0D, 0.0D, 3.0D, 13.0D, 1.0D, 13.0D),
+            Block.box(2.0D, 2.0D, 2.0D, 3.0D, 3.0D, 3.0D),
+            Block.box(2.0D, 2.0D, 13.0D, 3.0D, 3.0D, 14.0D),
+            Block.box(13.0D, 2.0D, 13.0D, 14.0D, 3.0D, 14.0D),
+            Block.box(13.0D, 2.0D, 2.0D, 14.0D, 3.0D, 3.0D)
     );
     protected static final VoxelShape BLOCK_SHAPE_WITH_LID = Shapes.or(
             BLOCK_SHAPE_WITHOUT_LID,
-            Block.box(12, 8, 4, 14, 8.5, 12),
-            Block.box(2, 8, 2, 14, 8.5, 4),
-            Block.box(4, 8.5, 4, 12, 9, 12),
-            Block.box(2, 8, 4, 4, 8.5, 12),
-            Block.box(2, 8, 12, 14, 8.5, 14),
-            Block.box(6.5, 9.5, 6.5, 9.5, 10, 9.5),
-            Block.box(7, 9.5, 7, 9, 10.5, 9),
-            Block.box(7, 9, 7, 9, 9.5, 9)
+            Block.box(12.0D, 8.0D, 4.0D, 14.0D, 8.5D, 12.0D),
+            Block.box(2.0D, 8.0D, 2.0D, 14.0D, 8.5D, 4.0D),
+            Block.box(4.0D, 8.5D, 4.0D, 12.0D, 9.0D, 12.0D),
+            Block.box(2.0D, 8.0D, 4.0D, 4.0D, 8.5D, 12.0D),
+            Block.box(2.0D, 8.0D, 12.0D, 14.0D, 8.5D, 14.0D),
+            Block.box(6.5D, 9.5D, 6.5D, 9.5D, 10.0D, 9.5D),
+            Block.box(7.0D, 9.5D, 7.0D, 9.0D, 10.5D, 9.0D),
+            Block.box(7.0D, 9.0D, 7.0D, 9.0D, 9.5D, 9.0D)
     );
 
     public CasseroleBlock(Properties properties) {

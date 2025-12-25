@@ -15,37 +15,37 @@ public class SteamerBlock extends AbstractPotBlock{
     public static final MapCodec<SteamerBlock> CODEC = simpleCodec(SteamerBlock::new);
 
     protected static final VoxelShape BLOCK_SHAPE_WITHOUT_LID = Shapes.or(
-            Block.box(0, 0, 0, 16, 2, 16),
-            Block.box(1, 2, 2, 2, 6, 14),
-            Block.box(14, 2, 2, 15, 6, 14),
-            Block.box(2, 2, 1, 14, 6, 2),
-            Block.box(2, 2, 14, 14, 6, 15),
-            Block.box(15, 6, 2, 16, 7, 14),
-            Block.box(0, 6, 2, 1, 7, 14),
-            Block.box(2, 6, 0, 14, 7, 1),
-            Block.box(2, 6, 15, 14, 7, 16),
-            Block.box(1, 6, 2, 2, 11, 14),
-            Block.box(14, 6, 2, 15, 11, 14),
-            Block.box(2, 6, 1, 14, 11, 2),
-            Block.box(2, 6, 14, 14, 11, 15),
-            Block.box(1.95, 5, 1.95, 13.95, 6, 13.95)
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D),
+            Block.box(1.0D, 2.0D, 2.0D, 2.0D, 6.0D, 14.0D),
+            Block.box(14.0D, 2.0D, 2.0D, 15.0D, 6.0D, 14.0D),
+            Block.box(2.0D, 2.0D, 1.0D, 14.0D, 6.0D, 2.0D),
+            Block.box(2.0D, 2.0D, 14.0D, 14.0D, 6.0D, 15.0D),
+            Block.box(15.0D, 6.0D, 2.0D, 16.0D, 7.0D, 14.0D),
+            Block.box(0.0D, 6.0D, 2.0D, 1.0D, 7.0D, 14.0D),
+            Block.box(2.0D, 6.0D, 0.0D, 14.0D, 7.0D, 1.0D),
+            Block.box(2.0D, 6.0D, 15.0D, 14.0D, 7.0D, 16.0D),
+            Block.box(1.0D, 6.0D, 2.0D, 2.0D, 11.0D, 14.0D),
+            Block.box(14.0D, 6.0D, 2.0D, 15.0D, 11.0D, 14.0D),
+            Block.box(2.0D, 6.0D, 1.0D, 14.0D, 11.0D, 2.0D),
+            Block.box(2.0D, 6.0D, 14.0D, 14.0D, 11.0D, 15.0D),
+            Block.box(1.95D, 5.0D, 1.95D, 13.95D, 6.0D, 13.95D)
     );
     protected static final VoxelShape BLOCK_SHAPE_WITH_LID = Shapes.or(
             BLOCK_SHAPE_WITHOUT_LID,
-            Block.box(2, 11.05, 2, 14, 11.55, 14),
-            Block.box(4, 11.05, 2, 12, 11.55, 4),
-            Block.box(4, 11.05, 12, 12, 11.55, 14),
-            Block.box(2, 11.05, 2, 4, 11.55, 14),
-            Block.box(12, 11.05, 2, 14, 11.55, 14),
-            Block.box(4, 11.55, 4, 12, 12.05, 12),
-            Block.box(14.5, 11, 2, 15.5, 12, 14),
-            Block.box(0.5, 11, 2, 1.5, 12, 14),
-            Block.box(2, 11, 0.5, 14, 12, 1.5),
-            Block.box(2, 11, 14.5, 14, 12, 15.5),
-            Block.box(14, 11, 1, 15, 12, 2),
-            Block.box(14, 11, 14, 15, 12, 15),
-            Block.box(1, 11, 1, 2, 12, 2),
-            Block.box(1, 11, 14, 2, 12, 15)
+            Block.box(2.0D, 11.05D, 2.0D, 14.0D, 11.55D, 14.0D),
+            Block.box(4.0D, 11.05D, 2.0D, 12.0D, 11.55D, 4.0D),
+            Block.box(4.0D, 11.05D, 12.0D, 12.0D, 11.55D, 14),
+            Block.box(2.0D, 11.05D, 2.0D, 4.0D, 11.55D, 14.0D),
+            Block.box(12.0D, 11.05D, 2.0D, 14.0D, 11.55D, 14.0D),
+            Block.box(4.0D, 11.55D, 4.0D, 12.0D, 12.05D, 12.0D),
+            Block.box(14.5D, 11.0D, 2.0D, 15.5D, 12.0D, 14.0D),
+            Block.box(0.5D, 11.0D, 2.0D, 1.5D, 12.0D, 14.0D),
+            Block.box(2.0D, 11.0D, 0.5D, 14.0D, 12.0D, 1.5D),
+            Block.box(2.0D, 11.0D, 14.5D, 14.0D, 12.0D, 15.5D),
+            Block.box(14.0D, 11.0D, 1.0D, 15.0D, 12.0D, 2.0D),
+            Block.box(14.0D, 11.0D, 14.0D, 15.0D, 12.0D, 15.0D),
+            Block.box(1.0D, 11.0D, 1.0D, 2.0D, 12.0D, 2.0D),
+            Block.box(1.0D, 11.0D, 14.0D, 2.0D, 12.0D, 15.0D)
     );
 
     public SteamerBlock(Properties properties) {

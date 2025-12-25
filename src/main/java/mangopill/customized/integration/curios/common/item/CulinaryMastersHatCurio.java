@@ -1,6 +1,5 @@
 package mangopill.customized.integration.curios.common.item;
 
-import mangopill.customized.Customized;
 import mangopill.customized.common.recipe.NutrientBuffRecipe;
 import mangopill.customized.common.registry.CRecipeRegistry;
 import net.minecraft.ChatFormatting;
@@ -8,14 +7,11 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.*;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.neoforged.neoforge.common.extensions.IItemStackExtension;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
@@ -24,7 +20,7 @@ import java.util.*;
 
 import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.integration.curios.CuriosRegistry.*;
 
 public class CulinaryMastersHatCurio implements ICurioItem {
     private static final int TICK_INTERVAL = 5000;
@@ -60,8 +56,8 @@ public class CulinaryMastersHatCurio implements ICurioItem {
         player.addEffect(new MobEffectInstance(selectedBuff, random.nextInt(RANDOM_DURATION), random.nextInt(RANDOM_AMPLIFIER)));
         waitTick = 0;
         if (!CULINARY_MASTERS_HAT_MESSAGE.get()) return;
-        player.displayClientMessage(getComponent("curios.message.customized.culinary_masters_hat.meals_blessing",
-                getComponent(selectedBuff.value().getDescriptionId())), true);
+        player.displayClientMessage(C_CURIOS_MESSAGE.create("culinary_masters_hat.meals_blessing",
+                selectedBuff.value().getDisplayName()), true);
         if (player.level() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, player.getX(), player.getY() + 0.5D, player.getZ(), 10, 0.0D, 0.0D, 0.0D, 0.05D);
         }
@@ -81,7 +77,7 @@ public class CulinaryMastersHatCurio implements ICurioItem {
         int newDamage = Math.max(0, itemToRepair.getDamageValue() - random.nextInt(SATIETY_RENEWAL_FIX));
         itemToRepair.setDamageValue(newDamage);
         if (!CULINARY_MASTERS_HAT_MESSAGE.get()) return;
-        player.displayClientMessage(getComponent("curios.message.customized.culinary_masters_hat.satiety_renewal",
+        player.displayClientMessage(C_CURIOS_MESSAGE.create("culinary_masters_hat.satiety_renewal",
                 Component.empty().append(itemToRepair.getDisplayName())), true);
         player.level().playSound(null, player, SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.6F, 0.6F);
     }
@@ -94,12 +90,12 @@ public class CulinaryMastersHatCurio implements ICurioItem {
     @Override
     public List<Component> getSlotsTooltip(List<Component> tooltips, Item.TooltipContext context, ItemStack stack) {
         List<Component> newTooltips = new ArrayList<>(tooltips);
-        newTooltips.add(getComponent("curios.tooltip." + Customized.MODID + ".culinary_masters_hat.hunger_protection_title").withStyle(ChatFormatting.GOLD)
-                .append(getComponent("curios.tooltip." + Customized.MODID + ".culinary_masters_hat.hunger_protection_text").withStyle(ChatFormatting.YELLOW)));
-        newTooltips.add(getComponent("curios.tooltip." + Customized.MODID + ".culinary_masters_hat.meals_blessing_title").withStyle(ChatFormatting.GOLD)
-                .append(getComponent("curios.tooltip." + Customized.MODID + ".culinary_masters_hat.meals_blessing_text").withStyle(ChatFormatting.YELLOW)));
-        newTooltips.add(getComponent("curios.tooltip." + Customized.MODID + ".culinary_masters_hat.satiety_renewal_title").withStyle(ChatFormatting.GOLD)
-                .append(getComponent("curios.tooltip." + Customized.MODID + ".culinary_masters_hat.satiety_renewal_text").withStyle(ChatFormatting.YELLOW)));
+        newTooltips.add(C_CURIOS_TOOLTIP.create("culinary_masters_hat.hunger_protection_title").withStyle(ChatFormatting.GOLD)
+                .append(C_CURIOS_TOOLTIP.create("culinary_masters_hat.hunger_protection_text").withStyle(ChatFormatting.YELLOW)));
+        newTooltips.add(C_CURIOS_TOOLTIP.create("culinary_masters_hat.meals_blessing_title").withStyle(ChatFormatting.GOLD)
+                .append(C_CURIOS_TOOLTIP.create("culinary_masters_hat.meals_blessing_text").withStyle(ChatFormatting.YELLOW)));
+        newTooltips.add(C_CURIOS_TOOLTIP.create("culinary_masters_hat.satiety_renewal_title").withStyle(ChatFormatting.GOLD)
+                .append(C_CURIOS_TOOLTIP.create("culinary_masters_hat.satiety_renewal_text").withStyle(ChatFormatting.YELLOW)));
         return newTooltips;
     }
 }

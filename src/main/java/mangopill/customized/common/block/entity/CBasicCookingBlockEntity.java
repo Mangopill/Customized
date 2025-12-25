@@ -1,10 +1,8 @@
 package mangopill.customized.common.block.entity;
 
-import mangopill.customized.common.recipe.*;
-import mangopill.customized.common.util.CreateItemStackHandler;
-import mangopill.customized.common.util.CItemStackHandlerHelper;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
+import mangopill.customized.common.recipe.CRecipeInterface;
+import mangopill.customized.common.util.*;
+import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.*;
@@ -14,15 +12,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
@@ -55,20 +51,22 @@ public abstract class CBasicCookingBlockEntity<T extends CRecipeInterface<Recipe
     }
 
     public static <C extends CBasicCookingBlockEntity<?>> void cookingTick(Level level, BlockPos pos, BlockState state, C blockEntity) {
+        if (blockEntity.level == null) return;
         RecipeWrapper wrapper = new RecipeWrapper(blockEntity.itemStackHandler);
         blockEntity.cookingTick(level, pos, state, wrapper);
-        blockEntity.itemStackHandlerChanged();
     }
 
     public void cookingTick(Level level, BlockPos pos, BlockState state, RecipeWrapper wrapper) {
         Optional<T> matchRecipe = getMatchRecipe(wrapper);
         if (matchRecipe.isEmpty() || !canCookRecipe(matchRecipe.get(),wrapper) || !hasInput()) return;
         cookRecipe(level, matchRecipe.get(), pos, state);
+        itemStackHandlerChanged();
     }
 
     abstract protected void cookRecipe(Level level, T recipe, BlockPos pos, BlockState state);
 
     protected boolean canCookRecipe(T recipe, RecipeWrapper recipeWrapper) {
+        assert level != null;
         ItemStack resultStack = recipe.getResultItem(level.registryAccess());
         return !resultStack.isEmpty() && recipe.matches(recipeWrapper, level);
     }
@@ -105,11 +103,8 @@ public abstract class CBasicCookingBlockEntity<T extends CRecipeInterface<Recipe
     }
 
     public List<ItemStack> getItemStackListInBlockEntity(boolean includeOutput) {
-        if (includeOutput){
-            return CItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, allSlot);
-        } else {
-            return CItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, inputSlot);
-        }
+        return includeOutput ? CItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, allSlot)
+                : CItemStackHandlerHelper.getItemStackListInSlot(itemStackHandler, 0, inputSlot);
     }
 
     @Override

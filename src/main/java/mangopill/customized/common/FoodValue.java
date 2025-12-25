@@ -1,20 +1,18 @@
 package mangopill.customized.common;
 
 import mangopill.customized.common.registry.CEffectRegistry;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.effect.*;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Items;
 
 public class FoodValue {
+    public static final int SHORT = 2400;
+    public static final int MEDIUM = 4800;
+
     public static final FoodProperties EMPTY = new FoodProperties.Builder()
             .alwaysEdible().build();
     public static final FoodProperties INEDIBLE = new FoodProperties.Builder()
-            .nutrition(4).saturationModifier(0.5F)
-            .build();
-
-    public static final int SHORT = 2400;
-    public static final int MEDIUM = 4800;
+            .nutrition(4).saturationModifier(0.5F).build();
 
     public static final FoodProperties TOMATO = new FoodProperties.Builder()
             .nutrition(2).saturationModifier(0.2F).build();

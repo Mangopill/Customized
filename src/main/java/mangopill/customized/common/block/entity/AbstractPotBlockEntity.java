@@ -1,19 +1,16 @@
 package mangopill.customized.common.block.entity;
 
-import mangopill.customized.common.block.handler.PotFluidHandler;
-import mangopill.customized.common.block.handler.PotItemHandler;
+import mangopill.customized.common.block.handler.*;
 import mangopill.customized.common.block.record.PotRecord;
 import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.item.AbstractPlateItem;
 import mangopill.customized.common.recipe.AbstractPotRecipe;
-import mangopill.customized.common.registry.*;
+import mangopill.customized.common.registry.CAdvancementRegistry;
 import mangopill.customized.common.tag.ModTag;
-import mangopill.customized.common.util.CreateItemStackHandler;
-import mangopill.customized.common.util.CItemStackHandlerHelper;
+import mangopill.customized.common.util.*;
 import mangopill.customized.common.util.record.UUIDRecord;
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.*;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -25,11 +22,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.fluids.*;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
@@ -38,11 +34,12 @@ import java.util.*;
 
 import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.block.AbstractPotBlock.*;
-import static mangopill.customized.common.util.CompoundTagHelper.*;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.RecipeUtil.*;
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CItemStackHandlerHelper.getConsumptionCount;
+import static mangopill.customized.common.util.CStringUtil.*;
+import static mangopill.customized.common.util.CompoundTagHelper.*;
 import static mangopill.customized.common.util.PropertyValueUtil.*;
+import static mangopill.customized.common.util.RecipeUtil.*;
 import static mangopill.customized.common.util.component.ItemComponentUtil.*;
 
 public abstract class AbstractPotBlockEntity extends BlockEntity implements CreateItemStackHandler {
@@ -148,6 +145,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     }
 
     protected boolean canCookRecipe(AbstractPotRecipe recipe, RecipeWrapper recipeWrapper) {
+        assert level != null;
         ItemStack resultStack = recipe.getResultItem(level.registryAccess());
         containerItem = recipe.getContainerItem();
         if (resultStack.isEmpty()) return false;
@@ -164,6 +162,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         lidAccelerate(state);
         if (cookingTime < cookingCompletionTime) return;
         if (!containsSameItem(List.of(containerItem.getItems()), itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + spiceInput))) return;
+        assert level != null;
         ItemStack resultStack = recipe.getResultItem(level.registryAccess()).copy();
         spawnItemEntity(level, resultStack.copy(), state, pos);
         for (int i = 0; i < ingredientInput + seasoningInput + spiceInput + OUTPUT; ++i) {

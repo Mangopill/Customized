@@ -1,39 +1,32 @@
 package mangopill.customized.common.item;
 
-import mangopill.customized.Customized;
 import mangopill.customized.common.entity.projectile.KnifeEntity;
 import mangopill.customized.common.registry.CSoundRegistry;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.*;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.*;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Unit;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Tool;
-import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.*;
+import net.minecraft.world.level.storage.loot.parameters.*;
 
 import java.util.List;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 import static net.minecraft.world.item.BowItem.*;
 
 public class KnifeItem extends TieredItem implements ProjectileItem, ThrowableIItem {
@@ -152,7 +145,7 @@ public class KnifeItem extends TieredItem implements ProjectileItem, ThrowableII
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(getComponent("item_text." + Customized.MODID + ".loot_chance_level", String.format("%.2f", chanceLevel * 100)).append("%").withStyle(ChatFormatting.GREEN));
+        tooltipComponents.add(getItemTextLootChanceLevelComponent(chanceLevel));
         tooltipComponents.add(component);
     }
 }

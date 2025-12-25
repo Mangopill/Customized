@@ -9,12 +9,10 @@ import net.minecraft.sounds.*;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.*;
 
 import static mangopill.customized.common.CustomizedConfig.*;
 
@@ -23,7 +21,7 @@ public class RoasterBlock extends AbstractPotBlock {
     public static final MapCodec<RoasterBlock> CODEC = simpleCodec(RoasterBlock::new);
 
     protected static final VoxelShape BLOCK_SHAPE = Shapes.or(
-            Block.box(0, 0, 0, 16, 16, 16)
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)
     );
 
     public RoasterBlock(Properties properties) {

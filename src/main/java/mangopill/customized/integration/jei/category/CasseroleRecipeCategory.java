@@ -2,30 +2,27 @@ package mangopill.customized.integration.jei.category;
 
 import mangopill.customized.common.block.record.PotRecord;
 import mangopill.customized.common.recipe.CasseroleRecipe;
-import mangopill.customized.common.registry.CBlockRegistry;
-import mangopill.customized.common.registry.CItemRegistry;
+import mangopill.customized.common.registry.*;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.builder.ITooltipBuilder;
-import mezz.jei.api.gui.drawable.*;
+import mezz.jei.api.gui.builder.*;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.recipe.*;
+import mezz.jei.api.recipe.IFocusGroup;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.integration.jei.util.JeiUtil.*;
 
 public class CasseroleRecipeCategory extends CRecipeCategory<CasseroleRecipe> {
 
     public CasseroleRecipeCategory(IGuiHelper helper) {
         super(CASSEROLE, getCPngLoc("textures/gui/casserole"));
-        title = getComponent(CBlockRegistry.CASSEROLE.get().getDescriptionId());
+        title = CBlockRegistry.CASSEROLE.get().getName();
         background = helper.createDrawable(image, 4, 4, 108, 99);
         icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(CItemRegistry.CASSEROLE.get()));
         fluidOverlay = helper.createDrawable(image, 117, 0, 12, 12);

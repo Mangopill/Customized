@@ -10,11 +10,10 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.Level;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AuraOfCulinaryArtsEnchantmentEffectRenderer<T extends Player, M extends PlayerModel<T>> extends RenderLayer<T, M> {
     public static final Map<String, AuraOfCulinaryArtsEnchantmentEffect.CulinaryAuraData> CLIENT_AURA_DATA = new HashMap<>();

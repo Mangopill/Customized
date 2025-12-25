@@ -1,19 +1,17 @@
 package mangopill.customized.integration.jei;
 
 import mangopill.customized.common.recipe.serializer.NutrientCategorySerializer;
-import mangopill.customized.common.registry.CItemRegistry;
-import mangopill.customized.common.registry.CRecipeRegistry;
+import mangopill.customized.common.registry.*;
 import mangopill.customized.common.tag.ModTag;
 import mangopill.customized.integration.jei.category.*;
-import mangopill.customized.integration.jei.ingredient.NutrientIngredientHelper;
-import mangopill.customized.integration.jei.ingredient.NutrientIngredientRenderer;
+import mangopill.customized.integration.jei.ingredient.*;
 import mezz.jei.api.*;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.registration.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.integration.jei.category.PropertyValueRecipeCategory.PropertyValueRecipeAdapter.*;
 import static mangopill.customized.integration.jei.util.JeiUtil.*;
 

@@ -2,7 +2,7 @@ package mangopill.customized.common.block.capabilities;
 
 import mangopill.customized.Customized;
 import mangopill.customized.common.item.CBucketItem;
-import mangopill.customized.common.registry.*;
+import mangopill.customized.common.registry.CItemRegistry;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.*;

@@ -4,7 +4,7 @@ import mangopill.customized.common.block.CrateBlock;
 import mangopill.customized.common.block.handler.CrateItemHandler;
 import mangopill.customized.common.recipe.CrateRecipe;
 import mangopill.customized.common.registry.*;
-import mangopill.customized.common.util.record.*;
+import mangopill.customized.common.util.record.ItemStackHandlerRecord;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
@@ -14,8 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.*;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 import java.util.List;

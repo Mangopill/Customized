@@ -14,7 +14,7 @@ public class PlatterBlock extends AbstractPlateBlock {
     public static final MapCodec<PlatterBlock> CODEC = simpleCodec(PlatterBlock::new);
 
     protected static final VoxelShape BLOCK_SHAPE = Shapes.or(
-            Block.box(4, 0, 4, 12, 1, 12)
+            Block.box(4.0D, 0.0D, 4.0D, 12.0D, 1.0D, 12.0D)
     );
 
     public PlatterBlock(Properties properties) {

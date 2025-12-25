@@ -3,8 +3,7 @@ package mangopill.customized.common.registry;
 import mangopill.customized.Customized;
 import mangopill.customized.common.entity.projectile.KnifeEntity;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.*;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;

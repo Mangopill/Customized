@@ -1,6 +1,6 @@
 package mangopill.customized.common.effect.combination;
 
-import mangopill.customized.common.effect.*;
+import mangopill.customized.common.effect.CMobEffect;
 import net.minecraft.world.entity.LivingEntity;
 
 /**

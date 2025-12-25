@@ -1,12 +1,10 @@
 package mangopill.customized.common.recipe;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.item.crafting.*;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public interface CRecipeInterface<T extends RecipeInput> extends Recipe<T> {
     @Override

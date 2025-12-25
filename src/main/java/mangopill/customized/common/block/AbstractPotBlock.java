@@ -12,19 +12,14 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.block.state.properties.*;
+import net.minecraft.world.level.material.*;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.*;
 
 import javax.annotation.Nullable;
-
 import java.util.List;
 
 import static mangopill.customized.common.block.state.PotState.*;
@@ -52,8 +47,8 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         if (!state.getValue(LID).equals(PotState.WITHOUT_LID)) {
-            if (level.isClientSide) return createTickerHelper(blockEntityType, setBlockEntity(), AbstractPotBlockEntity::animationTick);
-            return createTickerHelper(blockEntityType, setBlockEntity(), AbstractPotBlockEntity::cookingTick);
+            return level.isClientSide ? createTickerHelper(blockEntityType, setBlockEntity(), AbstractPotBlockEntity::animationTick)
+                    : createTickerHelper(blockEntityType, setBlockEntity(), AbstractPotBlockEntity::cookingTick);
         }
         return null;
     }
@@ -87,15 +82,6 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
-        return switch (state.getValue(LID)){
-            case WITHOUT_LID -> setShapeWithoutLid();
-            case WITH_LID -> setShapeWithLid();
-            case WITH_DRIVE -> setShapeWithDrive();
-        };
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(LID)){
             case WITHOUT_LID -> setShapeWithoutLid();
             case WITH_LID -> setShapeWithLid();

@@ -5,17 +5,15 @@ import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.AbstractPotBlock;
 import mangopill.customized.common.block.state.PotState;
 import mangopill.customized.common.item.*;
-import mangopill.customized.common.registry.*;
+import mangopill.customized.common.registry.CDataComponentRegistry;
 import mangopill.customized.common.util.record.ItemStackHandlerRecord;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.*;
@@ -23,8 +21,7 @@ import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.function.Supplier;
-import java.util.function.ToIntFunction;
+import java.util.function.*;
 
 import static mangopill.customized.common.registry.CItemRegistry.*;
 

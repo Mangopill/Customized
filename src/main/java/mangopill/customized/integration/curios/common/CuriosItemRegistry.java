@@ -1,8 +1,7 @@
 package mangopill.customized.integration.curios.common;
 
 import mangopill.customized.Customized;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;

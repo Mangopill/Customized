@@ -1,10 +1,8 @@
 package mangopill.customized.integration.jei.category;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import mangopill.customized.Customized;
 import mangopill.customized.common.recipe.*;
-import mangopill.customized.common.registry.CItemRegistry;
-import mangopill.customized.common.registry.CRecipeRegistry;
+import mangopill.customized.common.registry.*;
 import mangopill.customized.common.util.value.PropertyValue;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -22,8 +20,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.*;
 import java.util.stream.*;
 
+import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.common.util.PropertyValueUtil.*;
-import static mangopill.customized.common.util.StringUtil.*;
 import static mangopill.customized.integration.jei.util.JeiUtil.*;
 
 public class PropertyValueRecipeCategory extends CRecipeCategory<PropertyValueRecipeCategory.PropertyValueRecipeAdapter> {
@@ -33,7 +31,7 @@ public class PropertyValueRecipeCategory extends CRecipeCategory<PropertyValueRe
 
     public PropertyValueRecipeCategory(IGuiHelper helper) {
         super(PROPERTY_VALUE, getCPngLoc("textures/gui/property_value"));
-        title = getComponent("jei.category." + Customized.MODID + ".property_value");
+        title = C_JEI_CATEGORY.create("property_value");
         background = helper.createDrawable(image, 4, 4, 180, 92);
         icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(CItemRegistry.CHEF_HAT.get()));
     }
@@ -44,7 +42,7 @@ public class PropertyValueRecipeCategory extends CRecipeCategory<PropertyValueRe
         List<List<NutrientCategoryRecipe>> nutrientList = getNutrientCategorySubList(recipe);
         int spacing = 48;
         for (int i = 0; i < Math.min(nutrientList.size(), PAGE_COLS); i++) {
-            addNutrientSlots(builder, nutrientList.get(i), RecipeIngredientRole.OUTPUT, 36 + (i * spacing), 2, SLOT_SIZE, 5, 1, 0, null);
+            addNutrientSlots(builder, nutrientList.get(i), RecipeIngredientRole.OUTPUT, 36 + (i * spacing), 2, SLOT_SIZE, PAGE_ROWS, 1, 0, null);
         }
     }
 
@@ -57,7 +55,7 @@ public class PropertyValueRecipeCategory extends CRecipeCategory<PropertyValueRe
             List<NutrientCategoryRecipe> categoryRecipes = nutrientList.get(i);
             for (int j = 0; j < categoryRecipes.size(); j++) {
                 NutrientCategoryRecipe categoryRecipe = categoryRecipes.get(j);
-                Component component = getComponent(Stream.of(recipe.propertyValue.getValue()).map(map -> map.get(categoryRecipe.name())).toList().getFirst().toString()).append("%")
+                Component component = translate(Stream.of(recipe.propertyValue.getValue()).map(map -> map.get(categoryRecipe.name())).toList().getFirst().toString()).append("%")
                         .withStyle(ChatFormatting.ITALIC)
                         .withStyle(ChatFormatting.UNDERLINE);
                 PoseStack poseStack = guiGraphics.pose();

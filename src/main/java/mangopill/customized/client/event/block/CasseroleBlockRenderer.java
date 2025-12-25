@@ -6,8 +6,7 @@ import mangopill.customized.common.block.AbstractPotBlock;
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.state.PotState;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.*;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;

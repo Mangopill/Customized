@@ -8,7 +8,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 public class NutrientCategorySerializer implements RecipeSerializer<NutrientCategoryRecipe> {
     public static final MapCodec<NutrientCategoryRecipe> CODEC = RecordCodecBuilder.mapCodec(

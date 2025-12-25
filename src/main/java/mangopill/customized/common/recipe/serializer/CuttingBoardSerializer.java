@@ -1,15 +1,14 @@
 package mangopill.customized.common.recipe.serializer;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import mangopill.customized.common.recipe.*;
+import mangopill.customized.common.item.crafting.ProbabilityItemStack;
+import mangopill.customized.common.recipe.CuttingBoardRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.*;
 
 public class CuttingBoardSerializer implements RecipeSerializer<CuttingBoardRecipe> {
     public static final MapCodec<CuttingBoardRecipe> CODEC = RecordCodecBuilder.mapCodec(
@@ -17,8 +16,7 @@ public class CuttingBoardSerializer implements RecipeSerializer<CuttingBoardReci
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(CuttingBoardRecipe::cuttingItem),
                     NonNullList.codecOf(Ingredient.CODEC_NONEMPTY).fieldOf("tool").forGetter(CuttingBoardRecipe::toolItem),
                     NonNullList.codecOf(ItemStack.STRICT_CODEC).optionalFieldOf("result", NonNullList.of(ItemStack.EMPTY)).forGetter(CuttingBoardRecipe::output),
-                    NonNullList.codecOf(ItemStack.STRICT_CODEC).optionalFieldOf("additional_result", NonNullList.of(ItemStack.EMPTY)).forGetter(CuttingBoardRecipe::probabilityOutput),
-                    Codec.FLOAT.optionalFieldOf("additional_result_probability", 0.0F).forGetter(CuttingBoardRecipe::probability),
+                    NonNullList.codecOf(ProbabilityItemStack.CODEC).optionalFieldOf("additional_result", NonNullList.of(ProbabilityItemStack.EMPTY)).forGetter(CuttingBoardRecipe::probabilityOutput),
                     Codec.INT.optionalFieldOf("times", 1).forGetter(CuttingBoardRecipe::cuttingTimes)
             ).apply(instance, CuttingBoardRecipe::new));
 
@@ -43,11 +41,10 @@ public class CuttingBoardSerializer implements RecipeSerializer<CuttingBoardReci
         NonNullList<ItemStack> result = NonNullList.withSize(resultLength, ItemStack.EMPTY);
         result.replaceAll(r -> ItemStack.STREAM_CODEC.decode(buffer));
         int additionalResultLength = buffer.readVarInt();
-        NonNullList<ItemStack> additionalResult = NonNullList.withSize(additionalResultLength, ItemStack.EMPTY);
-        additionalResult.replaceAll(a -> ItemStack.STREAM_CODEC.decode(buffer));
-        float additionalResultProbability = buffer.readFloat();
+        NonNullList<ProbabilityItemStack> additionalResult = NonNullList.withSize(additionalResultLength, ProbabilityItemStack.EMPTY);
+        additionalResult.replaceAll(p -> ProbabilityItemStack.STREAM_CODEC.decode(buffer));
         int times = buffer.readVarInt();
-        return new CuttingBoardRecipe(ingredient, tool, result, additionalResult, additionalResultProbability, times);
+        return new CuttingBoardRecipe(ingredient, tool, result, additionalResult, times);
     }
 
     private static void toNetwork(RegistryFriendlyByteBuf buffer, CuttingBoardRecipe recipe) {
@@ -61,10 +58,9 @@ public class CuttingBoardSerializer implements RecipeSerializer<CuttingBoardReci
             ItemStack.STREAM_CODEC.encode(buffer, output);
         }
         buffer.writeVarInt(recipe.probabilityOutput().size());
-        for (ItemStack additionalResult : recipe.probabilityOutput()) {
-            ItemStack.STREAM_CODEC.encode(buffer, additionalResult);
+        for (ProbabilityItemStack additionalResult : recipe.probabilityOutput()) {
+            ProbabilityItemStack.STREAM_CODEC.encode(buffer, additionalResult);
         }
-        buffer.writeFloat(recipe.probability());
         buffer.writeVarInt(recipe.cuttingTimes());
     }
 }

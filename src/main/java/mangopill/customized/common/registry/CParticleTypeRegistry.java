@@ -1,8 +1,7 @@
 package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.particles.*;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredRegister;
 

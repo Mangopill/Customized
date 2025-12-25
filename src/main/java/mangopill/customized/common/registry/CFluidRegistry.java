@@ -2,9 +2,9 @@ package mangopill.customized.common.registry;
 
 import mangopill.customized.Customized;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.material.*;
-import net.neoforged.neoforge.fluids.*;
-import net.neoforged.neoforge.registries.*;
+import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 

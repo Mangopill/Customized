@@ -2,10 +2,8 @@ package mangopill.customized.common.recipe;
 
 import com.google.common.collect.ImmutableList;
 import mangopill.customized.common.recipe.serializer.PropertyValueSerializer;
-import mangopill.customized.common.registry.CRecipeRegistry;
-import mangopill.customized.common.registry.CRecipeSerializerRegistry;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
+import mangopill.customized.common.registry.*;
+import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
@@ -13,8 +11,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 public record PropertyValueRecipe(List<PropertyValueSerializer.PropertyValueGroup> groups) implements CRecipeInterface<RecipeInput> {
 

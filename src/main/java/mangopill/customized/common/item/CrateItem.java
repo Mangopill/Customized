@@ -1,15 +1,14 @@
 package mangopill.customized.common.item;
 
 import mangopill.customized.common.util.CItemStackHandlerHelper;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 import java.util.function.Supplier;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.component.ItemComponentUtil.getItemStackHandler;
+import static mangopill.customized.common.util.component.ItemComponentUtil.*;
 
 public class CrateItem extends BlockItem {
     public CrateItem(Supplier<Block> block, Properties properties) {

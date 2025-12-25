@@ -3,8 +3,7 @@ package mangopill.customized.common.block;
 import mangopill.customized.common.block.entity.CBrushableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BrushableBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 

@@ -3,26 +3,22 @@ package mangopill.customized.common.block;
 import com.mojang.serialization.MapCodec;
 import mangopill.customized.common.registry.CItemRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.phys.shapes.*;
 
 public class SichuanPepperCropBlock extends CropBlock {
     public static final MapCodec<SichuanPepperCropBlock> CODEC = simpleCodec(SichuanPepperCropBlock::new);
     private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
-            Block.box(4.0, 0.0, 4.0, 12.0, 7.0, 12.0),
-            Block.box(4.0, 0.0, 4.0, 12.0, 7.0, 12.0),
-            Block.box(4.0, 0.0, 4.0, 12.0, 11.0, 12.0),
-            Block.box(4.0, 0.0, 4.0, 12.0, 11.0, 12.0),
-            Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0),
-            Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0),
-            Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0),
-            Block.box(1.0, 0.0, 1.0, 15.0, 15.0, 15.0),
+            Block.box(4.0D, 0.0D, 4.0D, 12.0D, 7.0D, 12.0D),
+            Block.box(4.0D, 0.0D, 4.0D, 12.0D, 7.0D, 12.0D),
+            Block.box(4.0D, 0.0D, 4.0D, 12.0D, 11.0D, 12.0D),
+            Block.box(4.0D, 0.0D, 4.0D, 12.0D, 11.0D, 12.0D),
+            Block.box(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D),
+            Block.box(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D),
+            Block.box(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D),
+            Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D),
     };
 
     @Override

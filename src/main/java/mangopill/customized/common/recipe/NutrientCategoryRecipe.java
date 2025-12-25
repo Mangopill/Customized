@@ -1,7 +1,6 @@
 package mangopill.customized.common.recipe;
 
-import mangopill.customized.common.registry.CRecipeRegistry;
-import mangopill.customized.common.registry.CRecipeSerializerRegistry;
+import mangopill.customized.common.registry.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
@@ -9,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 public record NutrientCategoryRecipe(ResourceLocation icon, String name, String color, float nutrition, float saturation) implements CRecipeInterface<RecipeInput> {
 

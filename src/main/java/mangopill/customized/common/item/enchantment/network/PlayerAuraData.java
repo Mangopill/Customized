@@ -2,14 +2,12 @@ package mangopill.customized.common.item.enchantment.network;
 
 import io.netty.buffer.ByteBuf;
 import mangopill.customized.common.item.enchantment.AuraOfCulinaryArtsEnchantmentEffect;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.codec.*;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 
 public record PlayerAuraData(
         Map<String, AuraOfCulinaryArtsEnchantmentEffect.CulinaryAuraData> playerAuraData) implements CustomPacketPayload {

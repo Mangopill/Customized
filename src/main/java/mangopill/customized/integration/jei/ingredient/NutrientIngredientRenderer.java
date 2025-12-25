@@ -2,7 +2,6 @@ package mangopill.customized.integration.jei.ingredient;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import mangopill.customized.Customized;
 import mangopill.customized.common.recipe.NutrientCategoryRecipe;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.ingredients.IIngredientRenderer;
@@ -13,7 +12,8 @@ import net.minecraft.world.item.TooltipFlag;
 
 import java.util.*;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
+import static mangopill.customized.integration.jei.util.JeiUtil.*;
 
 public class NutrientIngredientRenderer implements IIngredientRenderer<NutrientCategoryRecipe> {
 
@@ -36,8 +36,8 @@ public class NutrientIngredientRenderer implements IIngredientRenderer<NutrientC
 
     @Override
     public void getTooltip(ITooltipBuilder tooltip, NutrientCategoryRecipe recipe, TooltipFlag tooltipFlag) {
-        tooltip.add(getComponent("property." + Customized.MODID + ".nutrient_category." + recipe.name()).withStyle(ChatFormatting.BOLD).withColor(recipe.getColorWithAlpha()));
-        tooltip.add(getComponent("jei.gui." + Customized.MODID + ".nutrition", recipe.nutrition()).withStyle(ChatFormatting.GOLD));
-        tooltip.add(getComponent("jei.gui." + Customized.MODID + ".saturation", recipe.saturation()).withStyle(ChatFormatting.GOLD));
+        tooltip.add(getPropertyNutrientCategoryComponent(recipe.name()).withStyle(ChatFormatting.BOLD).withColor(recipe.getColorWithAlpha()));
+        tooltip.add(C_JEI_GUI.create("nutrition", recipe.nutrition()).withStyle(ChatFormatting.GOLD));
+        tooltip.add(C_JEI_GUI.create("saturation", recipe.saturation()).withStyle(ChatFormatting.GOLD));
     }
 }

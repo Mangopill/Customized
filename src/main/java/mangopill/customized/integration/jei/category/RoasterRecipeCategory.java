@@ -1,7 +1,7 @@
 package mangopill.customized.integration.jei.category;
 
 import mangopill.customized.common.block.record.PotRecord;
-import mangopill.customized.common.recipe.*;
+import mangopill.customized.common.recipe.RoasterRecipe;
 import mangopill.customized.common.registry.*;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.*;
@@ -15,14 +15,14 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.*;
 
-import static mangopill.customized.common.util.StringUtil.*;
+import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.integration.jei.util.JeiUtil.*;
 
 public class RoasterRecipeCategory extends CRecipeCategory<RoasterRecipe> {
 
     public RoasterRecipeCategory(IGuiHelper helper) {
         super(ROASTER, getCPngLoc("textures/gui/roaster"));
-        title = getComponent(CBlockRegistry.ROASTER.get().getDescriptionId());
+        title = CBlockRegistry.ROASTER.get().getName();
         background = helper.createDrawable(image, 4, 4, 108, 121);
         icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(CItemRegistry.ROASTER.get()));
         drive = helper.createDrawable(image, 117, 14, 11, 11);

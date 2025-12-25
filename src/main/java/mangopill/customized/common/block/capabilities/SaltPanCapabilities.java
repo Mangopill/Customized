@@ -5,8 +5,7 @@ import mangopill.customized.common.block.handler.SaltPanFluidHandler;
 import mangopill.customized.common.registry.CBlockRegistry;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.capabilities.*;
 
 @EventBusSubscriber(modid = Customized.MODID)
 public class SaltPanCapabilities {

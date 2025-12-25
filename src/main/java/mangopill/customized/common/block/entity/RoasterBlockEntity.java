@@ -3,7 +3,7 @@ package mangopill.customized.common.block.entity;
 import mangopill.customized.common.block.record.PotRecord;
 import mangopill.customized.common.block.state.PotState;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.*;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 

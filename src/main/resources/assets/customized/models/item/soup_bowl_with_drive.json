@@ -2,9 +2,6 @@
 	"credit": "Made with Blockbench",
 	"parent": "builtin/entity",
 	"textures": {
-		"0": "customized:block/soup_bowl_bottom",
-		"1": "customized:block/soup_bowl_side",
-		"2": "minecraft:block/water_still",
 		"particle": "customized:block/soup_bowl_bottom"
 	},
 	"display": {

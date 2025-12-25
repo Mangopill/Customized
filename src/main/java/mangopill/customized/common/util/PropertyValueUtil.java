@@ -5,20 +5,19 @@ import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.recipe.*;
 import mangopill.customized.common.recipe.serializer.PropertyValueSerializer;
 import mangopill.customized.common.registry.CRecipeRegistry;
-import mangopill.customized.common.util.value.*;
+import mangopill.customized.common.util.value.PropertyValue;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.*;
 import java.util.*;
 import java.util.stream.Collectors;
 

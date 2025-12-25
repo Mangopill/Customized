@@ -3,13 +3,11 @@ package mangopill.customized.common.util.record;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.codec.*;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public record ItemStackHandlerRecord(ItemStackHandler itemStackHandler) {
     public static final ItemStackHandlerRecord EMPTY = new ItemStackHandlerRecord(new ItemStackHandler());

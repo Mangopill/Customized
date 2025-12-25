@@ -3,7 +3,7 @@ package mangopill.customized.client.event.block;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mangopill.customized.client.util.strategy.*;
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.*;
 import net.minecraft.world.item.ItemStack;
 

@@ -9,7 +9,7 @@ import mangopill.customized.common.util.record.UUIDRecord;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.*;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -22,8 +22,8 @@ import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 import java.util.*;
 
-import static mangopill.customized.common.util.CompoundTagHelper.*;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.CompoundTagHelper.*;
 
 public class BrewingBarrelBlockEntity extends CBasicCookingBlockEntity<BrewingBarrelRecipe> {
     private final IItemHandler inputAndOutputHandler;

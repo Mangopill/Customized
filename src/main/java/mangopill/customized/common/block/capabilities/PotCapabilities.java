@@ -4,8 +4,7 @@ import mangopill.customized.Customized;
 import mangopill.customized.common.block.record.PotRecord;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.capabilities.*;
 
 @EventBusSubscriber(modid = Customized.MODID)
 public class PotCapabilities {

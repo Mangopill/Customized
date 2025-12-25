@@ -3,13 +3,12 @@ package mangopill.customized.client.event.player;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mangopill.customized.client.util.strategy.RenderHatModelStrategy;
 import mangopill.customized.common.item.CHatItem;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
 
 import static mangopill.customized.client.util.ClientUtil.*;
