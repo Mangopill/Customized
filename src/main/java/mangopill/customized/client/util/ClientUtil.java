@@ -32,6 +32,18 @@ public final class ClientUtil {
                 (stack.getItem() instanceof AbstractPlateItem plate && plate.hasInput(stack)) ? 1.0F : 0.0F);
     }
 
+    public static void renderByStrategy(PoseStack poseStack, MultiBufferSource buffer,
+                                        int light, int overlay, Collection<IRenderStrategy> strategies) {
+        for (IRenderStrategy iRenderStrategy : strategies) {
+            iRenderStrategy.render(poseStack, buffer, light, overlay);
+        }
+    }
+
+    public static void renderByStrategy(PoseStack poseStack, MultiBufferSource buffer,
+                                        int light, int overlay, IRenderStrategy... strategies) {
+        renderByStrategy(poseStack, buffer, light, overlay, Arrays.asList(strategies));
+    }
+
     public static void renderBlockEntityByStrategy(BlockEntity blockEntity, PoseStack poseStack, MultiBufferSource buffer,
                                  int light, int overlay, IRenderStrategy... strategies) {
         renderBlockEntityByStrategy(blockEntity, poseStack, buffer, light, overlay, Arrays.asList(strategies));
@@ -41,9 +53,7 @@ public final class ClientUtil {
                                                    int light, int overlay, Collection<IRenderStrategy> strategies) {
         Level level = blockEntity.getLevel();
         if (level == null) return;
-        for (IRenderStrategy iRenderStrategy : strategies) {
-            iRenderStrategy.render(poseStack, buffer, light, overlay);
-        }
+        renderByStrategy(poseStack, buffer, light, overlay, strategies);
     }
 
     public static void renderItemStackByStrategy(PoseStack poseStack, MultiBufferSource buffer,
@@ -54,9 +64,7 @@ public final class ClientUtil {
     public static void renderItemStackByStrategy(PoseStack poseStack, MultiBufferSource buffer,
                                             int light, int overlay, Collection<IRenderStrategy> strategies) {
         if (Minecraft.getInstance().player == null) return;
-        for (IRenderStrategy iRenderStrategy : strategies) {
-            iRenderStrategy.render(poseStack, buffer, light, overlay);
-        }
+        renderByStrategy(poseStack, buffer, light, overlay, strategies);
     }
 
     // Specific rendering implementation for brewing barrels.

@@ -20,6 +20,7 @@ import static mangopill.customized.common.util.LootTableUtil.*;
 public abstract class ItemReplaceMixin{
     @Unique
     private int customized$life = 200;
+
     @Inject(at = @At("HEAD"), method = "tick")
     public void customized$itemReplace(CallbackInfo ci) {
         ItemEntity itemEntity = (ItemEntity)(Object)this;
