@@ -16,7 +16,6 @@ import net.neoforged.neoforge.items.*;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.BiPredicate;
-import java.util.stream.Stream;
 
 import static mangopill.customized.common.util.InteractUtil.*;
 import static mangopill.customized.common.util.component.ItemMatchMode.*;
@@ -226,9 +225,8 @@ public final class CItemStackHandlerHelper {
         if (stackList.isEmpty()) return ItemStack.EMPTY;
         ItemStack minStack = stackList.getFirst();
         for (ItemStack stack : stackList) {
-            if (stack.getCount() < minStack.getCount()) {
-                minStack = stack;
-            }
+            if (stack.getCount() >= minStack.getCount()) continue;
+            minStack = stack;
         }
         return minStack;
     }
@@ -275,7 +273,6 @@ public final class CItemStackHandlerHelper {
         return containsSameItem(itemStackList, targetStack, SAME_ITEM);
     }
 
-
     /**
      * Checks if a collection contains an item that matches the target stack according to the specified match mode.
      * <p>
@@ -287,10 +284,7 @@ public final class CItemStackHandlerHelper {
      * @return true if a matching item is found, false otherwise
      */
     public static boolean containsSameItem(Collection<ItemStack> itemStackList, ItemStack targetStack, ItemMatchMode matchMode) {
-        for (ItemStack stack : itemStackList) {
-            if (simpleTest(stack, targetStack, matchMode)) return true;
-        }
-        return false;
+        return itemStackList.stream().anyMatch(stack -> simpleTest(stack, targetStack, matchMode));
     }
 
     /**
@@ -332,7 +326,6 @@ public final class CItemStackHandlerHelper {
     public static List<ItemStack> getTopTwoItemsByCount(Collection<ItemStack> itemStackList) {
         Map<Item, Integer> itemCountMap = new HashMap<>();
         for (ItemStack itemStack : itemStackList) {
-            if (itemStack == null) continue;
             Item item = itemStack.getItem();
             int count = itemStack.getCount();
             itemCountMap.put(item, itemCountMap.getOrDefault(item, 0) + count);
@@ -347,8 +340,43 @@ public final class CItemStackHandlerHelper {
      * @return The sum of counts from all non-empty ItemStacks in the list, or 0 if the list is empty
      */
     public static int getTotalItemCount(Collection<ItemStack> stackList) {
-        if (stackList.isEmpty()) return 0;
-        return stackList.stream().filter(stack -> !stack.isEmpty()).mapToInt(ItemStack::getCount).sum();
+        return stackList.isEmpty() ? 0 : stackList.stream().filter(stack -> !stack.isEmpty()).mapToInt(ItemStack::getCount).sum();
+    }
+
+    /**
+     * @see #getTotalCountOf(Collection, Collection, ItemMatchMode)
+     */
+    public static int getTotalCountOf(Collection<ItemStack> itemStackList, ItemStack targetStack, ItemMatchMode matchMode) {
+        return getTotalCountOf(itemStackList, List.of(targetStack), matchMode);
+    }
+
+    /**
+     * @see #getTotalCountOf(Collection, Collection, ItemMatchMode)
+     */
+    public static int getTotalCountOf(Collection<ItemStack> itemStackList, Ingredient ingredient, ItemMatchMode matchMode) {
+        return getTotalCountOf(itemStackList, List.of(ingredient.getItems()), matchMode);
+    }
+
+    /**
+     * Calculates the total count of items that match any of the target items in a collection.
+     * <p>
+     * This method is useful when you need to count multiple types of items together.
+     * For example, counting all types of wood logs or all types of dyes.
+     * @param itemStackList The collection of ItemStacks to search
+     * @param targetStacks The collection of ItemStacks to match against
+     * @param matchMode The match mode to use for comparison
+     * @return The total count of matching items
+     */
+    public static int getTotalCountOf(Collection<ItemStack> itemStackList, Collection<ItemStack> targetStacks, ItemMatchMode matchMode) {
+        int totalCount = 0;
+        for (ItemStack stack : itemStackList) {
+            for (ItemStack targetStack : targetStacks) {
+                if (!simpleTest(stack, targetStack, matchMode)) continue;
+                totalCount += stack.getCount();
+                break;
+            }
+        }
+        return totalCount;
     }
 
     /**
@@ -364,12 +392,12 @@ public final class CItemStackHandlerHelper {
      * @param pos The position to spawn entities at
      */
     public static void spawnUsingConvertsTo(Level level, Collection<ItemStack> stackList, BlockState state, BlockPos pos) {
-        List<ItemStack> spawnList = stackList.stream().flatMap(itemStack -> {
+        List<ItemStack> spawnList = stackList.stream().map(itemStack -> {
             Optional<ItemStack> optionalItem = Optional.ofNullable(itemStack.getFoodProperties(null))
                     .flatMap(FoodProperties::usingConvertsTo);
             ItemStack finalItem = optionalItem.orElseGet(itemStack::getCraftingRemainingItem);
             finalItem.setCount(itemStack.getCount());
-            return Stream.of(finalItem);
+            return finalItem;
         }).toList();
         spawnItemEntityList(level, spawnList, state, pos);
     }
