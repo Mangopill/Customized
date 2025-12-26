@@ -27,6 +27,7 @@ import java.util.List;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.CStringUtil.*;
+import static mangopill.customized.common.util.InteractUtil.*;
 import static net.minecraft.world.item.BowItem.*;
 
 public class KnifeItem extends TieredItem implements ProjectileItem, ThrowableIItem {
@@ -66,7 +67,7 @@ public class KnifeItem extends TieredItem implements ProjectileItem, ThrowableII
             LootTable lootTable = level.getServer().reloadableRegistries().getLootTable(lootTableId);
             List<ItemStack> lootItems = lootTable.getRandomItems(lootParams);
             lootItems.forEach(itemStack -> itemStack.setCount(1));
-            lootItems.forEach(itemStack -> spawnItemEntity(level, itemStack, null, animal.blockPosition()));
+            spawnItemEntityList(level, lootItems, null, animal.blockPosition());
             level.playSound(null, animal.blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.5F, 1.0F);
         }
         return true;

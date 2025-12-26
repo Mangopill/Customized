@@ -24,6 +24,7 @@ import java.util.*;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.CompoundTagHelper.*;
+import static mangopill.customized.common.util.InteractUtil.*;
 
 public class BrewingBarrelBlockEntity extends CBasicCookingBlockEntity<BrewingBarrelRecipe> {
     private final IItemHandler inputAndOutputHandler;
@@ -42,7 +43,7 @@ public class BrewingBarrelBlockEntity extends CBasicCookingBlockEntity<BrewingBa
         ++cookingTime;
         getRecipeCookingCompletionTime(recipe);
         if (cookingTime < cookingCompletionTime) return;
-        Block block = level.getBlockState(pos).getBlock();
+        Block block = state.getBlock();
         if (!(block instanceof BrewingBarrelBlock)) return;
         if (state.getValue(BrewingBarrelBlock.PROGRESS) < 12){
             clearCookingTimeAndUpdate(pos, state, state.getValue(BrewingBarrelBlock.PROGRESS) + 1);

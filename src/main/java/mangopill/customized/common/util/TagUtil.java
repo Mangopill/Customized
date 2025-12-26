@@ -9,8 +9,7 @@ import net.minecraft.world.level.material.Fluid;
 import static mangopill.customized.common.util.CStringUtil.*;
 
 public final class TagUtil {
-    private TagUtil() {
-    }
+    private TagUtil() {}
 
     public static TagKey<Block> basicCommonBlockTag(String string) {
         return BlockTags.create(ResourceLocation.withDefaultNamespace(string));

@@ -26,8 +26,7 @@ import java.util.function.*;
 import static mangopill.customized.common.registry.CItemRegistry.*;
 
 public final class RegistryUtil {
-    private RegistryUtil() {
-    }
+    private RegistryUtil() {}
 
     public static Item.Properties basicItemProperties() {
         return new Item.Properties();

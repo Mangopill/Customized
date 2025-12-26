@@ -16,8 +16,7 @@ import static mangopill.customized.common.util.PropertyValueUtil.*;
 
 @OnlyIn(Dist.CLIENT)
 public final class TintingUtil {
-    private TintingUtil() {
-    }
+    private TintingUtil() {}
 
     public static int getPlateBlockWaterColor(BlockAndTintGetter getter, BlockState state, BlockPos pos) {
         if (!(state.getBlock() instanceof AbstractPlateBlock)) return -1;

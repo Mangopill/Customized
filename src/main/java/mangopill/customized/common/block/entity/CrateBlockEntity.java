@@ -20,6 +20,7 @@ import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import java.util.List;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.component.ItemMatchMode.*;
 
 public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
     private final IItemHandler inputAndOutputHandler;
@@ -55,7 +56,7 @@ public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
 
     @Override
     public void insertItem(ItemStack itemStackInHand) {
-        if (!hasInput() || ItemStack.isSameItemSameComponents(getItemStackListInBlockEntity(true).getFirst(), itemStackInHand)) {
+        if (!hasInput() || simpleTest(getItemStackListInBlockEntity(true).getFirst(), itemStackInHand, SAME_ITEM_SAME_COMPONENTS)) {
             super.insertItem(itemStackInHand);
         }
     }

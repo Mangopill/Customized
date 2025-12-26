@@ -9,8 +9,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public final class CompoundTagHelper {
-    private CompoundTagHelper() {
-    }
+    private CompoundTagHelper() {}
 
     public static FoodProperties deserializeFoodPropertyNBT(CompoundTag compound) {
         CompoundTag foodPropertyTag = compound.getCompound("FoodProperty");

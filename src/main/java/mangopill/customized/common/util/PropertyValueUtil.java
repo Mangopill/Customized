@@ -26,8 +26,7 @@ import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
 
 public final class PropertyValueUtil {
-    private PropertyValueUtil() {
-    }
+    private PropertyValueUtil() {}
 
     /**
      * Gets the property value of an ItemStack based on registered recipes in the level.

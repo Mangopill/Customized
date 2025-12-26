@@ -16,7 +16,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -38,14 +37,17 @@ import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.getConsumptionCount;
 import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.common.util.CompoundTagHelper.*;
+import static mangopill.customized.common.util.InteractUtil.*;
 import static mangopill.customized.common.util.PropertyValueUtil.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
 import static mangopill.customized.common.util.component.ItemComponentUtil.*;
+import static mangopill.customized.common.util.component.ItemMatchMode.*;
 
 public abstract class AbstractPotBlockEntity extends BlockEntity implements CreateItemStackHandler {
     protected final int ingredientInput;
     protected final int seasoningInput;
     protected final int spiceInput;
+    // Container Output
     public static final int OUTPUT = 1;
     private final boolean canInputDrive;
     protected final int allSlot;
@@ -203,7 +205,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
 
     protected void transferAndSpawn(Level level, List<ItemStack> stackList) {
         ItemStack outputItem = itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + spiceInput);
-        if (outputItem.is(plateItem) && outputItem.getItem() instanceof AbstractPlateItem plate) {
+        if (simpleTest(outputItem, plateItem, SAME_ITEM) && (outputItem.getItem() instanceof AbstractPlateItem plate)) {
             ItemStackHandler newItemStackHandler = plate.copyItemStackHandlerByComponent(outputItem);
             spawnUsingConvertsTo(level, stackList, getBlockState(), getBlockPos());
             stackList.forEach(itemStack -> plate.insertItem(itemStack, newItemStackHandler));
@@ -218,10 +220,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     }
 
     public void takeOutItem(Level level, BlockState state, BlockPos pos) {
-        for (int i = 0; i < ingredientInput + seasoningInput + spiceInput + OUTPUT; i++) {
-            ItemStack stackInSlot = getItemStackHandler().getStackInSlot(i);
-            spawnItemEntity(level, stackInSlot, state, pos);
-        }
+        spawnItemEntityList(level, getItemStackListInPot(true, true), state, pos);
         itemStackHandlerChanged();
     }
 
@@ -263,8 +262,8 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     }
 
     // speed up
-    public void stirFryAccelerate(ItemStack itemStackInHand, Player player, InteractionHand hand, ItemStack spatula){
-        if (!ItemStack.isSameItem(itemStackInHand, spatula)) return;
+    public void stirFryAccelerate(ItemStack itemStackInHand, Player player, ItemStack spatula){
+        if (!simpleTest(itemStackInHand, spatula, SAME_ITEM)) return;
         if (cookingTime > 0) {
             cookingTime += 10;
         }

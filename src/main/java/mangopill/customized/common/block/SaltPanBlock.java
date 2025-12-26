@@ -17,6 +17,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.InteractUtil.*;
+import static mangopill.customized.common.util.component.ItemMatchMode.*;
 
 public class SaltPanBlock extends Block {
     public static final BooleanProperty WITH_WATER = BooleanProperty.create("with_water");
@@ -49,7 +51,7 @@ public class SaltPanBlock extends Block {
 
     protected void shrinkAndGive(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player,
                                  Item shrinkItem, Item giveItem, SoundEvent sound, boolean with_water) {
-        if (itemStackInHand.is(shrinkItem)){
+        if (simpleTest(itemStackInHand, shrinkItem, SAME_ITEM)){
             consumeItemAndGiveToPlayer(itemStackInHand, player, giveItem.getDefaultInstance());
             level.setBlockAndUpdate(pos, state.setValue(WITH_WATER, with_water));
             level.playSound(null, pos, sound, SoundSource.BLOCKS, 0.8F, 1.0F);

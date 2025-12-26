@@ -16,7 +16,7 @@ import net.minecraft.world.phys.shapes.*;
 
 import java.util.function.Supplier;
 
-import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.InteractUtil.*;
 
 public class HandEatReturnContainerBlock extends Block {
     public static final IntegerProperty EAT = IntegerProperty.create("eat", 0, 10);

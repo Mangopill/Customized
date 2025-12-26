@@ -11,8 +11,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import java.util.UUID;
 
 public final class ItemComponentUtil {
-    private ItemComponentUtil() {
-    }
+    private ItemComponentUtil() {}
 
     public static FoodProperties getFoodProperty(MutableDataComponentHolder holder) {
         return holder.getOrDefault(DataComponents.FOOD, FoodValue.EMPTY);

@@ -18,7 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 
 import static mangopill.customized.common.registry.CDamageTypeRegistry.*;
-import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.InteractUtil.*;
 
 public class KnifeEntity extends AbstractArrow {
     private static final EntityDataAccessor<ItemStack> CLIENT_ITEM = SynchedEntityData.defineId(KnifeEntity.class, EntityDataSerializers.ITEM_STACK);

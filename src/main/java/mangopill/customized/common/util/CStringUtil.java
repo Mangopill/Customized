@@ -9,8 +9,7 @@ import net.minecraft.world.effect.*;
 import net.minecraft.world.food.FoodProperties;
 
 public final class CStringUtil {
-    private CStringUtil() {
-    }
+    private CStringUtil() {}
 
     public static ResourceLocation getCLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath(Customized.MODID, path);

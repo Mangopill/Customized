@@ -3,7 +3,7 @@ package mangopill.customized.integration.jei.util;
 import mangopill.customized.Customized;
 import mangopill.customized.common.item.crafting.ProbabilityItemStack;
 import mangopill.customized.common.recipe.*;
-import mangopill.customized.common.util.CStringUtil;
+import mangopill.customized.common.util.*;
 import mangopill.customized.integration.jei.category.PropertyValueRecipeCategory;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.*;
@@ -30,8 +30,7 @@ import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
 
 public final class JeiUtil {
-    private JeiUtil() {
-    }
+    private JeiUtil() {}
 
     public static final CStringUtil.ComponentFactory C_JEI_GUI = (s, a) -> translate("jei" + "." + "gui" + "." + Customized.MODID + "." + s, a);
     public static final CStringUtil.ComponentFactory C_JEI_CATEGORY = (s, a) -> translate("jei" + "." + "category" + "." + Customized.MODID + "." + s, a);
@@ -75,7 +74,7 @@ public final class JeiUtil {
     public static void addCustomIngredientSlots(IRecipeLayoutBuilder builder, int ingredientSize,
                                                 int startX, int startY,
                                                 int slotSize, int rows, int cols, int spacing,
-                                                @Nullable QuadConsumer<IRecipeLayoutBuilder, Integer, Integer, Integer> slotConfigurator) {
+                                                @Nullable FunctionalHelper.QuadConsumer<IRecipeLayoutBuilder, Integer, Integer, Integer> slotConfigurator) {
         cols = rows <= 0 ? Math.max(1, cols) : (cols <= 0 ? (int) Math.ceil((double) ingredientSize / (double) rows) : cols);
         for (int i = 0; i < ((rows <= 0 || cols <= 0) ? ingredientSize : Math.min(ingredientSize, rows * cols)); i++) {
             int row = i / cols;
@@ -86,11 +85,6 @@ public final class JeiUtil {
                 slotConfigurator.accept(builder, i, x, y);
             }
         }
-    }
-
-    @FunctionalInterface
-    public interface QuadConsumer<T, U, V, W> {
-        void accept(T t, U u, V v, W w);
     }
 
     public static void addCustomIngredientSlots(IRecipeLayoutBuilder builder, int ingredientSize,

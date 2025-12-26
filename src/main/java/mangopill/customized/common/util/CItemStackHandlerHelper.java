@@ -2,41 +2,50 @@ package mangopill.customized.common.util;
 
 import mangopill.customized.common.item.AbstractPlateItem;
 import mangopill.customized.common.tag.ModTag;
+import mangopill.customized.common.util.component.ItemMatchMode;
 import net.minecraft.core.*;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
+import static mangopill.customized.common.util.InteractUtil.*;
+import static mangopill.customized.common.util.component.ItemMatchMode.*;
+
 public final class CItemStackHandlerHelper {
-    private CItemStackHandlerHelper() {
+    private CItemStackHandlerHelper() {}
+
+    /**
+     * @see #fillInItem(ItemStackHandler, ItemStack, int, int, ItemMatchMode)
+     */
+    public static void fillInItem(ItemStackHandler itemStackHandler, ItemStack itemStack, int startIndex, int endIndex) {
+        fillInItem(itemStackHandler, itemStack, startIndex, endIndex, SAME_ITEM_SAME_COMPONENTS);
     }
 
     /**
-     * Fills the specified ItemStack into the given slot range of the ItemStackHandler.
+     * Fills items into the specified range of slots in the ItemStackHandler.
      * <p>
-     * This method iterates through the specified slot range and attempts to place the ItemStack into appropriate slots. The processing logic includes:
-     * - If the slot is empty and has sufficient capacity, places the entire ItemStack
-     * - If the slot is empty but has insufficient capacity, places part of the items and continues processing the remainder
-     * - If the slot already contains items that match the target items, attempts to merge the ItemStack
-     * - If the slot contains different items, skips the slot and continues to the next one
-     * @param itemStackHandler The target ItemStackHandler to be filled
-     * @param itemStack The ItemStack to fill (will be modified)
-     * @param startIndex The starting slot index to fill (inclusive)
-     * @param endIndex The ending slot index to fill (exclusive)
+     * This method attempts to insert the given ItemStack into slots within the specified range.
+     * It will first try to merge with existing stacks that match the specified match mode.
+     * If no matching stack is found or there's remaining count, it will fill into empty slots.
+     * The insertion continues until the ItemStack is fully inserted or all slots are processed.
+     * @param itemStackHandler The ItemStackHandler to insert items into
+     * @param itemStack The ItemStack to insert (will be modified during insertion)
+     * @param startIndex The starting slot index (inclusive)
+     * @param endIndex The ending slot index (exclusive)
+     * @param matchMode The matching mode to determine how items should be compared
      */
-    public static void fillInItem(ItemStackHandler itemStackHandler, ItemStack itemStack, int startIndex, int endIndex) {
+    public  static void fillInItem(ItemStackHandler itemStackHandler, ItemStack itemStack,
+                                   int startIndex, int endIndex, ItemMatchMode matchMode) {
         for (int i = startIndex; i < endIndex; i++) {
             ItemStack newItemStackInHand = itemStack.copy();
             ItemStack stackInSlot = itemStackHandler.getStackInSlot(i);
@@ -52,7 +61,7 @@ public final class CItemStackHandlerHelper {
                     itemStackHandler.setStackInSlot(i, newItemStackInHand.split(slotLimit));
                 }
             }else {
-                if (!ItemStack.isSameItemSameComponents(stackInSlot, itemStack)) continue;
+                if (!simpleTest(stackInSlot, itemStack, matchMode)) continue;
                 if (slotLimit >= stackInSlotCount + itemStackInHandCount){
                     stackInSlot.grow(itemStackInHandCount);
                     itemStack.copyAndClear();
@@ -66,46 +75,50 @@ public final class CItemStackHandlerHelper {
     }
 
     /**
-     * Inserts an ItemStack into the appropriate section of the ItemStackHandler based on its type.
-     * <p>
-     * This method routes the ItemStack to different slot ranges depending on its characteristics:
-     * - Seasoning items are inserted into the seasoning section
-     * - Famous spice items are inserted into the spice section
-     * - Container items or plate items are inserted into the output section
-     * - All other items are inserted into the ingredient section
-     * @param itemStackInHand The ItemStack to be inserted
-     * @param itemStackHandler The ItemStackHandler to insert into
-     * @param ingredientInput The starting index and size of the ingredient section
-     * @param seasoningInput The size of the seasoning section
-     * @param spiceInput The size of the spice section
-     * @param outPut The size of the output section
-     * @param containerItem The container ingredient, if any (can be null)
+     * @see #insertItem(ItemStack, ItemStackHandler, int, int, int, int, Ingredient, ItemMatchMode)
      */
-    public static void insertItem(ItemStack itemStackInHand, ItemStackHandler itemStackHandler, int ingredientInput, int seasoningInput, int spiceInput, int outPut, @Nullable Ingredient containerItem) {
-        if (itemStackInHand.is(ModTag.SEASONING)) {
-            fillInItem(itemStackHandler, itemStackInHand, ingredientInput ,ingredientInput + seasoningInput);
-            return;
-        }
-        if (itemStackInHand.is(ModTag.FAMOUS_SPICE)) {
-            fillInItem(itemStackHandler, itemStackInHand,ingredientInput + seasoningInput ,ingredientInput + seasoningInput + spiceInput);
-            return;
-        }
-        if (containerItem != null && ((containsSameItem(List.of(containerItem.getItems()), itemStackInHand)) || itemStackInHand.getItem() instanceof AbstractPlateItem)) {
-            fillInItem(itemStackHandler, itemStackInHand, ingredientInput + seasoningInput + spiceInput, ingredientInput + seasoningInput + spiceInput + outPut);
-            return;
-        }
-        fillInItem(itemStackHandler, itemStackInHand,0, ingredientInput);
+    public static void insertItem(ItemStack itemStackInHand, ItemStackHandler itemStackHandler,
+                                  int ingredientInput, int seasoningInput, int spiceInput, int outPut,
+                                  @Nullable Ingredient containerItem) {
+        insertItem(itemStackInHand, itemStackHandler, ingredientInput, seasoningInput, spiceInput, outPut, containerItem, SAME_ITEM_SAME_COMPONENTS);
     }
 
     /**
-     * Retrieves a list of non-empty ItemStacks from the specified slot range in an ItemStackHandler.
+     * Inserts an item into the appropriate slot category based on item type and tags.
      * <p>
-     * This method iterates through all slots in the given range and collects all non-empty ItemStacks.
-     * Only slots that actually contain items will be included in the returned list; empty slots are skipped.
-     * @param itemStackHandler The ItemStackHandler to retrieve items from
-     * @param startIndex The starting slot index (inclusive)
-     * @param endIndex The ending slot index (exclusive)
-     * @return A list containing all non-empty ItemStacks within the specified slot range
+     * This method categorizes items and inserts them into different sections of the handler:
+     * - Seasoning items (ModTag.SEASONING) go to seasoning input slots
+     * - Famous spice items (ModTag.FAMOUS_SPICE) go to spice input slots
+     * - Container items (if specified) or AbstractPlateItem instances go to output slots
+     * - All other items go to ingredient input slots
+     * @param itemStackInHand The ItemStack to insert
+     * @param itemStackHandler The ItemStackHandler to insert into
+     * @param ingredientInput The number of ingredient input slots
+     * @param seasoningInput The number of seasoning input slots
+     * @param spiceInput The number of spice input slots
+     * @param outPut The number of output slots
+     * @param containerItem Optional ingredient representing allowed container items
+     * @param matchMode The matching mode for item comparison
+     */
+    public static void insertItem(ItemStack itemStackInHand, ItemStackHandler itemStackHandler,
+                                  int ingredientInput, int seasoningInput, int spiceInput, int outPut,
+                                  @Nullable Ingredient containerItem, ItemMatchMode matchMode) {
+        if (itemStackInHand.is(ModTag.SEASONING)) {
+            fillInItem(itemStackHandler, itemStackInHand, ingredientInput, ingredientInput + seasoningInput, matchMode);
+            return;
+        }
+        if (itemStackInHand.is(ModTag.FAMOUS_SPICE)) {
+            fillInItem(itemStackHandler, itemStackInHand, ingredientInput + seasoningInput, ingredientInput + seasoningInput + spiceInput, matchMode);
+            return;
+        }
+        if (containerItem != null && ((containsSameItem(List.of(containerItem.getItems()), itemStackInHand, matchMode)) || itemStackInHand.getItem() instanceof AbstractPlateItem)) {
+            fillInItem(itemStackHandler, itemStackInHand, ingredientInput + seasoningInput + spiceInput, ingredientInput + seasoningInput + spiceInput + outPut, matchMode);
+            return;
+        }
+        fillInItem(itemStackHandler, itemStackInHand, 0, ingredientInput, matchMode);
+    }
+
+    /**
      * @see #getItemStackListInSlot(IItemHandler, int, int, boolean)
      */
     public static List<ItemStack> getItemStackListInSlot(IItemHandler itemStackHandler, int startIndex, int endIndex) {
@@ -122,7 +135,8 @@ public final class CItemStackHandlerHelper {
      * @param includeEmpty Whether to include empty ItemStacks in the returned list
      * @return A list containing ItemStacks within the specified slot range
      */
-    public static List<ItemStack> getItemStackListInSlot(IItemHandler itemStackHandler, int startIndex, int endIndex, boolean includeEmpty){
+    public static List<ItemStack> getItemStackListInSlot(IItemHandler itemStackHandler, int startIndex, int endIndex,
+                                                         boolean includeEmpty){
         List<ItemStack> stackList = new ArrayList<>();
         for (int i = startIndex; i < endIndex; ++i) {
             if (!includeEmpty && itemStackHandler.getStackInSlot(i).isEmpty()) continue;
@@ -172,7 +186,8 @@ public final class CItemStackHandlerHelper {
      * @param initialItemStackHandler The ItemStackHandler containing initial stack counts for calculation
      * @param consumptionCountTotal The divisor used to calculate the reduction amount for each stack
      */
-    public static void reduceItemStackCountByDivision(IItemHandler itemStackHandler, ItemStackHandler initialItemStackHandler, int consumptionCountTotal) {
+    public static void reduceItemStackCountByDivision(IItemHandler itemStackHandler, ItemStackHandler initialItemStackHandler,
+                                                      int consumptionCountTotal) {
         for (int i = 0; i < itemStackHandler.getSlots(); ++i) {
             ItemStack stack = itemStackHandler.getStackInSlot(i);
             ItemStack initialStack = initialItemStackHandler.getStackInSlot(i);
@@ -234,10 +249,7 @@ public final class CItemStackHandlerHelper {
      * @return true if any slot in the range [0, endIndex) is not empty, false otherwise
      */
     public static boolean hasInput(IItemHandler itemStackHandler, int endIndex){
-        for (int i = 0; i < endIndex; ++i) {
-            if (!itemStackHandler.getStackInSlot(i).isEmpty()) return true;
-        }
-        return false;
+        return getNonEmptySlotCount(itemStackHandler, endIndex) > 0;
     }
 
     /**
@@ -257,17 +269,57 @@ public final class CItemStackHandlerHelper {
     }
 
     /**
-     * Checks if the target ItemStack matches any ItemStack in the list by item type and components.
-     * @param itemStackList The list of ItemStacks to search through
-     * @param targetStack The ItemStack to match against
-     * @return true if any ItemStack in the list matches the target by item type and components, false otherwise
+     * @see #containsSameItem(Collection, ItemStack, ItemMatchMode)
      */
     public static boolean containsSameItem(Collection<ItemStack> itemStackList, ItemStack targetStack) {
-        if (itemStackList.isEmpty() && targetStack.isEmpty()) return true;
+        return containsSameItem(itemStackList, targetStack, SAME_ITEM);
+    }
+
+
+    /**
+     * Checks if a collection contains an item that matches the target stack according to the specified match mode.
+     * <p>
+     * This method iterates through the collection and compares each item with the target stack
+     * using the provided match mode's comparison logic.
+     * @param itemStackList The collection of ItemStacks to search
+     * @param targetStack The ItemStack to find a match for
+     * @param matchMode The match mode to use for comparison
+     * @return true if a matching item is found, false otherwise
+     */
+    public static boolean containsSameItem(Collection<ItemStack> itemStackList, ItemStack targetStack, ItemMatchMode matchMode) {
         for (ItemStack stack : itemStackList) {
-            if (ItemStack.isSameItem(stack, targetStack)) return true;
+            if (simpleTest(stack, targetStack, matchMode)) return true;
         }
         return false;
+    }
+
+    /**
+     * @see #test(ItemStack, ItemStack, BiPredicate)
+     */
+    public static boolean simpleTest(ItemStack stack, Item targetItem, ItemMatchMode matchMode) {
+        return test(stack, targetItem.getDefaultInstance(), matchMode.getComparator());
+    }
+
+    /**
+     * @see #test(ItemStack, ItemStack, BiPredicate)
+     */
+    public static boolean simpleTest(ItemStack stack, ItemStack targetStack, ItemMatchMode matchMode) {
+        return test(stack, targetStack, matchMode.getComparator());
+    }
+
+    /**
+     * Tests two ItemStacks using a custom BiPredicate comparator.
+     * <p>
+     * This method serves as a generic test utility that delegates the comparison logic
+     * to the provided BiPredicate. It can be used for various comparison scenarios where
+     * custom matching logic is required beyond the standard ItemMatchMode options.
+     * @param stack The first ItemStack to compare
+     * @param targetStack The second ItemStack to compare against
+     * @param comparator A BiPredicate that defines the comparison logic between two ItemStacks
+     * @return The result of the BiPredicate test applied to the two ItemStacks
+     */
+    public static boolean test(ItemStack stack, ItemStack targetStack, BiPredicate<ItemStack, ItemStack> comparator) {
+        return comparator.test(stack, targetStack);
     }
 
     /**
@@ -319,7 +371,28 @@ public final class CItemStackHandlerHelper {
             finalItem.setCount(itemStack.getCount());
             return Stream.of(finalItem);
         }).toList();
-        spawnList.forEach(craftingRemainingItem -> spawnItemEntity(level, craftingRemainingItem, state, pos));
+        spawnItemEntityList(level, spawnList, state, pos);
+    }
+
+    /**
+     * @see #spawnItemEntityList(Level, Collection, BlockState, Vec3i, UUID)
+     */
+    public static void spawnItemEntityList(Level level, Collection<ItemStack> stackList, @Nullable BlockState state, Vec3i pos) {
+        spawnItemEntityList(level, stackList, state, pos, null);
+    }
+
+    /**
+     * @see #spawnItemEntity(Level, ItemStack, BlockState, Vec3i, UUID)
+     */
+    public static void spawnItemEntityList(Level level, Collection<ItemStack> stackList, @Nullable BlockState state, Vec3i pos, @Nullable UUID uuid) {
+        stackList.forEach(stack -> spawnItemEntity(level, stack, state, pos, uuid));
+    }
+
+    /**
+     * @see #spawnItemEntity(Level, ItemStack, BlockState, Vec3i, UUID)
+     */
+    public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3i pos) {
+        spawnItemEntity(level, stack, state, pos, null);
     }
 
     /**
@@ -333,7 +406,7 @@ public final class CItemStackHandlerHelper {
      * @param pos The base position to spawn at
      * @param uuid Collectible entity
      */
-    public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3 pos, @Nullable UUID uuid) {
+    public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3i pos, @Nullable UUID uuid) {
         if (stack.isEmpty()) return;
         Direction direction = Direction.UP;
         if (state != null) {
@@ -343,47 +416,14 @@ public final class CItemStackHandlerHelper {
                     ? state.getValue(BlockStateProperties.HORIZONTAL_FACING)
                     : Direction.UP;
         }
-        double x = pos.x + 0.5D + (direction.getStepX() * 0.25D);
-        double y = pos.y + 1.0D;
-        double z = pos.z + 0.5D + (direction.getStepZ() * 0.25D);
+        double x = pos.getX() + 0.5D + (direction.getStepX() * 0.25D);
+        double y = pos.getY() + 1.0D;
+        double z = pos.getZ() + 0.5D + (direction.getStepZ() * 0.25D);
         ItemEntity itemEntity = new ItemEntity(level, x, y, z, stack.copy());
         itemEntity.setTarget(uuid);
         itemEntity.setDeltaMovement(direction.getStepX() * -0.1D, 0.45D, direction.getStepZ() * -0.1D);
         level.addFreshEntity(itemEntity);
         stack.copyAndClear();
-    }
-
-    /**
-     * Spawns an item entity in the world at the specified integer position.
-     * <p>
-     * This method converts the integer position to a vector position and delegates to
-     * the main spawn method. See the main method for detailed implementation details.
-     * @see #spawnItemEntity(Level, ItemStack, BlockState, Vec3, UUID)
-     */
-    public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3i pos, @Nullable UUID uuid) {
-        spawnItemEntity(level, stack, state, Vec3.atLowerCornerOf(pos), uuid);
-    }
-
-    /**
-     * Spawns an item entity in the world without entity targeting.
-     * <p>
-     * This method delegates to the main spawn method with a null UUID. See the main method
-     * for detailed implementation details.
-     * @see #spawnItemEntity(Level, ItemStack, BlockState, Vec3, UUID)
-     */
-    public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3 pos) {
-        spawnItemEntity(level, stack, state, pos, null);
-    }
-
-    /**
-     * Spawns an item entity in the world at an integer position without entity targeting.
-     * <p>
-     * This method converts the integer position to a vector position and delegates to
-     * the main spawn method with a null UUID. See the main method for detailed implementation details.
-     * @see #spawnItemEntity(Level, ItemStack, BlockState, Vec3, UUID)
-     */
-    public static void spawnItemEntity(Level level, ItemStack stack, @Nullable BlockState state, Vec3i pos) {
-        spawnItemEntity(level, stack, state, Vec3.atLowerCornerOf(pos), null);
     }
 
     /**
@@ -410,117 +450,41 @@ public final class CItemStackHandlerHelper {
     }
 
     /**
-     * Adds an item stack to the player's inventory, dropping it on the ground if inventory is full
-     * <p>
-     * @param player The target player to receive the item
-     * @param add The item stack to be added to the player's inventory
-     */
-    public static void addItemToPlayer(Player player, ItemStack add) {
-        if (!player.getInventory().add(add)) {
-            player.drop(add, false);
-        }
-    }
-
-    /**
-     * Adds an item stack to the player's inventory only if the player is not in creative mode
-     * If the player is in creative mode, the item is not added
-     * <p>
-     * @param player The target player to receive the item
-     * @param add The item stack to be added to the player's inventory
-     */
-    public static void addItemToPlayerNotCreative(Player player, ItemStack add) {
-        if (!player.isCreative()) {
-            addItemToPlayer(player, add);
-        }
-    }
-
-    /**
-     * Consumes the held item and gives a new item to the player in non-creative mode
-     * If the player is in creative mode, no items are consumed
-     * <p>
-     * @param shrink The item stack currently held by the player (will be consumed)
-     * @param player The target player to receive the new item
-     * @param add The new item stack to be given to the player
-     */
-    public static void consumeItemAndGiveToPlayer(ItemStack shrink, Player player, ItemStack add) {
-        if (!player.isCreative()) {
-            shrinkItemStack(shrink, player, 1);
-            addItemToPlayer(player, add);
-        }
-    }
-
-    /**
-     * Reduces the stack size of an item by the specified amount, unless the entity is a player in creative mode
-     * <p>
-     * @param itemStack The item stack to be shrunk
-     * @param entity The entity that owns the item stack
-     * @param decrement The amount to reduce the stack size by
-     */
-    public static void shrinkItemStack(ItemStack itemStack, LivingEntity entity, int decrement) {
-        if (entity instanceof Player player && player.isCreative()) return;
-        shrinkItemStack(itemStack, decrement);
-    }
-
-    /**
-     * Reduces the stack size of an item by the specified amount
-     * <p>
-     * @param itemStack The item stack to be shrunk
-     * @param decrement The amount to reduce the stack size by
-     */
-    public static void shrinkItemStack(ItemStack itemStack, int decrement) {
-        if (itemStack.isEmpty()) return;
-        itemStack.shrink(decrement);
-    }
-
-    /**
-     * Applies damage to an item and breaks it if durability reaches zero, unless the entity is a player in creative mode
-     * <p>
-     * @param itemStack The item stack to damage and potentially break
-     * @param entity The entity that owns and is using the item
-     * @param decrement The amount of damage to apply to the item
-     */
-    public static void hurtAndBreakItemStack(ItemStack itemStack, LivingEntity entity, int decrement) {
-        if ((entity instanceof Player player && player.isCreative()) || itemStack.isEmpty()) return;
-        itemStack.hurtAndBreak(decrement, entity, entity.getEquipmentSlotForItem(itemStack));
-    }
-
-    /**
-     * Reduces the quantity of items matching the target ItemStack in the ItemStackHandler.
-     * <p>
-     * This method searches through all slots in the ItemStackHandler for items that match
-     * the target ItemStack, then reduces the total quantity
-     * by the specified shrinkCount.
-     * <p>
-     * The reduction is applied across all matching stacks in the order they are found until
-     * the total reduction reaches shrinkCount or all matching items are exhausted.
-     * @param itemStackHandler The ItemStackHandler to remove items from
-     * @param targetStack The target ItemStack to match against (can be null)
-     * @param shrinkCount The total number of matching items to remove
-     * @return The actual number of items that were removed
+     * @see #shrinkMatchingItems(ItemStackHandler, ItemStack, int, ItemMatchMode)
      */
     public static int shrinkMatchingItems(ItemStackHandler itemStackHandler, @Nullable ItemStack targetStack, int shrinkCount) {
-        return shrinkMatchingItemsInRange(itemStackHandler, targetStack, shrinkCount, 0, itemStackHandler.getSlots());
+        return shrinkMatchingItems(itemStackHandler, targetStack, shrinkCount, SAME_ITEM);
     }
 
     /**
-     * Reduces the quantity of items matching the target ItemStack in a specific slot range.
+     * @see #shrinkMatchingItemsInRange(IItemHandler, ItemStack, int, int, int, ItemMatchMode)
+     */
+    public static int shrinkMatchingItems(ItemStackHandler itemStackHandler, @Nullable ItemStack targetStack, int shrinkCount,
+                                          ItemMatchMode matchMode) {
+        return shrinkMatchingItemsInRange(itemStackHandler, targetStack, shrinkCount, 0, itemStackHandler.getSlots(), matchMode);
+    }
+
+    /**
+     * Reduces the count of matching items within a specific slot range.
      * <p>
-     * This method searches through the specified slot range in the ItemStackHandler for items
-     * that match the target ItemStack, then reduces the total
-     * quantity by the specified shrinkCount.
-     * @param itemStackHandler The ItemStackHandler to remove items from
-     * @param targetStack The target ItemStack to match against (can be null)
-     * @param shrinkCount The total number of matching items to remove
+     * This method searches through the specified range of slots and reduces the count
+     * of items that match the target stack according to the specified match mode.
+     * The reduction continues until the requested shrink count is met, the range
+     * is exhausted, or all matching items are processed.
+     * @param itemStackHandler The IItemHandler containing items to shrink
+     * @param targetStack The ItemStack to match against (null matches any non-empty stack)
+     * @param shrinkCount The number of items to remove
      * @param startIndex The starting slot index (inclusive)
      * @param endIndex The ending slot index (exclusive)
-     * @return The actual number of items that were removed
+     * @param matchMode The match mode for item comparison
+     * @return The actual number of items removed
      */
     public static int shrinkMatchingItemsInRange(IItemHandler itemStackHandler, @Nullable ItemStack targetStack,
-                                                 int shrinkCount, int startIndex, int endIndex) {
+                                                 int shrinkCount, int startIndex, int endIndex, ItemMatchMode matchMode) {
         int remaining = shrinkCount;
         for (int i = startIndex; i < endIndex && remaining > 0; i++) {
             ItemStack stack = itemStackHandler.getStackInSlot(i);
-            boolean matches = targetStack == null ? !stack.isEmpty() : (!stack.isEmpty() && ItemStack.isSameItem(stack, targetStack));
+            boolean matches = targetStack == null ? !stack.isEmpty() : (!stack.isEmpty() && simpleTest(stack, targetStack, matchMode));
             if (matches) {
                 int remove = Math.min(stack.getCount(), remaining);
                 shrinkItemStack(stack, remove);
@@ -528,5 +492,13 @@ public final class CItemStackHandlerHelper {
             }
         }
         return shrinkCount - remaining;
+    }
+
+    /**
+     * @see #shrinkMatchingItemsInRange(IItemHandler, ItemStack, int, int, int, ItemMatchMode)
+     */
+    public static int shrinkMatchingItemsInRange(IItemHandler itemStackHandler, @Nullable ItemStack targetStack,
+                                                 int shrinkCount, int startIndex, int endIndex) {
+        return shrinkMatchingItemsInRange(itemStackHandler, targetStack, shrinkCount, startIndex, endIndex, SAME_ITEM);
     }
 }

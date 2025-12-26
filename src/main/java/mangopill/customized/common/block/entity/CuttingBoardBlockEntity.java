@@ -21,6 +21,7 @@ import java.util.Optional;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.CStringUtil.*;
+import static mangopill.customized.common.util.InteractUtil.*;
 
 public class CuttingBoardBlockEntity extends CBasicCookingBlockEntity<CuttingBoardRecipe> {
     private final IItemHandler inputAndOutputHandler;
@@ -59,11 +60,11 @@ public class CuttingBoardBlockEntity extends CBasicCookingBlockEntity<CuttingBoa
                 itemStackHandler.getStackInSlot(0).shrink(1);
                 totalTimes = 0;
             }
-            matchRecipe.get().output().forEach(itemStack -> spawnItemEntity(level, itemStack.copy(), state, pos));
-            matchRecipe.get().probabilityOutput().stream()
+            spawnItemEntityList(level, matchRecipe.get().output().stream().map(ItemStack::copy).toList(), state, pos);
+            spawnItemEntityList(level, matchRecipe.get().probabilityOutput().stream()
                     .filter(itemStack -> level.random.nextFloat() < itemStack.probability())
                     .flatMap(itemStack -> itemStack.probabilityStackList().stream())
-                    .forEach(stack -> spawnItemEntity(level, stack.copy(), state, pos));
+                    .map(ItemStack::copy).toList(), state, pos);
             hurtAndBreakItemStack(itemStackInHand, player, 1);
             times--;
             itemStackHandlerChanged();

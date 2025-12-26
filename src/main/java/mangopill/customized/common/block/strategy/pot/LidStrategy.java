@@ -13,6 +13,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.InteractUtil.*;
+import static mangopill.customized.common.util.component.ItemMatchMode.*;
 
 public record LidStrategy(ItemStack lid, boolean canInputDrive) implements PotInteractionStrategy {
 
@@ -25,7 +27,7 @@ public record LidStrategy(ItemStack lid, boolean canInputDrive) implements PotIn
             removeTheLid(state, level, pos, player);
             return true;
         }
-        if (ItemStack.isSameItem(itemStackInHand, lid) && !state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)) {
+        if (simpleTest(itemStackInHand, lid, SAME_ITEM) && !state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)) {
             if (!canInputDrive || state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE)) {
                 addLid(itemStackInHand, state, level, pos, player);
                 return true;

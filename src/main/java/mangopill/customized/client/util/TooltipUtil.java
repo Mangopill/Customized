@@ -21,8 +21,7 @@ import static mangopill.customized.common.util.PropertyValueUtil.*;
 
 @OnlyIn(Dist.CLIENT)
 public final class TooltipUtil {
-    private TooltipUtil() {
-    }
+    private TooltipUtil() {}
 
     public static void propertyValueTooltip(List<Component> components, ItemStack stack, Level level) {
         PropertyValue propertyValue = getPropertyValue(stack, level);

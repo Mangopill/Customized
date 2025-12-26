@@ -90,7 +90,7 @@ public abstract class CBasicCookingBlockEntity<T extends CRecipeInterface<Recipe
     }
 
     public void outputItem(Level level, BlockState state, BlockPos pos) {
-        getItemStackListInBlockEntity(true).forEach(itemStack -> spawnItemEntity(level, itemStack, state, pos));
+        spawnItemEntityList(level, getItemStackListInBlockEntity(true), state, pos);
     }
 
     public void insertItem(ItemStack itemStackInHand) {

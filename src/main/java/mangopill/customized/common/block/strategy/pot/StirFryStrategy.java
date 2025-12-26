@@ -26,7 +26,7 @@ public record StirFryStrategy(ItemStack spatula) implements PotInteractionStrate
             if (!canStirFry(itemStackInHand, state)){
                 return false;
             }
-            stirFry(itemStackInHand, level, pos, player, hand, potBlockEntity, spatula);
+            stirFry(itemStackInHand, level, pos, player, potBlockEntity, spatula);
             return true;
         }
         return false;
@@ -36,8 +36,8 @@ public record StirFryStrategy(ItemStack spatula) implements PotInteractionStrate
         return !itemStackInHand.isEmpty() && !state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID) && itemStackInHand.is(ModTag.SPATULA);
     }
 
-    private void stirFry(ItemStack itemStackInHand, Level level, BlockPos pos, Player player, InteractionHand hand, AbstractPotBlockEntity potBlockEntity, ItemStack spatula) {
-        potBlockEntity.stirFryAccelerate(itemStackInHand, player, hand, spatula);
+    private void stirFry(ItemStack itemStackInHand, Level level, BlockPos pos, Player player, AbstractPotBlockEntity potBlockEntity, ItemStack spatula) {
+        potBlockEntity.stirFryAccelerate(itemStackInHand, player, spatula);
         level.playSound(null, pos, SoundEvents.METAL_HIT, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 }

@@ -14,8 +14,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public final class RecipeUtil {
-    private RecipeUtil() {
-    }
+    private RecipeUtil() {}
 
     public static Ingredient mergeIngredients(Collection<Ingredient> ingredients) {
         if (ingredients.isEmpty()) return Ingredient.EMPTY;

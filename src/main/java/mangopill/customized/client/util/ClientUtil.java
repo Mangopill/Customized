@@ -24,8 +24,7 @@ import static mangopill.customized.common.util.CStringUtil.*;
 
 @OnlyIn(Dist.CLIENT)
 public final class ClientUtil {
-    private ClientUtil() {
-    }
+    private ClientUtil() {}
 
     public static void registerPlateItemProperty(Item item) {
         ItemProperties.register(item, getCLoc("drive"), (stack, level, player, seed) ->
