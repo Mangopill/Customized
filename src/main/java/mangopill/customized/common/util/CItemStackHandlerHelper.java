@@ -2,7 +2,7 @@ package mangopill.customized.common.util;
 
 import mangopill.customized.common.item.AbstractPlateItem;
 import mangopill.customized.common.tag.ModTag;
-import mangopill.customized.common.util.component.CItemMatchMode;
+import mangopill.customized.common.util.component.*;
 import net.minecraft.core.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.food.FoodProperties;
@@ -24,7 +24,7 @@ public final class CItemStackHandlerHelper {
     private CItemStackHandlerHelper() {}
 
     /**
-     * @see #fillInItem(ItemStackHandler, ItemStack, int, int, CItemMatchMode)
+     * @see #fillInItem(ItemStackHandler, ItemStack, int, int, IItemMatchMode)
      */
     public static void fillInItem(ItemStackHandler itemStackHandler, ItemStack itemStack, int startIndex, int endIndex) {
         fillInItem(itemStackHandler, itemStack, startIndex, endIndex, SAME_ITEM_SAME_COMPONENTS);
@@ -44,7 +44,7 @@ public final class CItemStackHandlerHelper {
      * @param matchMode The matching mode to determine how items should be compared
      */
     public  static void fillInItem(ItemStackHandler itemStackHandler, ItemStack itemStack,
-                                   int startIndex, int endIndex, CItemMatchMode matchMode) {
+                                   int startIndex, int endIndex, IItemMatchMode<ItemStack, ItemStack> matchMode) {
         for (int i = startIndex; i < endIndex; i++) {
             ItemStack newItemStackInHand = itemStack.copy();
             ItemStack stackInSlot = itemStackHandler.getStackInSlot(i);
@@ -74,7 +74,7 @@ public final class CItemStackHandlerHelper {
     }
 
     /**
-     * @see #insertItem(ItemStack, ItemStackHandler, int, int, int, int, Ingredient, CItemMatchMode)
+     * @see #insertItem(ItemStack, ItemStackHandler, int, int, int, int, Ingredient, IItemMatchMode)
      */
     public static void insertItem(ItemStack itemStackInHand, ItemStackHandler itemStackHandler,
                                   int ingredientInput, int seasoningInput, int spiceInput, int outPut,
@@ -101,7 +101,7 @@ public final class CItemStackHandlerHelper {
      */
     public static void insertItem(ItemStack itemStackInHand, ItemStackHandler itemStackHandler,
                                   int ingredientInput, int seasoningInput, int spiceInput, int outPut,
-                                  @Nullable Ingredient containerItem, CItemMatchMode matchMode) {
+                                  @Nullable Ingredient containerItem, IItemMatchMode<ItemStack, ItemStack> matchMode) {
         if (itemStackInHand.is(ModTag.SEASONING)) {
             fillInItem(itemStackHandler, itemStackInHand, ingredientInput, ingredientInput + seasoningInput, matchMode);
             return;
@@ -292,16 +292,16 @@ public final class CItemStackHandlerHelper {
     }
 
     /**
-     * @see #containsSameItem(Collection, ItemStack, CItemMatchMode)
+     * @see #containsSameItem(Collection, ItemStack, IItemMatchMode)
      */
     public static boolean containsSameItem(Collection<ItemStack> itemStackList, ItemStack targetStack) {
         return containsSameItem(itemStackList, targetStack, SAME_ITEM);
     }
 
     /**
-     * @see #containsSameItem(Collection, Collection, CItemMatchMode)
+     * @see #containsSameItem(Collection, Collection, IItemMatchMode)
      */
-    public static boolean containsSameItem(Collection<ItemStack> itemStackList, ItemStack targetStack, CItemMatchMode matchMode) {
+    public static boolean containsSameItem(Collection<ItemStack> itemStackList, ItemStack targetStack, IItemMatchMode<ItemStack, ItemStack> matchMode) {
         return containsSameItem(itemStackList, List.of(targetStack), matchMode);
     }
 
@@ -315,21 +315,21 @@ public final class CItemStackHandlerHelper {
      * @param matchMode The match mode to use for comparison
      * @return true if the source collection contains all items from the target collection (according to the match mode), false otherwise
      */
-    public static boolean containsSameItem(Collection<ItemStack> itemStackList, Collection<ItemStack> targetStackList, CItemMatchMode matchMode) {
+    public static boolean containsSameItem(Collection<ItemStack> itemStackList, Collection<ItemStack> targetStackList, IItemMatchMode<ItemStack, ItemStack> matchMode) {
         return targetStackList.stream().allMatch(target -> itemStackList.stream().anyMatch(stack -> simpleTest(stack, target, matchMode)));
     }
 
     /**
      * @see #test(ItemStack, ItemStack, BiPredicate)
      */
-    public static boolean simpleTest(ItemStack stack, Item targetItem, CItemMatchMode matchMode) {
+    public static boolean simpleTest(ItemStack stack, Item targetItem, IItemMatchMode<ItemStack, ItemStack> matchMode) {
         return test(stack, targetItem.getDefaultInstance(), matchMode.getComparator());
     }
 
     /**
      * @see #test(ItemStack, ItemStack, BiPredicate)
      */
-    public static boolean simpleTest(ItemStack stack, ItemStack targetStack, CItemMatchMode matchMode) {
+    public static boolean simpleTest(ItemStack stack, ItemStack targetStack, IItemMatchMode<ItemStack, ItemStack> matchMode) {
         return test(stack, targetStack, matchMode.getComparator());
     }
 
@@ -376,23 +376,23 @@ public final class CItemStackHandlerHelper {
     }
 
     /**
-     * @see #getTotalCountOf(Collection, Collection, CItemMatchMode)
+     * @see #getTotalCountOf(Collection, Collection, IItemMatchMode)
      */
-    public static int getTotalCountOf(Collection<ItemStack> itemStackList, Item target, CItemMatchMode matchMode) {
+    public static int getTotalCountOf(Collection<ItemStack> itemStackList, Item target, IItemMatchMode<ItemStack, ItemStack> matchMode) {
         return getTotalCountOf(itemStackList, List.of(target.getDefaultInstance()), matchMode);
     }
 
     /**
-     * @see #getTotalCountOf(Collection, Collection, CItemMatchMode)
+     * @see #getTotalCountOf(Collection, Collection, IItemMatchMode)
      */
-    public static int getTotalCountOf(Collection<ItemStack> itemStackList, ItemStack targetStack, CItemMatchMode matchMode) {
+    public static int getTotalCountOf(Collection<ItemStack> itemStackList, ItemStack targetStack, IItemMatchMode<ItemStack, ItemStack> matchMode) {
         return getTotalCountOf(itemStackList, List.of(targetStack), matchMode);
     }
 
     /**
-     * @see #getTotalCountOf(Collection, Collection, CItemMatchMode)
+     * @see #getTotalCountOf(Collection, Collection, IItemMatchMode)
      */
-    public static int getTotalCountOf(Collection<ItemStack> itemStackList, Ingredient ingredient, CItemMatchMode matchMode) {
+    public static int getTotalCountOf(Collection<ItemStack> itemStackList, Ingredient ingredient, IItemMatchMode<ItemStack, ItemStack> matchMode) {
         return getTotalCountOf(itemStackList, List.of(ingredient.getItems()), matchMode);
     }
 
@@ -406,7 +406,7 @@ public final class CItemStackHandlerHelper {
      * @param matchMode The match mode to use for comparison
      * @return The total count of matching items
      */
-    public static int getTotalCountOf(Collection<ItemStack> itemStackList, Collection<ItemStack> targetStacks, CItemMatchMode matchMode) {
+    public static int getTotalCountOf(Collection<ItemStack> itemStackList, Collection<ItemStack> targetStacks, IItemMatchMode<ItemStack, ItemStack> matchMode) {
         int totalCount = 0;
         for (ItemStack stack : itemStackList) {
             for (ItemStack targetStack : targetStacks) {
@@ -517,25 +517,25 @@ public final class CItemStackHandlerHelper {
     }
 
     /**
-     * @see #shrinkMatchingItem(ItemStackHandler, ItemStack, int, CItemMatchMode)
+     * @see #shrinkMatchingItem(ItemStackHandler, ItemStack, int, IItemMatchMode)
      */
     public static int shrinkMatchingItemList(ItemStackHandler itemStackHandler, Collection<ItemStack> targetStackList, int shrinkCount,
-                                         CItemMatchMode matchMode) {
+                                             IItemMatchMode<ItemStack, ItemStack> matchMode) {
         return targetStackList.stream().mapToInt(target -> shrinkMatchingItem(itemStackHandler, target, shrinkCount, matchMode)).sum();
     }
 
     /**
-     * @see #shrinkMatchingItem(ItemStackHandler, ItemStack, int, CItemMatchMode)
+     * @see #shrinkMatchingItem(ItemStackHandler, ItemStack, int, IItemMatchMode)
      */
     public static int shrinkMatchingItem(ItemStackHandler itemStackHandler, @Nullable ItemStack targetStack, int shrinkCount) {
         return shrinkMatchingItem(itemStackHandler, targetStack, shrinkCount, SAME_ITEM);
     }
 
     /**
-     * @see #shrinkMatchingItemInRange(IItemHandler, ItemStack, int, int, int, CItemMatchMode)
+     * @see #shrinkMatchingItemInRange(IItemHandler, ItemStack, int, int, int, IItemMatchMode)
      */
     public static int shrinkMatchingItem(ItemStackHandler itemStackHandler, @Nullable ItemStack targetStack, int shrinkCount,
-                                         CItemMatchMode matchMode) {
+                                         IItemMatchMode<ItemStack, ItemStack> matchMode) {
         return shrinkMatchingItemInRange(itemStackHandler, targetStack, shrinkCount, 0, itemStackHandler.getSlots(), matchMode);
     }
 
@@ -555,7 +555,7 @@ public final class CItemStackHandlerHelper {
      * @return The actual number of items removed
      */
     public static int shrinkMatchingItemInRange(IItemHandler itemStackHandler, @Nullable ItemStack targetStack,
-                                                int shrinkCount, int startIndex, int endIndex, CItemMatchMode matchMode) {
+                                                int shrinkCount, int startIndex, int endIndex, IItemMatchMode<ItemStack, ItemStack> matchMode) {
         int remaining = shrinkCount;
         for (int i = startIndex; i < endIndex && remaining > 0; i++) {
             ItemStack stack = itemStackHandler.getStackInSlot(i);

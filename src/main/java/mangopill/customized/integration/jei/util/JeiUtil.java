@@ -8,6 +8,7 @@ import mangopill.customized.integration.jei.category.PropertyValueRecipeCategory
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.*;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.*;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.recipe.*;
 import mezz.jei.api.recipe.RecipeType;
@@ -120,10 +121,22 @@ public final class JeiUtil {
         });
     }
 
+    public static void addNutrientListSlots(IRecipeLayoutBuilder builder, List<List<NutrientCategoryRecipe>> nutrient,
+                                            RecipeIngredientRole role, int startX, int startY,
+                                            int slotSize, int rows, int cols, int spacing,
+                                            @Nullable BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
+        addCustomIngredientSlots(builder, nutrient.size(), role, startX, startY, slotSize, rows, cols, spacing, (b, i) -> {
+            b.addIngredients(NUTRIENT_INGREDIENT, nutrient.get(i));
+            if (slotConfigurator != null) {
+                slotConfigurator.accept(b, i);
+            }
+        });
+    }
+
     public static void addNutrientSlots(IRecipeLayoutBuilder builder, List<NutrientCategoryRecipe> nutrient,
-                                        RecipeIngredientRole role, int startX, int startY,
-                                        int slotSize, int rows, int cols, int spacing,
-                                        @Nullable BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
+                                            RecipeIngredientRole role, int startX, int startY,
+                                            int slotSize, int rows, int cols, int spacing,
+                                            @Nullable BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
         addCustomIngredientSlots(builder, nutrient.size(), role, startX, startY, slotSize, rows, cols, spacing, (b, i) -> {
             b.addIngredient(NUTRIENT_INGREDIENT, nutrient.get(i));
             if (slotConfigurator != null) {
@@ -176,5 +189,16 @@ public final class JeiUtil {
 
     public static MutableComponent getProbabilityComponent(float probability) {
         return C_JEI_GUI.create("probability", formatPercent(probability, 2)).withStyle(ChatFormatting.AQUA);
+    }
+
+    public static List<IRecipeSlotDrawable> getIRecipeSlotDrawableByName(Collection<?> collection, IRecipeSlotDrawablesView view, String name) {
+        if (collection.isEmpty()) return new ArrayList<>();
+        List<IRecipeSlotDrawable> drawableList = new ArrayList<>();
+        for (int i = 0; i < collection.size(); i++) {
+            Optional<IRecipeSlotDrawable> optional = view.findSlotByName(name + i);
+            if (optional.isEmpty()) continue;
+            drawableList.add(optional.get());
+        }
+        return drawableList;
     }
 }

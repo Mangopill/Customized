@@ -15,7 +15,7 @@ import java.util.function.BiPredicate;
  * whether two item stacks are considered "matching" according to different criteria.
  * <p>
  * Usage example:
- * {@link CItemStackHandlerHelper#simpleTest(ItemStack, ItemStack, CItemMatchMode)}
+ * {@link CItemStackHandlerHelper#simpleTest(ItemStack, ItemStack, IItemMatchMode)}
  * <pre>{@code
  * // Check if two stacks are the same item type
  * boolean sameItem = ItemMatchMode.SAME_ITEM.getComparator().test(stack1, stack2);

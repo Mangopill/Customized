@@ -38,12 +38,10 @@ public class NutrientBuffRecipeCategory extends CRecipeCategory<NutrientBuffReci
                 .filter(set -> Minecraft.getInstance().level != null).map(set -> set.stream()
                         .flatMap(pair -> getNutrientCategoryByName(Minecraft.getInstance().level, pair.getFirst())
                                 .stream().map(recipeHolder -> Pair.of(recipeHolder, pair.getSecond()))).toList()).toList();
-        for (List<Pair<NutrientCategoryRecipe, Float>> recipesList : recipesLists) {
-            addNutrientSlots(builder, recipesList.stream().map(Pair::getFirst).toList(), RecipeIngredientRole.INPUT,
-                    1, 56, SLOT_SIZE, 0, 5, 0, (b, i) ->
-                            b.addRichTooltipCallback((s, tB) -> recipesList.forEach(pair ->
-                                    tB.add(getTooltipPropertyComponent(pair.getFirst().name(), pair.getSecond(), pair.getFirst().getColorWithAlpha())))));
-        }
+        addNutrientListSlots(builder, recipesLists.stream().map(list -> list.stream().map(Pair::getFirst).toList()).toList(), RecipeIngredientRole.INPUT,
+                1, 56, SLOT_SIZE, 0, 5, 0, (b, i) ->
+                        b.addRichTooltipCallback((s, tB) -> recipesLists.get(i).forEach(pair ->
+                                tB.add(getTooltipPropertyComponent(pair.getFirst().name(), pair.getSecond(), pair.getFirst().getColorWithAlpha())))));
         addIngredientSlots(builder, recipe.pot(), RecipeIngredientRole.CATALYST,
                 73, 15, SLOT_SIZE, 0, 2, 0, null);
     }
