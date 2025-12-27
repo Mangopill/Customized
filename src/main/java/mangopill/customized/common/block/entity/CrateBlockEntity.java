@@ -50,7 +50,7 @@ public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
         for (int i = 0; i < recipe.ingredientCount(); ++i) {
             spawnUsingConvertsTo(level, List.of(findMinStack(getItemStackListInBlockEntity(false))), state, pos);
         }
-        shrinkMatchingItems(itemStackHandler, null, recipe.ingredientCount());
+        shrinkMatchingItem(itemStackHandler, null, recipe.ingredientCount());
         cookingTime = 0;
     }
 

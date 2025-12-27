@@ -66,7 +66,7 @@ public final class CItemStackHandlerHelper {
                     itemStack.copyAndClear();
                     break;
                 }else {
-                    itemStack.shrink(slotLimit - stackInSlotCount);
+                    shrinkItemStack(itemStack, slotLimit - stackInSlotCount);
                     stackInSlot.grow(slotLimit - stackInSlotCount);
                 }
             }
@@ -485,18 +485,26 @@ public final class CItemStackHandlerHelper {
     }
 
     /**
-     * @see #shrinkMatchingItems(ItemStackHandler, ItemStack, int, CItemMatchMode)
+     * @see #shrinkMatchingItem(ItemStackHandler, ItemStack, int, CItemMatchMode)
      */
-    public static int shrinkMatchingItems(ItemStackHandler itemStackHandler, @Nullable ItemStack targetStack, int shrinkCount) {
-        return shrinkMatchingItems(itemStackHandler, targetStack, shrinkCount, SAME_ITEM);
+    public static int shrinkMatchingItemList(ItemStackHandler itemStackHandler, Collection<ItemStack> targetStackList, int shrinkCount,
+                                         CItemMatchMode matchMode) {
+        return targetStackList.stream().mapToInt(target -> shrinkMatchingItem(itemStackHandler, target, shrinkCount, matchMode)).sum();
     }
 
     /**
-     * @see #shrinkMatchingItemsInRange(IItemHandler, ItemStack, int, int, int, CItemMatchMode)
+     * @see #shrinkMatchingItem(ItemStackHandler, ItemStack, int, CItemMatchMode)
      */
-    public static int shrinkMatchingItems(ItemStackHandler itemStackHandler, @Nullable ItemStack targetStack, int shrinkCount,
-                                          CItemMatchMode matchMode) {
-        return shrinkMatchingItemsInRange(itemStackHandler, targetStack, shrinkCount, 0, itemStackHandler.getSlots(), matchMode);
+    public static int shrinkMatchingItem(ItemStackHandler itemStackHandler, @Nullable ItemStack targetStack, int shrinkCount) {
+        return shrinkMatchingItem(itemStackHandler, targetStack, shrinkCount, SAME_ITEM);
+    }
+
+    /**
+     * @see #shrinkMatchingItemInRange(IItemHandler, ItemStack, int, int, int, CItemMatchMode)
+     */
+    public static int shrinkMatchingItem(ItemStackHandler itemStackHandler, @Nullable ItemStack targetStack, int shrinkCount,
+                                         CItemMatchMode matchMode) {
+        return shrinkMatchingItemInRange(itemStackHandler, targetStack, shrinkCount, 0, itemStackHandler.getSlots(), matchMode);
     }
 
     /**
@@ -514,8 +522,8 @@ public final class CItemStackHandlerHelper {
      * @param matchMode The match mode for item comparison
      * @return The actual number of items removed
      */
-    public static int shrinkMatchingItemsInRange(IItemHandler itemStackHandler, @Nullable ItemStack targetStack,
-                                                 int shrinkCount, int startIndex, int endIndex, CItemMatchMode matchMode) {
+    public static int shrinkMatchingItemInRange(IItemHandler itemStackHandler, @Nullable ItemStack targetStack,
+                                                int shrinkCount, int startIndex, int endIndex, CItemMatchMode matchMode) {
         int remaining = shrinkCount;
         for (int i = startIndex; i < endIndex && remaining > 0; i++) {
             ItemStack stack = itemStackHandler.getStackInSlot(i);
@@ -527,13 +535,5 @@ public final class CItemStackHandlerHelper {
             }
         }
         return shrinkCount - remaining;
-    }
-
-    /**
-     * @see #shrinkMatchingItemsInRange(IItemHandler, ItemStack, int, int, int, CItemMatchMode)
-     */
-    public static int shrinkMatchingItemsInRange(IItemHandler itemStackHandler, @Nullable ItemStack targetStack,
-                                                 int shrinkCount, int startIndex, int endIndex) {
-        return shrinkMatchingItemsInRange(itemStackHandler, targetStack, shrinkCount, startIndex, endIndex, SAME_ITEM);
     }
 }
