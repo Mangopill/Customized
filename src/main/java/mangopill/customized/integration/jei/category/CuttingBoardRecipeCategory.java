@@ -42,8 +42,8 @@ public class CuttingBoardRecipeCategory extends CRecipeCategory<CuttingBoardReci
     public void createRecipeExtras(IRecipeExtrasBuilder builder, CuttingBoardRecipe recipe, IFocusGroup focuses) {
         IRecipeSlotDrawablesView recipeSlots = builder.getRecipeSlots();
         List<IRecipeSlotDrawable> list = getIRecipeSlotDrawableByName(recipe.probabilityOutput(), recipeSlots, "probabilityOutput");
-        IScrollGridWidget nutrientGrid = builder.addScrollGridWidget(list, 1, 1);
-        nutrientGrid.setPosition(99, 16);
+        IScrollGridWidget probabilityGrid = builder.addScrollGridWidget(list, 1, 1);
+        probabilityGrid.setPosition(99, 16);
     }
 
     @Override

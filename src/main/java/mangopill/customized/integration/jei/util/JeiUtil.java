@@ -108,6 +108,18 @@ public final class JeiUtil {
         });
     }
 
+    public static void addStackListSlots(IRecipeLayoutBuilder builder, List<List<ItemStack>> itemStacks,
+                                                    RecipeIngredientRole role, int startX, int startY,
+                                                    int slotSize, int rows, int cols, int spacing,
+                                                    @Nullable BiConsumer<IRecipeSlotBuilder, Integer> slotConfigurator) {
+        addCustomIngredientSlots(builder, itemStacks.size(), role, startX, startY, slotSize, rows, cols, spacing,  (b, i) -> {
+            b.addItemStacks(itemStacks.get(i));
+            if (slotConfigurator != null) {
+                slotConfigurator.accept(b, i);
+            }
+        });
+    }
+
     public static void addProbabilityItemStackSlots(IRecipeLayoutBuilder builder, List<ProbabilityItemStack> itemStacks,
                                           RecipeIngredientRole role, int startX, int startY,
                                           int slotSize, int rows, int cols, int spacing,
