@@ -41,7 +41,7 @@ import static mangopill.customized.common.util.InteractUtil.*;
 import static mangopill.customized.common.util.PropertyValueUtil.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
 import static mangopill.customized.common.util.component.ItemComponentUtil.*;
-import static mangopill.customized.common.util.component.ItemMatchMode.*;
+import static mangopill.customized.common.util.component.CItemMatchMode.*;
 
 public abstract class AbstractPotBlockEntity extends BlockEntity implements CreateItemStackHandler {
     protected final int ingredientInput;

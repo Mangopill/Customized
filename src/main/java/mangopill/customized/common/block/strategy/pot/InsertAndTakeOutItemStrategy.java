@@ -3,7 +3,7 @@ package mangopill.customized.common.block.strategy.pot;
 import mangopill.customized.common.block.AbstractPotBlock;
 import mangopill.customized.common.block.entity.AbstractPotBlockEntity;
 import mangopill.customized.common.block.state.PotState;
-import mangopill.customized.common.block.strategy.base.PotInteractionStrategy;
+import mangopill.customized.common.block.strategy.base.IPotInteractionStrategy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.*;
 import net.minecraft.world.InteractionHand;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public record InsertAndTakeOutItemStrategy() implements PotInteractionStrategy {
+public record InsertAndTakeOutItemStrategy() implements IPotInteractionStrategy {
     // Ensure this strategy is at the end of the registration
     @Override
     public boolean interact(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos,

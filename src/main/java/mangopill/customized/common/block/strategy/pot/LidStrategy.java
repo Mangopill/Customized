@@ -2,7 +2,7 @@ package mangopill.customized.common.block.strategy.pot;
 
 import mangopill.customized.common.block.AbstractPotBlock;
 import mangopill.customized.common.block.state.PotState;
-import mangopill.customized.common.block.strategy.base.PotInteractionStrategy;
+import mangopill.customized.common.block.strategy.base.IPotInteractionStrategy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.*;
 import net.minecraft.world.InteractionHand;
@@ -14,9 +14,9 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.InteractUtil.*;
-import static mangopill.customized.common.util.component.ItemMatchMode.*;
+import static mangopill.customized.common.util.component.CItemMatchMode.*;
 
-public record LidStrategy(ItemStack lid, boolean canInputDrive) implements PotInteractionStrategy {
+public record LidStrategy(ItemStack lid, boolean canInputDrive) implements IPotInteractionStrategy {
 
     @Override
     public boolean interact(ItemStack itemStackInHand, BlockState state,

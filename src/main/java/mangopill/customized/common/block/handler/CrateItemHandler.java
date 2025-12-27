@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.component.ItemMatchMode.*;
+import static mangopill.customized.common.util.component.CItemMatchMode.*;
 
 public class CrateItemHandler extends CIItemHandler<CrateBlockEntity> {
 

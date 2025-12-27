@@ -18,7 +18,7 @@ import net.minecraft.world.phys.shapes.*;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.InteractUtil.*;
-import static mangopill.customized.common.util.component.ItemMatchMode.*;
+import static mangopill.customized.common.util.component.CItemMatchMode.*;
 
 public class SaltPanBlock extends Block {
     public static final BooleanProperty WITH_WATER = BooleanProperty.create("with_water");

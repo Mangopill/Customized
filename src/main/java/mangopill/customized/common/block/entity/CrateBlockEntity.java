@@ -20,7 +20,7 @@ import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import java.util.List;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.component.ItemMatchMode.*;
+import static mangopill.customized.common.util.component.CItemMatchMode.*;
 
 public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
     private final IItemHandler inputAndOutputHandler;

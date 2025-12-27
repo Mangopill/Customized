@@ -14,7 +14,7 @@ import java.util.*;
 
 public class PotStrategyHandler {
     private static volatile PotStrategyHandler registry;
-    private final Map<String, PotInteractionStrategy[]> map = new HashMap<>();
+    private final Map<String, IPotInteractionStrategy[]> map = new HashMap<>();
 
     private PotStrategyHandler() {
     }
@@ -28,7 +28,7 @@ public class PotStrategyHandler {
         return registry;
     }
 
-    public void registry(String potName, PotInteractionStrategy... strategy) {
+    public void registry(String potName, IPotInteractionStrategy... strategy) {
         if (map.containsKey(potName)) return;
         map.put(potName, strategy);
     }
@@ -38,7 +38,7 @@ public class PotStrategyHandler {
         if (level.isClientSide) return ItemInteractionResult.SUCCESS;
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AbstractPotBlockEntity potBlockEntity) {
-            for (PotInteractionStrategy strategy : map.get(potName)){
+            for (IPotInteractionStrategy strategy : map.get(potName)){
                 if (strategy.interact(itemStackInHand, state, level, pos, player, hand, result)) break;
             }
             potBlockEntity.itemStackHandlerChanged();
@@ -46,7 +46,7 @@ public class PotStrategyHandler {
         return ItemInteractionResult.SUCCESS;
     }
 
-    public Map<String, PotInteractionStrategy[]> getMap() {
+    public Map<String, IPotInteractionStrategy[]> getMap() {
         return map;
     }
 }

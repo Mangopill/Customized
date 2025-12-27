@@ -2,7 +2,7 @@ package mangopill.customized.common.block.strategy.pot;
 
 import mangopill.customized.common.block.AbstractPotBlock;
 import mangopill.customized.common.block.state.PotState;
-import mangopill.customized.common.block.strategy.base.PotInteractionStrategy;
+import mangopill.customized.common.block.strategy.base.IPotInteractionStrategy;
 import mangopill.customized.common.tag.CommonTag;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.*;
@@ -15,7 +15,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import static mangopill.customized.common.util.InteractUtil.*;
 
-public record IgniteStrategy() implements PotInteractionStrategy {
+public record IgniteStrategy() implements IPotInteractionStrategy {
     @Override
     public boolean interact(ItemStack itemStackInHand, BlockState state,
                          Level level, BlockPos pos,

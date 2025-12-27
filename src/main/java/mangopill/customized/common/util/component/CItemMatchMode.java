@@ -1,5 +1,6 @@
 package mangopill.customized.common.util.component;
 
+import mangopill.customized.common.util.CItemStackHandlerHelper;
 import net.minecraft.core.component.DataComponentPredicate;
 import net.minecraft.world.item.ItemStack;
 
@@ -14,13 +15,17 @@ import java.util.function.BiPredicate;
  * whether two item stacks are considered "matching" according to different criteria.
  * <p>
  * Usage example:
+ * {@link CItemStackHandlerHelper#simpleTest(ItemStack, ItemStack, CItemMatchMode)}
  * <pre>{@code
  * // Check if two stacks are the same item type
  * boolean sameItem = ItemMatchMode.SAME_ITEM.getComparator().test(stack1, stack2);
+ * // Also
+ * boolean sameItem = simpleTest(stack1, stack2, CItemMatchMode.SAME_ITEM)
  * }</pre>
  */
-public enum ItemMatchMode {
+public enum CItemMatchMode implements IItemMatchMode<ItemStack, ItemStack> {
     SAME_ITEM(ItemStack::isSameItem),
+    SAME_COUNT((stack, target) -> stack.getCount() == target.getCount()),
     ANY_SAME_COMPONENT((stack, target) -> DataComponentPredicate.allOf(stack.getComponents()).test(target)),
     ALL_SAME_COMPONENTS((stack, target) -> (stack.isEmpty() && target.isEmpty()) || Objects.equals(stack.getComponents(), target.getComponents())),
     /**
@@ -37,10 +42,11 @@ public enum ItemMatchMode {
 
     private final BiPredicate<ItemStack, ItemStack> comparator;
 
-    ItemMatchMode(BiPredicate<ItemStack, ItemStack> comparator) {
+    CItemMatchMode(BiPredicate<ItemStack, ItemStack> comparator) {
         this.comparator = comparator;
     }
 
+    @Override
     public BiPredicate<ItemStack, ItemStack> getComparator() {
         return comparator;
     }

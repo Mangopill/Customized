@@ -128,7 +128,7 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         List<ItemStack> getDrops = super.getDrops(state,builder);
         if (state.getValue(LID).equals(PotState.WITH_LID)){
-            for (PotInteractionStrategy strategy : PotStrategyHandler.getInstance().getMap().get(getDescriptionId())){
+            for (IPotInteractionStrategy strategy : PotStrategyHandler.getInstance().getMap().get(getDescriptionId())){
                 if (!(strategy instanceof LidStrategy lidStrategy)) continue;
                 getDrops.add(lidStrategy.lid());
             }
