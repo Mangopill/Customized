@@ -216,6 +216,8 @@ public final class CItemStackHandlerHelper {
     /**
      * Finds the ItemStack with the smallest count from a list of ItemStacks.
      * <p>
+     * Note that this method compares the count of each individual ItemStack, without merging counts of the same item {@link #getMinTotalItemCount(Collection)}.
+     * <p>
      * This method iterates through the list and returns the ItemStack with the lowest count value.
      * If the list is empty, returns an empty ItemStack.
      * @param stackList The list of ItemStacks to search through
@@ -229,6 +231,29 @@ public final class CItemStackHandlerHelper {
             minStack = stack;
         }
         return minStack;
+    }
+
+    /**
+     * Calculates the minimum total count of items after merging stacks of the same item.
+     * The difference from {@link #findMinStack(List)} is:
+     * this method merges counts of the same item, while {@link #findMinStack(List)} compares the individual count of each ItemStack.
+     * <p>
+     * This method first groups the ItemStacks by item, summing up the counts for each item,
+     * then returns the smallest total count among these items.
+     * If the collection is empty, returns 0.
+     * @param stackList The collection of ItemStacks to process
+     * @return The minimum total count of any item after merging, or 0 if the collection is empty
+     */
+    public static int getMinTotalItemCount(Collection<ItemStack> stackList) {
+        if (stackList.isEmpty()) return 0;
+        Map<Item, Integer> itemTotalCountMap = new HashMap<>();
+        for (ItemStack stack : stackList) {
+            if (stack.isEmpty()) continue;
+            Item item = stack.getItem();
+            int count = stack.getCount();
+            itemTotalCountMap.put(item, itemTotalCountMap.getOrDefault(item, 0) + count);
+        }
+        return itemTotalCountMap.values().stream().min(Integer::compareTo).orElse(0);
     }
 
     /**
@@ -348,6 +373,13 @@ public final class CItemStackHandlerHelper {
      */
     public static int getTotalItemCount(Collection<ItemStack> stackList) {
         return stackList.isEmpty() ? 0 : stackList.stream().filter(stack -> !stack.isEmpty()).mapToInt(ItemStack::getCount).sum();
+    }
+
+    /**
+     * @see #getTotalCountOf(Collection, Collection, CItemMatchMode)
+     */
+    public static int getTotalCountOf(Collection<ItemStack> itemStackList, Item target, CItemMatchMode matchMode) {
+        return getTotalCountOf(itemStackList, List.of(target.getDefaultInstance()), matchMode);
     }
 
     /**

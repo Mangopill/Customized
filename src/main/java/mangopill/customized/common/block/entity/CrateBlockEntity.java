@@ -48,7 +48,8 @@ public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
         ItemStack resultStack = recipe.getResultItem(level.registryAccess()).copy();
         spawnItemEntity(level, resultStack.copy(), state, pos);
         for (int i = 0; i < recipe.ingredientCount(); ++i) {
-            spawnUsingConvertsTo(level, List.of(findMinStack(getItemStackListInBlockEntity(false))), state, pos);
+            ItemStack stack = getTemplateItem().copyWithCount(recipe.ingredientCount());
+            spawnUsingConvertsTo(level, List.of(stack), state, pos);
         }
         shrinkMatchingItem(itemStackHandler, null, recipe.ingredientCount());
         cookingTime = 0;
@@ -56,9 +57,14 @@ public class CrateBlockEntity extends CBasicCookingBlockEntity<CrateRecipe> {
 
     @Override
     public void insertItem(ItemStack itemStackInHand) {
-        if (!hasInput() || simpleTest(getItemStackListInBlockEntity(true).getFirst(), itemStackInHand, SAME_ITEM_SAME_COMPONENTS)) {
+        if (!hasInput() || simpleTest(getTemplateItem(), itemStackInHand, SAME_ITEM_SAME_COMPONENTS)) {
             super.insertItem(itemStackInHand);
         }
+    }
+
+    public ItemStack getTemplateItem() {
+        List<ItemStack> stackList = getItemStackListInBlockEntity(false);
+        return stackList.isEmpty() ? ItemStack.EMPTY : stackList.getFirst();
     }
 
     protected void reduceCookingTime() {

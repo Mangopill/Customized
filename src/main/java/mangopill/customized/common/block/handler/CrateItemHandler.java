@@ -15,7 +15,7 @@ public class CrateItemHandler extends CIItemHandler<CrateBlockEntity> {
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (getEntity().hasInput() && !simpleTest(getEntity().getItemStackListInBlockEntity(true).getFirst(), stack, SAME_ITEM_SAME_COMPONENTS)) {
+        if (getEntity().hasInput() && !simpleTest(getEntity().getTemplateItem(), stack, SAME_ITEM_SAME_COMPONENTS)) {
             return stack;
         }
         return slot < getEntity().getAllSlot() ? getItemHandler().insertItem(slot, stack, simulate) : stack;
