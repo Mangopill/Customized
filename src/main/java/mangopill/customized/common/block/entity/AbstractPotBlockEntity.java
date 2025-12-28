@@ -36,12 +36,12 @@ import static mangopill.customized.common.block.AbstractPotBlock.*;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.getConsumptionCount;
 import static mangopill.customized.common.util.CStringUtil.*;
-import static mangopill.customized.common.util.CompoundTagHelper.*;
 import static mangopill.customized.common.util.InteractUtil.*;
 import static mangopill.customized.common.util.PropertyValueUtil.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
-import static mangopill.customized.common.util.component.ItemComponentUtil.*;
 import static mangopill.customized.common.util.component.CItemMatchMode.*;
+import static mangopill.customized.common.util.component.CompoundTagHelper.*;
+import static mangopill.customized.common.util.component.ItemComponentUtil.*;
 
 public abstract class AbstractPotBlockEntity extends BlockEntity implements CreateItemStackHandler {
     protected final int ingredientInput;

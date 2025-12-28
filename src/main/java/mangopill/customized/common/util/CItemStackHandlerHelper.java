@@ -2,7 +2,7 @@ package mangopill.customized.common.util;
 
 import mangopill.customized.common.item.AbstractPlateItem;
 import mangopill.customized.common.tag.ModTag;
-import mangopill.customized.common.util.component.*;
+import mangopill.customized.common.util.component.IItemMatchMode;
 import net.minecraft.core.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.food.FoodProperties;

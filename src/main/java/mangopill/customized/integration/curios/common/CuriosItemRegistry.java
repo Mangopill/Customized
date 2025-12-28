@@ -11,6 +11,6 @@ import static mangopill.customized.common.util.RegistryUtil.*;
 public final class CuriosItemRegistry {
     public static final DeferredRegister.Items CURIOS_ITEM = DeferredRegister.createItems(Customized.MODID);
     // curio
-    public static final Supplier<Item> CULINARY_MASTERS_HAT = registerWithCreativeTab(CURIOS_ITEM,
+    public static final Supplier<Item> CULINARY_MASTERS_HAT = registerWithCCreativeTab(CURIOS_ITEM,
             "culinary_masters_hat", () -> new Item(basicItemProperties().stacksTo(1).rarity(Rarity.EPIC)));
 }

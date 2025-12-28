@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.CompoundTagHelper.*;
+import static mangopill.customized.common.util.component.CompoundTagHelper.*;
 
 public abstract class AbstractPlateBlockEntity extends BlockEntity implements CreateItemStackHandler {
     private final int ingredientInput;

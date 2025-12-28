@@ -1,4 +1,4 @@
-package mangopill.customized.common.util;
+package mangopill.customized.common.util.component;
 
 import mangopill.customized.common.FoodValue;
 import mangopill.customized.common.block.handler.PotFluidHandler;

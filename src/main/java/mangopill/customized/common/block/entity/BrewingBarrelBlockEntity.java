@@ -23,8 +23,8 @@ import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import java.util.*;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-import static mangopill.customized.common.util.CompoundTagHelper.*;
 import static mangopill.customized.common.util.InteractUtil.*;
+import static mangopill.customized.common.util.component.CompoundTagHelper.*;
 
 public class BrewingBarrelBlockEntity extends CBasicCookingBlockEntity<BrewingBarrelRecipe> {
     private final IItemHandler inputAndOutputHandler;

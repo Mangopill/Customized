@@ -21,6 +21,7 @@ import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.LinkedHashSet;
 import java.util.function.*;
 
 import static mangopill.customized.common.registry.CItemRegistry.*;
@@ -101,9 +102,13 @@ public final class RegistryUtil {
         return state -> !state.getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID) ? lightValue : 0;
     }
 
-    public static Supplier<Item> registerWithCreativeTab(final DeferredRegister.Items items, final String string, final Supplier<Item> supplier) {
+    public static Supplier<Item> registerWithCCreativeTab(final DeferredRegister.Items items, final String string, final Supplier<Item> supplier) {
+        return registerWithCreativeTab(items, CREATIVE_MODE_TAB, string, supplier);
+    }
+
+    public static Supplier<Item> registerWithCreativeTab(final DeferredRegister.Items items, final LinkedHashSet<Supplier<Item>> hashSet, final String string, final Supplier<Item> supplier) {
         Supplier<Item> register = items.register(string, supplier);
-        CREATIVE_MODE_TAB.add(register);
+        hashSet.add(register);
         return register;
     }
 
