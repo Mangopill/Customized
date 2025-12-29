@@ -9,8 +9,8 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public abstract class CIFluidHandler<T extends Comparable<T>, V extends T> implements IFluidHandler {
-    private final Level level;
-    private final BlockPos pos;
+    protected final Level level;
+    protected final BlockPos pos;
 
     protected CIFluidHandler(Level level, BlockPos pos) {
         this.level = level;

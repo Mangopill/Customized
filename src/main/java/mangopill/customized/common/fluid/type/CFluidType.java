@@ -4,8 +4,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.fluids.FluidType;
 
 public class CFluidType extends FluidType {
-    private final ResourceLocation stillTexture;
-    private final ResourceLocation flowingTexture;
+    protected final ResourceLocation stillTexture;
+    protected final ResourceLocation flowingTexture;
 
     public CFluidType(Properties properties, ResourceLocation stillTexture, ResourceLocation flowingTexture) {
         super(properties);

@@ -14,23 +14,23 @@ public class SaltPanFluidHandler extends CIFluidHandler<Boolean, Boolean> {
 
     @Override
     protected SaltPanContent getContent() {
-        return SaltPanContent.getContent(getLevel(), getPos());
+        return SaltPanContent.getContent(level, pos);
     }
 
     @Override
     protected SaltPanContent getContentForFill() {
-        return SaltPanContent.getContentForFill(getLevel(), getPos());
+        return SaltPanContent.getContentForFill(level, pos);
     }
 
     @Override
     protected boolean canInput(){
-        BlockState blockState = getLevel().getBlockState(getPos());
+        BlockState blockState = level.getBlockState(pos);
         return blockState.getValue(SaltPanBlock.WITH_WATER).equals(false);
     }
 
     @Override
     protected boolean canOutput(){
-        BlockState blockState = getLevel().getBlockState(getPos());
+        BlockState blockState = level.getBlockState(pos);
         return blockState.getValue(SaltPanBlock.WITH_WATER).equals(true);
     }
 }

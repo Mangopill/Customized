@@ -16,14 +16,14 @@ public class BrewingBarrelItemHandler extends CIItemHandler<BrewingBarrelBlockEn
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (containsSameItem(List.of(getEntity().getContainerItem().getItems()), stack)) {
-            return slot == getEntity().getInputSlot() ? getItemHandler().insertItem(slot, stack, simulate) : stack;
+        if (containsSameItem(List.of(entity.getContainerItem().getItems()), stack)) {
+            return slot == entity.getInputSlot() ? itemHandler.insertItem(slot, stack, simulate) : stack;
         }
-        return slot < getEntity().getInputSlot() ? getItemHandler().insertItem(slot, stack, simulate) : stack;
+        return slot < entity.getInputSlot() ? itemHandler.insertItem(slot, stack, simulate) : stack;
     }
 
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        return slot == getEntity().getInputSlot() ? getItemHandler().extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+        return slot == entity.getInputSlot() ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
     }
 }

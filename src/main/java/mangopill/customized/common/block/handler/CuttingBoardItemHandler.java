@@ -11,11 +11,11 @@ public class CuttingBoardItemHandler extends CIItemHandler<CuttingBoardBlockEnti
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        return slot < getEntity().getAllSlot() ? getItemHandler().insertItem(slot, stack, simulate) : stack;
+        return slot < entity.getAllSlot() ? itemHandler.insertItem(slot, stack, simulate) : stack;
     }
 
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        return slot <= getEntity().getAllSlot() && getEntity().getTimes() <= 0 ? getItemHandler().extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+        return slot <= entity.getAllSlot() && entity.getTimes() <= 0 ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
     }
 }

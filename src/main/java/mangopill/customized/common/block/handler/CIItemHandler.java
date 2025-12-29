@@ -5,8 +5,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 
 public abstract class CIItemHandler<T extends CreateItemStackHandler> implements IItemHandler {
-    private final T entity;
-    private final IItemHandler itemHandler;
+    protected final T entity;
+    protected final IItemHandler itemHandler;
 
     protected CIItemHandler(T entity, IItemHandler itemHandler) {
         this.entity = entity;
