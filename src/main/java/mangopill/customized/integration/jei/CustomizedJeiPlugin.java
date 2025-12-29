@@ -44,13 +44,13 @@ public class CustomizedJeiPlugin implements IModPlugin {
         registration.addRecipes(BREWING_BARREL, getRecipeList(CRecipeRegistry.BREWING_BARREL.get()));
         registration.addRecipes(CRATE, getRecipeList(CRecipeRegistry.CRATE.get()));
         registration.addRecipes(CUTTING_BOARD, getRecipeList(CRecipeRegistry.CUTTING_BOARD.get()));
-        registerJeiInfoForItemTag(registration, ModTag.SOILED_SEED);
-        registerJeiInfoForItemTag(registration, ModTag.CUSTOMIZED_PLATE);
-        addJeiInfo(registration, CItemRegistry.SALT_PAN);
-        addJeiInfo(registration, CItemRegistry.SALT);
-        addJeiInfo(registration, CItemRegistry.SPOON);
-        addJeiInfo(registration, CItemRegistry.CRATE);
-        registerJeiInfoForItemTag(registration, ModTag.KNIFE);
+        registerJeiInfoForItemTag(registration, ModTag.SOILED_SEED, C_JEI_INFO);
+        registerJeiInfoForItemTag(registration, ModTag.CUSTOMIZED_PLATE, C_JEI_INFO);
+        addJeiInfo(registration, CItemRegistry.SALT_PAN, C_JEI_INFO);
+        addJeiInfo(registration, CItemRegistry.SALT, C_JEI_INFO);
+        addJeiInfo(registration, CItemRegistry.SPOON, C_JEI_INFO);
+        addJeiInfo(registration, CItemRegistry.CRATE, C_JEI_INFO);
+        registerJeiInfoForItemTag(registration, ModTag.KNIFE, C_JEI_INFO);
     }
 
     @Override
