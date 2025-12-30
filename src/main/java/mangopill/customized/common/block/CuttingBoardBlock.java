@@ -1,7 +1,6 @@
 package mangopill.customized.common.block;
 
 import com.mojang.serialization.MapCodec;
-import mangopill.customized.common.block.entity.CuttingBoardBlockEntity;
 import mangopill.customized.common.registry.CBlockEntityTypeRegistry;
 import net.minecraft.core.*;
 import net.minecraft.sounds.SoundEvents;
@@ -18,7 +17,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 import org.jetbrains.annotations.Nullable;
 
-public class CuttingBoardBlock extends BaseEntityBlock implements CSimpleInteractableBlock {
+public class CuttingBoardBlock extends BaseEntityBlock implements CSimpleInteractableBlock, CSimpleDropContentsBlock {
     public static final MapCodec<CuttingBoardBlock> CODEC = simpleCodec(CuttingBoardBlock::new);
 
     protected static final VoxelShape X_SHAPE = Shapes.or(
@@ -41,13 +40,7 @@ public class CuttingBoardBlock extends BaseEntityBlock implements CSimpleInterac
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() == newState.getBlock()) return;
-        if (level.getBlockEntity(pos) instanceof CuttingBoardBlockEntity cuttingBoardBlockEntity) {
-            NonNullList<ItemStack> stackNonNullList = NonNullList.create();
-            stackNonNullList.addAll(cuttingBoardBlockEntity.getItemStackListInBlockEntity(true));
-            Containers.dropContents(level, pos, stackNonNullList);
-            level.updateNeighbourForOutputSignal(pos, this);
-        }
+        dropContents(state, level, pos, newState, this);
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 

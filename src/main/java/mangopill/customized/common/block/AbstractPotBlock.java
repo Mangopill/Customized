@@ -24,7 +24,7 @@ import java.util.List;
 
 import static mangopill.customized.common.block.state.PotState.*;
 
-public abstract class AbstractPotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+public abstract class AbstractPotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, CSimpleDropContentsBlock {
     public static final EnumProperty<PotState> LID = EnumProperty.create("lid", PotState.class);
 
     protected AbstractPotBlock(Properties properties) {
@@ -114,14 +114,15 @@ public abstract class AbstractPotBlock extends BaseEntityBlock implements Simple
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() == newState.getBlock()) return;
-        if (level.getBlockEntity(pos) instanceof AbstractPotBlockEntity potBlockEntity) {
-            NonNullList<ItemStack> stackNonNullList = NonNullList.create();
-            stackNonNullList.addAll(potBlockEntity.getItemStackListInPot(true, true));
-            Containers.dropContents(level, pos, stackNonNullList);
-            level.updateNeighbourForOutputSignal(pos, this);
-        }
+        dropContents(state, level, pos, newState, this);
         super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    @Override
+    public NonNullList<ItemStack> getCustomStackList(BlockState state, Level level, BlockPos pos, BlockState newState, Block block) {
+        return (level.getBlockEntity(pos) instanceof AbstractPotBlockEntity potBlockEntity)
+                ? NonNullList.copyOf(potBlockEntity.getItemStackListInPot(true, true))
+                : CSimpleDropContentsBlock.super.getCustomStackList(state, level, pos, newState, block);
     }
 
     @Override

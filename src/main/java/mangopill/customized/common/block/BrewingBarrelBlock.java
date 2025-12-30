@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class BrewingBarrelBlock extends BaseEntityBlock implements CSimpleInteractableBlock {
+public class BrewingBarrelBlock extends BaseEntityBlock implements CSimpleInteractableBlock, CSimpleDropContentsBlock {
     public static final MapCodec<BrewingBarrelBlock> CODEC = simpleCodec(BrewingBarrelBlock::new);
     public static final IntegerProperty PROGRESS = IntegerProperty.create("progress", 0, 12);
 
@@ -37,13 +37,7 @@ public class BrewingBarrelBlock extends BaseEntityBlock implements CSimpleIntera
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() == newState.getBlock()) return;
-        if (level.getBlockEntity(pos) instanceof BrewingBarrelBlockEntity brewingBarrelBlockEntity) {
-            NonNullList<ItemStack> stackNonNullList = NonNullList.create();
-            stackNonNullList.addAll(brewingBarrelBlockEntity.getItemStackListInBlockEntity(true));
-            Containers.dropContents(level, pos, stackNonNullList);
-            level.updateNeighbourForOutputSignal(pos, this);
-        }
+        dropContents(state, level, pos, newState, this);
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
