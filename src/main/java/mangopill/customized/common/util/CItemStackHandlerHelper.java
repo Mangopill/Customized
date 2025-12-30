@@ -214,46 +214,51 @@ public final class CItemStackHandlerHelper {
     }
 
     /**
-     * Finds the ItemStack with the smallest count from a list of ItemStacks.
+     * Calculates the minimum total count of items after merging stacks according to the specified match mode.
      * <p>
-     * Note that this method compares the count of each individual ItemStack, without merging counts of the same item {@link #getMinTotalItemCount(Collection)}.
+     * This method processes a collection of ItemStacks by grouping them based on the provided match mode.
+     * It aggregates the counts of all stacks that match each other according to the match mode's comparator,
+     * then returns the smallest total count among these groups along with a representative ItemStack.
+     * </p>
      * <p>
-     * This method iterates through the list and returns the ItemStack with the lowest count value.
-     * If the list is empty, returns an empty ItemStack.
-     * @param stackList The list of ItemStacks to search through
-     * @return The ItemStack with the smallest count, or ItemStack. EMPTY if the list is empty
-     */
-    public static ItemStack findMinStack(List<ItemStack> stackList) {
-        if (stackList.isEmpty()) return ItemStack.EMPTY;
-        ItemStack minStack = stackList.getFirst();
-        for (ItemStack stack : stackList) {
-            if (stack.getCount() >= minStack.getCount()) continue;
-            minStack = stack;
-        }
-        return minStack;
-    }
-
-    /**
-     * Calculates the minimum total count of items after merging stacks of the same item.
-     * The difference from {@link #findMinStack(List)} is:
-     * this method merges counts of the same item, while {@link #findMinStack(List)} compares the individual count of each ItemStack.
-     * <p>
-     * This method first groups the ItemStacks by item, summing up the counts for each item,
-     * then returns the smallest total count among these items.
-     * If the collection is empty, returns 0.
+     * The method works as follows:
+     * 1. Creates a map where keys are representative ItemStacks and values are total counts
+     * 2. For each input ItemStack, checks if it matches any existing key in the map
+     * 3. If a match is found, adds the count to the existing total
+     * 4. If no match is found, adds the stack as a new entry
+     * 5. Returns the entry with the smallest total count
+     * </p>
      * @param stackList The collection of ItemStacks to process
-     * @return The minimum total count of any item after merging, or 0 if the collection is empty
+     * @param matchMode The match mode to use for grouping and comparing ItemStacks
+     * @return A Map.Entry containing:
+     *         - Key: A representative ItemStack from the group with the smallest total count
+     *         - Value: The total count of that group
+     *         If the input collection is empty, returns an entry with ItemStack.EMPTY and count 0
      */
-    public static int getMinTotalItemCount(Collection<ItemStack> stackList) {
-        if (stackList.isEmpty()) return 0;
-        Map<Item, Integer> itemTotalCountMap = new HashMap<>();
+    public static Map.Entry<ItemStack, Integer> getMinTotalItemCount(Collection<ItemStack> stackList, IItemMatchMode<ItemStack, ItemStack> matchMode) {
+        if (stackList.isEmpty()) return Map.entry(ItemStack.EMPTY, 0);
+        Map<ItemStack, Integer> stackTotalCountMap = new HashMap<>();
         for (ItemStack stack : stackList) {
             if (stack.isEmpty()) continue;
-            Item item = stack.getItem();
-            int count = stack.getCount();
-            itemTotalCountMap.put(item, itemTotalCountMap.getOrDefault(item, 0) + count);
+            int addCount = stack.getCount();
+            boolean hasPut = false;
+            for (Map.Entry<ItemStack, Integer> entry : stackTotalCountMap.entrySet()) {
+                if (simpleTest(entry.getKey(), stack, matchMode)) {
+                    stackTotalCountMap.put(entry.getKey(), entry.getValue() + addCount);
+                    hasPut = true;
+                }
+            }
+            if (hasPut) continue;
+            stackTotalCountMap.put(stack, stackTotalCountMap.getOrDefault(stack, 0) + addCount);
         }
-        return itemTotalCountMap.values().stream().min(Integer::compareTo).orElse(0);
+        if (stackTotalCountMap.isEmpty()) return Map.entry(ItemStack.EMPTY, 0);
+        Map.Entry<ItemStack, Integer> minEntry = null;
+        for (Map.Entry<ItemStack, Integer> entry : stackTotalCountMap.entrySet()) {
+            if (minEntry == null || entry.getValue() < minEntry.getValue()) {
+                minEntry = entry;
+            }
+        }
+        return minEntry;
     }
 
     /**
@@ -262,7 +267,7 @@ public final class CItemStackHandlerHelper {
      * @return The minimum value between 16 and the count of the smallest stack
      */
     public static int getConsumptionCount(List<ItemStack> stackList) {
-        return Math.min(16, findMinStack(stackList).getCount());
+        return Math.min(16, getMinTotalItemCount(stackList, () -> SAME_ITEM_SAME_COMPONENTS.getComparator().and(SAME_COUNT.getComparator())).getValue());
     }
 
     /**
