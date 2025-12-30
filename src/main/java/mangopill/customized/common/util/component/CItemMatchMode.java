@@ -37,7 +37,7 @@ public enum CItemMatchMode implements IItemMatchMode<ItemStack, ItemStack> {
      * {@link ItemStack#isSameItemSameComponents(ItemStack, ItemStack)} internally.
      */
     SAME_ITEM_SAME_COMPONENTS(ItemStack::isSameItemSameComponents),
-    SAME_ITEM_ANY_COMPONENTS(SAME_ITEM.comparator.and(ANY_SAME_COMPONENT.comparator));
+    SAME_ITEM_ANY_COMPONENT(SAME_ITEM.comparator.and(ANY_SAME_COMPONENT.comparator));
 
 
     private final BiPredicate<ItemStack, ItemStack> comparator;
