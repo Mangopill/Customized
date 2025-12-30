@@ -16,9 +16,8 @@ public interface CRecipeInterface<T extends RecipeInput> extends Recipe<T> {
         List<ItemStack> ingredient = new ArrayList<>();
         for (int i = start; i < end; ++i) {
             ItemStack itemstack = recipeWrapper.getItem(i);
-            if (!itemstack.isEmpty()) {
-                ingredient.add(itemstack);
-            }
+            if (itemstack.isEmpty()) continue;
+            ingredient.add(itemstack);
         }
         return ingredient;
     }

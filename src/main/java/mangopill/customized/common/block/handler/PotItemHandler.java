@@ -6,10 +6,6 @@ import mangopill.customized.common.tag.ModTag;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 
-import java.util.List;
-
-import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-
 public class PotItemHandler extends CIItemHandler<AbstractPotBlockEntity> {
     private final int ingredientInput;
     private final int seasoningInput;
@@ -30,7 +26,7 @@ public class PotItemHandler extends CIItemHandler<AbstractPotBlockEntity> {
         if (stack.is(ModTag.FAMOUS_SPICE)) {
             return slot >= seasoningInput + ingredientInput && slot < seasoningInput + ingredientInput + spiceInput ? getItemHandler().insertItem(slot, stack, simulate) : stack;
         }
-        if (stack.getItem() instanceof AbstractPlateItem || containsSameItem(List.of(getEntity().getContainerItem().getItems()), stack)) {
+        if (stack.getItem() instanceof AbstractPlateItem || getEntity().getContainerItem().test(stack)) {
             return slot == seasoningInput + ingredientInput + spiceInput ? getItemHandler().insertItem(slot, stack, simulate) : stack;
         }
         return slot < ingredientInput ? getItemHandler().insertItem(slot, stack, simulate) : stack;

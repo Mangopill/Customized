@@ -49,7 +49,7 @@ public class BrewingBarrelBlockEntity extends CBasicCookingBlockEntity<BrewingBa
             clearCookingTimeAndUpdate(pos, state, state.getValue(BrewingBarrelBlock.PROGRESS) + 1);
             return;
         }
-        if (!containsSameItem(List.of(containerItem.getItems()), itemStackHandler.getStackInSlot(inputSlot))) return;
+        if (!containerItem.test(itemStackHandler.getStackInSlot(inputSlot))) return;
         ItemStack resultStack = recipe.getResultItem(level.registryAccess()).copy();
         spawnItemEntity(level, resultStack.copy(), state, pos);
         for (int i = 0; i < inputSlot + outputSlot; ++i) {
@@ -79,7 +79,7 @@ public class BrewingBarrelBlockEntity extends CBasicCookingBlockEntity<BrewingBa
 
     @Override
     public void insertItem(ItemStack itemStackInHand) {
-        if (containsSameItem(List.of(containerItem.getItems()), itemStackInHand)) {
+        if (containerItem.test(itemStackInHand)) {
             CItemStackHandlerHelper.fillInItem(itemStackHandler, itemStackInHand, inputSlot, inputSlot + outputSlot);
         } else {
             CItemStackHandlerHelper.fillInItem(itemStackHandler, itemStackInHand, 0, inputSlot);

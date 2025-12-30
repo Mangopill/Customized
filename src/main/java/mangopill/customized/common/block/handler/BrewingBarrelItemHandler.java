@@ -4,10 +4,6 @@ import mangopill.customized.common.block.entity.BrewingBarrelBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 
-import java.util.List;
-
-import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
-
 public class BrewingBarrelItemHandler extends CIItemHandler<BrewingBarrelBlockEntity> {
 
     public BrewingBarrelItemHandler(BrewingBarrelBlockEntity entity, IItemHandler itemHandler) {
@@ -16,7 +12,7 @@ public class BrewingBarrelItemHandler extends CIItemHandler<BrewingBarrelBlockEn
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (containsSameItem(List.of(entity.getContainerItem().getItems()), stack)) {
+        if (entity.getContainerItem().test(stack)) {
             return slot == entity.getInputSlot() ? itemHandler.insertItem(slot, stack, simulate) : stack;
         }
         return slot < entity.getInputSlot() ? itemHandler.insertItem(slot, stack, simulate) : stack;

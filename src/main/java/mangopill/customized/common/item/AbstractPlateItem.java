@@ -27,12 +27,13 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.CStringUtil.*;
+import static mangopill.customized.common.util.component.CItemMatchMode.*;
 import static mangopill.customized.common.util.component.ItemComponentUtil.*;
 import static mangopill.customized.common.util.component.ItemComponentUtil.getConsumptionCount;
 
@@ -160,7 +161,7 @@ public abstract class AbstractPlateItem extends BlockItem {
     @Override
     public Component getName(ItemStack stack) {
         List<ItemStack> stackList = getItemStackListInPlate(stack, false);
-        List<ItemStack> topTwoItems = getTopTwoItemsByCount(stackList);
+        List<ItemStack> topTwoItems = getTopNGroups(stackList, SAME_ITEM, false, 2).stream().map(Map.Entry::getKey).toList();
         if (topTwoItems.isEmpty()) return super.getName(stack);
         String itemName = topTwoItems.stream().map(item -> item.getDisplayName().getString()).collect(Collectors.joining("&"));
         return literal(itemName).append(":").append(translate(getDescriptionId(stack) + "_food"));

@@ -214,29 +214,21 @@ public final class CItemStackHandlerHelper {
     }
 
     /**
-     * Calculates the minimum total count of items after merging stacks according to the specified match mode.
+     * Groups ItemStacks by match mode and returns a map with total counts.
      * <p>
      * This method processes a collection of ItemStacks by grouping them based on the provided match mode.
      * It aggregates the counts of all stacks that match each other according to the match mode's comparator,
-     * then returns the smallest total count among these groups along with a representative ItemStack.
-     * </p>
-     * <p>
-     * The method works as follows:
-     * 1. Creates a map where keys are representative ItemStacks and values are total counts
-     * 2. For each input ItemStack, checks if it matches any existing key in the map
-     * 3. If a match is found, adds the count to the existing total
-     * 4. If no match is found, adds the stack as a new entry
-     * 5. Returns the entry with the smallest total count
-     * </p>
+     * then returns a map with representative ItemStacks as keys and total counts as values.
      * @param stackList The collection of ItemStacks to process
      * @param matchMode The match mode to use for grouping and comparing ItemStacks
-     * @return A Map.Entry containing:
-     *         - Key: A representative ItemStack from the group with the smallest total count
+     * @return A map where:
+     *         - Key: A representative ItemStack from each group
      *         - Value: The total count of that group
-     *         If the input collection is empty, returns an entry with ItemStack.EMPTY and count 0
+     *         If the input collection is empty, returns an empty map
      */
-    public static Map.Entry<ItemStack, Integer> getMinTotalItemCount(Collection<ItemStack> stackList, IItemMatchMode<ItemStack, ItemStack> matchMode) {
-        if (stackList.isEmpty()) return Map.entry(ItemStack.EMPTY, 0);
+    public static Map<ItemStack, Integer> groupItemStacksByMatchMode(Collection<ItemStack> stackList,
+                                                                     IItemMatchMode<ItemStack, ItemStack> matchMode) {
+        if (stackList.isEmpty()) return Map.of(ItemStack.EMPTY, 0);
         Map<ItemStack, Integer> stackTotalCountMap = new HashMap<>();
         for (ItemStack stack : stackList) {
             if (stack.isEmpty()) continue;
@@ -246,19 +238,49 @@ public final class CItemStackHandlerHelper {
                 if (simpleTest(entry.getKey(), stack, matchMode)) {
                     stackTotalCountMap.put(entry.getKey(), entry.getValue() + addCount);
                     hasPut = true;
+                    break;
                 }
             }
-            if (hasPut) continue;
-            stackTotalCountMap.put(stack, stackTotalCountMap.getOrDefault(stack, 0) + addCount);
-        }
-        if (stackTotalCountMap.isEmpty()) return Map.entry(ItemStack.EMPTY, 0);
-        Map.Entry<ItemStack, Integer> minEntry = null;
-        for (Map.Entry<ItemStack, Integer> entry : stackTotalCountMap.entrySet()) {
-            if (minEntry == null || entry.getValue() < minEntry.getValue()) {
-                minEntry = entry;
+            if (!hasPut) {
+                stackTotalCountMap.put(stack, stackTotalCountMap.getOrDefault(stack, 0) + addCount);
             }
         }
-        return minEntry;
+        return stackTotalCountMap;
+    }
+
+    /**
+     * Returns a sorted list of grouped ItemStacks by their total counts.
+     * @param stackList The collection of ItemStacks to process
+     * @param matchMode The match mode to use for grouping and comparing ItemStacks
+     * @param ascending If true, sorts in ascending order (smallest first); if false, descending order (largest first)
+     * @return A list of Map.Entry objects sorted by total count
+     */
+    public static List<Map.Entry<ItemStack, Integer>> getSortedItemEntryList(Collection<ItemStack> stackList,
+                                                                             IItemMatchMode<ItemStack, ItemStack> matchMode,
+                                                                             boolean ascending) {
+        Map<ItemStack, Integer> grouped = groupItemStacksByMatchMode(stackList, matchMode);
+        List<Map.Entry<ItemStack, Integer>> sortedEntries = new ArrayList<>(grouped.entrySet());
+        Comparator<Map.Entry<ItemStack, Integer>> comparator = Map.Entry.comparingByValue();
+        if (!ascending) {
+            comparator = comparator.reversed();
+        }
+        sortedEntries.sort(comparator);
+        return sortedEntries;
+    }
+
+    /**
+     * Gets the top N groups of ItemStacks sorted by their total counts.
+     * @param stackList The collection of ItemStacks to process
+     * @param matchMode The match mode used for grouping and comparing ItemStacks
+     * @param ascending Sort order: true for ascending (smallest first), false for descending (largest first)
+     * @param n Number of groups to return
+     * @return Sorted list of the first N groups, empty list if n <= 0
+     */
+    public static List<Map.Entry<ItemStack, Integer>> getTopNGroups(Collection<ItemStack> stackList,
+                                                                    IItemMatchMode<ItemStack, ItemStack> matchMode,
+                                                                    boolean ascending, int n) {
+        List<Map.Entry<ItemStack, Integer>> sorted = getSortedItemEntryList(stackList, matchMode, ascending);
+        return sorted.subList(0, Math.clamp(n, 0, sorted.size()));
     }
 
     /**
@@ -267,7 +289,7 @@ public final class CItemStackHandlerHelper {
      * @return The minimum value between 16 and the count of the smallest stack
      */
     public static int getConsumptionCount(List<ItemStack> stackList) {
-        return Math.min(16, getMinTotalItemCount(stackList, () -> SAME_ITEM_SAME_COMPONENTS.getComparator().and(SAME_COUNT.getComparator())).getValue());
+        return Math.min(16, getSortedItemEntryList(stackList, () -> SAME_ITEM_SAME_COMPONENTS.getComparator().and(SAME_COUNT.getComparator()), true).getFirst().getValue());
     }
 
     /**
@@ -351,24 +373,6 @@ public final class CItemStackHandlerHelper {
      */
     public static boolean test(ItemStack stack, ItemStack targetStack, BiPredicate<ItemStack, ItemStack> comparator) {
         return comparator.test(stack, targetStack);
-    }
-
-    /**
-     * Gets the top two items by total count from a list of ItemStacks.
-     * <p>
-     * This method aggregates counts by item type and returns the two items with the highest total counts.
-     * @param itemStackList The list of ItemStacks to analyze
-     * @return A list containing the top two items by count, represented as new ItemStacks with aggregated counts
-     */
-    public static List<ItemStack> getTopTwoItemsByCount(Collection<ItemStack> itemStackList) {
-        Map<Item, Integer> itemCountMap = new HashMap<>();
-        for (ItemStack itemStack : itemStackList) {
-            Item item = itemStack.getItem();
-            int count = itemStack.getCount();
-            itemCountMap.put(item, itemCountMap.getOrDefault(item, 0) + count);
-        }
-        return itemCountMap.entrySet().stream().sorted((entry1, entry2) -> entry2.getValue() - entry1.getValue())
-                .limit(2).map(entry -> new ItemStack(entry.getKey(), entry.getValue())).toList();
     }
 
     /**

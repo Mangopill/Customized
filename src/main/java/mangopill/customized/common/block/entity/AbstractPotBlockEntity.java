@@ -163,7 +163,7 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
         getRecipeCookingCompletionTime(recipe);
         lidAccelerate(state);
         if (cookingTime < cookingCompletionTime) return;
-        if (!containsSameItem(List.of(containerItem.getItems()), itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + spiceInput))) return;
+        if (!containerItem.test(itemStackHandler.getStackInSlot(ingredientInput + seasoningInput + spiceInput))) return;
         assert level != null;
         ItemStack resultStack = recipe.getResultItem(level.registryAccess()).copy();
         spawnItemEntity(level, resultStack.copy(), state, pos);

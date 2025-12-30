@@ -21,6 +21,8 @@ import java.util.function.BiPredicate;
  * boolean sameItem = ItemMatchMode.SAME_ITEM.getComparator().test(stack1, stack2);
  * // Also
  * boolean sameItem = simpleTest(stack1, stack2, CItemMatchMode.SAME_ITEM)
+ * // Advanced
+ * () -> SAME_ITEM_SAME_COMPONENTS.getComparator().and(SAME_COUNT.getComparator())
  * }</pre>
  */
 public enum CItemMatchMode implements IItemMatchMode<ItemStack, ItemStack> {
@@ -38,7 +40,6 @@ public enum CItemMatchMode implements IItemMatchMode<ItemStack, ItemStack> {
      */
     SAME_ITEM_SAME_COMPONENTS(ItemStack::isSameItemSameComponents),
     SAME_ITEM_ANY_COMPONENT(SAME_ITEM.comparator.and(ANY_SAME_COMPONENT.comparator));
-
 
     private final BiPredicate<ItemStack, ItemStack> comparator;
 
