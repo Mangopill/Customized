@@ -110,6 +110,8 @@
   "enchantment.customized.edge_resonance": "Edge Resonance",
   "enchantment.customized.edge_resonance.desc": "This enchantment causes the blade to resonate and split.",
 
+  "tooltip.customized.am": "%s:%s AM",
+  "tooltip.customized.pm": "%s:%s PM",
   "tooltip.customized.is_ctrl_key_pressed": "<Press the Ctrl key to see more>",
   "tooltip.customized.food_category_seasoning": "Seasoning",
   "tooltip.customized.food_category_food": "Food",

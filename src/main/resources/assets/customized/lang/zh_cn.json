@@ -110,6 +110,8 @@
   "enchantment.customized.edge_resonance": "刃鸣",
   "enchantment.customized.edge_resonance.desc": "此魔咒使刀刃产生共鸣分裂。",
 
+  "tooltip.customized.am": "上午 %s:%s",
+  "tooltip.customized.pm": "下午 %s:%s",
   "tooltip.customized.is_ctrl_key_pressed": "<按下Ctrl键以显示更多>",
   "tooltip.customized.food_category_seasoning": "调料",
   "tooltip.customized.food_category_food": "食材",
