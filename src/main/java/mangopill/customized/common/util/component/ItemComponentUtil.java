@@ -26,11 +26,11 @@ public final class ItemComponentUtil {
     }
 
     public static int getConsumptionCount(MutableDataComponentHolder holder) {
-        return holder.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT, ConsumptionCountRecord.NULL).consumptionCount();
+        return holder.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT, ConsumptionCountRecord.EMPTY).consumptionCount();
     }
 
     public static int getConsumptionCountTotal(MutableDataComponentHolder holder) {
-        return holder.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, ConsumptionCountTotalRecord.NULL).consumptionCountTotal();
+        return holder.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, ConsumptionCountTotalRecord.EMPTY).consumptionCountTotal();
     }
 
     public static UUID getLastInteractPlayerId(MutableDataComponentHolder holder) {

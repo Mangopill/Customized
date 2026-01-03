@@ -113,8 +113,8 @@ public final class RegistryUtil {
     }
 
     public static <T extends Recipe<?>> RecipeType<T> registerRecipeType(final String s) {
-        return new RecipeType<>()
-        {
+        return new RecipeType<>() {
+            @Override
             public String toString() {
                 return Customized.MODID + ":" + s;
             }

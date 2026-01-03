@@ -17,7 +17,7 @@ import static mangopill.customized.common.util.RegistryUtil.*;
 
 public final class CItemRegistry {
     public static final DeferredRegister.Items ITEM = DeferredRegister.createItems(Customized.MODID);
-    public static LinkedHashSet<Supplier<Item>> CREATIVE_MODE_TAB = new LinkedHashSet<>();
+    public static final LinkedHashSet<Supplier<Item>> CREATIVE_MODE_TAB = new LinkedHashSet<>();
     // item
     public static final Supplier<Item> ROCK_SUGAR = registerWithCCreativeTab(ITEM,
             "rock_sugar", basicItem());

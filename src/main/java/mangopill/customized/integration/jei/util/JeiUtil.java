@@ -39,7 +39,9 @@ public final class JeiUtil {
 
     public static final int SLOT_SIZE = 16 + 2;
     public static final int TICKS_PER_CYCLE = 200;
+
     public static final IIngredientType<NutrientCategoryRecipe> NUTRIENT_INGREDIENT = () -> NutrientCategoryRecipe.class;
+
     public static final RecipeType<PropertyValueRecipeCategory.PropertyValueRecipeAdapter> PROPERTY_VALUE = RecipeType.create(Customized.MODID, "property_value", PropertyValueRecipeCategory.PropertyValueRecipeAdapter.class);
     public static final RecipeType<NutrientBuffRecipe> NUTRIENT_BUFF = RecipeType.create(Customized.MODID, "nutrient_buff", NutrientBuffRecipe.class);
     public static final RecipeType<CasseroleRecipe> CASSEROLE = RecipeType.create(Customized.MODID, "casserole", CasseroleRecipe.class);

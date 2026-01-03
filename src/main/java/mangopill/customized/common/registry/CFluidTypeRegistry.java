@@ -19,7 +19,6 @@ import static mangopill.customized.common.util.CStringUtil.*;
 public final class CFluidTypeRegistry {
     public static final DeferredRegister<FluidType> FLUID_TYPE = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, Customized.MODID);
 
-
     private static final ResourceLocation SOUP_STILL = getCLoc("block/soup_still");
     private static final ResourceLocation SOUP_FLOW = getCLoc("block/soup_flow");
     public static final Supplier<FluidType> SOUP_TYPE = FLUID_TYPE.register(

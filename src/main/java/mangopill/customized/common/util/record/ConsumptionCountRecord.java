@@ -6,7 +6,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.*;
 
 public record ConsumptionCountRecord(int consumptionCount) {
-    public static final ConsumptionCountRecord NULL = new ConsumptionCountRecord(0);
+    public static final ConsumptionCountRecord EMPTY = new ConsumptionCountRecord(0);
 
     public static final Codec<ConsumptionCountRecord> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(

@@ -185,8 +185,8 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
     @Override
     protected void applyImplicitComponents(BlockEntity.DataComponentInput componentInput) {
         super.applyImplicitComponents(componentInput);
-        consumptionCount = componentInput.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT, ConsumptionCountRecord.NULL).consumptionCount();
-        consumptionCountTotal = componentInput.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, ConsumptionCountTotalRecord.NULL).consumptionCountTotal();
+        consumptionCount = componentInput.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT, ConsumptionCountRecord.EMPTY).consumptionCount();
+        consumptionCountTotal = componentInput.getOrDefault(CDataComponentRegistry.CONSUMPTION_COUNT_TOTAL, ConsumptionCountTotalRecord.EMPTY).consumptionCountTotal();
         foodProperty = componentInput.getOrDefault(DataComponents.FOOD, FoodValue.EMPTY);
         processComponentStack(componentInput, CDataComponentRegistry.ITEM_STACK_HANDLER, itemStackHandler);
         processComponentStack(componentInput, CDataComponentRegistry.INITIAL_ITEM_STACK_HANDLER, initialItemStackHandler);
