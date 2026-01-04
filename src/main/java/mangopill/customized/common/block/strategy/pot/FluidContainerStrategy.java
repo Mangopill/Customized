@@ -20,9 +20,7 @@ public record FluidContainerStrategy() implements IPotInteractionStrategy {
                             Player player, InteractionHand hand,
                             BlockHitResult result) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof AbstractPotBlockEntity potBlockEntity)) {
-            return false;
-        }
+        if (!(blockEntity instanceof AbstractPotBlockEntity potBlockEntity)) return false;
         return FluidUtil.interactWithFluidHandler(player, hand, potBlockEntity.getFluidHandler());
     }
 }

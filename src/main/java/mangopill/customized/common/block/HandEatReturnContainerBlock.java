@@ -17,6 +17,7 @@ import net.minecraft.world.phys.shapes.*;
 import java.util.function.Supplier;
 
 import static mangopill.customized.common.util.InteractUtil.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 
 public class HandEatReturnContainerBlock extends Block {
     public static final IntegerProperty EAT = IntegerProperty.create("eat", 0, 10);
@@ -56,7 +57,7 @@ public class HandEatReturnContainerBlock extends Block {
                 level.setBlockAndUpdate(pos, state.setValue(EAT, eat + 1));
             } else {
                 addItemToPlayer(player, container.get().getDefaultInstance());
-                level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.PLAYERS, 0.8F, 1.0F);
+                playSound(level, null, pos, SoundEvents.STONE_BREAK, SoundSource.PLAYERS, 0.8F, 1.0F);
                 level.removeBlock(pos, false);
             }
         }
@@ -70,7 +71,7 @@ public class HandEatReturnContainerBlock extends Block {
                 player.addEffect(effect.effect());
             }
         }
-        level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 1.0F);
+        playSound(level, null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 1.0F);
     }
 
     @Override

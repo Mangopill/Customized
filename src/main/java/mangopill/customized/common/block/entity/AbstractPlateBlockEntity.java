@@ -30,6 +30,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 import static mangopill.customized.common.util.component.CompoundTagHelper.*;
 
 public abstract class AbstractPlateBlockEntity extends BlockEntity implements CreateItemStackHandler {
@@ -79,7 +80,7 @@ public abstract class AbstractPlateBlockEntity extends BlockEntity implements Cr
 
     public void eatFood(Level level, Player player, BlockState state, BlockPos pos) {
         if (consumptionCount < 1) return;
-        level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
+        playSound(level, null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
         player.getFoodData().eat(foodProperty);
         addEffect(player, foodProperty);
         AbstractPlateItem.plateAdvancement(player, foodProperty);

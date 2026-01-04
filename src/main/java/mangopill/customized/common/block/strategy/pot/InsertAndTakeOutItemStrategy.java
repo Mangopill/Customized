@@ -14,6 +14,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+import static mangopill.customized.common.util.SensoryUtil.*;
+
 public record InsertAndTakeOutItemStrategy() implements IPotInteractionStrategy {
     // Ensure this strategy is at the end of the registration
     @Override
@@ -21,9 +23,7 @@ public record InsertAndTakeOutItemStrategy() implements IPotInteractionStrategy 
                             Player player, InteractionHand hand, BlockHitResult result) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AbstractPotBlockEntity potBlockEntity){
-            if (state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)){
-                return false;
-            }
+            if (state.getValue(AbstractPotBlock.LID).equals(PotState.WITH_LID)) return false;
             if (itemStackInHand.isEmpty()){
                 if (player.isShiftKeyDown()){
                     takeOut(state, level, pos, potBlockEntity);
@@ -39,11 +39,11 @@ public record InsertAndTakeOutItemStrategy() implements IPotInteractionStrategy 
 
     private void insert(ItemStack itemStackInHand, Level level, BlockPos pos, AbstractPotBlockEntity potBlockEntity, Player player) {
         potBlockEntity.insertItem(itemStackInHand, player);
-        level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT, SoundSource.BLOCKS, 0.8F, 1.0F);
+        playSound(level, null, pos, SoundEvents.DECORATED_POT_INSERT, SoundSource.BLOCKS, 0.8F, 1.0F);
     }
 
     private void takeOut(BlockState state, Level level, BlockPos pos, AbstractPotBlockEntity potBlockEntity) {
         potBlockEntity.takeOutItem(level, state, pos);
-        level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT_FAIL, SoundSource.BLOCKS, 0.8F, 1.0F);
+        playSound(level, null, pos, SoundEvents.DECORATED_POT_INSERT_FAIL, SoundSource.BLOCKS, 0.8F, 1.0F);
     }
 }

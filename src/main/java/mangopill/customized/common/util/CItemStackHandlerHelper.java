@@ -439,7 +439,7 @@ public final class CItemStackHandlerHelper {
      * @param state The block state at the spawn position (can be used for direction calculation)
      * @param pos The position to spawn entities at
      */
-    public static void spawnUsingConvertsTo(Level level, Collection<ItemStack> stackList, BlockState state, BlockPos pos) {
+    public static void spawnUsingConvertsTo(Level level, Collection<ItemStack> stackList, BlockState state, Vec3i pos) {
         List<ItemStack> spawnList = stackList.stream().map(itemStack -> {
             Optional<ItemStack> optionalItem = Optional.ofNullable(itemStack.getFoodProperties(null))
                     .flatMap(FoodProperties::usingConvertsTo);

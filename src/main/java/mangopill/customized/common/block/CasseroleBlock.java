@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.*;
 
 import static mangopill.customized.common.CustomizedConfig.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 
 public class CasseroleBlock extends AbstractPotBlock{
     public static final MapCodec<CasseroleBlock> CODEC = simpleCodec(CasseroleBlock::new);
@@ -66,16 +67,12 @@ public class CasseroleBlock extends AbstractPotBlock{
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof CasseroleBlockEntity cookingPotEntity && cookingPotEntity.isHeated() && !state.getValue(LID).equals(PotState.WITHOUT_LID)) {
-            double x = (double) pos.getX() + 0.4D;
-            double y = pos.getY();
-            double z = (double) pos.getZ() + 0.4D;
-            if (random.nextInt(8) == 0 && CASSEROLE_SOUND.get()) {
-                SoundEvent sound = state.getValue(LID).equals(PotState.WITH_LID)
-                        ? CSoundRegistry.BOILING_WATER_WITH_LID.get()
-                        : CSoundRegistry.BOILING_WATER_WITHOUT_LID.get();
-                level.playLocalSound(x, y, z, sound, SoundSource.BLOCKS, Math.clamp(random.nextFloat() + 0.01F, 0.01F, 0.3F), 1.0F, false);
-            }
+        if (!(blockEntity instanceof CasseroleBlockEntity cookingPotEntity) || !CASSEROLE_SOUND.get()) return;
+        if (cookingPotEntity.isHeated() && !state.getValue(LID).equals(PotState.WITHOUT_LID)) {
+            SoundEvent sound = state.getValue(LID).equals(PotState.WITH_LID)
+                    ? CSoundRegistry.BOILING_WATER_WITH_LID.get()
+                    : CSoundRegistry.BOILING_WATER_WITHOUT_LID.get();
+            playRandomSound(level, null, pos, sound, SoundSource.BLOCKS, random, 0.1F, Math.clamp(random.nextFloat() + 0.01F, 0.01F, 0.3F), 1.0F);
         }
     }
 

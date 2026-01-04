@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.CStringUtil.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 import static mangopill.customized.common.util.component.CItemMatchMode.*;
 import static mangopill.customized.common.util.component.ItemComponentUtil.*;
 import static mangopill.customized.common.util.component.ItemComponentUtil.getConsumptionCount;
@@ -84,7 +85,7 @@ public abstract class AbstractPlateItem extends BlockItem {
         FoodProperties properties = getFoodProperty(stack);
         plateAdvancement(livingEntity, properties);
         if (consumptionCount >= 1) {
-            level.playSound(null, livingEntity, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
+            playSound(level, livingEntity, livingEntity.getOnPos(), SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
             if (livingEntity instanceof ServerPlayer player) {
                 player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
                 player.getFoodData().eat(properties);

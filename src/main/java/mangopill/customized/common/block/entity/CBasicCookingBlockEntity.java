@@ -22,6 +22,7 @@ import java.util.*;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 
 public abstract class CBasicCookingBlockEntity<T extends CRecipeInterface<RecipeWrapper>> extends BlockEntity implements CreateItemStackHandler {
     protected final int inputSlot;
@@ -81,10 +82,10 @@ public abstract class CBasicCookingBlockEntity<T extends CRecipeInterface<Recipe
                          BlockPos pos, SoundEvent output, SoundEvent insert) {
         if (itemStackInHand.isEmpty() && player.isShiftKeyDown()) {
             outputItem(level, state, pos);
-            level.playSound(null, pos, output, SoundSource.BLOCKS, 0.8F, 1.0F);
+            playSound(level, null, pos, output, SoundSource.BLOCKS, 0.8F, 1.0F);
         } else {
             insertItem(itemStackInHand);
-            level.playSound(null, pos, insert, SoundSource.BLOCKS, 0.8F, 1.0F);
+            playSound(level, null, pos, insert, SoundSource.BLOCKS, 0.8F, 1.0F);
         }
         itemStackHandlerChanged();
     }

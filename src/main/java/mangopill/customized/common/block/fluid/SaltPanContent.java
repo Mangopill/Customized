@@ -14,18 +14,14 @@ public class SaltPanContent extends CFluidContent<Boolean, Boolean> {
     }
 
     public static SaltPanContent getContent(Level level, BlockPos pos) {
-        if (level.getBlockState(pos).getValue(SaltPanBlock.WITH_WATER).equals(true)){
-            return new SaltPanContent(CBlockRegistry.SALT_PAN.get(), Fluids.WATER, 333, false);
-        } else {
-            return new SaltPanContent(CBlockRegistry.SALT_PAN.get(), Fluids.EMPTY, 0, false);
-        }
+        return level.getBlockState(pos).getValue(SaltPanBlock.WITH_WATER).equals(true)
+                ? new SaltPanContent(CBlockRegistry.SALT_PAN.get(), Fluids.WATER, 333, false)
+                : new SaltPanContent(CBlockRegistry.SALT_PAN.get(), Fluids.EMPTY, 0, false);
     }
 
     public static SaltPanContent getContentForFill(Level level, BlockPos pos) {
-        if (level.getBlockState(pos).getValue(SaltPanBlock.WITH_WATER).equals(false)){
-            return new SaltPanContent(CBlockRegistry.SALT_PAN.get(), Fluids.WATER, 333, true);
-        } else {
-            return new SaltPanContent(CBlockRegistry.SALT_PAN.get(), Fluids.EMPTY, 0, true);
-        }
+        return level.getBlockState(pos).getValue(SaltPanBlock.WITH_WATER).equals(false)
+                ? new SaltPanContent(CBlockRegistry.SALT_PAN.get(), Fluids.WATER, 333, true)
+                : new SaltPanContent(CBlockRegistry.SALT_PAN.get(), Fluids.EMPTY, 0, true);
     }
 }

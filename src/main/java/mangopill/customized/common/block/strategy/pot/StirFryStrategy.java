@@ -15,6 +15,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+import static mangopill.customized.common.util.SensoryUtil.*;
+
 public record StirFryStrategy(ItemStack spatula) implements IPotInteractionStrategy {
     @Override
     public boolean interact(ItemStack itemStackInHand, BlockState state,
@@ -23,9 +25,7 @@ public record StirFryStrategy(ItemStack spatula) implements IPotInteractionStrat
                          BlockHitResult result) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AbstractPotBlockEntity potBlockEntity){
-            if (!canStirFry(itemStackInHand, state)){
-                return false;
-            }
+            if (!canStirFry(itemStackInHand, state)) return false;
             stirFry(itemStackInHand, level, pos, player, potBlockEntity, spatula);
             return true;
         }
@@ -38,6 +38,6 @@ public record StirFryStrategy(ItemStack spatula) implements IPotInteractionStrat
 
     private void stirFry(ItemStack itemStackInHand, Level level, BlockPos pos, Player player, AbstractPotBlockEntity potBlockEntity, ItemStack spatula) {
         potBlockEntity.stirFryAccelerate(itemStackInHand, player, spatula);
-        level.playSound(null, pos, SoundEvents.METAL_HIT, SoundSource.BLOCKS, 1.0F, 1.0F);
+        playSound(level, null, pos, SoundEvents.METAL_HIT, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 }

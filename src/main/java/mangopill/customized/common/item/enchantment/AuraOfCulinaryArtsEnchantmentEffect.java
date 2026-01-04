@@ -8,7 +8,6 @@ import mangopill.customized.common.registry.CEnchantmentComponentRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.*;
 import net.minecraft.network.codec.*;
-import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.*;
 import net.minecraft.sounds.*;
@@ -31,6 +30,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.common.util.LootTableUtil.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 
 @EventBusSubscriber(modid = Customized.MODID)
 public class AuraOfCulinaryArtsEnchantmentEffect {
@@ -74,8 +74,8 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
                     data.getStackList().removeLast();
                     PacketDistributor.sendToAllPlayers(new PlayerAuraData(new HashMap<>(PLAYER_AURA_DATA)));
                     if (!AURA_OF_CULINARY_ARTS_MESSAGE.get()) return;
-                    addParticles(player, 0.5D, 10, 0.1);
-                    playSound(player, SoundEvents.ENCHANTMENT_TABLE_USE);
+                    addEffectParticle(player, 10, 0.1);
+                    playEffectSound(player, SoundEvents.ENCHANTMENT_TABLE_USE);
                     player.displayClientMessage(C_MESSAGE.create("aura_of_culinary_arts", data.activeFoods), true);
                 }
             });
@@ -91,29 +91,20 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
             data.getStackList().addLast(getRandomLootTableItemStack((ServerLevel) player.level(), LOOT_TABLE));
             PacketDistributor.sendToAllPlayers(new PlayerAuraData(new HashMap<>(PLAYER_AURA_DATA)));
             if (!AURA_OF_CULINARY_ARTS_MESSAGE.get()) return;
-            addParticles(player, 1.0, 5, 0.05);
-            playSound(player, SoundEvents.EXPERIENCE_ORB_PICKUP);
+            addEffectParticle(player, 5, 0.05);
+            playEffectSound(player, SoundEvents.EXPERIENCE_ORB_PICKUP);
             player.displayClientMessage(C_MESSAGE.create("aura_of_culinary_arts", data.activeFoods), true);
         }
     }
 
-    private static void addParticles(Player player, double x, int particleCount, double speed) {
-        if (player.level() instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER,
-                    player.getX(), player.getY() + x, player.getZ(),
-                    particleCount, 0.3, 0.3, 0.3, speed);
-        }
+    private static void addEffectParticle(Player player, int particleCount, double speed) {
+        if (!(player.level() instanceof ServerLevel serverLevel)) return;
+        sendRandomParticle(serverLevel, player.getOnPos().above(), ParticleTypes.HAPPY_VILLAGER,
+                player.getRandom(), 0.8F, particleCount, speed, 0.0F, 0.5F, 0.0F, 0.0F, 0.5F);
     }
 
-    private static void playSound(Player player, SoundEvent enchantmentTableUse) {
-        if (player instanceof ServerPlayer serverPlayer) {
-            serverPlayer.connection.send(new ClientboundSoundPacket(
-                    BuiltInRegistries.SOUND_EVENT.wrapAsHolder(enchantmentTableUse),
-                    SoundSource.PLAYERS,
-                    player.getX(), player.getY(), player.getZ(),
-                    1.0F, 1.0F, player.level().getRandom().nextLong()
-            ));
-        }
+    private static void playEffectSound(Player player, SoundEvent soundEvent) {
+        playSound(player.level(), player, player.getOnPos().above(), soundEvent, SoundSource.PLAYERS, 1.0F, 1.0F);
     }
 
     public static class CulinaryAuraData {

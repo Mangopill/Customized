@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 import static mangopill.customized.common.util.InteractUtil.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 
 public record IgniteStrategy() implements IPotInteractionStrategy {
     @Override
@@ -35,6 +36,6 @@ public record IgniteStrategy() implements IPotInteractionStrategy {
     private void ignite(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand) {
         level.setBlockAndUpdate(pos, state.setValue(AbstractPotBlock.LID, PotState.WITH_DRIVE));
         hurtAndBreakItemStack(itemStackInHand, player, 1);
-        level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 0.8F, 1.0F);
+        playSound(level, null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 0.8F, 1.0F);
     }
 }

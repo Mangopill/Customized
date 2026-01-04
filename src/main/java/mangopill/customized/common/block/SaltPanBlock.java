@@ -18,6 +18,7 @@ import net.minecraft.world.phys.shapes.*;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.InteractUtil.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 import static mangopill.customized.common.util.component.CItemMatchMode.*;
 
 public class SaltPanBlock extends Block {
@@ -54,7 +55,7 @@ public class SaltPanBlock extends Block {
         if (simpleTest(itemStackInHand, shrinkItem, SAME_ITEM)){
             consumeItemAndGiveToPlayer(itemStackInHand, player, giveItem.getDefaultInstance());
             level.setBlockAndUpdate(pos, state.setValue(WITH_WATER, with_water));
-            level.playSound(null, pos, sound, SoundSource.BLOCKS, 0.8F, 1.0F);
+            playSound(level, null, pos, sound, SoundSource.BLOCKS, 0.8F, 1.0F);
         }
     }
 

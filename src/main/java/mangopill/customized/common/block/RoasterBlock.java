@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.*;
 
 import static mangopill.customized.common.CustomizedConfig.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 
 
 public class RoasterBlock extends AbstractPotBlock {
@@ -31,7 +32,7 @@ public class RoasterBlock extends AbstractPotBlock {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         super.stepOn(level, pos, state, entity);
-        if (state.getValue(AbstractPotBlock.LID).equals(PotState.WITHOUT_LID) || !(entity instanceof LivingEntity)) return;
+        if (state.getValue(LID).equals(PotState.WITHOUT_LID) || !(entity instanceof LivingEntity)) return;
         entity.hurt(level.damageSources().hotFloor(), 1.0F);
     }
 
@@ -42,9 +43,8 @@ public class RoasterBlock extends AbstractPotBlock {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if (random.nextInt(10) == 0 && ROASTER_SOUND.get()) {
-            level.playLocalSound(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, SoundEvents.CAMPFIRE_CRACKLE, SoundSource.BLOCKS, 0.5F + random.nextFloat(), random.nextFloat() * 0.7F + 0.6F, false);
-        }
+        if (!ROASTER_SOUND.get() || state.getValue(LID).equals(PotState.WITHOUT_LID)) return;
+        playRandomSound(level, null, pos, SoundEvents.CAMPFIRE_CRACKLE, SoundSource.BLOCKS, random, 0.1F, 0.5F + random.nextFloat(), random.nextFloat() * 0.7F + 0.6F);
     }
 
     @Override

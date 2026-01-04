@@ -19,6 +19,7 @@ import net.minecraft.world.phys.*;
 
 import static mangopill.customized.common.registry.CDamageTypeRegistry.*;
 import static mangopill.customized.common.util.InteractUtil.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 
 public class KnifeEntity extends AbstractArrow {
     private static final EntityDataAccessor<ItemStack> CLIENT_ITEM = SynchedEntityData.defineId(KnifeEntity.class, EntityDataSerializers.ITEM_STACK);
@@ -58,14 +59,14 @@ public class KnifeEntity extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         Level level = level();
-        if (!(level instanceof ServerLevel serverlevel)) return;
+        if (!(level instanceof ServerLevel serverLevel)) return;
         Entity owner = getOwner();
         ItemStack itemStack = getPickupItemStackOrigin();
         float damage;
         if (!(owner instanceof LivingEntity shooter)) return;
         damage = (float) shooter.getAttributeValue(Attributes.ATTACK_DAMAGE);
-        damage = EnchantmentHelper.modifyDamage(serverlevel, itemStack, entity, getDamageSource(level, KNIFE_ENTITY, this, owner), damage);
-        EnchantmentHelper.doPostAttackEffectsWithItemSource(serverlevel, entity, getDamageSource(level, KNIFE_ENTITY, this, owner), itemStack);
+        damage = EnchantmentHelper.modifyDamage(serverLevel, itemStack, entity, getDamageSource(level, KNIFE_ENTITY, this, owner), damage);
+        EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, getDamageSource(level, KNIFE_ENTITY, this, owner), itemStack);
         int i = entity.getRemainingFireTicks();
         if (isOnFire() && entity.getType() != EntityType.ENDERMAN) {
             entity.igniteForSeconds(5.0F);
@@ -76,7 +77,7 @@ public class KnifeEntity extends AbstractArrow {
                     knifeItem.hurtEnemy(itemStack, target, shooter);
                 }
                 target.setLastHurtMob(entity);
-                serverlevel.sendParticles(ParticleTypes.DAMAGE_INDICATOR, target.getX(), target.getY(0.5D), target.getZ(), Math.round(damage), 0.1D, 0.0D, 0.1D, 0.2D);
+                sendParticle(serverLevel, ParticleTypes.DAMAGE_INDICATOR, target.getX(), target.getY(0.5D), target.getZ(), Math.round(damage), 0.1D, 0.0D, 0.1D, 0.2D);
             }
             if (owner instanceof ServerPlayer serverPlayer) {
                 CAdvancementRegistry.USE_FLYING_KNIFE.get().trigger(serverPlayer);

@@ -14,6 +14,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.InteractUtil.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 import static mangopill.customized.common.util.component.CItemMatchMode.*;
 
 public record LidStrategy(ItemStack lid, boolean canInputDrive) implements IPotInteractionStrategy {
@@ -39,12 +40,12 @@ public record LidStrategy(ItemStack lid, boolean canInputDrive) implements IPotI
     private void addLid(ItemStack itemStackInHand, BlockState state, Level level, BlockPos pos, Player player) {
         shrinkItemStack(itemStackInHand, player, 1);
         level.setBlockAndUpdate(pos, state.setValue(AbstractPotBlock.LID, PotState.WITH_LID));
-        level.playSound(null, pos, SoundEvents.DECORATED_POT_PLACE, SoundSource.BLOCKS, 0.8F, 1.0F);
+        playSound(level, null, pos, SoundEvents.DECORATED_POT_PLACE, SoundSource.BLOCKS, 0.8F, 1.0F);
     }
 
     private void removeTheLid(BlockState state, Level level, BlockPos pos, Player player) {
         level.setBlockAndUpdate(pos, state.setValue(AbstractPotBlock.LID, canInputDrive ? PotState.WITH_DRIVE : PotState.WITHOUT_LID));
         addItemToPlayerNotCreative(player, lid.copy());
-        level.playSound(null, pos, SoundEvents.DECORATED_POT_HIT, SoundSource.BLOCKS, 0.8F, 1.0F);
+        playSound(level, null, pos, SoundEvents.DECORATED_POT_HIT, SoundSource.BLOCKS, 0.8F, 1.0F);
     }
 }

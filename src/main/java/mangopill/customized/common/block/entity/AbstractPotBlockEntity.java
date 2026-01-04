@@ -11,11 +11,9 @@ import mangopill.customized.common.util.*;
 import mangopill.customized.common.util.record.UUIDRecord;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.*;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -122,17 +120,6 @@ public abstract class AbstractPotBlockEntity extends BlockEntity implements Crea
     }
 
     abstract public void particleTick(Level level, BlockPos pos, AbstractPotBlockEntity potBlockEntity);
-
-    public static void addSimpleParticle(Level level, BlockPos pos, ParticleOptions type, float probability,
-                                         float xMin, float xMax, float yOffset, float zMin, float zMax) {
-        RandomSource random = RandomSource.create();
-        if (random.nextFloat() < probability) {
-            double x = pos.getX() + Math.clamp(random.nextDouble(), xMin, xMax);
-            double y = pos.getY() + yOffset;
-            double z = pos.getZ() + Math.clamp(random.nextDouble(), zMin, zMax);
-            level.addParticle(type, x, y, z, 0.0D, 0.0D, 0.0D);
-        }
-    }
 
     protected Optional<? extends AbstractPotRecipe> getPotMatchRecipe(RecipeWrapper recipeWrapper) {
         return hasInput() ? getCheckRecipeOptionalFor(potCheck, recipeWrapper, level) : Optional.empty();

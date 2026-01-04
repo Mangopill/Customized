@@ -18,6 +18,8 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.List;
 
+import static mangopill.customized.common.util.SensoryUtil.*;
+
 @EventBusSubscriber(modid = Customized.MODID)
 public class AromaPervasionEnchantmentEffect {
     @SubscribeEvent
@@ -35,7 +37,7 @@ public class AromaPervasionEnchantmentEffect {
                 if (level.random.nextFloat() > 0.2F) continue;
                 mob.hurt(level.damageSources().magic(), 0.05F * l);
                 if (level instanceof ServerLevel serverLevel) {
-                    serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, mob.getX(), mob.getY() + 0.5D, mob.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.05D);
+                    sendParticle(serverLevel, ParticleTypes.HAPPY_VILLAGER, mob.getX(), mob.getY() + 0.5D, mob.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.05D);
                 }
             }
             List<Animal> animals = level.getEntitiesOfClass(Animal.class, player.getBoundingBox().inflate(range));
@@ -45,7 +47,7 @@ public class AromaPervasionEnchantmentEffect {
                 animal.getNavigation().moveTo(player, 0.6D + l * 0.1D);
                 if (level.random.nextFloat() > 0.1F) continue;
                 if (level instanceof ServerLevel serverLevel) {
-                    serverLevel.sendParticles(ParticleTypes.HEART, animal.getX(), animal.getY() + 0.5D, animal.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.05D);
+                    sendParticle(serverLevel, ParticleTypes.HEART, animal.getX(), animal.getY() + 0.5D, animal.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.05D);
                 }
             }
         });

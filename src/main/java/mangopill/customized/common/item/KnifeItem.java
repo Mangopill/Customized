@@ -28,6 +28,7 @@ import java.util.List;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.common.util.InteractUtil.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 import static net.minecraft.world.item.BowItem.*;
 
 public class KnifeItem extends TieredItem implements ProjectileItem, ThrowableIItem {
@@ -68,7 +69,7 @@ public class KnifeItem extends TieredItem implements ProjectileItem, ThrowableII
             List<ItemStack> lootItems = lootTable.getRandomItems(lootParams);
             lootItems.forEach(itemStack -> itemStack.setCount(1));
             spawnItemEntityList(level, lootItems, null, animal.blockPosition());
-            level.playSound(null, animal.blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.5F, 1.0F);
+            playSound(level, null, animal.blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.5F, 1.0F);
         }
         return true;
     }
@@ -111,7 +112,7 @@ public class KnifeItem extends TieredItem implements ProjectileItem, ThrowableII
             }
             addKnifeEntity(level, shooter, projectile, i, power, yawOffset, pitchOffset);
         }
-        level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), CSoundRegistry.KNIFE_SHOOT.get(), SoundSource.PLAYERS, 0.5F, 1.0F);
+        playSound(level, shooter, shooter.getOnPos(), CSoundRegistry.KNIFE_SHOOT.get(), SoundSource.PLAYERS, 0.5F, 1.0F);
         if (shooter instanceof Player player) {
             player.awardStat(Stats.ITEM_USED.get(this));
         }

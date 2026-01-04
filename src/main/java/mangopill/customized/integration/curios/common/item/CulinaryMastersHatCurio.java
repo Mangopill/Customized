@@ -20,6 +20,7 @@ import java.util.*;
 
 import static mangopill.customized.common.CustomizedConfig.*;
 import static mangopill.customized.common.util.RecipeUtil.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 import static mangopill.customized.integration.curios.CuriosRegistry.*;
 
 public class CulinaryMastersHatCurio implements ICurioItem {
@@ -59,7 +60,7 @@ public class CulinaryMastersHatCurio implements ICurioItem {
         player.displayClientMessage(C_CURIOS_MESSAGE.create("culinary_masters_hat.meals_blessing",
                 selectedBuff.value().getDisplayName()), true);
         if (player.level() instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, player.getX(), player.getY() + 0.5D, player.getZ(), 10, 0.0D, 0.0D, 0.0D, 0.05D);
+            sendParticle(serverLevel, ParticleTypes.HAPPY_VILLAGER, player.getX(), player.getY() + 0.5D, player.getZ(), 10, 0.0D, 0.0D, 0.0D, 0.05D);
         }
     }
 
@@ -79,7 +80,7 @@ public class CulinaryMastersHatCurio implements ICurioItem {
         if (!CULINARY_MASTERS_HAT_MESSAGE.get()) return;
         player.displayClientMessage(C_CURIOS_MESSAGE.create("culinary_masters_hat.satiety_renewal",
                 Component.empty().append(itemToRepair.getDisplayName())), true);
-        player.level().playSound(null, player, SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.6F, 0.6F);
+        playSound(player.level(), player, player.getOnPos(), SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.6F, 0.6F);
     }
 
     @Override

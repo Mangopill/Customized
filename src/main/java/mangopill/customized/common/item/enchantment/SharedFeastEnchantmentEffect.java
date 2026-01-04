@@ -17,6 +17,8 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.List;
 
+import static mangopill.customized.common.util.SensoryUtil.*;
+
 @EventBusSubscriber(modid = Customized.MODID)
 public class SharedFeastEnchantmentEffect {
     @SubscribeEvent
@@ -49,8 +51,8 @@ public class SharedFeastEnchantmentEffect {
                 effectInstance.showIcon()
         );
         entity.addEffect(shared);
-        if (level instanceof ServerLevel serverLevel && serverLevel.getRandom().nextInt(5) == 0) {
-            serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, entity.getX(), entity.getY() + 0.7D, entity.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.05D);
-        }
+        if (!(level instanceof ServerLevel serverLevel)) return;
+        sendRandomParticle(serverLevel, entity.getOnPos(), ParticleTypes.HAPPY_VILLAGER,
+                entity.getRandom(), 0.5F, 1, 0.05D, 0.0F, 0.5F, 0.7F, 0.0F, 0.5F);
     }
 }

@@ -7,6 +7,7 @@ import mangopill.customized.common.registry.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,6 +15,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
 
+import static mangopill.customized.common.util.SensoryUtil.*;
 import static mangopill.customized.common.util.PropertyValueUtil.*;
 
 public class CasseroleBlockEntity extends AbstractPotBlockEntity{
@@ -43,9 +45,10 @@ public class CasseroleBlockEntity extends AbstractPotBlockEntity{
 
     @Override
     public void particleTick(Level level, BlockPos pos, AbstractPotBlockEntity potBlockEntity) {
-        if (potBlockEntity.getBlockState().getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE) && potBlockEntity.getFluidHandler().isWater()) {
-            addSimpleParticle(level, pos, ParticleTypes.BUBBLE_POP, 0.4F, 0.1F, 0.9F, 0.5F, 0.1F, 0.9F);
+        RandomSource random = RandomSource.create();
+        if (potBlockEntity.getBlockState().getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE) && potBlockEntity.getFluidHandler().isWaterOrSoup()) {
+            addRandomParticle(level, pos, ParticleTypes.BUBBLE_POP, random, 0.4F, 1, 0.1F, 0.9F, 0.5F, 0.1F, 0.9F);
         }
-        addSimpleParticle(level, pos, CParticleTypeRegistry.STEAM.get(),0.3F, 0.1F, 0.9F, 0.5F, 0.1F, 0.9F);
+        addRandomParticle(level, pos, CParticleTypeRegistry.STEAM.get(), random,0.3F, 1, 0.1F, 0.9F, 0.5F, 0.1F, 0.9F);
     }
 }

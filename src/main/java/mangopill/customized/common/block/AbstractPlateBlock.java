@@ -19,6 +19,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 
 import static mangopill.customized.common.block.state.PlateState.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 
 public abstract class AbstractPlateBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final EnumProperty<PlateState> DRIVE = EnumProperty.create("drive", PlateState.class);
@@ -93,14 +94,8 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof AbstractPlateBlockEntity && state.getValue(DRIVE).equals(WITH_DRIVE)) {
-            if (random.nextFloat() <= 0.3F) {
-                double x = (double) pos.getX() + 0.2D + (random.nextDouble() * 0.3D);
-                double y = (double) pos.getY() + 0.2D;
-                double z = (double) pos.getZ() + 0.2D + (random.nextDouble() * 0.3D);
-                level.addParticle(CParticleTypeRegistry.AROMA.get(), x, y, z, 0.0D, 0.0D, 0.0D);
-            }
-        }
+        if (!(blockEntity instanceof AbstractPlateBlockEntity) || !state.getValue(DRIVE).equals(WITH_DRIVE)) return;
+        addRandomParticle(level, pos, CParticleTypeRegistry.AROMA.get(), random,0.3F, 1, 0.0F, 0.5F, 0.2F, 0.0F, 0.5F);
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static mangopill.customized.common.util.CItemStackHandlerHelper.*;
 import static mangopill.customized.common.util.CStringUtil.*;
 import static mangopill.customized.common.util.LootTableUtil.*;
+import static mangopill.customized.common.util.SensoryUtil.*;
 
 @Mixin(ItemEntity.class)
 public abstract class ItemReplaceMixin{
@@ -27,7 +28,7 @@ public abstract class ItemReplaceMixin{
         ItemStack itemStack = itemEntity.getItem().copy();
         Level level = itemEntity.level();
         if (!(itemStack.is(ModTag.SOILED_SEED)) || !(itemEntity.isInWaterRainOrBubble())) return;
-        level.addParticle(CParticleTypeRegistry.DIRT.get(), itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 0.0D, 0.0D, 0.0D);
+        addParticle(level, CParticleTypeRegistry.DIRT.get(), itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 0.0D, 0.0D, 0.0D);
         if (level.isClientSide() || level.getServer() == null) return;
         if (this.customized$life > 0) {
             this.customized$life--;
