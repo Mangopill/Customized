@@ -80,7 +80,7 @@ public class CulinaryMastersHatCurio implements ICurioItem {
         if (!CULINARY_MASTERS_HAT_MESSAGE.get()) return;
         player.displayClientMessage(C_CURIOS_MESSAGE.create("culinary_masters_hat.satiety_renewal",
                 Component.empty().append(itemToRepair.getDisplayName())), true);
-        playSound(player.level(), player, player.getOnPos(), SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.6F, 0.6F);
+        playSound(player.level(), null, player.getOnPos(), SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.6F, 0.6F);
     }
 
     @Override

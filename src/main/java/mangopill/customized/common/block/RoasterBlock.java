@@ -43,6 +43,7 @@ public class RoasterBlock extends AbstractPotBlock {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        System.out.println("是客户端?" + level.isClientSide);
         if (!ROASTER_SOUND.get() || state.getValue(LID).equals(PotState.WITHOUT_LID)) return;
         playRandomSound(level, null, pos, SoundEvents.CAMPFIRE_CRACKLE, SoundSource.BLOCKS, random, 0.1F, 0.5F + random.nextFloat(), random.nextFloat() * 0.7F + 0.6F);
     }

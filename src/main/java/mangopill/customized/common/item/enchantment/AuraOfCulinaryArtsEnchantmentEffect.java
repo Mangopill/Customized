@@ -104,7 +104,7 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
     }
 
     private static void playEffectSound(Player player, SoundEvent soundEvent) {
-        playSound(player.level(), player, player.getOnPos().above(), soundEvent, SoundSource.PLAYERS, 1.0F, 1.0F);
+        playSound(player.level(), null, player.getOnPos().above(), soundEvent, SoundSource.PLAYERS, 1.0F, 1.0F);
     }
 
     public static class CulinaryAuraData {

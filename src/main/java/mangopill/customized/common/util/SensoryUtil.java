@@ -162,6 +162,13 @@ public final class SensoryUtil {
      */
     public static void playSound(Level level, @Nullable Entity entity, BlockPos pos, SoundEvent sound,
                                  SoundSource category, float volume, float pitch) {
+        if (level.isClientSide) {
+            double x = entity == null ? pos.getX() : entity.getX();
+            double y = entity == null ? pos.getY() : entity.getY();
+            double z = entity == null ? pos.getZ() : entity.getZ();
+            level.playLocalSound(x, y, z, sound, category, volume, pitch, false);
+            return;
+        }
         level.playSound(entity, pos, sound, category, volume, pitch);
     }
 
