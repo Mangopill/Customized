@@ -52,7 +52,7 @@ public class SharedFeastEnchantmentEffect {
         );
         entity.addEffect(shared);
         if (!(level instanceof ServerLevel serverLevel)) return;
-        sendRandomParticle(serverLevel, entity.getOnPos(), ParticleTypes.HAPPY_VILLAGER,
-                entity.getRandom(), 0.5F, 1, 0.05D, 0.0F, 0.5F, 0.7F, 0.0F, 0.5F);
+        sendRandomParticle(serverLevel, vec3toVec3i(entity.position()), ParticleTypes.HAPPY_VILLAGER,
+                entity.getRandom(), 0.5F, 1, 0.05D, 0.0D, 0.5D, 1.5D, 0.0D, 0.5D);
     }
 }

@@ -95,7 +95,7 @@ public abstract class AbstractPlateBlock extends BaseEntityBlock implements Simp
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof AbstractPlateBlockEntity) || !state.getValue(DRIVE).equals(WITH_DRIVE)) return;
-        addRandomParticle(level, pos, CParticleTypeRegistry.AROMA.get(), random,0.3F, 1, 0.0F, 0.5F, 0.2F, 0.0F, 0.5F);
+        addRandomParticle(level, pos, CParticleTypeRegistry.AROMA.get(), random,0.3F, 1, 0.0D, 0.5D, 0.2D, 0.0D, 0.5D);
     }
 
     @Override

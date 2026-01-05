@@ -47,8 +47,8 @@ public class CasseroleBlockEntity extends AbstractPotBlockEntity{
     public void particleTick(Level level, BlockPos pos, AbstractPotBlockEntity potBlockEntity) {
         RandomSource random = RandomSource.create();
         if (potBlockEntity.getBlockState().getValue(AbstractPotBlock.LID).equals(PotState.WITH_DRIVE) && potBlockEntity.getFluidHandler().isWaterOrSoup()) {
-            addRandomParticle(level, pos, ParticleTypes.BUBBLE_POP, random, 0.4F, 1, 0.1F, 0.9F, 0.5F, 0.1F, 0.9F);
+            addRandomParticle(level, pos, ParticleTypes.BUBBLE_POP, random, 0.4F, 1, 0.1D, 0.9D, 0.5D, 0.1D, 0.9D);
         }
-        addRandomParticle(level, pos, CParticleTypeRegistry.STEAM.get(), random,0.3F, 1, 0.1F, 0.9F, 0.5F, 0.1F, 0.9F);
+        addRandomParticle(level, pos, CParticleTypeRegistry.STEAM.get(), random,0.3F, 1, 0.1D, 0.9D, 0.5D, 0.1D, 0.9D);
     }
 }

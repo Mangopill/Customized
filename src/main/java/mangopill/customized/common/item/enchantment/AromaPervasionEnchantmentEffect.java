@@ -42,13 +42,11 @@ public class AromaPervasionEnchantmentEffect {
             }
             List<Animal> animals = level.getEntitiesOfClass(Animal.class, player.getBoundingBox().inflate(range));
             for (Animal animal : animals) {
-                if (animal.distanceTo(player) < 3.0F) continue;
                 animal.getLookControl().setLookAt(player);
                 animal.getNavigation().moveTo(player, 0.6D + l * 0.1D);
-                if (level.random.nextFloat() > 0.1F) continue;
-                if (level instanceof ServerLevel serverLevel) {
-                    sendParticle(serverLevel, ParticleTypes.HEART, animal.getX(), animal.getY() + 0.5D, animal.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.05D);
-                }
+                if (!(level instanceof ServerLevel serverLevel)) continue;
+                sendRandomParticle(serverLevel, vec3toVec3i(animal.position()), ParticleTypes.HEART,
+                        level.random, 0.9F, 1, 0.05D, 0.0D, 0.5D, 1.0D, 0.0D, 0.5D);
             }
         });
     }

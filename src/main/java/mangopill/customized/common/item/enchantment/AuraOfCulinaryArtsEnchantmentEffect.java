@@ -99,8 +99,8 @@ public class AuraOfCulinaryArtsEnchantmentEffect {
 
     private static void addEffectParticle(Player player, int particleCount, double speed) {
         if (!(player.level() instanceof ServerLevel serverLevel)) return;
-        sendRandomParticle(serverLevel, player.getOnPos().above(), ParticleTypes.HAPPY_VILLAGER,
-                player.getRandom(), 0.8F, particleCount, speed, 0.0F, 0.5F, 0.0F, 0.0F, 0.5F);
+        sendRandomParticle(serverLevel, vec3toVec3i(player.position()), ParticleTypes.HAPPY_VILLAGER,
+                player.getRandom(), 0.8F, particleCount, speed, 0.0D, 0.5D, 1.5D, 0.0D, 0.5D);
     }
 
     private static void playEffectSound(Player player, SoundEvent soundEvent) {

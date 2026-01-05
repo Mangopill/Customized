@@ -28,7 +28,7 @@ public abstract class ItemReplaceMixin{
         ItemStack itemStack = itemEntity.getItem().copy();
         Level level = itemEntity.level();
         if (!(itemStack.is(ModTag.SOILED_SEED)) || !(itemEntity.isInWaterRainOrBubble())) return;
-        addParticle(level, CParticleTypeRegistry.DIRT.get(), itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 0.0D, 0.0D, 0.0D);
+        addParticle(level, CParticleTypeRegistry.DIRT.get(), itemEntity.getX(), itemEntity.getY(), itemEntity.getZ());
         if (level.isClientSide() || level.getServer() == null) return;
         if (this.customized$life > 0) {
             this.customized$life--;

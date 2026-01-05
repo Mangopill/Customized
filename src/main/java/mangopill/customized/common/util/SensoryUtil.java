@@ -27,6 +27,13 @@ public final class SensoryUtil {
     }
 
     /**
+     * @see #addParticle(Level, ParticleOptions, double, double, double, double, double, double) 
+     */
+    public static void addParticle(Level level, ParticleOptions type, double x, double y, double z) {
+        level.addParticle(type, x, y, z, 0.0D, 0.0D, 0.0D);
+    }
+    
+    /**
      * Adds a single particle to the level at the specified position with velocity.
      * <p>
      * This method is typically used for client-side particle effects.

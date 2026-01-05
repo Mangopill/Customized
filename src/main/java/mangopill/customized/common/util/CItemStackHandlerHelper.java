@@ -228,7 +228,7 @@ public final class CItemStackHandlerHelper {
      */
     public static Map<ItemStack, Integer> groupItemStacksByMatchMode(Collection<ItemStack> stackList,
                                                                      IItemMatchMode<ItemStack, ItemStack> matchMode) {
-        if (stackList.isEmpty()) return Map.of(ItemStack.EMPTY, 0);
+        if (stackList.isEmpty()) return Map.of();
         Map<ItemStack, Integer> stackTotalCountMap = new HashMap<>();
         for (ItemStack stack : stackList) {
             if (stack.isEmpty()) continue;

@@ -20,7 +20,7 @@ public class RoasterBlockEntity extends AbstractPotBlockEntity{
     @Override
     public void particleTick(Level level, BlockPos pos, AbstractPotBlockEntity potBlockEntity) {
         RandomSource random = RandomSource.create();
-        addRandomParticle(level, pos, ParticleTypes.SMOKE, random,0.4F, 1, 0.0F, 1.0F, 0.4F, 0.0F, 1.0F);
+        addRandomParticle(level, pos, ParticleTypes.SMOKE, random,0.4F, 1, 0.0D, 1.0D, 0.4D, 0.0D, 1.0D);
     }
 
     @Override
